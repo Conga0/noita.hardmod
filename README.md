@@ -1,0 +1,1 @@
+A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod intends to make the game more difficult/challenging in a fun and engaging manner (NOT memey bullshit like Fairmod was, this is intended to be a good fun mod people can play!) 
