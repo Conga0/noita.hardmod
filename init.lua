@@ -72,6 +72,11 @@ for _,module in ipairs(enabled_modules) do
 	--end
 end
 
+local translations = ModTextFileGetContent("data/translations/common.csv")
+translations = translations .. "\n" .. ModTextFileGetContent("mods/noita.hardmod/files/standard.csv").."\n"
+translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
+ModTextFileSetContent("data/translations/common.csv", translations)
+
 
 function OnModPreInit()
 	for _,func in ipairs(hooks.mod_pre_init) do
