@@ -1,7 +1,7 @@
 local hooks = {}
+local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
 hooks.mod_init = function()
-    local nxml = dofile_once("mods/Apotheosis/lib/nxml.lua")
 	local path = "data/entities/player_base.xml"
 	local xml = nxml.parse(ModTextFileGetContent(path))
 
