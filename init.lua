@@ -1,7 +1,7 @@
 -- TODO: make a mod :)
 -- Eba was here!!!
 -- UserK too!!
-
+-- !!!ooT enyL AgnoC
 
 dofile_once("mods/noita.hardmod/lib/utilities.lua")
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
@@ -9,6 +9,7 @@ local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 local modules = {
 	"test_module_dont_run",
 	"example",
+	"nerfed_combat_healing",
 }
 
 local force_enable_state = {
