@@ -11,13 +11,16 @@ local modules = {
 	"example",
 }
 
-local force_enable = {
-	--example =  true
+local force_enable_state = {
+	test_module_dont_run = false,
+	example = false,
 }
 
 local enabled_modules = {}
 for _,module in ipairs(modules) do
-	if ModSettingGet("noita.hardmod."..module) or force_enable[module] then
+	local enabled = not ModSettingGet("noita.hardmod."..module..".disabled")
+	if force_enable_state[module] ~= nil then enabled = force_enable_state[module] end
+	if enabled then
 		enabled_modules[#enabled_modules+1] = module
 	end
 end
