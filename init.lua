@@ -17,6 +17,7 @@ local force_enable_state = {
 	example = false,
 }
 
+
 local enabled_modules = {}
 for _,module in ipairs(modules) do
 	local enabled = not ModSettingGet("noita.hardmod."..module..".disabled")
@@ -65,7 +66,11 @@ local gd = GLOBAL_DATA
 
 for _,module in ipairs(enabled_modules) do
 	for hook_name,hook in pairs(dofile("mods/noita.hardmod/files/modules/"..module.."/init.lua") or {}) do
-		hooks[hook_name][#hooks[hook_name]+1] = hook
+		if hooks[hook_name] == nil then
+			-- Throw that shit away, let me stuff random shit in the hooks table >:(
+		else
+			hooks[hook_name][#hooks[hook_name]+1] = hook
+		end
 	end
 
 	--Alternative code for if we wanna support multiple functions for a hook from a single module:
