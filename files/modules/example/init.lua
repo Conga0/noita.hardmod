@@ -21,10 +21,12 @@ local hooks = {
 
 	--Pause hofunction() ends
 	mod_settings_changed = function() end,
-	pause_pre_update = function(is_paused, is_inventory_pause) end,
-	pause_changed = function() end,
+	pause_pre_update = function() end,
+	pause_changed = function(is_paused, is_inventory_pause) end,
 	count_secrets = function(total, found) return total,found end,
 }
+
+-- DONT INITIALISE FUNCTIONS YOU DONT NEED, THESE ARE JUST HERE TO SHOW YOU A LIST OF THEM ^^^^
 
 local gd = GLOBAL_DATA
 
