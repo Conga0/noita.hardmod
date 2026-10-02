@@ -12,3 +12,6 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 As you continually take more damage, the wounded timer you have can grow up to a maximum of 60 seconds, at which point it cannot be risen any higher
 - `splash_text`
   - Pause menu will have a random splash message on it
+- `cheeseless_triggers`
+  - Trigger spells pay their payload's cast delay
+  - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
