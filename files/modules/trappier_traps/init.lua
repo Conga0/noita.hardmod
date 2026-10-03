@@ -8,7 +8,7 @@ module.mod_pre_init = function()
 	local igniters = {"data/entities/props/physics/trap_ignite.xml", "data/entities/props/physics/trap_ignite_enabled.xml", "data/entities/props/physics_trap_ignite.xml", "data/entities/props/physics_trap_ignite_enabled.xml"}
 	for _, file in ipairs(igniters)do
 		for entity in nxml.edit_file(file) do
-			-- ignite instantly?
+			-- ignite instantly? mayhaps
 			for i = #entity.children, 1, -1 do
 				if entity.children[i]:get("script_source_file") == "data/scripts/props/physics_trap_ignite.lua" then
 					entity.children[i]:set("execute_every_n_frame", 1)
