@@ -71,7 +71,7 @@ local updateSplash = function()
 		end
 
 		if isAnyInputPressed() then
-			GameRemoveFlagRun("draw_logo_splash")
+			module.draw_logo_splash = false
 			return
 		end
 
