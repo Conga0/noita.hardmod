@@ -10,8 +10,9 @@ local modules = {
 	"test_module_dont_run",
 	"example",
 	"nerfed_combat_healing",
-	"logo_splash",
 	"trappier_traps",
+	"cheeseless_triggers",
+	"logo_splash",
 }
 
 local force_enable_state = {
