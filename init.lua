@@ -13,6 +13,7 @@ local modules = {
 	"trappier_traps",
 	"cheeseless_triggers",
 	"logo_splash",
+	"worse_hearts",
 }
 
 local force_enable_state = {
