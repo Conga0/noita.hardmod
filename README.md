@@ -15,3 +15,10 @@ As you continually take more damage, the wounded timer you have can grow up to a
 - `cheeseless_triggers`
   - Trigger spells pay their payload's cast delay
   - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
+- `no_more_chainsaw_wrapping`
+  - Within the cast state, chainsaw and luminous drill only give cast delay to eachother, the full state is reset to what it was *before* either of the spells was cast, once another spell is cast. This means any spell completely breaks the momentum of chainsaw.
+- `trappier_traps`
+  - Made a bunch of the box traps unkickable.
+  - Wall traps shotgun projectiles.
+- `worse_hearts`
+  - Holy mountain hearts no longer grant health increase
