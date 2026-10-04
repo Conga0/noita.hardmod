@@ -14,7 +14,6 @@ local modules = {
 	"cheeseless_triggers",
 	"logo_splash",
 	"worse_hearts",
-	"worse_recharge_spells",
 }
 
 local force_enable_state = {
