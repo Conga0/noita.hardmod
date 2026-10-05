@@ -57,6 +57,7 @@ perk_reworks = {
 	},
 	{
 		id = "BLEED_OIL",
+		ui_description = "$hardmod_perk_bleed_oil_desc",
 		clear_original_game_effect = true,
 		remove_other_perks = nil,
 		func = function( entity_perk_item, entity_who_picked, item_name )
@@ -116,6 +117,7 @@ perk_reworks = {
 	},
 	{
 		id = "EXPLODING_CORPSES",
+		ui_description = "$hardmod_perk_exploding_corpses_desc",
 		clear_original_game_effect2 = true,
 		remove_other_perks = nil,
 		func = function( entity_perk_item, entity_who_picked, item_name )
