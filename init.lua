@@ -16,6 +16,7 @@ local modules = {
 	"logo_splash",
 	"worse_hearts",
 	"vanilla_perk_rebalances",
+	"no_more_chainsaw_wrapping",
 }
 
 local force_enable_state = {
