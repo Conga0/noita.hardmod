@@ -19,6 +19,14 @@ perk_reworks = {
 			end
         end,
 	},
+	{
+		id = "SHIELD",
+		stackable_maximum = 3,
+	},
+	{
+		id = "STAINLESS_ARMOUR",
+		stackable_maximum = 3,
+	},
 }
 
 local function modify_perk( rework_data )
