@@ -10,10 +10,10 @@ perk_reworks = {
 		one_off_effect = false,
 		usable_by_enemies = false,
         func = function( entity_perk_item, entity_who_picked, item_name )
-            EntityAddChild( entity_who_picked, EntityLoad( "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/all_seeing_eye.xml" ) )
+            EntityAddChild( entity_who_picked, EntityLoad( "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/perks/all_seeing_eye.xml" ) )
         end,
         func_remove = function( entity_who_picked )
-        	local perk_entity = EntityGetAllChildren( entity_who_picked, "hardmod_all_seeing_eye_rework" )[1]
+        	local perk_entity = EntityGetAllChildren( entity_who_picked, "hardmod_all_seeing_eye_entity" )[1]
 			if perk_entity ~= nil then
 				EntityKill( perk_entity )
 			end

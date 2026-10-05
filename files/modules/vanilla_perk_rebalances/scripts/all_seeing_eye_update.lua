@@ -1,3 +1,5 @@
+dofile_once( "mods/noita.hardmod/lib/utilities.lua" )
+
 local entity = GetUpdatedEntityID()
 local parent = EntityGetParent( entity )
 

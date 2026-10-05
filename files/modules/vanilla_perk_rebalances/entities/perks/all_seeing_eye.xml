@@ -1,6 +1,6 @@
-<Entity tags="perk_entity,hardmod_all_seeing_eye_rework">
+<Entity tags="perk_entity,hardmod_all_seeing_eye_entity">
     <SpriteComponent 
-        _tags="enabled_in_hand"
+        _tags="enabled_in_hand,fog_of_war_hole"
         alpha="1.0"
         image_file="data/particles/torch_fog_of_war_hole.xml"
         smooth_filtering="1"
