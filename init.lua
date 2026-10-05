@@ -14,6 +14,7 @@ local modules = {
 	"cheeseless_triggers",
 	"logo_splash",
 	"worse_hearts",
+	"no_more_chainsaw_wrapping",
 }
 
 local force_enable_state = {
