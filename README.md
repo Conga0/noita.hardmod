@@ -10,6 +10,11 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - On taking damage, you gain a healblock status effect
   - For every 1% of max health you take as damage, you gain 2 seconds of wounded up to a maximum of 10 seconds from a single instance of damage
 As you continually take more damage, the wounded timer you have can grow up to a maximum of 60 seconds, at which point it cannot be risen any higher
+- `vanilla_perk_rebalances`
+  - All-Seeing Eye (perk) now grants vision around the cursor only, rather than lighting up the entire screen.
+  - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
+  - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
+  - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
 - `splash_text`
   - Pause menu will have a random splash message on it
 - `cheeseless_triggers`
@@ -22,8 +27,3 @@ As you continually take more damage, the wounded timer you have can grow up to a
   - Wall traps shotgun projectiles.
 - `worse_hearts`
   - Holy mountain hearts no longer grant health increase
-- `vanilla_perk_rebalances`
-  - All-Seeing Eye now grants vision around the cursor only, rather than lighting up the entire screen.
-  - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
-  - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
-  - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
