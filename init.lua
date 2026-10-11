@@ -18,6 +18,7 @@ local modules = {
 	"vanilla_perk_rebalances",
 	"no_more_chainsaw_wrapping",
 	"holy_mountain_rework",
+	"phantom_nemesis",
 }
 
 local force_enable_state = {
@@ -74,9 +75,7 @@ local gd = GLOBAL_DATA
 
 for _,module in ipairs(enabled_modules) do
 	for hook_name,hook in pairs(dofile("mods/noita.hardmod/files/modules/"..module.."/init.lua") or {}) do
-		if hooks[hook_name] == nil then
-			-- Throw that shit away, let me stuff random shit in the hooks table >:(
-		else
+		if hooks[hook_name] ~= nil then --Throw that shit away, let me stuff random shit in the hooks table >:(
 			hooks[hook_name][#hooks[hook_name]+1] = hook
 		end
 	end

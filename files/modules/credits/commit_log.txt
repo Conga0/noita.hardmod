@@ -1,0 +1,34 @@
+Initial commit
+First commit
+added hook system + NXML
+some polish, added example module, no settings support yet
+Update init.lua
+Create README.md
+added csv file for translations
+Update README.md
+Nerfed Combat Healing
+removed unnecessary hooks from nerfed_combat_healing
+fixed nxml oversight in NCH module, fixed example module issues
+Add logo splash module
+ya
+fixed apoth thing probably
+Fix triggers
+hell
+no holy mountain health ups
+patch chainsaw wrapping
+rename no more chainsaw wrapping folder
+Revise game mechanics descriptions in README
+fix
+Add All-Seeing Eye (perk) nerf
+(oops)
+Limit Shield + Stainless Armour to 3 stacks
+Rework Immunity → Protection perks
+Fixed incorrect filepath
+Fixed wrong filepath 2
+And somehow, the code got even worse
+Add VSC shorthands to utilities.lua
+Disable ASE on Master of Blinding hover
+Add missing documentation
+Merge remote-tracking branch 'fork/vanilla-perk-rebalances' into vanilla-perk-rebalances
+Update Oil Blood + Exploding Corpses desc
+Phantom Nemesis
