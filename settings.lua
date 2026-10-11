@@ -150,7 +150,7 @@ function ModSettingsGui( gui, in_main_menu )
             GuiImage( gui, new_id(), -20.2, -1.2, "mods/noita.hardmod/lib/ui_sprites/settings_content_disabled_overlay.png", 1, 1.2, 0 )
         end
 
-        if HasSettingFlag( module_setting ) then
+        if HasSettingFlag( module_disabled ) then
             GuiColorSetForNextWidget( gui, 1, 0.25, 0.25, 1 )
         else
             GuiColorSetForNextWidget( gui, 1, 1, 1, 1 )
