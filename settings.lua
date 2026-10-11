@@ -106,7 +106,6 @@ function ModSettingsGui( gui, in_main_menu )
 
     local modules = {}
     for i,module in ipairs( module_data ) do
-        print( module.id )
         if module.force_enable_state == nil then
             table.insert( modules, module )
         end
@@ -137,7 +136,7 @@ function ModSettingsGui( gui, in_main_menu )
         end
 
         local tooltip_text = GameTextGetTranslatedOrNot( module.ui_desc ) .. "\n "
-        if HasSettingFlag( module_disabled_setting ) then
+        if HasSettingFlag( module_disabled ) then
             GuiTooltip( gui, tooltip_text, "[ Click to enable ]" );
         else
             GuiTooltip( gui, tooltip_text, "[ Click to disable]" )
