@@ -74,9 +74,7 @@ local gd = GLOBAL_DATA
 
 for _,module in ipairs(enabled_modules) do
 	for hook_name,hook in pairs(dofile("mods/noita.hardmod/files/modules/"..module.."/init.lua") or {}) do
-		if hooks[hook_name] == nil then
-			-- Throw that shit away, let me stuff random shit in the hooks table >:(
-		else
+		if hooks[hook_name] ~= nil then --Throw that shit away, let me stuff random shit in the hooks table >:(
 			hooks[hook_name][#hooks[hook_name]+1] = hook
 		end
 	end

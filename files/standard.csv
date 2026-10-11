@@ -17,7 +17,7 @@ hardmod_status_ase_disabled_desc,Your All-Seeing Eye has been temporarily disabl
 hardmod_phantom_phantom_name,"Ira",,,,,,,,,,,,,
 hardmod_phantom_possession,"$0 has possessed a $1!",,,,,,,,,,,,,
 hardmod_phantom_banished,"$0 has been banished!",,,,,,,,,,,,,
-hardmod_phantom_banished_permanent,"You feel $0s grip loosen on this domain",,,,,,,,,,,,,  
+hardmod_phantom_banished_permanent,"You feel $0's grip loosen on this domain",,,,,,,,,,,,,  
 hardmod_phantom_enraged,"$0 is enraged by this banishment",,,,,,,,,,,,,
 hardmod_phantom_pheromone_resist,"$0 is resisting the pheromones!",,,,,,,,,,,,,
 hardmod_phantom_ability_alchemic_name,Alchemic,,,,,,,,,,,,,

@@ -1,0 +1,26 @@
+local credits = "\n \n=== Hard Mod Commit History ===\n" .. ModTextFileGetContent("mods/noita.hardmod/files/modules/credits/commit_log.txt"):gsub("\r\n", "\n")
+
+local function escape(str) return str:gsub("[%(%)%.%%%+%-%*%?%[%^%$%]]", "%%%1") end
+
+local function add_release_break(target, release)
+	target = "\n" .. target .. "\n"
+	credits = credits:gsub(escape(target), target .. " \n--- " .. release .. " ---\n \n")
+end
+
+--i personally pick the final commit made before a major release
+--so everything up to `fixed init` is part of the main development, and `Labor of Loathing is here :)` is up until LOL's release
+--add_release_break("(whatever the last PR is)", " MAIN RELEASE 31/10/26")
+
+local dev_messages = {
+	example_name = "hihi!!",
+}
+
+local dev_msg_txt = #dev_messages ~= 0 and "\n \n \n==== FINAL WORDS ====" or ""
+
+for dev, message in pairs(dev_messages) do
+	dev_msg_txt = dev_msg_txt .. "~MESSAGES FROM " .. dev .. "~\n" .. message .. "\n \n"
+end
+
+credits = credits .. dev_msg_txt .. "\n \n \n \nAdded approximately 95,236,821,904,984 hämisket"
+
+ModTextFileSetContent("data/credits.txt", credits)
