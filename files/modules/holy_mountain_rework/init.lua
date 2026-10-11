@@ -25,12 +25,10 @@ for _,file in ipairs(visual_references) do
 end
 img.ImageOverlay("data/biome_impl/temple/altar_right.png", path.."images/material.png", 0, 0)
 
---modifile("data/scripts/perks/perk.lua",
---	[[if( Random( 1, 100 ) <= perk_destroy_chance ) then]],
---		[[local hardmod_collapse_mountain_func = dofile("mods/noita.hardmod/files/modules/holy_mountain_rework/collapse_mountain_check");
---		if EntityGetWithTagInRadius( "perk" )
---		if( Random( 1, 100 ) <= perk_destroy_chance ) then hardmod_collapse_mountain_func(pos_x, pos_y);]]
---)
+modifile("data/scripts/perks/perk.lua",
+		[[if( Random( 1, 100 ) <= perk_destroy_chance ) then]],
+		[[if( Random( 1, 100 ) <= perk_destroy_chance ) then dofile("mods/noita.hardmod/files/modules/holy_mountain_rework/perk_disappear_hook.lua")(pos_x, pos_y);]]
+)
 ModLuaFileAppend("data/scripts/biomes/temple_altar.lua", path.."append_altar.lua")
 
 return hooks

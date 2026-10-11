@@ -8,9 +8,8 @@ local function collapse()
 	-- this reset the biome stats - see workshop_trigger_check_stats.lua
 	StatsBiomeReset()
 
-	EntityLoad("data/entities/misc/workshop_collapse.xml", x - 240, y - 60)
-	EntityLoad("data/entities/misc/workshop_areadamage.xml", x-143, y+47) --unmodified
-	EntityLoad("data/entities/misc/workshop_areadamage.xml", x-543, y+47) --unmodified
+	EntityLoad("data/entities/misc/workshop_collapse.xml", x - 210, y - 40)
+	EntityLoad("data/entities/misc/workshop_areadamage.xml", x-110, y-10) --unmodified
 
 	-- Destroy workshop entities
 
@@ -26,7 +25,7 @@ local function collapse()
 
 	-- kill temple_areacheckers that are on (about) the same horizontal level as we are
 	local temple_areacheckers = EntityGetInRadiusWithTag( x, y, 2048, "temple_areachecker" )
-	for k,areachecker in pairs(temple_areacheckers) do
+	for _,areachecker in pairs(temple_areacheckers) do
 		local area_x, area_y = EntityGetTransform( areachecker )
 		if( math.abs( y - area_y ) < 512 ) then
 			EntityKill( areachecker )
@@ -45,7 +44,6 @@ local function collapse()
 	GamePlaySound( "data/audio/Desktop/misc.bank", "misc/temple_collapse", x-112, y + 40 )
 end
 
-local nearby_perks = EntityGetInRadius(x, y, 130)
 if #EntityGetInRadiusWithTag(x, y, 130, "perk") == 0 then
 	for _,crystal in ipairs(EntityGetInRadiusWithTag(x+250, y, 60, "worm_crystal") or {}) do
 		if EntityGetName(crystal) == "hardmod_collapse_crystal" then
