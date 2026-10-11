@@ -7,7 +7,7 @@ perk_reworks = {
 
 new_perks = {
 	{
-		id = "D2D_SPELL_GEMS",
+		id = "HARDMOD_PERK_SPELL_GEMS",
 		ui_name = "$hardmod_perk_spell_gems_name",
 		ui_description = "$hardmod_perk_spell_gems_desc",
 		ui_icon = "mods/noita.hardmod/files/modules/truly_limited_spells/gfx/ui_gfx/perks/spell_gems_016.png",
