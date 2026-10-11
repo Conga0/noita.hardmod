@@ -55,6 +55,42 @@ local function trigger_action_ungreeked( data, hand, rec )
 	end
 end
 
+local function EntityIsWand( entity_id )
+	local acomp = EntityGetFirstComponentIncludingDisabled( entity_id, "AbilityComponent" )
+  	if not acomp then return false end
+	return ComponentGetValue2( acomp, "use_gun_script" ) == true
+end
+
+local function GetHeldWand( entity_id )
+	if entity_id ~= nil then
+		local inv2_comp = EntityGetFirstComponentIncludingDisabled( entity_id, "Inventory2Component" )
+		local active_item = ComponentGetValue2( inv2_comp, "mActiveItem" )
+		if EntityIsWand( active_item ) then
+			return active_item
+		end
+	end
+	return nil
+end
+
+local function EntityLoadAtWandTip( player_entity_id, load_this_entity )
+    local wand_entity_id = GetHeldWand( player_entity_id )
+    if ( not player_entity_id ) or ( not wand_entity_id ) then return end
+
+    local ctrl_comp = EntityGetFirstComponent( player_entity_id, "ControlsComponent" )
+    local hs_comp = EntityGetFirstComponentIncludingDisabled( wand_entity_id, "HotspotComponent" )
+    if ctrl_comp ~= nil and hs_comp ~= nil then
+        local aim_x, aim_y = ComponentGetValue2( ctrl_comp, "mAimingVectorNormalized" )
+		local offset_x, offset_y = ComponentGetValue2( hs_comp, "offset" )
+		local offset_mag = math.sqrt( offset_x ^ 2 + offset_y ^ 2 )
+
+        local wx, wy = EntityGetTransform( wand_entity_id )
+        local tx = wx + ( offset_mag * aim_x )
+        local ty = wy + ( offset_mag * aim_y )
+        return EntityLoad( load_this_entity, tx, ty )
+    end
+    return nil
+end
+
 if actions ~= nil then
 	new_actions = {
 		{
@@ -64,12 +100,13 @@ if actions ~= nil then
 			sprite				= "mods/noita.hardmod/files/modules/truly_limited_spells/gfx/ui_gfx/spells/indulgence.png",
 			type				= ACTION_TYPE_OTHER,
 			recursive 			= true,
-			spawn_level			= "10",
-			spawn_probability	= "1",
-			price				= 500,
-			mana				= 40,
+			spawn_level			= "0",
+			spawn_probability	= "0",
+			spawn_requires_flag = "hardmod_cannot_spawn",
+			price				= 1000,
+			mana				= 1,
 			action				= function()
-									-- c.fire_rate_wait = c.fire_rate_wait + 15
+									if reflecting then return end
 
 									local data = {}
 									if ( #deck > 0 ) then
@@ -100,34 +137,42 @@ if actions ~= nil then
 										-- determine the cost for this spell
 										local cast_price
 										if data.id == "DIVIDE_10" then
-											cast_price = 1000
-										elseif max_uses <= 2 or lua_data.recursive then -- i.e. Circle of Vigour, Greek letters
 											cast_price = 500
-										elseif max_uses <= 5 then -- i.e. Black Hole
+										elseif max_uses <= 2 or data.recursive then -- i.e. Circle of Vigour, Greek letters
 											cast_price = 250
+										elseif max_uses <= 5 then -- i.e. Black Hole
+											cast_price = 125
 										elseif max_uses <= 10 then
-											cast_price = 100
-										elseif max_uses <= 20 then
 											cast_price = 50
-										else
+										elseif max_uses <= 20 then
 											cast_price = 25
+										else
+											cast_price = 10
 										end
-										-- if lua_data.never_unlimited then cast_price = cast_price * 2 end
-										-- cast_price = math.floor( cast_price * ( 1.0 + ( money_spent * 0.00001 ) ) )
+										if lua_data.never_unlimited then
+											cast_price = cast_price * 2
+										end
 
 										if money >= cast_price then
 											ComponentSetValue2( wcomp, "money", money - cast_price )
-											GamePrint( "-" .. cast_price .. " gold" )
-											GamePlaySound( "data/audio/Desktop/event_cues.bank", "event_cues/goldnugget/create", x, y )
 
 											data.action( rec )
 											mana = mana - data.mana
+
+											local x, y = EntityGetTransform( GetUpdatedEntityID() )
+											GamePlaySound( "data/audio/Desktop/event_cues.bank", "event_cues/goldnugget/create", x, y )
+											if ModSettingGet( "noita.hardmod.print_indulgence_cost" ) == true then
+												local cost_label = EntityLoadAtWandTip( GetUpdatedEntityID(), "mods/noita.hardmod/files/modules/truly_limited_spells/entities/misc/indulgence_cost_label.xml" )
+												EntityAddComponent2( cost_label, "VariableStorageComponent", {
+													name = "hardmod_indulgence_cast_price",
+													value_int = cast_price,
+												})
+											end
 										end
 									else
+										mana = mana + 40
 										draw_actions( 1, true )
 									end
-
-									-- draw_actions( 1, true )
 								end,
 		},
 		{
@@ -138,11 +183,10 @@ if actions ~= nil then
 			type				= ACTION_TYPE_OTHER,
 			recursive 			= true,
 			spawn_level			= "10",
-			spawn_probability	= "0.4",
-			price				= 500,
-			mana				= 80,
+			spawn_probability	= "0.5",
+			price				= 800,
+			mana				= 99,
 			action				= function()
-									c.fire_rate_wait = c.fire_rate_wait + 15
 									if reflecting then return end
 
 									local data = {}
@@ -160,12 +204,9 @@ if actions ~= nil then
 										data.action( rec )
 										mana = mana - data.mana
 									else
-										c.fire_rate_wait = c.fire_rate_wait - 15
 										mana = mana + 100
 										draw_actions( 1, true )
 									end
-
-									-- draw_actions( 1, true )
 								end,
 		},
 	}
