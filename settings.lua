@@ -44,6 +44,36 @@ local module_data = {
     },
 }
 
+local mod_id = "noita.hardmod" -- This should match the name of your mod's folder.
+mod_settings_version = 1 -- This is a magic global that can be used to migrate settings to new mod versions. call mod_settings_get_version() before mod_settings_update() to get the old value.
+mod_settings =
+{
+    {
+        -- Leaving this here as a reminder/template for when we start adding settings
+        -- 
+        -- category_id = "limited_spells_settings",
+        -- ui_name = "Truly Limited Spells",
+        -- foldable = true,
+        -- _folded = true,
+        -- settings = {
+        --     {
+        --         id = "print_indulgence_cost",
+        --         ui_name = "Print Indulgence cost",
+        --         ui_description = "When enabled, casting the Indulgence spell will print\nits cost at the tip of your wand.",
+        --         value_default = true,
+        --         scope = MOD_SETTING_SCOPE_RUNTIME,
+        --     },
+        --     {
+        --         id = "spawn_truly_limited_spells_test_package",
+        --         ui_name = "[TEMP] Test Mode",
+        --         ui_description = "For testing this module. Requires a new game.\n(REMOVE THIS SETTING BEFORE RELEASE)",
+        --         value_default = false,
+        --         scope = MOD_SETTING_SCOPE_NEW_GAME,
+        --     },
+        -- }
+    },
+}
+
 function ModSettingsUpdate(init_scope)
     local old_version = mod_settings_get_version(mod_id)
     mod_settings_update(mod_id, mod_settings, init_scope)
