@@ -16,8 +16,6 @@ for entity_id = prev_max_eid + 1, new_max do
 			execute_on_removed = true,
 		} )
 		SetInternalInt( entity_id, "hardmod_spell_gems_script_added", 1 )
-		GamePrint( "NEW ENTITY CHECKED" )
-
 		SetInternalInt( perk_entity_id, "prev_max_eid", new_max )
 	end
 end

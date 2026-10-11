@@ -25,9 +25,7 @@ if dmg_comp then
 	local max_hp = ComponentGetValue2( dmg_comp, "max_hp" )
 	local chance_to_drop = Remap( max_hp, 0, 20, 20, 50 )
 	local rnd = Random( 1, 100 )
-	GamePrint( "1 (chance: " .. rnd .. ")" )
 	while rnd < chance_to_drop do
-		GamePrint( "2" )
 		local x, y = EntityGetTransform( entity_id )
 		local offset_x = Random( -4, 4 )
 		local offset_y = Random( -4, 4 )
