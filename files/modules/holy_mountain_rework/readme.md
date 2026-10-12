@@ -25,10 +25,12 @@ A player can do this if they value taking their perk, but also wish to keep the 
 - Players can no longer accidentally collapse their mountain (this isn't common, but can be mildly frustrating).
 
 ## Drawbacks
+- Does not apply to the Final Holy Mountain
 - The Holy Mountain's collapse has a lot less flair
-- There were more I think I just don't remember them at the time of writing this lmao
+- The path into the collapsed zone is not consistently blocked
 
 ## Future
+- Apply rework to the Final Holy Mountain
 - Add a small attractor effect that pulls the crystal towards the centre of the crystal room to avoid the crystal floating out accidentally
 - Add a new particle effect that sweeps from the right to the left of the perk altar room
 - Tweak collapse effect to better block the tunnel back to the shop area of the Holy Mountain

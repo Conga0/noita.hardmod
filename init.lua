@@ -22,6 +22,7 @@ local modules = {
 	"phantom_nemesis",
 	"truly_limited_spells",
 	"alt_fire_anything",
+	"credits",
 }
 
 local force_enable_state = {

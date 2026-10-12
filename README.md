@@ -49,3 +49,5 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - The [Alt Fire Anything](https://noita.wiki.gg/wiki/Mod:Alt_Fire_Anything) spell has been ported into this mod.
 - `holy_mountain_rework`
   - [readme.md](files/modules/holy_mountain_rework/readme.md)
+- `credit`
+  - Credits are replaced with the Commit history and optional dev messages

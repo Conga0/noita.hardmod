@@ -33,6 +33,8 @@ Merge remote-tracking branch 'fork/vanilla-perk-rebalances' into vanilla-perk-re
 rework Heartbreak status
 change Matosade's related_projectiles
 Update Oil Blood + Exploding Corpses desc
+saving progress thus far
+Update art.ase
 remove TWWE + No Wand Tinkering from perk pool
 make MoM drop TWWE
 reorganize some files
@@ -40,18 +42,43 @@ add Tinker At Pedestals perk
 changed TWWE acquisition method
 Phantom Nemesis
 Removed redundant GamePrints
+some stuff
+give All-Seeing Eye (spell) fewer uses
+finished checks, working on crystal
+added crystal base
 rename input list variables for readability
 add Alt Fire Anything spell
 add guaranteed spawns to 3 orb rooms
 (forgot the spell icon)
+replace Unlimited Spells with Spell Gems
+add Indulgence + Infinity spells
+remove Wand Refresh from spell pool + MoM
+update README.md
+added functionality to crystal, added collapse on taking perks
+tweaking collapse
+better visualize Indulgence cost
+spawn Indulgence when shop is emptied
+remove test prints
+add module testing mode
 added credits module
 Update utilities.lua
+nearly finished HM rework
 add first Mod Settings setup
 add example module icon
 add "template" for individual settings
 whoopsie daisy
 fix log spam
+re-add accidentally removed code
+make ASE spell more common later
+actually append gun_actions
+fix readme
 add module metadata
 fix parallel merge conflict stuff
 remove redundant dofile
+Merge remote-tracking branch 'fork/vanilla-perk-rebalances' into truly-limited-spells
+Merge remote-tracking branch 'fork/truly-limited-spells' into truly-limited-spells
+cleanup
 Merge remote-tracking branch 'upstream/main'
+Update commit_log.txt
+reworking some logic stuff, fixed flat HMs
+added readme support
