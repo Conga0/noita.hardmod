@@ -42,6 +42,11 @@ local module_data = {
         ui_name = "Trappier Traps",
         ui_desc = "Makes traps more dangerous.",
     },
+    {
+        id      = "alt_fire_anything",
+        ui_name = "Alt Fire Anything",
+        ui_desc = "Utility spell that lets you have 8 wand slots. Kinda.",
+    },
 }
 
 --Key binding data
