@@ -10,6 +10,12 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - On taking damage, you gain a healblock status effect
   - For every 1% of max health you take as damage, you gain 2 seconds of wounded up to a maximum of 10 seconds from a single instance of damage
 As you continually take more damage, the wounded timer you have can grow up to a maximum of 60 seconds, at which point it cannot be risen any higher
+  - As you continually take more damage, the wounded timer you have can grow up to a maximum of 60 seconds, at which point it cannot be risen any higher
+- `phantom_nemesis`
+  - A phantom is haunting you and will possess nearby enemies, granting them powerful abilities in order to drag you into the grave with them.
+  - The Phantom is named Ira and will grow stronger with each biome you visit, they will take the situation & previous encounters into consideration when selecting abilities to grant their next host in order to best slay you.
+  - You have a 3 minute grace period before Ira begins haunting you, after which Ira will continually possess a new target every minute to hunt you down; however Ira will stop haunting you briefly if you banish them by killing their host, this grace period timer after each kill also grows longer with each biome you visit.
+  - Ira can be banished instantly by charming their host with pheromones but this will anger Ira greatly and you may have a harder time fending them off in future encounters.
 - `vanilla_perk_rebalances`
   - All-Seeing Eye (perk) now grants vision around the cursor only, rather than lighting up the entire screen.
   - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
