@@ -35,5 +35,8 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Wall traps shotgun projectiles.
 - `worse_hearts`
   - Holy mountain hearts no longer grant health increase
+- `no_more_max_hp_cheesing`
+  - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
+  - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.
 - `alt_fire_anything`
-  - The [Alt Fire Anything](https://noita.wiki.gg/wiki/Mod:Alt_Fire_Anything) spell has been ported into this mod
+  - The [Alt Fire Anything](https://noita.wiki.gg/wiki/Mod:Alt_Fire_Anything) spell has been ported into this mod.
