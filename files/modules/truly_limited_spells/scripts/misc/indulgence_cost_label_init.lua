@@ -1,0 +1,27 @@
+dofile_once( "mods/noita.hardmod/lib/utilities.lua" )
+
+local cast_price = GetInternalInt( GetUpdatedEntityID(), "hardmod_indulgence_cast_price" )
+
+local offsetx = 6
+local text = tostring( cast_price )
+local textwidth = 0
+for i=1,#text do
+	local l = string.sub( text, i, i )
+	
+	if ( l ~= "1" ) then
+		textwidth = textwidth + 6
+	else
+		textwidth = textwidth + 3
+	end
+end
+offsetx = textwidth * 0.5 - 0.5
+
+EntityAddComponent2( GetUpdatedEntityID(), "SpriteComponent", { 
+	_tags = "enabled_in_world",
+	image_file = "mods/noita.hardmod/files/modules/truly_limited_spells/fonts/font_small_numbers_with_hyphen.xml",
+	is_text_sprite = true,
+	offset_x = offsetx,
+	offset_y = 8,
+	text = "-" .. tostring( cast_price or 0 ),
+	z_index = -1,
+})
