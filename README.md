@@ -15,6 +15,14 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - The Phantom is named Ira and will grow stronger with each biome you visit, they will take the situation & previous encounters into consideration when selecting abilities to grant their next host in order to best slay you.
   - You have a 3 minute grace period before Ira begins haunting you, after which Ira will continually possess a new target every minute to hunt you down; however Ira will stop haunting you briefly if you banish them by killing their host, this grace period timer after each kill also grows longer with each biome you visit.
   - Ira can be banished instantly by charming their host with pheromones but this will anger Ira greatly and you may have a harder time fending them off in future encounters.
+- `vanilla_perk_rebalances`
+  - All-Seeing Eye now grants vision around the cursor only, rather than lighting up the entire screen.
+  - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
+  - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
+  - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
+- `no_more_max_hp_cheesing`
+  - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
+  - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.
 - `splash_text`
   - Pause menu will have a random splash message on it
 - `cheeseless_triggers`
@@ -27,10 +35,5 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Wall traps shotgun projectiles.
 - `worse_hearts`
   - Holy mountain hearts no longer grant health increase
-- `vanilla_perk_rebalances`
-  - All-Seeing Eye now grants vision around the cursor only, rather than lighting up the entire screen.
-  - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
-  - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
-  - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
 - `alt_fire_anything`
   - The [Alt Fire Anything](https://noita.wiki.gg/wiki/Mod:Alt_Fire_Anything) spell has been ported into this mod
