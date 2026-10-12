@@ -9,7 +9,6 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `nerfed_combat_healing`
   - On taking damage, you gain a healblock status effect
   - For every 1% of max health you take as damage, you gain 2 seconds of wounded up to a maximum of 10 seconds from a single instance of damage
-As you continually take more damage, the wounded timer you have can grow up to a maximum of 60 seconds, at which point it cannot be risen any higher
   - As you continually take more damage, the wounded timer you have can grow up to a maximum of 60 seconds, at which point it cannot be risen any higher
 - `phantom_nemesis`
   - A phantom is haunting you and will possess nearby enemies, granting them powerful abilities in order to drag you into the grave with them.
