@@ -242,7 +242,7 @@ end
 ---Shorthand for quickly raising a VSC's int value, or creating one if a VSC with the same name doesn't exist yet
 ---@param entity_id entity_id ID of the entity
 ---@param variable_name string Name of the variable
----@param increment int How much do we add to the existing int value? (or initial value, if VSC did not exist)
+---@param increment integer How much do we add to the existing int value? (or initial value, if VSC did not exist)
 function RaiseInternalInt(entity_id, variable_name, increment)
 	increment = increment or 1
 	local variable_found = false

@@ -30,5 +30,28 @@ Add VSC shorthands to utilities.lua
 Disable ASE on Master of Blinding hover
 Add missing documentation
 Merge remote-tracking branch 'fork/vanilla-perk-rebalances' into vanilla-perk-rebalances
+rework Heartbreak status
+change Matosade's related_projectiles
 Update Oil Blood + Exploding Corpses desc
+remove TWWE + No Wand Tinkering from perk pool
+make MoM drop TWWE
+reorganize some files
+add Tinker At Pedestals perk
+changed TWWE acquisition method
 Phantom Nemesis
+Removed redundant GamePrints
+rename input list variables for readability
+add Alt Fire Anything spell
+add guaranteed spawns to 3 orb rooms
+(forgot the spell icon)
+added credits module
+Update utilities.lua
+add first Mod Settings setup
+add example module icon
+add "template" for individual settings
+whoopsie daisy
+fix log spam
+add module metadata
+fix parallel merge conflict stuff
+remove redundant dofile
+Merge remote-tracking branch 'upstream/main'

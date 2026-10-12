@@ -18,7 +18,9 @@ local modules = {
 	"vanilla_perk_rebalances",
 	"no_more_chainsaw_wrapping",
 	"holy_mountain_rework",
+	"no_more_max_hp_cheesing",
 	"phantom_nemesis",
+	"alt_fire_anything",
 }
 
 local force_enable_state = {
