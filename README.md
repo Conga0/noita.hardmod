@@ -21,6 +21,9 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
   - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
   - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
+- `no_more_max_hp_cheesing`
+  - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
+  - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.
 - `splash_text`
   - Pause menu will have a random splash message on it
 - `cheeseless_triggers`
@@ -36,8 +39,5 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `no_more_max_hp_cheesing`
   - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
   - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.
-- `vanilla_perk_rebalances`
-  - All-Seeing Eye now grants vision around the cursor only, rather than lighting up the entire screen.
-  - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
-  - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
-  - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
+- `alt_fire_anything`
+  - The [Alt Fire Anything](https://noita.wiki.gg/wiki/Mod:Alt_Fire_Anything) spell has been ported into this mod.
