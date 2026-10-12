@@ -18,9 +18,9 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `truly_limited_spells`
   - The Unlimited Spells perk has been removed.
   - A new perk gives enemies a chance to drop "spell gems", which restore a few spell charges on pickup.
-  - The Wand Refresh spell has been removed. (Alt Fire Anything substitutes the copy dropped by MoM)
   - Greek spells are now (by default) limited to 30 uses.
   - Two new late-game spells allow you to cast limited spells with 0 remaining charges.
+  - More info: [readme.md](files/modules/truly_limited_spells/readme.md)
 - `vanilla_perk_rebalances`
   - All-Seeing Eye (perk) now grants vision around the cursor only, rather than lighting up the entire screen.
   - All-Seeing Eye (spell) is now less common early, and has fewer uses.
