@@ -18,6 +18,7 @@ As you continually take more damage, the wounded timer you have can grow up to a
   - Ira can be banished instantly by charming their host with pheromones but this will anger Ira greatly and you may have a harder time fending them off in future encounters.
 - `vanilla_perk_rebalances`
   - All-Seeing Eye (perk) now grants vision around the cursor only, rather than lighting up the entire screen.
+  - All-Seeing Eye (spell) is now less common early, and has fewer uses.
   - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
   - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
   - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
