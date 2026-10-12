@@ -1,0 +1,5 @@
+<Entity name="hardmod.hm_rework.crystal_attractor">
+	<LuaComponent
+		script_source_file="mods/noita.hardmod/files/modules/holy_mountain_rework/crystal/attract.lua"
+	/>
+</Entity>

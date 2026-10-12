@@ -45,9 +45,14 @@ local function collapse()
 end
 
 if #EntityGetInRadiusWithTag(x, y, 130, "perk") == 0 then
-	for _,crystal in ipairs(EntityGetInRadiusWithTag(x+250, y, 60, "worm_crystal") or {}) do
-		if EntityGetName(crystal) == "hardmod_collapse_crystal" then
-			collapse()
+	local crystals = EntityGetInRadiusWithTag(x+250, y, 60, "worm_crystal")
+	if #crystals == 0 then --if crystal is missing, anger the gods
+		dofile("mods/noita.hardmod/files/modules/holy_mountain_rework/anger_gods.lua")
+	else
+		for _,crystal in ipairs(crystals) do
+			if EntityGetName(crystal) == "hardmod.hm_rework.collapse_crystal" then
+				collapse()
+			end
 		end
 	end
 	EntityKill(entity_id)

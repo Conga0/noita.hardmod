@@ -1,4 +1,4 @@
-<Entity name="hardmod_collapse_crystal" tags="worm_crystal">
+<Entity name="hardmod.hm_rework.collapse_crystal" tags="worm_crystal">
 
 	<!-- mortal is required so it can explode -->
 

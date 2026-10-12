@@ -30,4 +30,9 @@ if (GlobalsGetValue(leak_name) ~= "1") then
 	GameScreenshake(150)
 end
 
+print("AAAAAAAAAAA")
+for _,eid in ipairs(EntityGetInRadius(x, y, 350)) do
+	if EntityGetName(eid) == "hardmod.hm_rework.missing_perk_check" then EntityKill(eid) end
+end
+
 GlobalsSetValue(leak_name, "1")

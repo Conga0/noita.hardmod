@@ -23,7 +23,8 @@ for _,file in ipairs(visual_references) do
 	modifile(file, [[data/biome_impl/temple/altar_right_background.png]], bg_path)
 	ModLuaFileAppend(file, append_path)
 end
-img.ImageOverlay("data/biome_impl/temple/altar_right.png", path.."images/material.png", 0, 0)
+img.ImageOverlay("data/biome_impl/temple/altar_right.png", path.."images/material.png", 0, 8)
+img.ImageOverlay("data/biome_impl/temple/altar_right_snowcastle.png", path.."images/material_flat_exit.png", 0, 8)
 
 modifile("data/scripts/perks/perk.lua",
 		[[if( Random( 1, 100 ) <= perk_destroy_chance ) then]],

@@ -1,4 +1,4 @@
-<Entity tags="" >
+<Entity>
 	<Base file="data/entities/base_item_physics.xml" >
 		<PhysicsBodyComponent on_death_leave_physics_body="1"/>
 
