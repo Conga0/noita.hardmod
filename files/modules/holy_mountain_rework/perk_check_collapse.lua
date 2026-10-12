@@ -41,19 +41,26 @@ local function collapse()
 	temple_set_active_flag( x, y, "0" )
 
 	GameTriggerMusicFadeOutAndDequeueAll( 2.0 )
-	GamePlaySound( "data/audio/Desktop/misc.bank", "misc/temple_collapse", x-112, y + 40 )
+	GamePlaySound( "data/audio/Desktop/misc.bank", "misc/temple_collapse", x-112, y - 40 )
 end
 
 if #EntityGetInRadiusWithTag(x, y, 130, "perk") == 0 then
-	local crystals = EntityGetInRadiusWithTag(x+250, y, 60, "worm_crystal")
-	if #crystals == 0 then --if crystal is missing, anger the gods
-		dofile("mods/noita.hardmod/files/modules/holy_mountain_rework/anger_gods.lua")
-	else
-		for _,crystal in ipairs(crystals) do
-			if EntityGetName(crystal) == "hardmod.hm_rework.collapse_crystal" then
-				collapse()
-			end
+	print("NO PERKS FOUND!!!")
+	local entities = EntityGetInRadius(x+274, y-3, 60)
+
+	local found_crystal
+	for _,entity in ipairs(entities) do
+		found_crystal = found_crystal or EntityHasTag(entity, "worm_crystal")
+
+		local name = EntityGetName(entity)
+		if name == "hardmod.hm_rework.collapse_crystal" then collapse()
+		elseif name == "hardmod.hm_rework.crystal_attractor" then EntityKill(entity)
 		end
 	end
+
+	if not found_crystal then --if crystal is missing, anger the gods
+		dofile("mods/noita.hardmod/files/modules/holy_mountain_rework/anger_gods.lua")
+	end
+
 	EntityKill(entity_id)
 end

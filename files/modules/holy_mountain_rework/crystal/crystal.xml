@@ -13,7 +13,7 @@
 
 	<DamageModelComponent 
 		air_needed="0" 
-		blood_material="plasma_fading" 
+		blood_material="spark_red" 
 		drop_items_on_death="0" 
 		falling_damage_damage_max="1.2" 
 		falling_damage_damage_min="0.1" 
@@ -102,8 +102,6 @@
 	<UIInfoComponent name="$hardmod_hmrework_crystal"/>
 	
 	<LuaComponent
-		execute_every_n_frame="-1"
-		execute_on_removed="1"
-		script_source_file="mods/noita.hardmod/files/modules/holy_mountain_rework/anger_gods.lua"
+		script_death="mods/noita.hardmod/files/modules/holy_mountain_rework/anger_gods.lua"
 	/>
 </Entity>

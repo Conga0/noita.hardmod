@@ -15,7 +15,7 @@ local move_targets = {
 for xml in nxml.edit_file("data/biome/_pixel_scenes.xml") do
 	for child in xml:first_of("mBufferedPixelScenes"):each_child() do
 		if move_targets[child.attr.material_filename] then
-			move_targets.attr.pos_x = move_targets.attr.pos_x - 44
+			child.attr.pos_x = child.attr.pos_x - 44
 		end
 	end
 end
