@@ -212,53 +212,6 @@ if actions ~= nil then
 	}
 
 	reworked_actions = {
-		-- ["ALPHA"] = {
-		-- 	action 				= function( recursion_level, iteration )
-		-- 							c.fire_rate_wait = c.fire_rate_wait + 15
-									
-		-- 							local data = {}
-									
-		-- 							if ( #discarded > 0 ) then
-		-- 								data = discarded[1]
-		-- 							elseif ( #hand > 0 ) then
-		-- 								data = hand[1]
-		-- 							elseif ( #deck > 0 ) then
-		-- 								data = deck[1]
-		-- 							else
-		-- 								data = nil
-		-- 							end
-									
-		-- 							local rec = check_recursion( data, recursion_level )
-									
-		-- 							if ( data ~= nil ) and ( rec > -1 ) and ( data.uses_remaining ~= 0 ) then
-		-- 								trigger_action_ungreeked( data, hand, rec )
-		-- 								-- data.action( rec )
-		-- 								-- data.uses_remaining = data.uses_remaining - 1
-		-- 								-- GamePrint( "USES REMAINING: " .. data.uses_remaining )
-		-- 							end
-		-- 						end,
-		-- },
-		-- ["GAMMA"] = {
-		-- 	action 				= function( recursion_level, iteration )
-		-- 							c.fire_rate_wait = c.fire_rate_wait + 15
-									
-		-- 							local data = {}
-									
-		-- 							if ( #deck > 0 ) then
-		-- 								data = deck[#deck]
-		-- 							elseif ( #hand > 0 ) then
-		-- 								data = hand[#hand]
-		-- 							else
-		-- 								data = nil
-		-- 							end
-									
-		-- 							local rec = check_recursion( data, recursion_level )
-									
-		-- 							if ( data ~= nil ) and ( rec > -1 ) then
-		-- 								trigger_action_ungreeked( data, hand, rec )
-		-- 							end
-		-- 						end,
-		-- },
 	    ["ALPHA"] = {
 	    	max_uses = 30,
 	    	never_unlimited = true,
