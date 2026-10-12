@@ -1,4 +1,3 @@
-dofile_once( "mods/D2DContentPack/files/scripts/d2d_utils.lua" )
 
 local me = GetUpdatedEntityID()
 local caster = EntityGetRootEntity(me)
