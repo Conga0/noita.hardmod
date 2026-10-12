@@ -1,4 +1,19 @@
+---@diagnostic disable: lowercase-global
 --Useful scripts.
+
+-- de-patterning function for dealing with string.gsub() and other pattern-utilising Lua functions.
+---@param str string
+---@return string
+---@return integer
+function escape(str) return str:gsub("[%(%)%.%%%+%-%*%?%[%^%$%]]", "%%%1") end
+
+-- Convenient function to simplify modifying files, gsub \r\n to \n to edit multiple lines at a time.
+---@param file string filepath
+---@param target string target you wish to replace
+---@param sub string what you wish to replace it with
+function modifile(file, target, sub)
+	ModTextFileSetContent(file, ModTextFileGetContent(file):gsub("\r\n", "\n"):gsub(escape(target), sub))
+end
 
 
 ---handy func i stole that converts an entire table to string, grabbed from [here](https://stackoverflow.com/questions/9168058/how-to-dump-a-table-to-console)
@@ -148,6 +163,7 @@ end
 ---@return entity_id
 function ShootProjectile(shooter, entity_file, x, y, vel_x, vel_y, send_message)
 	---@type entity_id
+	---@diagnostic disable-next-line: assign-type-mismatch
 	shooter = shooter or 0
 	local entity_id = EntityLoad(entity_file, x, y)
 	vel_x = vel_x or 0
@@ -158,12 +174,12 @@ function ShootProjectile(shooter, entity_file, x, y, vel_x, vel_y, send_message)
 
 	GameShootProjectile(shooter, x, y, x+vel_x, y+vel_y, entity_id, send_message)
 
-	for _, proj_comp in ipairs(EntityGetComponent(entity_id, "ProjectileComponent") or {}) do
+	for _,proj_comp in ipairs(EntityGetComponent(entity_id, "ProjectileComponent") or {}) do
 		ComponentSetValue2(proj_comp, "mWhoShot", shooter)
 		ComponentSetValue2(proj_comp, "mShooterHerdId", herd_id) --should be fine if nil..?
 	end
 
-	for _, vel_comp in ipairs(EntityGetComponent(entity_id, "VelocityComponent") or {}) do
+	for _,vel_comp in ipairs(EntityGetComponent(entity_id, "VelocityComponent") or {}) do
 		ComponentSetValue2(vel_comp, "mVelocity", vel_x, vel_y)
 	end
 
@@ -171,7 +187,7 @@ function ShootProjectile(shooter, entity_file, x, y, vel_x, vel_y, send_message)
 end
 
 ---Shorthand for quickly getting the int value of a VSC
----@param entity_id int ID of the entity
+---@param entity_id entity_id ID of the entity
 ---@param variable_name string Name of the variable
 ---@param create_if_nil? boolean If true, a new VSC of the given name will be created if it doesn't exist
 ---@return int value that matches the given VSC name
@@ -179,7 +195,7 @@ function GetInternalInt(entity_id, variable_name, create_if_nil)
 	local value = nil
 	local vscomps = EntityGetComponentIncludingDisabled(entity_id, "VariableStorageComponent")
 	if vscomps ~= nil then
-		for key,comp_id in pairs(vscomps) do 
+		for key,comp_id in pairs(vscomps) do
 			local var_name = ComponentGetValue2(comp_id, "name")
 			if var_name == variable_name then
 				value = ComponentGetValue2(comp_id, "value_int")
@@ -199,14 +215,14 @@ function GetInternalInt(entity_id, variable_name, create_if_nil)
 end
 
 ---Shorthand for quickly setting a VSC's int value, or creating one if a VSC with the same name doesn't exist yet
----@param entity_id int ID of the entity
+---@param entity_id entity_id ID of the entity
 ---@param variable_name string Name of the variable
 ---@param new_value int New value of the variable (or initial value, if VSC did not exist)
 function SetInternalInt(entity_id, variable_name, new_value)
 	local variable_found = false
-	local vscomps = EntityGetComponent(entity_id, "VariableStorageComponent")	
+	local vscomps = EntityGetComponent(entity_id, "VariableStorageComponent")
 	if vscomps ~= nil then
-		for key,comp_id in pairs(vscomps) do 
+		for key,comp_id in pairs(vscomps) do
 			local var_name = ComponentGetValue2(comp_id, "name")
 			if var_name == variable_name then
 				ComponentSetValue2(comp_id, "value_int", new_value)
@@ -224,15 +240,15 @@ function SetInternalInt(entity_id, variable_name, new_value)
 end
 
 ---Shorthand for quickly raising a VSC's int value, or creating one if a VSC with the same name doesn't exist yet
----@param entity_id int ID of the entity
+---@param entity_id entity_id ID of the entity
 ---@param variable_name string Name of the variable
----@param increment int How much do we add to the existing int value? (or initial value, if VSC did not exist)
+---@param increment integer How much do we add to the existing int value? (or initial value, if VSC did not exist)
 function RaiseInternalInt(entity_id, variable_name, increment)
 	increment = increment or 1
 	local variable_found = false
-	local vscomps = EntityGetComponent(entity_id, "VariableStorageComponent")	
+	local vscomps = EntityGetComponent(entity_id, "VariableStorageComponent")
 	if vscomps ~= nil then
-		for key,comp_id in pairs(vscomps) do 
+		for key,comp_id in pairs(vscomps) do
 			local var_name = ComponentGetValue2(comp_id, "name")
 			if var_name == variable_name then
 				local value = ComponentGetValue2(comp_id, "value_int")
@@ -248,7 +264,7 @@ function RaiseInternalInt(entity_id, variable_name, increment)
 			value_int = increment
 		})
 	end
-end
+end --this function seems like a needless shorthand of SetInternalInt(eid, var, current_value+increment)
 
 function Remap( value, inMin, inMax, outMin, outMax )
     if inMax == inMin then

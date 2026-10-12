@@ -1,0 +1,6 @@
+<Entity name="hardmod.hm_rework.missing_perk_check">
+	<LuaComponent
+		script_source_file="mods/noita.hardmod/files/modules/holy_mountain_rework/perk_check_collapse.lua"
+		execute_every_n_frame="60"
+	/>
+</Entity>
