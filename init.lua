@@ -20,6 +20,7 @@ local modules = {
 	"holy_mountain_rework",
 	"no_more_max_hp_cheesing",
 	"phantom_nemesis",
+	"truly_limited_spells",
 	"alt_fire_anything",
 }
 

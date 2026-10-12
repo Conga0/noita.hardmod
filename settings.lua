@@ -1,13 +1,20 @@
 dofile("data/scripts/lib/mod_settings.lua")
 
 -- To set your module's icon, create a 16x16 sprite and save it as 'module_icon_016.png' in the root of your module folder.
--- (Dani: I vote for ordering this list from (roughly) most to least impactful for the average run.)
+-- (Dani: ordering this list from (roughly) most to least impactful for the average run.)
 local module_data = {
     {
         id      = "phantom_nemesis",
         ui_name = "Phantom Nemesis",
         ui_desc = "A powerful phantom haunts you throughout your run, possessing enemies\n" ..
                   "and giving them buffs that adapt to your strengths.",
+    },
+    {
+        id      = "truly_limited_spells",
+        ui_name = "Truly Limited Spells",
+        ui_desc = "A variety of changes that make it harder (but not impossible!) to\n" ..
+                  "\"unlimit\" limited-use spells. This includes a limit of 30 uses for\n" ..
+                  "all Greek spells, along with various new ways to restore spell charges.",
     },
     {
         id      = "vanilla_perk_rebalances",
@@ -447,6 +454,29 @@ mod_settings_version = 1 -- This is a magic global that can be used to migrate s
 mod_settings =
 {
     {
+        category_id = "limited_spells_settings",
+        ui_name = "Truly Limited Spells",
+        ui_description = "Which button should be used to cast Alt Fire Anything?",
+        foldable = true,
+        _folded = true,
+        settings = {
+            {
+                id = "print_indulgence_cost",
+                ui_name = "Print Indulgence cost",
+                ui_description = "When enabled, casting the Indulgence spell will print\nits cost at the tip of your wand.",
+                value_default = true,
+                scope = MOD_SETTING_SCOPE_RUNTIME,
+            },
+            {
+                id = "spawn_truly_unlimited_spells_test_package",
+                ui_name = "[TEMP] Test Mode",
+                ui_description = "For testing this module. Requires a new game.\n(REMOVE THIS SETTING BEFORE RELEASE)",
+                value_default = false,
+                scope = MOD_SETTING_SCOPE_NEW_GAME,
+            },
+        }
+    },
+    {
         category_id = "alt_fire_settings",
         ui_name = "Alt Fire Anything",
         ui_description = "Which button should be used to cast Alt Fire Anything?",
@@ -638,6 +668,5 @@ function ModSettingsGui( gui, in_main_menu )
     end
 
     mod_settings_gui( mod_id, mod_settings, gui, in_main_menu )
-
     -- GuiLayoutEnd(gui)
 end

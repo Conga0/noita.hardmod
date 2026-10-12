@@ -265,3 +265,14 @@ function RaiseInternalInt(entity_id, variable_name, increment)
 		})
 	end
 end --this function seems like a needless shorthand of SetInternalInt(eid, var, current_value+increment)
+
+function Remap( value, inMin, inMax, outMin, outMax )
+    if inMax == inMin then
+        error( "Input range cannot have zero length" )
+    end
+
+    -- normalise the input value to a 0‑1 scale
+    local t = (value - inMin) / (inMax - inMin)
+
+    return outMin + t * (outMax - outMin)
+end
