@@ -23,7 +23,7 @@ if nearby_wands ~= nil then
 	end
 end
 
-if purchases_left == 0 then
+if purchases_left == 0 and EntityGetInRadiusWithTag( x, y, 128, "player_unit" )[1] ~= nil then
 	local sx, sy = x + 88, y
 	EntityLoad( "data/entities/particles/image_emitters/magical_symbol.xml", sx, sy )
 	GamePlaySound( "data/audio/Desktop/projectiles.snd", "player_projectiles/crumbling_earth/create", sx, sy )
