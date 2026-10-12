@@ -1,0 +1,16 @@
+<Materials>
+	<CellDataChild
+		name="hardmod_magic_crystal_red" 
+		ui_name="$mat_magic_crystal"
+		_parent="magic_crystal"
+		_inherit_reactions="1"
+		wang_color="ffd74140" 
+		show_in_creative_mode="0"
+	>
+		<Graphics
+			normal_mapped="1"
+			texture_file="data/materials_gfx/crystal.png"
+			color="ffef0202"
+		/>
+	</CellDataChild>
+</Materials>

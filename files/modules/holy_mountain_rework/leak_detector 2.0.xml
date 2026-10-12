@@ -1,0 +1,3 @@
+<Entity name="hardmod.hm_rework.leak_detector" tags="temple_areachecker">
+	<LuaComponent script_material_area_checker_failed="data/scripts/buildings/temple_check_for_leaks.lua"/>
+</Entity>
