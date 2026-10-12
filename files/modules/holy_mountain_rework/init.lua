@@ -3,7 +3,22 @@ local img = dofile_once("mods/noita.hardmod/lib/image_utils.lua")
 
 local hooks = {}
 local path = "mods/noita.hardmod/files/modules/holy_mountain_rework/"
+local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
+
 ModMaterialsFileAdd(path.."materials.xml")
+
+local move_targets = {
+	["data/biome_impl/temple/altar_snowcave_capsule.png"] = true,
+	["data/biome_impl/temple/altar_snowcastle_capsule.png"] = true,
+	["data/biome_impl/temple/altar_vault_capsule.png"] = true,
+}
+for xml in nxml.edit_file("data/biome/_pixel_scenes.xml") do
+	for child in xml:first_of("mBufferedPixelScenes"):each_child() do
+		if move_targets[child.attr.material_filename] then
+			move_targets.attr.pos_x = move_targets.attr.pos_x - 44
+		end
+	end
+end
 
 
 local visual_references = {
