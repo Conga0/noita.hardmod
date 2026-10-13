@@ -23,7 +23,7 @@ local function give_enemy_perk(entity_id)
 	local x,y = EntityGetTransform(entity_id)
 	local enemy_perks_handler
 	for _,child in ipairs(EntityGetAllChildren(entity_id) or {}) do
-		if EntityGetName == "hardmod.enemy_perks" then enemy_perks_handler = child break end
+		if EntityGetName(child) == "hardmod.enemy_perks" then enemy_perks_handler = child break end
 	end
 	if not enemy_perks_handler then
 		enemy_perks_handler = EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/handler.xml", x, y)
@@ -60,6 +60,12 @@ end
 hooks.new_eid = function(entity_id)
 	if EntityHasTag(entity_id, "enemy") and not EntityHasTag(entity_id, "hardmod_blessed") then
 		give_enemy_perk(entity_id)
+		give_enemy_perk(entity_id)
+		give_enemy_perk(entity_id)
+		give_enemy_perk(entity_id)
+		give_enemy_perk(entity_id)
+		give_enemy_perk(entity_id)
+		give_enemy_perk(entity_id)
 	end
 end
 
@@ -78,8 +84,23 @@ local function world_to_screen_coordinates(x, y)
 	return (x - cx) / scale_x + screen_width / 2 + 1.5, (y - cy) / scale_y + screen_height / 2
 end
 
---[[
-function hooks.pre_update(frame)
+
+local selected_creature = nil
+function hooks.post_update(frame)
+	if InputIsKeyJustDown(18) then
+		local x,y = DEBUG_GetMouseWorld()
+		selected_creature = EntityGetClosestWithTag(x, y, "hardmod_blessed")
+		local creature_x,creature_y = EntityGetTransform(selected_creature)
+		if (creature_x-x)^2 + (creature_y-y)^2 > 16^2 then selected_creature = nil end
+		print("selected creature: "..tostring(selected_creature))
+	end
+	if not EntityGetIsAlive(selected_creature or 0) then selected_creature = nil end
+	if not (selected_creature and EntityGetIsAlive(selected_creature)) then return end
+
+	local creature_x,creature_y = EntityGetTransform(selected_creature)
+	if GameGetFogOfWarBilinear(creature_x, creature_y) > 200 then selected_creature = nil return end
+
+	GuiStartFrame(gui)
 	virt_x = MagicNumbersGetValue("VIRTUAL_RESOLUTION_X")
 	virt_y = MagicNumbersGetValue("VIRTUAL_RESOLUTION_Y")
 	screen_width, screen_height = GuiGetScreenDimensions(gui)
@@ -87,7 +108,72 @@ function hooks.pre_update(frame)
 	scale_y = virt_y / screen_height
 	cx, cy = GameGetCameraPos()
 
-	GuiStartFrame(gui)
+
+    local vx = creature_x - cx + virt_x / 2
+    local vy = creature_y - cy + virt_y / 2
+    local gui_x = vx * screen_width / virt_x
+    local gui_y = vy * screen_height / virt_y
+	if gui_x < 0 or gui_x > screen_width or gui_y < 0 or gui_y > screen_height then selected_creature = nil return end
+
+
+	local enemy_perks_handler
+	for _,child in ipairs(EntityGetAllChildren(selected_creature) or {}) do
+		if EntityGetName(child) == "hardmod.enemy_perks" then enemy_perks_handler = child break end
+	end
+	if not enemy_perks_handler then return end
+
+	local enemy_perk_data
+	for _,varcomp in ipairs(EntityGetComponent(enemy_perks_handler, "VariableStorageComponent") or {}) do
+		if ComponentGetValue2(varcomp, "name") == "enemy_perk_data" then enemy_perk_data = varcomp break end
+	end
+	if not enemy_perk_data then return end
+
+	local target_perks = {}
+	for perk_id in ComponentGetValue2(enemy_perk_data, "value_string"):gmatch("([^,]+)") do
+		target_perks[#target_perks+1] = enemy_perks_indexed[perk_id]
+	end
+
+	local gz = 100
+
+	local x_offset_from_target = 16
+	local y_offset_from_target = -20
+	local edge_padding = 3
+	local top_padding = 2
+	local icon_padding = 1
+	local max_perks_per_row = 5
+	local icon_size = 16
+
+	local name = GameTextGetTranslatedOrNot(EntityGetName(selected_creature))
+	local name_w,name_h = GuiGetTextDimensions(gui, name)
+
+	local box_size = {
+		x = edge_padding * 2 + math.max(icon_padding*math.max(math.min(#target_perks, 5)-1, 0) + math.min(#target_perks, 5) * icon_size, name_w),
+		y = top_padding + name_h + edge_padding * 2 + icon_padding*math.max(math.ceil(#target_perks*.2)-1, 0) + math.ceil(#target_perks*.2) * icon_size,
+	}
+
+	local box_origin_x,box_origin_y = gui_x + x_offset_from_target, gui_y + y_offset_from_target
+	if box_origin_x + box_size.x >= screen_width then box_origin_x = gui_x - (x_offset_from_target + box_size.x) end
+	GuiZSetForNextWidget(gui, gz-4)
+	GuiImageNinePiece(gui, new_id(), box_origin_x, box_origin_y, box_size.x, box_size.y)
+	GuiText(gui, box_origin_x+edge_padding, box_origin_y+top_padding, name)
+
+	local next_perk_x,next_perk_y,next_perk_num =
+		box_origin_x+edge_padding,
+		box_origin_y+top_padding+name_h+edge_padding,
+		0
+
+	for _,perk in ipairs(target_perks) do
+		GuiZSetForNextWidget(gui, gz-5)
+		GuiImage(gui, new_id(), next_perk_x, next_perk_y, perk.icon, 1, 1, 1)
+		next_perk_num = next_perk_num + 1
+		if next_perk_num % max_perks_per_row == 0 then
+			next_perk_x = box_origin_x+edge_padding
+			next_perk_y = next_perk_y + icon_size + icon_padding
+		else
+			next_perk_x = next_perk_x + icon_size + icon_padding
+		end
+	end
+	--[[
 	for _,entity_id in ipairs(EntityGetWithTag("hardmod_blessed")) do
 		local enemy_perk_data
 		for _,varcomp in ipairs(EntityGetComponent(entity_id, "VariableStorageComponent") or {}) do
@@ -106,7 +192,9 @@ function hooks.pre_update(frame)
 			--GameCreateSpriteForXFrames(enemy_perks_indexed[perk].icon, x-8, y-20, false, 0, 0, 1, true)
 			GuiImage(gui, new_id(), sx+((i-1)*30)-12, sy-44, "mods/noita.hardmod/files/modules/enemy_perks/expand.png", 1, 3/2)
 		end
-	end
+	end--]]
+
+
 end--]]
 
 return hooks
