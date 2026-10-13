@@ -45,7 +45,6 @@ local function collapse()
 end
 
 if #EntityGetInRadiusWithTag(x, y, 130, "perk") == 0 then
-	print("NO PERKS FOUND!!!")
 	local entities = EntityGetInRadius(x+274, y-3, 60)
 
 	local found_crystal
