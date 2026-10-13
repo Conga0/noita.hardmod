@@ -23,6 +23,7 @@ local modules = {
 	"truly_limited_spells",
 	"alt_fire_anything",
 	"credits",
+	"buff_enemies",
 }
 
 local force_enable_state = {
