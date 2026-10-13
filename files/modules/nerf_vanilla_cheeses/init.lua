@@ -24,8 +24,9 @@ end
 
 -- Nerf Tannerkivi to not work on Extremely Dense Rock
 function hooks.edit_material(elem)
-    if elem.attr.name == "rock_hard_border" then
-        elem.attr.tags = elem.attr.tags:gsub(",[earth]", "")
+    local mat_name = elem.attr.name
+    if mat_name == "rock_hard_border" or mat_name == "rock_hard" then
+        elem.attr.tags = elem.attr.tags:gsub(escape(",[earth]"), "")
     end
 end
 
