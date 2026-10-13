@@ -1,9 +1,11 @@
 dofile_once("mods/noita.hardmod/lib/utilities.lua")
 
 local hooks = {}
-local directory = "mods/noita.hardmod/files/modules/buff_enemies/"
+local directory = "mods/noita.hardmod/files/modules/nerf_vanilla_cheeses/"
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
+
+-- Nerf Stevari and Skoude to be 95% resistant to Physics Damage
 local reduce_physics_damage = {
 	"data/entities/animals/necromancer_shop.xml",
 	"data/entities/animals/necromancer_super.xml",
@@ -17,6 +19,14 @@ for _,path in ipairs(reduce_physics_damage) do
 			if mults then mults.attr.physics_hit = "0.05" end
 		end
 	end
+end
+
+
+-- Nerf Tannerkivi to not work on Extremely Dense Rock
+function hooks.edit_material(elem)
+    if elem.attr.name == "rock_hard_border" then
+        elem.attr.tags = elem.attr.tags:gsub(",[earth]", "")
+    end
 end
 
 

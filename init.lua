@@ -23,7 +23,7 @@ local modules = {
 	"truly_limited_spells",
 	"alt_fire_anything",
 	"credits",
-	"buff_enemies",
+	"nerf_vanilla_cheeses",
 }
 
 local force_enable_state = {
