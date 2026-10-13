@@ -1,0 +1,90 @@
+Initial commit
+First commit
+added hook system + NXML
+some polish, added example module, no settings support yet
+Update init.lua
+Create README.md
+added csv file for translations
+Update README.md
+Nerfed Combat Healing
+removed unnecessary hooks from nerfed_combat_healing
+fixed nxml oversight in NCH module, fixed example module issues
+Add logo splash module
+ya
+fixed apoth thing probably
+Fix triggers
+hell
+no holy mountain health ups
+patch chainsaw wrapping
+rename no more chainsaw wrapping folder
+Revise game mechanics descriptions in README
+fix
+Add All-Seeing Eye (perk) nerf
+(oops)
+Limit Shield + Stainless Armour to 3 stacks
+Rework Immunity → Protection perks
+Fixed incorrect filepath
+Fixed wrong filepath 2
+And somehow, the code got even worse
+Add VSC shorthands to utilities.lua
+Disable ASE on Master of Blinding hover
+Add missing documentation
+Merge remote-tracking branch 'fork/vanilla-perk-rebalances' into vanilla-perk-rebalances
+rework Heartbreak status
+change Matosade's related_projectiles
+Update Oil Blood + Exploding Corpses desc
+saving progress thus far
+Update art.ase
+remove TWWE + No Wand Tinkering from perk pool
+make MoM drop TWWE
+reorganize some files
+add Tinker At Pedestals perk
+changed TWWE acquisition method
+Phantom Nemesis
+Removed redundant GamePrints
+some stuff
+give All-Seeing Eye (spell) fewer uses
+finished checks, working on crystal
+added crystal base
+rename input list variables for readability
+add Alt Fire Anything spell
+add guaranteed spawns to 3 orb rooms
+(forgot the spell icon)
+replace Unlimited Spells with Spell Gems
+add Indulgence + Infinity spells
+remove Wand Refresh from spell pool + MoM
+update README.md
+added functionality to crystal, added collapse on taking perks
+tweaking collapse
+better visualize Indulgence cost
+spawn Indulgence when shop is emptied
+remove test prints
+add module testing mode
+added credits module
+Update utilities.lua
+nearly finished HM rework
+add first Mod Settings setup
+add example module icon
+add "template" for individual settings
+whoopsie daisy
+fix log spam
+re-add accidentally removed code
+make ASE spell more common later
+actually append gun_actions
+fix readme
+add module metadata
+fix parallel merge conflict stuff
+remove redundant dofile
+Merge remote-tracking branch 'fork/vanilla-perk-rebalances' into truly-limited-spells
+Merge remote-tracking branch 'fork/truly-limited-spells' into truly-limited-spells
+cleanup
+Merge remote-tracking branch 'upstream/main'
+Update commit_log.txt
+reworking some logic stuff, fixed flat HMs
+fix new game starting in HM
+added readme support
+fixed & updated credits, tweaked readmes
+fixed collapse crystal not triggering death script when fully destroyed
+fixed flat-exits for Reworked Holy Mountains
+finished crystal attraction effect, unfixed collapse crystal not triggering death script when fully destroyed because b2d genuinely sucks balls so bad 😭
+I LOVE THE SEQUEL TO PHYSICSBODYCOMPONENT, PHYSICSBODY2COMPONENT!!!!!

@@ -16,7 +16,7 @@ function damage_received( damage, desc, entity_who_caused, is_fatal )
         local children = EntityGetAllChildren(entity_id) or {}
         local found = false
         for k=1,#children do
-            if EntityGetName(children[k]) == "apotheosis_wounded" and ComponentGetValue2(EntityGetFirstComponentIncludingDisabled(children[k],"UIIconComponent"),"icon_sprite_file") == "mods/noita.hardmod/files/modules/anti_cov_spam/ui_gfx/status_indicators/nohealing_hardcore.png" then --This scan feels so stupid but it saves a tag I guess..? Maybe wounded should just be an entity tag at this point.. but for just one status effect..? ugh...
+            if EntityGetName(children[k]) == "apotheosis_wounded" and ComponentGetValue2(EntityGetFirstComponentIncludingDisabled(children[k],"UIIconComponent"),"icon_sprite_file") == "mods/noita.hardmod/files/modules/nerfed_combat_healing/ui_gfx/status_indicators/nohealing_hardmod.png" then --This scan feels so stupid but it saves a tag I guess..? Maybe wounded should just be an entity tag at this point.. but for just one status effect..? ugh...
                 found = true
                 local comp = EntityGetFirstComponentIncludingDisabled(children[k],"GameEffectComponent")
                 ComponentSetValue2(comp,"frames",math.min(wound_duration_cap * 60,ComponentGetValue2(comp,"frames") + (wounded_time* 60)))

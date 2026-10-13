@@ -1,0 +1,10 @@
+<Entity>
+	<Base file="data/entities/base_item_physics.xml" >
+		<PhysicsBodyComponent on_death_leave_physics_body="1"/>
+
+		<PhysicsImageShapeComponent
+			image_file="mods/noita.hardmod/files/modules/holy_mountain_rework/crystal/base.png"
+			material="metal_prop"
+		/>
+	</Base>
+</Entity>

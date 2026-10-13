@@ -2,6 +2,7 @@
 -- Eba was here!!!
 -- UserK too!!
 -- !!!ooT enyL AgnoC
+-- D2D2
 
 dofile_once("mods/noita.hardmod/lib/utilities.lua")
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
@@ -15,6 +16,15 @@ local modules = {
 	"cheeseless_triggers",
 	"logo_splash",
 	"worse_hearts",
+	"vanilla_perk_rebalances",
+	"no_more_chainsaw_wrapping",
+	"holy_mountain_rework",
+	"no_more_max_hp_cheesing",
+	"phantom_nemesis",
+	"truly_limited_spells",
+	"alt_fire_anything",
+	"credits",
+	"buff_enemies",
 }
 
 local force_enable_state = {
@@ -71,9 +81,7 @@ local gd = GLOBAL_DATA
 
 for _,module in ipairs(enabled_modules) do
 	for hook_name,hook in pairs(dofile("mods/noita.hardmod/files/modules/"..module.."/init.lua") or {}) do
-		if hooks[hook_name] == nil then
-			-- Throw that shit away, let me stuff random shit in the hooks table >:(
-		else
+		if hooks[hook_name] ~= nil then --Throw that shit away, let me stuff random shit in the hooks table >:(
 			hooks[hook_name][#hooks[hook_name]+1] = hook
 		end
 	end
