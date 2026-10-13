@@ -31,6 +31,7 @@ if (GlobalsGetValue(leak_name) ~= "1") then
 end
 
 print("AAAAAAAAAAA")
+print(EntityGetName(GetUpdatedEntityID()))
 for _,eid in ipairs(EntityGetInRadius(x, y, 350)) do
 	if EntityGetName(eid) == "hardmod.hm_rework.missing_perk_check" then EntityKill(eid) end
 end

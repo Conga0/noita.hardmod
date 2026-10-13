@@ -2,4 +2,26 @@
 	<LuaComponent
 		script_source_file="mods/noita.hardmod/files/modules/holy_mountain_rework/crystal/attract.lua"
 	/>
+
+	<ParticleEmitterComponent
+		emitted_material_name="spark_red"
+		gravity.y="0.0"
+		lifetime_min="4"
+		lifetime_max="4"
+		count_min="30"
+		count_max="45"
+		render_on_grid="0"
+		fade_based_on_lifetime="1"
+		area_circle_radius.min="18"
+		area_circle_radius.max="20"
+		cosmetic_force_create="1"
+		airflow_force="0.051"
+		airflow_time="0.51"
+		airflow_scale="0.05"
+		emission_interval_min_frames="150"
+		emission_interval_max_frames="150"
+		emit_cosmetic_particles="1"
+		velocity_always_away_from_center="-7"
+		collide_with_grid="0"
+	/>
 </Entity>
