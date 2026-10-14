@@ -47,4 +47,10 @@ modifile("data/scripts/perks/perk.lua",
 )
 ModLuaFileAppend("data/scripts/biomes/temple_altar.lua", path.."append_altar.lua")
 
+hooks.edit_material = function(elem)
+	if elem.attr.name == "templebrick_static_soft" then
+		elem.attr.durability = 9
+	end
+end
+
 return hooks

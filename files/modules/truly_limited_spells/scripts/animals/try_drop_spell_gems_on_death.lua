@@ -15,7 +15,6 @@ local function has_vsc( entity_id, variable_name )
 	return false
 end
 if has_vsc( entity_id, "no_gold_drop" ) then return end
-GamePrint( "0" )
 
 -- scale from 20% chance to drop at 0 HP, to 50% chance at 500 HP
 local dmg_comp = EntityGetFirstComponent( entity_id, "DamageModelComponent" )

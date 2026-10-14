@@ -30,8 +30,7 @@ if (GlobalsGetValue(leak_name) ~= "1") then
 	GameScreenshake(150)
 end
 
-print("AAAAAAAAAAA")
-print(EntityGetName(GetUpdatedEntityID()))
+print("gods angered by "..EntityGetName(GetUpdatedEntityID()))
 for _,eid in ipairs(EntityGetInRadius(x, y, 350)) do
 	if EntityGetName(eid) == "hardmod.hm_rework.missing_perk_check" then EntityKill(eid) end
 end

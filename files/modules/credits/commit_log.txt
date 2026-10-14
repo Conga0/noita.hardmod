@@ -81,4 +81,10 @@ cleanup
 Merge remote-tracking branch 'upstream/main'
 Update commit_log.txt
 reworking some logic stuff, fixed flat HMs
+fix new game starting in HM
 added readme support
+fixed & updated credits, tweaked readmes
+fixed collapse crystal not triggering death script when fully destroyed
+fixed flat-exits for Reworked Holy Mountains
+finished crystal attraction effect, unfixed collapse crystal not triggering death script when fully destroyed because b2d genuinely sucks balls so bad 😭
+I LOVE THE SEQUEL TO PHYSICSBODYCOMPONENT, PHYSICSBODY2COMPONENT!!!!!

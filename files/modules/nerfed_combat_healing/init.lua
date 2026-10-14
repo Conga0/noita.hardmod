@@ -2,18 +2,11 @@ local hooks = {}
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
 hooks.mod_init = function()
-	local path = "data/entities/player_base.xml"
-	local xml = nxml.parse(ModTextFileGetContent(path))
-
-	xml:add_child(nxml.parse([[
-        <LuaComponent
-        _enabled="1"
-        script_damage_received="mods/noita.hardmod/files/modules/nerfed_combat_healing/scripts/wound_on_damage.lua"
-        execute_every_n_frame="-1"
-        >
-        </LuaComponent>
-    ]]))
-	ModTextFileSetContent(path, tostring(xml))
+	for xml in nxml.edit_file("data/entities/player_base.xml") do
+		xml:add_child(nxml.new_element("LuaComponent", {
+			script_damage_received = "mods/noita.hardmod/files/modules/nerfed_combat_healing/scripts/wound_on_damage.lua",
+		}))
+	end
 
 	-- Modular translation injection
 	-- local translations_filepath = "mods/noita.hardmod/files/standard.csv"
