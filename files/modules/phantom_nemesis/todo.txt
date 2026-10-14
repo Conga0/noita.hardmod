@@ -1,0 +1,1 @@
+Save who Ira is possessing between mod restarts by removing the camerabound component (Maybe I'll do this? cba rn tbh)
