@@ -239,33 +239,13 @@ function SetInternalInt(entity_id, variable_name, new_value)
 	end
 end
 
----Shorthand for quickly raising a VSC's int value, or creating one if a VSC with the same name doesn't exist yet
----@param entity_id entity_id ID of the entity
----@param variable_name string Name of the variable
----@param increment integer How much do we add to the existing int value? (or initial value, if VSC did not exist)
-function RaiseInternalInt(entity_id, variable_name, increment)
-	increment = increment or 1
-	local variable_found = false
-	local vscomps = EntityGetComponent(entity_id, "VariableStorageComponent")
-	if vscomps ~= nil then
-		for key,comp_id in pairs(vscomps) do
-			local var_name = ComponentGetValue2(comp_id, "name")
-			if var_name == variable_name then
-				local value = ComponentGetValue2(comp_id, "value_int")
-				ComponentSetValue2(comp_id, "value_int", value + increment)
-				variable_found = true
-			end
-		end
-	end
-
-	if not variable_found then
-		EntityAddComponent2(entity_id, "VariableStorageComponent", {
-			name = variable_name,
-			value_int = increment
-		})
-	end
-end --this function seems like a needless shorthand of SetInternalInt(eid, var, current_value+increment)
-
+--- Remaps a value between (a1,b1) to (a2,b2)
+---@param value int Value to remap
+---@param inMin int Lower end of the input range
+---@param inMax int Higher end of the input range
+---@param outMin int Lower end of the output range
+---@param outMax int Higher end of the output range
+---return int The mapped value
 function Remap( value, inMin, inMax, outMin, outMax )
     if inMax == inMin then
         error( "Input range cannot have zero length" )
