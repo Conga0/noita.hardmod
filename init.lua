@@ -84,13 +84,6 @@ for _,module in ipairs(enabled_modules) do
 			hooks[hook_name][#hooks[hook_name]+1] = hook
 		end
 	end
-
-	--Alternative code for if we wanna support multiple functions for a hook from a single module:
-	--for hook_name,module_hooks in pairs(dofile(module) or {}) do
-	--	for _,hook in ipairs(module_hooks) do
-	--		hooks[hook_name][#hooks[hook_name]+1] = hook
-	--	end
-	--end
 end
 
 local translations = ModTextFileGetContent("data/translations/common.csv")

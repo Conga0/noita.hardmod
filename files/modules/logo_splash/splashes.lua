@@ -5,4 +5,11 @@ return {
 	"Eba was here",
 	"Insert splash text here",
 	"Dani was here",
+	"UserK",
+	"Brought to you by Team Fairmod",
+	"A Notla Classic!",
+	"100% more false walls in Holy Mountain!",
+	"Well it's not Fairmod!",
+	"We were nice this time!",
+	">:)",
 }
