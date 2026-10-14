@@ -19,7 +19,7 @@ possession_limit_per_biome = {
     {id="$biome_boss_victoryroom",limit=-1}
 }
 
-default_biome_limit = 4
+default_biome_limit = 3
 
 return {
     possession_limit_per_biome   = possession_limit_per_biome,
