@@ -36,7 +36,7 @@ function on_open( entity_item )
 	local nearest_player = EntityGetInRadiusWithTag( x, y, 100, "player_unit" )[1]
 	if nearest_player == nil then return end
 
-	local value_to_spawn = ( GetInternalInt( nearest_player, "hardmod_treasure_hunter_gold_saved" ) or 0 )
+	local value_to_spawn = 100 + ( GetInternalInt( nearest_player, "hardmod_treasure_hunter_gold_saved" ) or 0 )
 	value_to_spawn = value_to_spawn * treasure_hunter_pickup_count
 	-- local value_to_spawn = 200 + ( ( ( spawn_y * 0.15 ) or ( y * 0.1 ) ) * treasure_hunter_pickup_count )
 	-- above is an alternative, depth-based formula
