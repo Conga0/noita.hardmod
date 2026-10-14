@@ -1,19 +1,24 @@
-<Entity name="hardmod.hm_rework.collapse_crystal" tags="worm_crystal">
+<Entity name="hardmod.hm_rework.collapse_crystal" tags="worm_crystal,mortal">
 
-	<!-- mortal is required so it can explode -->
-
-	<Base file="data/entities/base_item_physics.xml" >
-		<PhysicsBodyComponent on_death_leave_physics_body="1"/>
-
-		<PhysicsImageShapeComponent
-			image_file="mods/noita.hardmod/files/modules/holy_mountain_rework/crystal/crystal.png"
-			material="hardmod_magic_crystal_red"
-		/>
-	</Base>
+	<PhysicsImageShapeComponent
+		is_root="1"
+		centered="1" 
+		image_file="mods/noita.hardmod/files/modules/holy_mountain_rework/crystal/crystal.png"
+		material="hardmod_magic_crystal_red"
+	/>
+	
+	<PhysicsBody2Component
+		kill_entity_if_body_destroyed="1"
+		allow_sleep="1"
+		angular_damping=".2"
+		fixed_rotation="0"
+		is_bullet="0"
+		linear_damping="0.3"
+	/>
 
 	<DamageModelComponent 
 		air_needed="0" 
-		blood_material="plasma_fading" 
+		blood_material="spark_red" 
 		drop_items_on_death="0" 
 		falling_damage_damage_max="1.2" 
 		falling_damage_damage_min="0.1" 
@@ -103,6 +108,5 @@
 	
 	<LuaComponent
 		script_death="mods/noita.hardmod/files/modules/holy_mountain_rework/anger_gods.lua"
-		remove_after_executed="0"
 	/>
 </Entity>
