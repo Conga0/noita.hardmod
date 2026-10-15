@@ -39,4 +39,5 @@ return {
 	"Everyone say \"Thank you Lamier\" for making this text rotatable!",
 	"Saving Grace had it coming.",
 	"Beat this to unlock Epilogue 3!",
+	"Lamia was drunk",
 }
