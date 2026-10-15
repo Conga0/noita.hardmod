@@ -22,7 +22,7 @@ if dmg_comp then
 	local max_hp = ComponentGetValue2( dmg_comp, "max_hp" )
 	local chance_to_drop = Remap( max_hp, 0, 20, 20, 50 )
 	local rnd = Random( 1, 100 )
-	local gems_dropped = 10
+	local gems_dropped = 0
 	while rnd < chance_to_drop and gems_dropped < 10 do
 		local x, y = EntityGetTransform( entity_id )
 		local offset_x = Random( -4, 4 )
