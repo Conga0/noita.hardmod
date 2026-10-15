@@ -3,38 +3,29 @@ local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
 -- xml modifications as separate functions for better readability
 local function modify_master_of_blinding()
-	local path = "data/entities/animals/wizard_dark.xml"
-	local xml = nxml.parse( ModTextFileGetContent( path ) )
-	xml:add_child( nxml.parse( [[
-        <LuaComponent
-        _enabled="1"
-        script_source_file="mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/wizard_dark_ase_scan.lua"
-        execute_every_n_frame="2"
-        >
-        </LuaComponent>
-    ]] ))
-	ModTextFileSetContent( path, tostring( xml ) )
+	for xml in nxml.edit_file("data/entities/animals/wizard_dark.xml") do
+		xml:add_child(nxml.new_element("LuaComponent", {
+			script_source_file="mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/wizard_dark_ase_scan.lua",
+        	execute_every_n_frame="2",
+		}))
+	end
 end
 
 local function modify_wandstone()
-	local path = "data/entities/items/pickup/wandstone.xml"
-	for content in nxml.edit_file( path ) do
-        content:set( "tags", content:get( "tags" ) .. ",hardmod_wandstone" )
+	for xml in nxml.edit_file("data/entities/items/pickup/wandstone.xml") do
+		local tags = xml.attr.tags
+		if #tags == 0 then xml.attr.tags = "hardmod_wandstone"
+		else xml.attr.tags = tags .. ",hardmod_wandstone" end
     end
 end
 
 local function modify_mountain_altar()
-	local path = "data/entities/animals/boss_centipede/ending/ending_sampo_spot_mountain.xml"
-	local xml = nxml.parse( ModTextFileGetContent( path ) )
-	xml:add_child( nxml.parse( [[
-        <LuaComponent
-        _enabled="1"
-        script_source_file="mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/altar_tablet_magic_append.lua"
-        execute_every_n_frame="240"
-        >
-        </LuaComponent>
-    ]] ))
-	ModTextFileSetContent( path, tostring( xml ) )
+	for xml in nxml.edit_file("data/entities/animals/boss_centipede/ending/ending_sampo_spot_mountain.xml") do
+		xml:add_child(nxml.new_element("LuaComponent", {
+        	script_source_file="mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/altar_tablet_magic_append.lua",
+        	execute_every_n_frame="240",
+		}))
+	end
 end
 
 local function modify_treasure_chest()
