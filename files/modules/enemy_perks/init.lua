@@ -8,11 +8,33 @@ ModLuaFileAppend("data/scripts/perks/perk_reflect.lua", curr_path.."add_perks_to
 
 local enemy_perks = {}
 local enemy_perks_indexed = {}
+
+local offscreen_leniancy = 16 --how many pixels off-screen can the target be before the window closes automatically
+local min_dark = 200 --maximum dark value the target can be in before the windo closes automatically
+
+local gz = 100 --Z position that all the GUI is relative to
+local x_offset_from_target = 16 --x offset away from the target's origin
+local y_offset_from_target = -20 --y offset away from the target's origin
+local edge_padding = 3 --padding in pixels from the left, right and bottom sides of the window
+local top_padding = 2 --padding between the top of the window and the name, and the name and perk view
+local icon_padding = 1 --padding between perks in the perk view
+local max_perks_per_row = 5 --max perks before breaking into a new row
+local icon_size = 16 --the xy size of the perk icons
+
+RemoveFlagPersistent("perk_picked_enemyperk_hardmod_test_perk")
+local function update_perk_unlock_states()
+	for _,perk in ipairs(enemy_perks) do
+		perk.locked = not HasFlagPersistent("perk_picked_enemyperk_hardmod_"..perk.id:lower())
+	end
+end
+
 hooks.mod_post_init = function() --run later in case of appends
 	enemy_perks = dofile_once(curr_path.."enemy_perks_list.lua")
 	for _,perk in ipairs(enemy_perks) do
 		enemy_perks_indexed[perk.id] = perk
 	end
+
+	update_perk_unlock_states()
 end
 
 hooks.world_init = function()
@@ -87,6 +109,11 @@ end
 
 local selected_creature = nil
 function hooks.post_update(frame)
+	if GameHasFlagRun("hardmod_new_enemy_perk_discovered") then
+		update_perk_unlock_states()
+	end
+
+
 	if InputIsKeyJustDown(18) then
 		local x,y = DEBUG_GetMouseWorld()
 		selected_creature = EntityGetClosestWithTag(x, y, "hardmod_blessed")
@@ -98,7 +125,7 @@ function hooks.post_update(frame)
 	if not (selected_creature and EntityGetIsAlive(selected_creature)) then return end
 
 	local creature_x,creature_y = EntityGetTransform(selected_creature)
-	if GameGetFogOfWarBilinear(creature_x, creature_y) > 200 then selected_creature = nil return end
+	if GameGetFogOfWarBilinear(creature_x, creature_y) > min_dark then selected_creature = nil return end
 
 	GuiStartFrame(gui)
 	virt_x = MagicNumbersGetValue("VIRTUAL_RESOLUTION_X")
@@ -109,11 +136,11 @@ function hooks.post_update(frame)
 	cx, cy = GameGetCameraPos()
 
 
-    local vx = creature_x - cx + virt_x / 2
-    local vy = creature_y - cy + virt_y / 2
-    local gui_x = vx * screen_width / virt_x
-    local gui_y = vy * screen_height / virt_y
-	if gui_x < 0 or gui_x > screen_width or gui_y < 0 or gui_y > screen_height then selected_creature = nil return end
+	local vx = creature_x - cx + virt_x / 2
+	local vy = creature_y - cy + virt_y / 2
+	local gui_x = vx * screen_width / virt_x
+	local gui_y = vy * screen_height / virt_y
+	if gui_x < (0-offscreen_leniancy) or gui_x > (screen_width+offscreen_leniancy) or gui_y < (0-offscreen_leniancy) or gui_y > (screen_height+offscreen_leniancy) then selected_creature = nil return end
 
 
 	local enemy_perks_handler
@@ -133,15 +160,14 @@ function hooks.post_update(frame)
 		target_perks[#target_perks+1] = enemy_perks_indexed[perk_id]
 	end
 
-	local gz = 100
-
-	local x_offset_from_target = 16
-	local y_offset_from_target = -20
-	local edge_padding = 3
-	local top_padding = 2
-	local icon_padding = 1
-	local max_perks_per_row = 5
-	local icon_size = 16
+	local function render_perk(perk, x, y)
+		if perk.locked then GuiColorSetForNextWidget(gui, 0.3, 0.3, 0.3, 1) end
+		GuiImage(gui, new_id(), x, y, perk.icon, 1, 1, 1)
+		local prev = {GuiGetPreviousWidgetInfo(gui)}
+		if prev[3] then
+			local box_size
+		end
+	end
 
 	local name = GameTextGetTranslatedOrNot(EntityGetName(selected_creature))
 	local name_w,name_h = GuiGetTextDimensions(gui, name)
@@ -153,6 +179,7 @@ function hooks.post_update(frame)
 
 	local box_origin_x,box_origin_y = gui_x + x_offset_from_target, gui_y + y_offset_from_target
 	if box_origin_x + box_size.x >= screen_width then box_origin_x = gui_x - (x_offset_from_target + box_size.x) end
+	box_origin_y = math.max(math.min(box_origin_y, screen_height-box_size.y), 0)
 	GuiZSetForNextWidget(gui, gz-4)
 	GuiImageNinePiece(gui, new_id(), box_origin_x, box_origin_y, box_size.x, box_size.y)
 	GuiText(gui, box_origin_x+edge_padding, box_origin_y+top_padding, name)
@@ -164,7 +191,7 @@ function hooks.post_update(frame)
 
 	for _,perk in ipairs(target_perks) do
 		GuiZSetForNextWidget(gui, gz-5)
-		GuiImage(gui, new_id(), next_perk_x, next_perk_y, perk.icon, 1, 1, 1)
+		render_perk(perk, next_perk_x, next_perk_y)
 		next_perk_num = next_perk_num + 1
 		if next_perk_num % max_perks_per_row == 0 then
 			next_perk_x = box_origin_x+edge_padding
@@ -173,28 +200,6 @@ function hooks.post_update(frame)
 			next_perk_x = next_perk_x + icon_size + icon_padding
 		end
 	end
-	--[[
-	for _,entity_id in ipairs(EntityGetWithTag("hardmod_blessed")) do
-		local enemy_perk_data
-		for _,varcomp in ipairs(EntityGetComponent(entity_id, "VariableStorageComponent") or {}) do
-			if ComponentGetValue2(varcomp, "name") == "hardmod.enemy_perks" then enemy_perk_data = varcomp break end
-		end
-		if not enemy_perk_data then return end
-
-		local perks = {}
-		local x,y = EntityGetTransform(entity_id)
-		for perk_id in ComponentGetValue2(enemy_perk_data, "value_string"):gmatch("([^,]+)") do
-			perks[#perks+1] = perk_id
-		end
-
-		local sx, sy = world_to_screen_coordinates(x,y)
-		for i,perk in ipairs(perks) do
-			--GameCreateSpriteForXFrames(enemy_perks_indexed[perk].icon, x-8, y-20, false, 0, 0, 1, true)
-			GuiImage(gui, new_id(), sx+((i-1)*30)-12, sy-44, "mods/noita.hardmod/files/modules/enemy_perks/expand.png", 1, 3/2)
-		end
-	end--]]
-
-
 end--]]
 
 return hooks
