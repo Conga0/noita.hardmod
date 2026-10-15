@@ -31,7 +31,7 @@ A player can do this if they value taking their perk, but also wish to keep the 
 
 ## Future
 - Apply rework to the Final Holy Mountain
-- Add a small attractor effect that pulls the crystal towards the centre of the crystal room to avoid the crystal floating out accidentally
+- Add a "Perk Rain" or other effect when bringing the Collapse Crystal to the Mountain Altar
 - Add a new particle effect that sweeps from the right to the left of the perk altar room
 - Tweak collapse effect to better block the tunnel back to the shop area of the Holy Mountain
 - The false-wall is too tough to break with Unstable Crystal, Firebolt and Magic Missile. We may need to decide if this is fine or if we wish to change this.

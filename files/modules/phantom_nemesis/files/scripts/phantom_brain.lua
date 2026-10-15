@@ -56,16 +56,17 @@ local function GetPlayer()
 end
 
 local function PriortisePlayerAsTarget()
-    local player_id = GetPlayer()
+    local player_id = GetPlayer() or 0
     local player_x, player_y = EntityGetTransform(player_id)
+    if player_id == 0 then return end
     
-    local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
-    local pathfinding_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"PathFindingComponent") or 0
-    local physics_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"PhysicsAIComponent") or 0
-    local worm_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"PhysicsAIComponent") or 0
+    local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(root_id,"AnimalAIComponent") or 0
+    local pathfinding_comp = EntityGetFirstComponentIncludingDisabled(root_id,"PathFindingComponent") or 0
+    local physics_ai_comp = EntityGetFirstComponentIncludingDisabled(root_id,"PhysicsAIComponent") or 0
+    local worm_ai_comp = EntityGetFirstComponentIncludingDisabled(root_id,"WormAIComponent") or 0
 
     if animal_ai_comp > 0 then
-        ComponentSetValue2(pathfinding_comp,"path_next_node_vector_to",player_x,player_y)
+        --ComponentSetValue2(pathfinding_comp,"path_next_node_vector_to",player_x,player_y)
         ComponentSetValue2(animal_ai_comp,"creature_detection_range_x",300)
         ComponentSetValue2(animal_ai_comp,"creature_detection_range_y",300)
         ComponentSetValue2(animal_ai_comp,"creature_detection_angular_range_deg",180)
@@ -74,12 +75,12 @@ local function PriortisePlayerAsTarget()
     end
 
     if animal_ai_comp > 0 and physics_ai_comp > 0 then
-        local boss_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"LimbBossComponent") or 0
+        local boss_ai_comp = EntityGetFirstComponentIncludingDisabled(root_id,"LimbBossComponent") or 0
         if boss_ai_comp > 0 then
             ComponentSetValue2(boss_ai_comp, "mMoveToPositionX", player_x)
             ComponentSetValue2(boss_ai_comp, "mMoveToPositionY", player_y)
         else
-            EntityAddComponent(entity_id,"LimbBossComponent",{
+            EntityAddComponent(root_id,"LimbBossComponent",{
                 state=1
             })
         end
