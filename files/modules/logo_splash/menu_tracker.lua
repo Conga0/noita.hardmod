@@ -42,7 +42,6 @@ local tracker = {
 }
 
 -- data/scripts/lib/utilities.lua
-local GUI_OPTION_LAYOUT_NO_LAYOUTING = 15
 local GUI_OPTION_ALIGN_HORIZONTAL_CENTER = 16
 
 -- data/scripts/debug/keycodes.lua
@@ -66,8 +65,9 @@ local NAVIGATION_REPEAT_INTERVAL = 5
 local DEBUG_Z = -1000100
 
 local HELP_IMAGE_ID = 9800
-local APPLY_RETURN_ID = 0x7a3d
-local RETURN_ID = 0x7a3e
+local FOOTER_PROBE_ID = 9801
+-- One id per main row, offset by the row index
+local MAIN_ROW_PROBE_ID = 9810
 
 local ROW_CONTINUE = 1
 local ROW_SAVE_AND_QUIT = 8
@@ -96,7 +96,6 @@ local HELP_IMAGE_LOGO_BOUNDS = {
 }
 
 local main_labels = {} ---@type string[]
-local paused_label = ""
 local menu_top_percent = nil ---@type number?
 
 ---@class menu_input
@@ -152,7 +151,6 @@ end
 
 ---Translates the main-menu labels; redone on every entry so a language change in Options applies.
 local function refresh_main_labels()
-	paused_label = GameTextGet("$menu_paused")
 	for row = 1, MAIN_ROW_COUNT do
 		main_labels[row] = GameTextGet(MAIN_MENU_KEYS[row])
 	end
@@ -330,25 +328,19 @@ local function return_position(screen_width, screen_height)
 	return screen_width * 0.04, screen_height * 0.93
 end
 
----Colors the next probe widget: invisible normally, cyan above everything in debug mode.
+---Tints the next probe cyan above everything in debug mode.
 ---@param gui gui
 local function color_probe(gui)
-	if not tracker.debug_menu_tracker then
-		GuiColorSetForNextWidget(gui, 1, 1, 1, 0)
-		return
-	end
+	if not tracker.debug_menu_tracker then return end
 	GuiZSetForNextWidget(gui, DEBUG_Z)
 	GuiColorSetForNextWidget(gui, 0.1, 1, 1, 1)
 end
 
----Colors a main-menu probe row, highlighting focus and Continue in debug mode.
+---Tints a main-menu probe row in debug mode, highlighting focus and Continue.
 ---@param gui gui
 ---@param row integer
 local function color_main_row(gui, row)
-	if not tracker.debug_menu_tracker then
-		GuiColorSetForNextWidget(gui, 1, 1, 1, 0)
-		return
-	end
+	if not tracker.debug_menu_tracker then return end
 	GuiZSetForNextWidget(gui, DEBUG_Z)
 	if tracker.main_focus_from_navigation and row == tracker.focused_main_row then
 		GuiColorSetForNextWidget(gui, 1, 1, 0.2, 1)
@@ -366,6 +358,24 @@ local function get_menu_top_percent()
 	return menu_top_percent
 end
 
+---Draws a label-sized box and returns whether it is hovered; invisible unless debugging.
+---@param gui gui
+---@param id integer
+---@param x number
+---@param y number
+---@param label string
+---@return boolean
+local function probe_label(gui, id, x, y, label)
+	local width, height = GuiGetTextDimensions(gui, label, 1)
+	GuiImageNinePiece(gui, id, x, y, width, height, tracker.debug_menu_tracker and 1 or 0)
+	local _, _, hovered = GuiGetPreviousWidgetInfo(gui)
+	return hovered
+end
+
+-- Scratch tables reused every frame for the main-row probe positions
+local row_centers_x = {} ---@type number[]
+local row_tops_y = {} ---@type number[]
+
 ---Rebuilds the native main-menu layout with invisible widgets to detect the hovered row.
 ---@param gui gui
 ---@param screen_width number
@@ -380,33 +390,35 @@ local function probe_main_menu(gui, screen_width, screen_height)
 	GuiImage(gui, HELP_IMAGE_ID, 0, 0, HELP_IMAGES[tracker.pause_input_type], 0, 1, 1, 0, 0, "")
 	local _, _, _, image_x, image_y = GuiGetPreviousWidgetInfo(gui)
 	tracker.help_image_x, tracker.help_image_y = image_x, image_y
-	GuiColorSetForNextWidget(gui, 1, 1, 1, 0)
-	GuiOptionsAddForNextWidget(gui, GUI_OPTION_ALIGN_HORIZONTAL_CENTER)
-	GuiText(gui, 0, 0, paused_label, 1)
-
+	-- Blank lines reproduce the native row heights; the probes go on top after the layout closes
+	GuiText(gui, 0, 0, " ", 1)
 	for row = 1, MAIN_ROW_COUNT do
-		color_main_row(gui, row)
 		GuiOptionsAddForNextWidget(gui, GUI_OPTION_ALIGN_HORIZONTAL_CENTER)
-		GuiText(gui, 0, 0, main_labels[row], 1)
-		local _, _, hovered = GuiGetPreviousWidgetInfo(gui)
-		if hovered then tracker.hovered_main_row = row end
+		GuiText(gui, 0, 0, " ", 1)
+		local _, _, _, x, y, width = GuiGetPreviousWidgetInfo(gui)
+		row_centers_x[row], row_tops_y[row] = x + width / 2, y
 	end
 	GuiLayoutEnd(gui)
+
+	for row = 1, MAIN_ROW_COUNT do
+		local label = main_labels[row]
+		local label_width = GuiGetTextDimensions(gui, label, 1)
+		color_main_row(gui, row)
+		if probe_label(gui, MAIN_ROW_PROBE_ID + row, row_centers_x[row] - label_width / 2, row_tops_y[row], label) then
+			tracker.hovered_main_row = row
+		end
+	end
 end
 
----Draws an invisible copy of a footer button; returns whether it is hovered or clicked.
+---Probes a footer button over its label; returns whether it is hovered.
 ---@param gui gui
----@param id integer
 ---@param x number
 ---@param y number
 ---@param label string
 ---@return boolean
-local function probe_footer_button(gui, id, x, y, label)
+local function probe_footer_button(gui, x, y, label)
 	color_probe(gui)
-	GuiOptionsAddForNextWidget(gui, GUI_OPTION_LAYOUT_NO_LAYOUTING)
-	local clicked = GuiButton(gui, id, x, y, label)
-	local _, _, hovered = GuiGetPreviousWidgetInfo(gui)
-	return hovered or clicked
+	return probe_label(gui, FOOTER_PROBE_ID, x, y, label)
 end
 
 ---Probes the footer button of the open submenu, if its position is known.
@@ -417,10 +429,10 @@ local function probe_submenu(gui, screen_width, screen_height)
 	local kind = tracker.submenu_kind
 	if kind == "options" then
 		local x, y = apply_return_position(screen_width, screen_height)
-		tracker.hovered_apply_return = probe_footer_button(gui, APPLY_RETURN_ID, x, y, GameTextGet("$menu_applyandreturn"))
+		tracker.hovered_apply_return = probe_footer_button(gui, x, y, GameTextGet("$menu_applyandreturn"))
 	elseif RETURN_BUTTON_KINDS[kind] then
 		local x, y = return_position(screen_width, screen_height)
-		tracker.hovered_return = probe_footer_button(gui, RETURN_ID, x, y, GameTextGet("$menu_return"))
+		tracker.hovered_return = probe_footer_button(gui, x, y, GameTextGet("$menu_return"))
 	end
 end
 
