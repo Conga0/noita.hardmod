@@ -24,6 +24,7 @@ local modules = {
 	"alt_fire_anything",
 	"credits",
 	"nerf_vanilla_cheeses",
+	"stronger_kolmi",
 }
 
 local force_enable_state = {
