@@ -11,7 +11,7 @@ if wandstone ~= nil then
 	if distance < 64 then
 
 		-- standard mountain altar feedback
-		EntityLoad("data/entities/particles/image_emitters/chest_effect.xml", tx, ty)
+		EntityLoad( "data/entities/particles/image_emitters/chest_effect.xml", sx, sy )
 		GamePrintImportant( "$log_altar_magic" )
 
 		-- spawn the perk

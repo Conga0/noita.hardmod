@@ -17,4 +17,7 @@ function death( damage_type_bit_field, damage_message, entity_thats_responsible,
 			end
 		end
 	end
+
+	local x, y = EntityGetTransform( GetUpdatedEntityID() )
+	CreateItemActionEntity( "HARDMOD_SPELL_INFINITY", x, y - 8 )
 end
