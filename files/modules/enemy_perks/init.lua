@@ -106,6 +106,7 @@ local function world_to_screen_coordinates(x, y)
 	return (x - cx) / scale_x + screen_width / 2 + 1.5, (y - cy) / scale_y + screen_height / 2
 end
 
+local cached_perk_hover_info = {}
 
 local selected_creature = nil
 function hooks.post_update(frame)
@@ -165,7 +166,17 @@ function hooks.post_update(frame)
 		GuiImage(gui, new_id(), x, y, perk.icon, 1, 1, 1)
 		local prev = {GuiGetPreviousWidgetInfo(gui)}
 		if prev[3] then
-			local box_size
+			local perk_hover_info
+			if not cached_perk_hover_info[perk.id] then
+				cached_perk_hover_info[perk.id] = {
+					icon = perk.icon,
+					name = GameTextGetTranslatedOrNot(perk.name),
+					box_size = {
+						x = edge_padding*2 + icon_size*2 + top_padding + math.max(GuiGetTextDimensions(gui, perk_hover_info.name), 48),
+						y = top_padding,
+					}
+				}
+			end
 		end
 	end
 
