@@ -55,6 +55,7 @@ hooks.mod_post_init = function()
 	ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/actions_append.lua")
 	ModLuaFileAppend("data/scripts/items/chest_random.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/items/chest_random_append.lua")
 	ModLuaFileAppend("data/scripts/items/gold_pickup.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/items/gold_pickup_append.lua")
+	-- ModLuaFileAppend("data/scripts/magic/altar_tablet_magic.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/altar_tablet_magic_append.lua")
 end
 
 return hooks --Don't forget to do this if you want your changes to apply!!!!
