@@ -5,6 +5,7 @@ return {
 	"Eba was here",
 	"Insert splash text here",
 	"Dani was here",
+	"Every pixel is stimulated",
 	"UserK",
 	"Brought to you by Team Fairmod",
 	"A Notla Classic!",

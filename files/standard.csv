@@ -69,3 +69,5 @@ hardmod_spell_infinity_desc,"Force-casts an empty spell","Принудитель
 hardmod_spell_alt_fire_anything_name,Alt Fire Anything,,,,,,,,,,,,,
 hardmod_spell_alt_fire_anything_desc,Right-click to cast the spell slotted to the right,,,,,,,,,,,,,
 hardmod_settings_header_modules,Toggle modules,Переключение модулей,,,,,,,,,,,,
+hardmod_perk_treasure_hunter_name,Treasure Hunter,,,,,,,,,,,,,
+hardmod_perk_treasure_hunter_desc,Chests are guaranteed to contain extra gold.,,,,,,,,,,,,,
