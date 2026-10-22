@@ -18,6 +18,7 @@ local modules = {
 	"vanilla_perk_rebalances",
 	"no_more_chainsaw_wrapping",
 	"holy_mountain_rework",
+	"ring_of_returning",
 	"no_more_max_hp_cheesing",
 	"phantom_nemesis",
 	"truly_limited_spells",

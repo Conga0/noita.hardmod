@@ -108,4 +108,8 @@ return {
 		if menu_tracker.pause_pre_update() then update() end
 	end,
 	pause_changed = menu_tracker.pause_changed,
+	count_secrets = function(total, found)
+		menu_tracker.count_secrets()
+		return total, found
+	end,
 }

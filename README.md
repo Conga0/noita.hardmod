@@ -49,5 +49,7 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - The [Alt Fire Anything](https://noita.wiki.gg/wiki/Mod:Alt_Fire_Anything) spell has been ported into this mod.
 - `holy_mountain_rework`
   - [readme.md](files/modules/holy_mountain_rework/readme.md)
+- `ring_of_returning`
+  - An item found in each Holy Mountain that, when broken, opens a portal to the last HM you discovered.
 - `credit`
   - Credits are replaced with the Commit history and optional dev messages
