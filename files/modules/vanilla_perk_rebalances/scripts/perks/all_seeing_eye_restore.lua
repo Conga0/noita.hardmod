@@ -1,5 +1,11 @@
 dofile_once( "mods/noita.hardmod/lib/utilities.lua" )
 
 EntitySetComponentsWithTagEnabled( GetUpdatedEntityID(), "fog_of_war_hole", true )
-SetInternalInt( GetUpdatedEntityID(), "hardmod_wizard_dark_counter", 0 )
 GamePrint( "Your All-Seeing Eye has been restored." )
+
+local nearby_mobs = EntityGetWithTag( "hardmod_master_of_blinding" )
+if nearby_mobs ~= nil then
+	for i,mob in ipairs( nearby_mobs ) do
+		SetInternalInt( mob, "hardmod_wizard_dark_counter", 0 )
+	end
+end

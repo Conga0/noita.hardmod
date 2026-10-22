@@ -20,6 +20,23 @@ new_perks = {
 			end
         end,
 	},
+	{
+		id = "HARDMOD_TREASURE_HUNTER",
+		ui_name = "$hardmod_perk_treasure_hunter_name",
+		ui_description = "$hardmod_perk_treasure_hunter_desc",
+		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/treasure_hunter_016.png",
+		perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/treasure_hunter.png",
+		stackable = STACKABLE_YES,
+		one_off_effect = false,
+		usable_by_enemies = false,
+		stackable_maximum = 3,
+		func = function( entity_perk_item, entity_who_picked, item_name, pickup_count )
+			-- nothing happens here
+        end,
+        func_remove = function( entity_who_picked )
+        	-- nothing happens here
+        end,
+	},
 }
 
 perk_reworks = {
@@ -213,6 +230,10 @@ perk_reworks = {
 	},
 	{
 		id = "NO_WAND_EDITING",
+		not_in_default_perk_pool = true,
+	},
+	{
+		id = "EXTRA_MONEY",
 		not_in_default_perk_pool = true,
 	},
 }

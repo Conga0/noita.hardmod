@@ -18,9 +18,9 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `truly_limited_spells`
   - The Unlimited Spells perk has been removed.
   - A new perk gives enemies a chance to drop "spell gems", which restore a few spell charges on pickup.
-  - The Wand Refresh spell has been removed. (Alt Fire Anything substitutes the copy dropped by MoM)
   - Greek spells are now (by default) limited to 30 uses.
   - Two new late-game spells allow you to cast limited spells with 0 remaining charges.
+  - More info: [readme.md](files/modules/truly_limited_spells/readme.md)
 - `vanilla_perk_rebalances`
   - All-Seeing Eye (perk) now grants vision around the cursor only, rather than lighting up the entire screen.
   - All-Seeing Eye (spell) is now less common early, and has fewer uses.
@@ -49,5 +49,7 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - The [Alt Fire Anything](https://noita.wiki.gg/wiki/Mod:Alt_Fire_Anything) spell has been ported into this mod.
 - `holy_mountain_rework`
   - [readme.md](files/modules/holy_mountain_rework/readme.md)
+- `ring_of_returning`
+  - An item found in each Holy Mountain that, when broken, opens a portal to the last HM you discovered.
 - `credit`
   - Credits are replaced with the Commit history and optional dev messages

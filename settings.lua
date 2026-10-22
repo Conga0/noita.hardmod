@@ -24,6 +24,16 @@ local module_data = {
                   "or harder to obtain.",
     },
     {
+        id      = "holy_mountain_rework",
+        ui_name = "Holy Mountain Rework",
+        ui_desc = "Reworks Holy Mountains to collapse only once you take a perk.",
+    },
+    {
+        id      = "ring_of_returning",
+        ui_name = "Ring of Returning",
+        ui_desc = "Each Holy Mountain spawns a breakable item that lets you warp back to them.",
+    },
+    {
         id      = "nerfed_combat_healing",
         ui_name = "Nerfed Combat Healing",
         ui_desc = "Whenever you take damage, your healing is disabled for up to 1 minute.",
