@@ -16,7 +16,7 @@ local modules = {
 	"logo_splash",
 	"worse_hearts",
 	"vanilla_perk_rebalances",
-	"no_more_chainsaw_wrapping",
+	--"no_more_chainsaw_wrapping", -- shit module never enable
 	"holy_mountain_rework",
 	"ring_of_returning",
 	"no_more_max_hp_cheesing",
