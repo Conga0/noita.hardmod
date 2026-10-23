@@ -264,8 +264,25 @@ if actions ~= nil then
 	    },
 
 	    ["RESET"] = {
-	    	spawn_level = "0",
-	    	spawn_probability = "0",
+			action = function()
+				current_reload_time = current_reload_time - 25
+				
+				move_hand_to_discarded()
+				
+				for i,v in ipairs( deck ) do
+					-- print( "removed " .. v.id .. " from deck" )
+					table.insert( discarded, v )
+				end
+				
+				hand = {}
+				deck = {}
+				
+				if ( force_stop_draws == false ) then
+					force_stop_draws = true
+					move_discarded_to_deck()
+					order_deck()
+				end
+			end,
 	    },
 	}
 
