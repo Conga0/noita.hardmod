@@ -45,9 +45,10 @@ local module_data = {
                   "a trigger payload.",
     },
     {
-        id      = "no_more_chainsaw_wrapping",
-        ui_name = "No More Chainsaw Wrapping",
-        ui_desc = "The Chainsaw spell no longer reduces cast delay to 0.",
+        id      = "rapidfire_nerfs",
+        ui_name = "Rapidfire Nerfs",
+        ui_desc = "The Chainsaw spell only halves cast delay, and spawns later.\n" ..
+                  "Early on, you may find the Mini Chainsaw spell instead.",
     },
     {
         id      = "worse_hearts",
