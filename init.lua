@@ -3,6 +3,7 @@
 -- UserK too!!
 -- !!!ooT enyL AgnoC
 -- D2D2
+-- qtyui_ too!!!!
 
 dofile_once("mods/noita.hardmod/lib/utilities.lua")
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
@@ -26,6 +27,7 @@ local modules = {
 	"credits",
 	"nerf_vanilla_cheeses",
 	"stronger_kolmi",
+	"chest_tweaks",
 }
 
 local force_enable_state = {

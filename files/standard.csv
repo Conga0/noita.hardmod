@@ -1,6 +1,8 @@
 hardmod_status_nohealing_name,Wounded,Ранен,,,,,,,受创,負傷,,,,
 hardmod_status_nohealing_desc,You can not be healed.,Вы не можете быть исцелены.,,,,,,,各类治疗魔法无法治疗你。,回復魔法の効果がない。,,,,
 hardmod_status_heartbreak_desc,Taking damage reduces your max health.,Получение урона снижает ваше максимальное здоровье.,,,,,,,,,,,,
+hardmod_perk_better_chests_name,Better Chests,,,,,,,,,,,,,
+hardmod_perk_better_chests_desc,All chests will have better loot from now on,,,,,,,,,,,,,
 hardmod_perk_all_seeing_eye_name,All-Seeing Eye,Всевидящее око,,,,,,,,,,,,
 hardmod_perk_all_seeing_eye_desc,Your cursor carries a magic light that cuts through darkness.,"Ваш курсор излучает магический свет, способный рассечь тьму.",,,,,,,,,,,,
 hardmod_perk_protection_fire_name,Fire Protection,Защита от огня,,,,,,,,,,,,
