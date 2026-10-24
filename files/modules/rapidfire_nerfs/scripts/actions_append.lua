@@ -44,7 +44,6 @@ reworked_actions = {
 
                                     local restore = math.min( hand_cost, max_restore )
                                     mana = mana + restore
-                                    GamePrint( "+" .. restore )
                                 end
                             end,
     },
