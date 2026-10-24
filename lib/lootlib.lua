@@ -1,6 +1,6 @@
 --[[
   ###########################
-  ##  Noita Loot Lib v0.1  ##
+  ##  Noita Loot Lib v0.2  ##
   ###########################
 
   This library lets you extend vanilla loot tables (such as chests)
@@ -12,7 +12,7 @@
   THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ]]
 
----@diagnostic disable: lowercase-global
+---@diagnostic disable: lowercase-global,undefined-global
 
 ---@alias LootTable WeightedLootItem[]
 
@@ -56,6 +56,7 @@
 ---@field pick_weighted WeightedLootItem[]? Run a single item from a weighted list
 ---@field pick_chance ChanceLootItem[]? Run a single item from a list with chances
 ---@field pick_chance_all ChanceLootItem[]? Run all items from a list with chances
+---@field pick_chance_at_least_one boolean? Ensures `pick_chance` or `pick_chance_all` picks at least a single random item (if no chances matched, pick an entirely random item)
 ---@field pick_random BaseLootItem[]? Run a random item from a list
 ---@field entity string? Entity file to spawn
 ---@field offset_x LootNumber? X offest to add to the spawned entity
@@ -89,6 +90,8 @@
 
 ---@alias LootItem BaseLootItem | WeightedLootItem | ChanceLootItem
 
+---@alias LootHookFunc fun(ctx: LootContext, tbl: LootTable, table_name: string)
+
 --------------------------------
 
 dofile_once("data/scripts/gun/gun_actions.lua")
@@ -103,14 +106,29 @@ LOOTLIB_DATA = LOOTLIB_DATA or {
   ---@type {[string]: fun(ctx: LootContext, value: any, item: LootItem)}
   handlers = {},
   ---@type fun()[]
-  patch_end_hooks = {}
+  patch_end_hooks = {},
+  ---@type LootHookFunc[]
+  chest_pre_open_hooks = {},
+  ---@type LootHookFunc[]
+  chest_post_open_hooks = {},
+  ---@type fun(entity: entity_id)?
+  orig_chest_on_open = nil,
+
+  config = {
+    chest_script_loot_table_names = {
+      ["data/scripts/items/chest_random.lua"] = "chest_random",
+      ["data/scripts/items/chest_random_super.lua"] = "chest_random_super_with_sampo",
+      ["data/scripts/items/utility_box.lua"] = "utility_box",
+    }
+  }
 }
 
 ---@class lootlib
 local lootlib = {
   handlers = LOOTLIB_DATA.handlers,
+  config = LOOTLIB_DATA.config,
   ---@type {[string]: LootTable}
-  default_loot_tables = {}
+  default_loot_tables = {},
 }
 
 --------------------------------
@@ -222,40 +240,6 @@ function lootlib.chance_matches(rnd, chance)
   end
 end
 
----@param tbl {chance: LootChance}[]
----@return any?
-function lootlib.pick_random_chance(tbl)
-  local rnd = Random(0, 100)
-  for _,item in pairs(tbl) do
-    if lootlib.chance_matches(rnd, item.chance) then
-      return item
-    end
-  end
-
-  return nil
-end
-
----@param tbl {weight: number}[]
----@return any
-function lootlib.pick_random_weighted(tbl)
-  local total = 0
-  for _,item in pairs(tbl) do
-    total = total + item.weight
-  end
-
-  local threshold = Random() * total
-  total = 0
-
-  for _,item in pairs(tbl) do
-    total = total + item.weight
-    if total > threshold then
-      return item
-    end
-  end
-
-  return tbl[#tbl]
-end
-
 ---@param x number
 ---@param y number
 ---@return entity_id
@@ -345,26 +329,59 @@ end
 
 ---@param tbl WeightedLootItem[]
 function lootlib.handlers.pick_weighted(ctx, tbl)
-  lootlib.run_item(ctx, lootlib.pick_random_weighted(tbl))
+  local total = 0
+  for _,item in pairs(tbl) do
+    total = total + item.weight
+  end
+
+  local threshold = Random() * total
+  local item = tbl[#tbl]
+  total = 0
+
+  for _,it in pairs(tbl) do
+    total = total + it.weight
+    if total > threshold then
+      item = it
+      break
+    end
+  end
+
+  lootlib.run_item(ctx, item)
 end
 
 ---@param tbl ChanceLootItem[]
-function lootlib.handlers.pick_chance(ctx, tbl)
-  lootlib.run_item(ctx, lootlib.pick_random_chance(tbl))
+function lootlib.handlers.pick_chance(ctx, tbl, item)
+  local rnd = Random(0, 100)
+  for _,it in pairs(tbl) do
+    if lootlib.chance_matches(rnd, it.chance) then
+      lootlib.run_item(ctx, it)
+      return
+    end
+  end
+
+  if item.pick_chance_at_least_one then
+    lootlib.handlers.pick_random(ctx, tbl, item)
+  end
+end
+
+---@param tbl ChanceLootItem[]
+function lootlib.handlers.pick_chance_all(ctx, tbl, item)
+  local picked = false
+  for _,it in pairs(tbl) do
+    if lootlib.chance_matches(Random(0, 100), it.chance) then
+      lootlib.run_item(ctx, it)
+      picked = true
+    end
+  end
+
+  if not picked and item.pick_chance_at_least_one then
+    lootlib.handlers.pick_random(ctx, tbl, item)
+  end
 end
 
 ---@param tbl BaseLootItem[]
 function lootlib.handlers.pick_random(ctx, tbl)
   lootlib.run_item(ctx, tbl[Random(1, #tbl)])
-end
-
----@param tbl ChanceLootItem[]
-function lootlib.handlers.pick_chance_all(ctx, tbl)
-  for _,item in pairs(tbl) do
-    if lootlib.chance_matches(Random(0, 100), item.chance) then
-      lootlib.run_item(ctx, item)
-    end
-  end
 end
 
 ---@param tbl BaseLootItem[]
@@ -521,15 +538,17 @@ end
 ---Adds all items from `tbl` to the loot table.
 ---
 ---Only available inside of patch scripts (`lootlib.add_patch_script`).
----@param name string Loot table name
+---@param name_or_table string|LootTable Loot table or its name
 ---@param tbl LootTable
-function lootlib.extend_loot_table(name, tbl)
+function lootlib.extend_loot_table(name_or_table, tbl)
   if not LOOTLIB_DATA.patching then
     print_error("lootlib.extend_loot_table() called outside of a patch script")
     return
   end
 
-  local orig = lootlib.get_loot_table(name)
+  local orig = name_or_table
+  if type(orig) == "string" then orig = lootlib.get_loot_table(orig) end
+
   for _,val in pairs(tbl) do
     table.insert(orig, val)
   end
@@ -570,6 +589,91 @@ function lootlib.get_label(tbl, label, recursive)
 
     ::continue::
   end
+end
+
+--------------------------------
+---      Chest patches       ---
+--------------------------------
+
+---Add mod appends to vanilla chests
+---@param lib_path string Path to lootlib
+function lootlib.init_patches(lib_path)
+  ModLuaFileAppend("data/scripts/items/chest_random.lua", lib_path)
+  ModLuaFileAppend("data/scripts/items/chest_random_super.lua", lib_path)
+end
+
+---The provided function will be called right before a chest opens.
+---You can edit the passed context and loot table.
+---
+---Keep in mind changes to the loot table stay, it is not a copy.
+---@param cb LootHookFunc
+function lootlib.on_chest_pre_open(cb)
+  table.insert(LOOTLIB_DATA.chest_pre_open_hooks, cb)
+end
+
+---The provided function will be called right after a chest opens.
+---@param cb LootHookFunc
+function lootlib.on_chest_post_open(cb)
+  table.insert(LOOTLIB_DATA.chest_post_open_hooks, cb)
+end
+
+local function chest_on_open_patch(entity)
+  local comps = EntityGetComponent(entity, "LuaComponent")
+  local loot_table_name = nil
+
+  if comps then
+    for _,comp in pairs(comps) do
+      local script = ComponentGetValue2(comp, "script_item_picked_up")
+      local name = lootlib.config.chest_script_loot_table_names[script]
+
+      if name then
+        loot_table_name = name
+        break
+      end
+    end
+  end
+
+  if not loot_table_name then
+    return LOOTLIB_DATA.orig_chest_on_open(entity)
+  end
+
+  local x, y = EntityGetTransform(entity)
+  local rx, ry = x, y
+
+  local pos = EntityGetFirstComponent(entity, "PositionSeedComponent")
+  if pos then
+    rx = tonumber(ComponentGetValue2(pos, "pos_x")) or rx
+    ry = tonumber(ComponentGetValue2(pos, "pos_y")) or ry
+  end
+
+  rx = rx + 509.7
+  ry = ry + 683.1
+
+  local ctx = lootlib.create_context(x, y, rx, ry, entity, 1)
+  local loot_table = lootlib.get_loot_table(loot_table_name)
+
+  for _,hook in pairs(LOOTLIB_DATA.chest_pre_open_hooks) do
+    hook(ctx, loot_table, loot_table_name)
+  end
+
+  SetRandomSeed(ctx.vars.rand_x, ctx.vars.rand_y)
+
+  lootlib.generate(loot_table, ctx)
+
+  for _,hook in pairs(LOOTLIB_DATA.chest_post_open_hooks) do
+    hook(ctx, loot_table, loot_table_name)
+  end
+
+  if ctx.vars.bad_rolls > 0 then
+    EntityLoad("data/entities/particles/image_emitters/chest_effect_bad.xml", x, y)
+  else
+    EntityLoad("data/entities/particles/image_emitters/chest_effect.xml", x, y)
+  end
+end
+
+if on_open and not LOOTLIB_DATA.orig_chest_on_open then
+  LOOTLIB_DATA.orig_chest_on_open = on_open
+  on_open = chest_on_open_patch
 end
 
 --------------------------------
@@ -792,7 +896,7 @@ lootlib.default_loot_tables.chest_random_super_with_sampo = {
   {
     label = "sampo",
     -- TODO: adding max_rolls and other parameters for the root loot table would be nice
-    weight = 1,
+    weight = 0.00001,
     func = function(ctx)
       EntityLoadEndGameItem("data/entities/animals/boss_centipede/sampo.xml", ctx.vars.pos_x, ctx.vars.pos_y)
     end

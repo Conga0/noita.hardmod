@@ -1,7 +1,6 @@
-local lootlib = dofile_once("mods/noita.hardmod/lib/lootlib.lua")---@class lootlib
+local lootlib = dofile_once("mods/noita.hardmod/lib/lootlib.lua")---@type lootlib
 
 local chest = lootlib.get_loot_table("chest_random")
-
 local bomb = lootlib.get_label(chest, "bomb")
 bomb.weight = 7
 bomb.var = "rolls"
@@ -10,7 +9,7 @@ bomb.add = { a = 0, b = 2 }
 local misc = lootlib.get_label(chest, "misc_items") or {}
 table.insert(misc.pick_random, { entity = "data/entities/items/pickup/broken_wand.xml" })
 
-lootlib.extend_loot_table("chest_random", {
+lootlib.extend_loot_table(chest, {
   {
     weight = 7,
     is_bad = true,
@@ -19,8 +18,9 @@ lootlib.extend_loot_table("chest_random", {
   {
     -- funny
     weight = 7,
+    pick_chance_at_least_one = true,
     pick_chance_all = {
-      { chance = 100, entity = "data/entities/props/physics_bone_01.xml" },
+      { chance = 20, entity = "data/entities/props/physics_bone_01.xml" },
       { chance = 20, entity = "data/entities/props/physics_bone_02.xml" },
       { chance = 20, entity = "data/entities/props/physics_bone_03.xml" },
       { chance = 20, entity = "data/entities/props/physics_bone_04.xml" },
