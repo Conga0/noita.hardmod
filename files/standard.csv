@@ -76,5 +76,5 @@ hardmod_item_ring_of_returning_desc,Opens a portal to the last Holy Mountain whe
 hardmod_portal_ring_of_returning,Portal to Holy Mountain,,,,,,,,,,,,,
 hardmod_spell_mini_chainsaw_name,Mini Chainsaw,,,,,,,,,,,,,
 hardmod_spell_mini_chainsaw_desc,"A good tool for cutting meat. It's only slightly magical.",,,,,,,,,,,,,
-hardmod_spell_mana_reduce_desc,"Your wand regains 12% of its max mana per second",,,,,,,,,,,,,
-hardmod_spell_apotheosis_water_power_desc,Increases fire rate and restores 12% max mana per second when wet,,,,,,,,,,,,,
+hardmod_spell_mana_reduce_desc,"Adds up to 50 mana during the first second of firing",,,,,,,,,,,,,
+hardmod_spell_apotheosis_water_power_desc,Increases fire rate and adds up to 50 mana when wet,,,,,,,,,,,,,
