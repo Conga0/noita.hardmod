@@ -26,6 +26,7 @@ local modules = {
 	"credits",
 	"nerf_vanilla_cheeses",
 	"stronger_kolmi",
+	"rapidfire_nerfs",
 }
 
 local force_enable_state = {
