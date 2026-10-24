@@ -1,0 +1,804 @@
+--[[
+  ###########################
+  ##  Noita Loot Lib v0.1  ##
+  ###########################
+
+  This library lets you extend vanilla loot tables (such as chests)
+  and create custom loot tables that can be easily extended by other mods.
+
+  Copyright (c) 2026 yui.dev
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+]]
+
+---@diagnostic disable: lowercase-global
+
+---@alias LootTable WeightedLootItem[]
+
+---@alias LootNumber
+---|number Exact number
+---|fun(ctx: LootContext): LootNumber Number from a function
+---|{a:LootNumber, b: LootNumber, each?: LootNumber, is_float?: boolean} Random range from a to b, with an optional multiplier (each). Set `is_float` to use `Randomf` instead
+---|LootVariable Value of the variable
+
+---@alias LootChance
+---|number Matches if `Random(0, 100) <= number`
+---|{a?: number, b?: number} Matches if `a <= Random(0, 100) <= b`. (a=0, b=100 by default)
+
+---@alias LootVariable
+---|'"rolls"' Amount of rolls left to do
+---|'"rolls_done"' Amount of rolls that have already been done
+---|'"pos_x"' X position where to spawn the loot
+---|'"pos_y"' Y position where to spawn the loot
+---|'"rand_x"' X position for PRNG
+---|'"rand_y"' Y position for PRNG
+---|'"bad_rolls"' Amount of "bad" rolls that have occurred so far (`is_bad`)
+---|'"gold"' Amount of gold to spawn at the end
+---|string Any arbitrary variable for your use
+
+---[[
+---@class LootPredicate
+---@field func (fun(ctx: LootContext): boolean)? Custom check with a function
+---@field flag_persistent string? Check if a player has a persistent flag set
+---@field flag_run string? Check if the player has a run flag set
+---@field greed_curse boolean? Set to `true` to check if the player has the greed curse, and `false` to check if the player doesn't have it
+---]]
+
+---[[
+---@class BaseLootItem
+---@field label string? Optional label, has no functionality but useful for patching loot tables from other mods
+---@field func (fun(ctx: LootContext): BaseLootItem?)? Custom drop function
+---@field check LootPredicate? Optional condition. Runs the item from `success` if matches, and from `fail` if it doesn't. The current item runs regardless of the result.
+---@field success BaseLootItem? This will run if the check in `check` succeeds
+---@field fail BaseLootItem? This will run if the check in `check` fails
+---@field do_all BaseLootItem[]? Run all these items sequentially
+---@field pick_weighted WeightedLootItem[]? Run a single item from a weighted list
+---@field pick_chance ChanceLootItem[]? Run a single item from a list with chances
+---@field pick_chance_all ChanceLootItem[]? Run all items from a list with chances
+---@field pick_random BaseLootItem[]? Run a random item from a list
+---@field entity string? Entity file to spawn
+---@field offset_x LootNumber? X offest to add to the spawned entity
+---@field offset_y LootNumber? Y offest to add to the spawned entity
+---@field is_bad boolean? Mark the chest drop as "bad" (will summon chest_effect_bad.xml on open instead of chest_effect.xml)
+---@field var LootVariable? Variable to modify
+---@field set LootNumber? Number to set the specified variable to (`var`)
+---@field add LootNumber? Number to add to the specified variable (`var`)
+---@field sub LootNumber? Number to subtract from the specified variable (`var`)
+---@field mul LootNumber? Number to multiply the specified variable by (`var`)
+---@field div LootNumber? Number to divide the specified variable by (`var`)
+---]]
+
+---[[
+---@class WeightedLootItem:BaseLootItem
+---@field weight number Random weight
+---]]
+
+---[[
+---@class ChanceLootItem:BaseLootItem
+---@field chance LootChance Random chance to match
+---]]
+
+---[[
+---@class LootContext
+---@field entities { file: string, x: number, y: number }[] List of entities and their positions to spawn
+---@field entity_id entity_id? Chest's entity ID
+---@field greed_curse boolean Whether the greed curse is active
+---@field vars table<LootVariable, number> Variables
+---]]
+
+---@alias LootItem BaseLootItem | WeightedLootItem | ChanceLootItem
+
+--------------------------------
+
+dofile_once("data/scripts/gun/gun_actions.lua")
+
+--------------------------------
+
+LOOTLIB_DATA = LOOTLIB_DATA or {
+  patching = false,
+  patched = false,
+  ---@type {[string]: LootTable}
+  tables = {},
+  ---@type {[string]: fun(ctx: LootContext, value: any, item: LootItem)}
+  handlers = {},
+  ---@type fun()[]
+  patch_end_hooks = {}
+}
+
+---@class lootlib
+local lootlib = {
+  handlers = LOOTLIB_DATA.handlers,
+  ---@type {[string]: LootTable}
+  default_loot_tables = {}
+}
+
+--------------------------------
+---      Main functions      ---
+--------------------------------
+
+---Create a loot context to use for generating loot tables
+---@param pos_x number? X position where to spawn the loot
+---@param pos_y number? Y position where to spawn the loot
+---@param entity_id integer? Chest's entity ID
+---@param rand_x number? X position for PRNG
+---@param rand_y number? Y position for PRNG
+---@param rolls number? Initial amount of rolls to do (defaults to 1)
+---@return LootContext
+function lootlib.create_context(pos_x, pos_y, rand_x, rand_y, entity_id, rolls)
+  return {
+    entities = {},
+    greed_curse = GameHasFlagRun("greed_curse") and not GameHasFlagRun("greed_curse_gone"),
+    entity_id = entity_id,
+    vars = {
+      pos_x = pos_x or 0,
+      pos_y = pos_y or 0,
+      rand_x = rand_x or pos_x or 0,
+      rand_y = rand_y or pos_y or 0,
+      rolls = rolls or 1,
+      rolls_done = 0,
+      bad_rolls = 0,
+      gold = 0,
+    }
+  }
+end
+
+---Generate and spawn a loot table
+---@param tbl LootTable
+---@param ctx LootContext
+---@return LootContext
+function lootlib.generate(tbl, ctx)
+  SetRandomSeed(ctx.vars.rand_x, ctx.vars.rand_y)
+
+  while ctx.vars.rolls > 0 do
+    ctx.vars.rolls = ctx.vars.rolls - 1
+    ctx.vars.rolls_done = ctx.vars.rolls_done + 1
+    lootlib.run_item(ctx, { pick_weighted = tbl })
+  end
+
+  if ctx.vars.gold > 0 then
+    lootlib.spawn_gold(ctx, ctx.vars.gold)
+  end
+
+  for _,entity in pairs(ctx.entities) do
+    local eid = EntityLoad(entity.file, entity.x, entity.y)
+    
+    local item_comp = EntityGetFirstComponent( eid, "ItemComponent" )
+    if item_comp and ComponentGetValue2(item_comp, "auto_pickup") then
+      ComponentSetValue2(item_comp, "next_frame_pickable", GameGetFrameNum() + 30)
+    end
+  end
+
+  return ctx
+end
+
+---@param ctx LootContext
+---@param item LootItem?
+---@return nil
+function lootlib.run_item(ctx, item)
+  if type(item) ~= "table" then return end
+
+  for key,handler in pairs(lootlib.handlers) do
+    local val = item[key]
+    if val ~= nil then
+      handler(ctx, val, item)
+    end
+  end
+end
+
+---@param ctx LootContext
+---@param num LootNumber
+---@param default LootNumber?
+---@return number
+function lootlib.get_value(ctx, num, default)
+  if num == nil then num = default or 0 end
+  if type(num) == "table" then
+    local a = lootlib.get_value(ctx, num.a)
+    local b = lootlib.get_value(ctx, num.b)
+    local each = lootlib.get_value(ctx, num.each, 1)
+
+    if num.is_float then
+      return Randomf(a, b) * each
+    else
+      return Random(a, b) * each
+    end
+  elseif type(num) == "string" then
+    return ctx.vars[num] or 0
+  elseif type(num) == "function" then
+    return lootlib.get_value(ctx, num(ctx))
+  else
+    return num
+  end
+end
+
+---@param rnd number
+---@param chance LootChance
+---@return boolean
+function lootlib.chance_matches(rnd, chance)
+  if type(chance) == "table" then
+    return rnd >= (chance.a or 0) and rnd <= (chance.b or 100)
+  else
+    return rnd <= chance
+  end
+end
+
+---@param tbl {chance: LootChance}[]
+---@return any?
+function lootlib.pick_random_chance(tbl)
+  local rnd = Random(0, 100)
+  for _,item in pairs(tbl) do
+    if lootlib.chance_matches(rnd, item.chance) then
+      return item
+    end
+  end
+
+  return nil
+end
+
+---@param tbl {weight: number}[]
+---@return any
+function lootlib.pick_random_weighted(tbl)
+  local total = 0
+  for _,item in pairs(tbl) do
+    total = total + item.weight
+  end
+
+  local threshold = Random() * total
+  total = 0
+
+  for _,item in pairs(tbl) do
+    total = total + item.weight
+    if total > threshold then
+      return item
+    end
+  end
+
+  return tbl[#tbl]
+end
+
+---@param x number
+---@param y number
+---@return entity_id
+function lootlib.spawn_random_card(x, y)
+  local card = nil
+
+  while true do
+    ---@diagnostic disable-next-line: undefined-global
+    card = actions[Random(1, #actions)]
+    
+    if
+      not card.spawn_requires_flag
+      or HasFlagPersistent(card.spawn_requires_flag)
+      and card.spawn_probability ~= "0"
+    then
+      break
+    end
+  end
+
+  if card then
+    return CreateItemActionEntity(string.lower(card.id), x, y)
+  end
+end
+
+---@param ctx LootContext
+---@param gold number
+function lootlib.spawn_gold(ctx, gold)
+  local gold_nuggets = {
+    { "data/entities/items/pickup/goldnugget_200000.xml", 200000 },
+    { "data/entities/items/pickup/goldnugget_10000.xml", 10000 },
+    { "data/entities/items/pickup/goldnugget_1000.xml", 1000 },
+    { "data/entities/items/pickup/goldnugget_200.xml", 200 },
+    { "data/entities/items/pickup/goldnugget_50.xml", 50 },
+    { "data/entities/items/pickup/goldnugget_10.xml", 10 },
+  }
+
+  while gold > 10 do
+    local entity = nil
+
+    for _,nugget in pairs(gold_nuggets) do
+      if gold >= nugget[2] then
+        entity = nugget[1]
+        gold = gold - nugget[2]
+        break
+      end
+    end
+
+    if not entity then break end
+    
+    table.insert(ctx.entities, {
+      file = entity,
+      x = ctx.vars.pos_x,
+      y = ctx.vars.pos_y,
+      gold = true
+    })
+  end
+end
+
+--------------------------------
+---         Handlers         ---
+--------------------------------
+
+---@param check LootPredicate
+function lootlib.handlers.check(ctx, check, item)
+  local valid = true
+
+  if
+    (check.func and not check.func(ctx))
+    or (check.flag_persistent and not HasFlagPersistent(check.flag_persistent))
+    or (check.flag_run and not GameHasFlagRun(check.flag_run))
+    or (check.greed_curse and ctx.greed_curse ~= check.greed_curse)
+  then
+    valid = false
+  end
+
+  if valid then
+    lootlib.run_item(ctx, item.success)
+  else
+    lootlib.run_item(ctx, item.fail)
+  end
+end
+
+---@param func fun(ctx: LootContext): BaseLootItem?
+function lootlib.handlers.func(ctx, func)
+  lootlib.run_item(ctx, func(ctx))
+end
+
+---@param tbl WeightedLootItem[]
+function lootlib.handlers.pick_weighted(ctx, tbl)
+  lootlib.run_item(ctx, lootlib.pick_random_weighted(tbl))
+end
+
+---@param tbl ChanceLootItem[]
+function lootlib.handlers.pick_chance(ctx, tbl)
+  lootlib.run_item(ctx, lootlib.pick_random_chance(tbl))
+end
+
+---@param tbl BaseLootItem[]
+function lootlib.handlers.pick_random(ctx, tbl)
+  lootlib.run_item(ctx, tbl[Random(1, #tbl)])
+end
+
+---@param tbl ChanceLootItem[]
+function lootlib.handlers.pick_chance_all(ctx, tbl)
+  for _,item in pairs(tbl) do
+    if lootlib.chance_matches(Random(0, 100), item.chance) then
+      lootlib.run_item(ctx, item)
+    end
+  end
+end
+
+---@param tbl BaseLootItem[]
+function lootlib.handlers.do_all(ctx, tbl)
+  for _,it in pairs(tbl) do
+    lootlib.run_item(ctx, it)
+  end
+end
+
+---@param var LootVariable
+function lootlib.handlers.var(ctx, var, item)
+  local value = ctx.vars[var] or 0
+
+  if item.set then value = lootlib.get_value(ctx, item.set) end
+  if item.add then value = value + lootlib.get_value(ctx, item.add) end
+  if item.sub then value = value - lootlib.get_value(ctx, item.sub) end
+  if item.mul then value = value * lootlib.get_value(ctx, item.mul) end
+  if item.div then value = value / lootlib.get_value(ctx, item.div) end
+
+  ctx.vars[var] = value
+end
+
+---@param entity string
+function lootlib.handlers.entity(ctx, entity, item)
+  local x = ctx.vars.pos_x + lootlib.get_value(ctx, item.offset_x, { a=-10, b=10 })
+  local y = ctx.vars.pos_y + lootlib.get_value(ctx, item.offset_y, { a=-9, b=1 })
+
+  table.insert(ctx.entities, {
+    file = entity,
+    x = x, y = y
+  })
+end
+
+---@param amount LootNumber
+function lootlib.handlers.spawn_random_cards(ctx, amount)
+  amount = lootlib.get_value(ctx, amount)
+  for i=1,amount do
+    lootlib.spawn_random_card(ctx.vars.pos_x + (i - (amount / 2)) * 8, ctx.vars.pos_y + Random(-9, 1))
+  end
+end
+
+function lootlib.handlers.is_bad(ctx)
+  ctx.vars.bad_rolls = ctx.vars.bad_rolls + 1
+end
+
+--------------------------------
+---         Patching         ---
+--------------------------------
+
+local patch_file = "data/_lootlib_patch_init.lua"
+local function make_patch_file()
+  if not ModDoesFileExist(patch_file) then
+    ModTextFileSetContent(patch_file, "--")
+  end
+end
+
+---Add a patch script for editing loot tables.
+---
+---You should modify loot tables inside of patch scripts, so that other mods can access the loot tables too.
+---
+---This file will be ran for every separate context that needs to generate loot tables.
+---@param script string Path to the script
+function lootlib.add_patch_script(script)
+  make_patch_file()
+  ModLuaFileAppend(patch_file, script)
+end
+
+---Get a list of all added patch scripts
+---@return string[]
+function lootlib.get_patch_scripts()
+  make_patch_file()
+  return ModLuaFileGetAppends(patch_file)
+end
+
+---Override a list of patch scripts
+---@param scripts string[]
+function lootlib.set_patch_scripts(scripts)
+  make_patch_file()
+  ModLuaFileSetAppends(patch_file, scripts)
+end
+
+---The provided function will be called after all patch scripts have finished running
+---
+---Available only inside of a patching script
+---@param cb fun()
+function lootlib.on_patching_end(cb)
+  if not LOOTLIB_DATA.patching then return end
+  table.insert(LOOTLIB_DATA.patch_end_hooks, cb)
+end
+
+function lootlib.load_patches()
+  if LOOTLIB_DATA.patched or LOOTLIB_DATA.patching then return end
+
+  for key,tbl in pairs(lootlib.default_loot_tables) do
+    if LOOTLIB_DATA.tables[key] == nil then
+      LOOTLIB_DATA.tables[key] = tbl
+    end
+  end
+
+  local scripts = lootlib.get_patch_scripts()
+  LOOTLIB_DATA.patching = true
+
+  for _,script in pairs(scripts) do
+    if ModDoesFileExist(script) then
+      dofile_once(script)
+    else
+      print_error("lootlib.load_patches(): file does not exist: " .. script)
+    end
+  end
+
+  for _,hook in pairs(LOOTLIB_DATA.patch_end_hooks) do
+    hook()
+  end
+
+  LOOTLIB_DATA.patch_end_hooks = nil
+  LOOTLIB_DATA.patched = true
+  LOOTLIB_DATA.patching = false
+end
+
+---Returns a loot table by the provided name.
+---
+---You can edit the loot table inside of patch scripts (`lootlib.add_patch_script`)
+---
+---Use `lootlib.generate` combined with `lootlib.create_context` to generate the loot table.
+---@return LootTable
+function lootlib.get_loot_table(name)
+  lootlib.load_patches()
+
+  local tbl = LOOTLIB_DATA.tables[name]
+  if tbl == nil then
+    print_error("lootlib.get_loot_table(" .. name .. "): table does not exist")
+    return {}
+  end
+
+  return tbl
+end
+
+---Creates a new loot table, or overrides an existing one.
+---
+---Only available inside of patch scripts (`lootlib.add_patch_script`).
+---
+---If you want to change an existing loot table, please consider patching it instead of completely overriding.
+---@param name string Loot table name
+---@param tbl LootTable
+function lootlib.set_loot_table(name, tbl)
+  if not LOOTLIB_DATA.patching then
+    print_error("lootlib.set_loot_table() called outside of a patch script")
+    return
+  end
+
+  LOOTLIB_DATA.tables[name] = tbl
+end
+
+---Adds all items from `tbl` to the loot table.
+---
+---Only available inside of patch scripts (`lootlib.add_patch_script`).
+---@param name string Loot table name
+---@param tbl LootTable
+function lootlib.extend_loot_table(name, tbl)
+  if not LOOTLIB_DATA.patching then
+    print_error("lootlib.extend_loot_table() called outside of a patch script")
+    return
+  end
+
+  local orig = lootlib.get_loot_table(name)
+  for _,val in pairs(tbl) do
+    table.insert(orig, val)
+  end
+end
+
+---Returns a table of all loot tables
+---@return {[string]: LootTable}
+function lootlib.get_all_loot_tables()
+  lootlib.load_patches()
+  return LOOTLIB_DATA.tables
+end
+
+---Get a labeled item from a loot table/array of loot items
+---@param tbl LootItem[]
+---@param label string
+---@param recursive boolean? Whether or not to recurse (true by default)
+---@return LootItem?
+function lootlib.get_label(tbl, label, recursive)
+  if recursive == nil then recursive = true end
+
+  for _,item in pairs(tbl) do
+    if type(item) ~= "table" then
+      goto continue
+    end
+
+    if item.label == label then
+      return item
+    end
+
+    if recursive then
+      for _,value in pairs(item) do
+        if type(value) == "table" then
+          local it = lootlib.get_label(value, label)
+          if it then return it end
+        end
+      end
+    end
+
+    ::continue::
+  end
+end
+
+--------------------------------
+---   Vanilla loot tables    ---
+--------------------------------
+
+lootlib.default_loot_tables.chest_random = {
+  { label = "bomb", weight = 7, is_bad = true, entity = "data/entities/projectiles/bomb_small.xml" },
+  {
+    label = "gold",
+    weight = 33,
+    do_all = {
+      {
+        pick_weighted = {
+          { weight = 80, var = "gold", add = 70 },
+          { weight = 15, var = "gold", add = 100 },
+          { weight = 5, var = "gold", add = 200 }
+        }
+      },
+      {
+        pick_weighted = {
+          { weight = 50, var = "gold", add = 50 },
+          { weight = 46, var = "gold", add = 200 },
+          { weight = 4, var = "gold", add = 1000 },
+          {
+            weight = 1,
+            pick_chance_all = {
+              { chance = 100, var = "gold", add = { a=1, b=3, each=50 } },
+              { chance = 49, var = "gold", add = { a=1, b=3, each=200 } },
+              { chance = 19, var = "gold", add = { a=1, b=3, each=1000 } },
+            }
+          },
+        }
+      }
+    }
+  },
+  {
+    label = "potion",
+    weight = 10,
+    pick_weighted = {
+      { weight = 94, entity = "data/entities/items/pickup/potion.xml" },
+      { weight = 4, entity = "data/entities/items/pickup/powder_stash.xml" },
+      {
+        weight = 2,
+        pick_weighted = {
+          { weight = 98, entity="data/entities/items/pickup/potion_secret.xml" },
+          { weight = 2, entity="data/entities/items/pickup/potion_random_material.xml" }
+        }
+      },
+    }
+  },
+  {
+    label = "spell_refresh",
+    weight = 4,
+    pick_weighted = {
+      { weight = 98, entity = "data/entities/items/pickup/spell_refresh.xml" },
+      { weight = 2, entity = "data/entities/animals/illusions/shaman_wind.xml" },
+    }
+  },
+  {
+    label = "misc_items",
+    weight = 6,
+    pick_random = {
+      { entity = "data/entities/items/pickup/safe_haven.xml" },
+      { entity = "data/entities/items/pickup/moon.xml" },
+      { entity = "data/entities/items/pickup/thunderstone.xml" },
+      { entity = "data/entities/items/pickup/evil_eye.xml" },
+      { entity = "data/entities/items/pickup/brimstone.xml" },
+      {
+        label = "die",
+        check = { flag_persistent = "card_unlocked_duplicate" },
+        success = {
+          check = { greed_curse = true },
+          success = { entity = "data/entities/items/pickup/physics_greed_die.xml" },
+          fail = { entity = "data/entities/items/pickup/physics_die.xml" }
+        },
+        fail = { entity = "data/entities/items/pickup/potion.xml" }
+      },
+      {
+        label = "runestone",
+        pick_random = {
+          { entity = "data/entities/items/pickup/runestones/runestone_laser.xml" },
+          { entity = "data/entities/items/pickup/runestones/runestone_fireball.xml" },
+          { entity = "data/entities/items/pickup/runestones/runestone_lava.xml" },
+          { entity = "data/entities/items/pickup/runestones/runestone_slow.xml" },
+          { entity = "data/entities/items/pickup/runestones/runestone_null.xml" },
+          { entity = "data/entities/items/pickup/runestones/runestone_disc.xml" },
+          { entity = "data/entities/items/pickup/runestones/runestone_metal.xml" },
+        }
+      },
+      {
+        label = "gold_orb",
+        check = { greed_curse = true },
+        success = { entity = "data/entities/items/pickup/physics_gold_orb_greed.xml" },
+        fail = { entity = "data/entities/items/pickup/physics_gold_orb.xml" }
+      }
+    }
+  },
+  {
+    label = "random_card",
+    weight = 5,
+    spawn_random_cards = function()
+      local rnd = Random(1, 100)
+      return math.min(5, math.max(1, math.floor((rnd + 9) / 10) - 4))
+    end,
+  },
+  {
+    label = "wand",
+    weight = 19,
+    pick_weighted = {
+      { weight = 25, entity = "data/entities/items/wand_level_01.xml" },
+      { weight = 25, entity = "data/entities/items/wand_unshuffle_01.xml" },
+      { weight = 25, entity = "data/entities/items/wand_level_02.xml" },
+      { weight = 15, entity = "data/entities/items/wand_unshuffle_02.xml" },
+      { weight = 6, entity = "data/entities/items/wand_level_03.xml" },
+      { weight = 2, entity = "data/entities/items/wand_unshuffle_03.xml" },
+      { weight = 1, entity = "data/entities/items/wand_level_04.xml" },
+      { weight = 1, entity = "data/entities/items/wand_unshuffle_04.xml" },
+    }
+  },
+  {
+    label = "health",
+    weight = 11,
+    pick_weighted = {
+      { weight = 88, entity = "data/entities/items/pickup/heart.xml" },
+      { weight = 1, entity = "data/entities/animals/illusions/dark_alchemist.xml" },
+      { weight = 10, entity = "data/entities/items/pickup/heart_better.xml" },
+      { weight = 1, entity = "data/entities/items/pickup/heart_fullhp.xml" },
+    }
+  },
+  {
+    label = "chest_to_gold",
+    weight = 3,
+    func = function(ctx)
+      if ctx.entity_id ~= nil then
+        EntityConvertToMaterial(ctx.entity_id, "gold")
+      end
+    end
+  },
+  { label = "add_2_rolls", weight = 1, var = "rolls", add = 2 },
+  { label = "add_3_rolls", weight = 1, var = "rolls", add = 3 },
+}
+
+lootlib.default_loot_tables.chest_random_super = {
+  {
+    label = "potion",
+    weight = 10,
+    pick_chance = {
+      {
+        chance = 30,
+        do_all = {
+          { entity = "data/entities/items/pickup/potion.xml" },
+          { entity = "data/entities/items/pickup/potion.xml" },
+          { entity = "data/entities/items/pickup/potion_secret.xml" },
+        }
+      },
+      {
+        chance = 100,
+        do_all = {
+          { entity = "data/entities/items/pickup/potion_secret.xml" },
+          { entity = "data/entities/items/pickup/potion_secret.xml" },
+          { entity = "data/entities/items/pickup/potion_random_material.xml" },
+        }
+      }
+    }
+  },
+  {
+    label = "rain_gold",
+    weight = 5,
+    -- TODO: i should probably add max_rolls or smth
+    check = {
+      func = function(ctx) return (ctx.vars.rains or 0) < 5 end,
+    },
+    success = {
+      entity = "data/entities/projectiles/rain_gold.xml",
+      var = "rains",
+      add = 1,
+    }
+  },
+  {
+    label = "essence_stone",
+    weight = 3,
+    pick_weighted = {
+      { weight = 30, entity = "data/entities/items/pickup/waterstone.xml" },
+      { weight = 1, entity = "data/entities/items/pickup/poopstone.xml" },
+    }
+  },
+  {
+    label = "wand",
+    weight = 21,
+    pick_weighted = {
+      { weight = 25, entity = "data/entities/items/wand_level_04.xml" },
+      { weight = 25, entity = "data/entities/items/wand_unshuffle_04.xml" },
+      { weight = 25, entity = "data/entities/items/wand_level_05.xml" },
+      { weight = 15, entity = "data/entities/items/wand_unshuffle_05.xml" },
+      { weight = 6, entity = "data/entities/items/wand_level_06.xml" },
+      { weight = 2, entity = "data/entities/items/wand_unshuffle_06.xml" },
+      { weight = 1, entity = "data/entities/items/wand_level_06.xml" },
+      { weight = 1, entity = "data/entities/items/wand_level_10.xml" },
+    }
+  },
+  {
+    label = "hearts",
+    weight = 21,
+    pick_weighted = {
+      { weight = 89, entity = "data/entities/items/pickup/heart.xml" },
+      { weight = 10, entity = "data/entities/items/pickup/heart_better.xml" },
+      { weight = 1, entity = "data/entities/items/pickup/heart_fullhp.xml" },
+    }
+  },
+  { label = "add_2_rolls", weight = 38, var = "rolls", add = 2 },
+  { label = "add_3_rolls", weight = 2, var = "rolls", add = 3 },
+}
+
+lootlib.default_loot_tables.chest_random_super_with_sampo = {
+  {
+    weight = 100000,
+    pick_weighted = lootlib.default_loot_tables.chest_random_super,
+  },
+  {
+    label = "sampo",
+    -- TODO: adding max_rolls and other parameters for the root loot table would be nice
+    weight = 1,
+    func = function(ctx)
+      EntityLoadEndGameItem("data/entities/animals/boss_centipede/sampo.xml", ctx.vars.pos_x, ctx.vars.pos_y)
+    end
+  },
+}
+
+--------------------------------
+
+return lootlib
