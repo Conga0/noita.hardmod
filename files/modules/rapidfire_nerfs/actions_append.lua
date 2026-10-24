@@ -1,17 +1,19 @@
 reworked_actions = {
 	["CHAINSAW"] = {
-        sprite              = "mods/noita.hardmod/files/modules/rapidfire_nerfs/chainsaw.png",
         spawn_level         = "6,10",
         spawn_probability   = "0.2,1",
         price               = 160,
         mana                = 12,
-        action              = function()
-                                add_projectile( "data/entities/projectiles/deck/chainsaw.xml" )
-                                c.fire_rate_wait = c.fire_rate_wait * 0.5
-                                c.spread_degrees = c.spread_degrees + 6.0
-                                current_reload_time = current_reload_time - 10
-                            end,
 	},
+    ["MANA_REDUCE"] = {
+        description         = "$hardmod_spell_mana_reduce_desc",
+        type                = ACTION_TYPE_PASSIVE,
+        mana                = 0,
+        custom_xml_file     = "mods/noita.hardmod/files/modules/rapidfire_nerfs/entities/card_mana_reduce.xml",
+        action              = function()
+                                draw_actions( 1, true )
+                            end,
+    },
 }
 
 new_actions = {
@@ -25,10 +27,11 @@ new_actions = {
         spawn_level         = "0,2",
         spawn_probability   = "1,1",
         price               = 80,
-        mana                = 1,
+        mana                = 6,
         sound_loop_tag      = "sound_chainsaw",
         action              = function()
                                 add_projectile( "data/entities/projectiles/deck/chainsaw.xml" )
+                                c.fire_rate_wait = c.fire_rate_wait * 0.5
                                 c.spread_degrees = c.spread_degrees + 6.0
                                 current_reload_time = current_reload_time - 10
                             end,
