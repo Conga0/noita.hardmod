@@ -61,6 +61,8 @@
 ---@field entity string? Entity file to spawn
 ---@field offset_x LootNumber? X offest to add to the spawned entity
 ---@field offset_y LootNumber? Y offest to add to the spawned entity
+---@field spawn_random_cards LootNumber? Spawn [n] random cards
+---@field card_filter (fun(card: any): boolean)? Filter for spawn_random_cards. Return false to disallow the card from spawning
 ---@field is_bad boolean? Mark the chest drop as "bad" (will summon chest_effect_bad.xml on open instead of chest_effect.xml)
 ---@field var LootVariable? Variable to modify
 ---@field set LootNumber? Number to set the specified variable to (`var`)
@@ -95,6 +97,7 @@
 ---|"chest_random"
 ---|"chest_random_super" Wrapper containing either the sampo drop or chest_random_super_base
 ---|"chest_random_super_base" Edit this instead of chest_random_super
+---|"misc_items" Random item (runestones, die, kuu, etc) dropped by chests and utility boxes; everything has weight 1 by default
 ---|"utility_box"
 ---|string
 ---@alias LootHookFunc fun(ctx: LootContext, tbl: LootTable, table_name: LootTableName)
@@ -283,25 +286,29 @@ end
 
 ---@param x number
 ---@param y number
----@return entity_id
-function lootlib.spawn_random_card(x, y)
-  local card = nil
+---@param filter (fun(card: any): boolean)?
+---@return entity_id?
+function lootlib.spawn_random_card(x, y, filter)
+  local found = nil
 
-  while true do
+  for _=1,999 do
     ---@diagnostic disable-next-line: undefined-global
-    card = actions[Random(1, #actions)]
-    
+    local card = actions[Random(1, #actions)]
+
     if
       not card.spawn_requires_flag
       or HasFlagPersistent(card.spawn_requires_flag)
       and card.spawn_probability ~= "0"
     then
-      break
+      if not filter or filter(card) then
+        found = card
+        break
+      end
     end
   end
 
-  if card then
-    return CreateItemActionEntity(string.lower(card.id), x, y)
+  if found then
+    return CreateItemActionEntity(string.lower(found.id), x, y)
   end
 end
 
@@ -460,10 +467,10 @@ function lootlib.handlers.entity(ctx, entity, item)
 end
 
 ---@param amount LootNumber
-function lootlib.handlers.spawn_random_cards(ctx, amount)
+function lootlib.handlers.spawn_random_cards(ctx, amount, item)
   amount = lootlib.get_value(ctx, amount)
   for i=1,amount do
-    lootlib.spawn_random_card(ctx.vars.pos_x + (i - (amount / 2)) * 8, ctx.vars.pos_y + Random(-9, 1))
+    lootlib.spawn_random_card(ctx.vars.pos_x + (i - (amount / 2)) * 8, ctx.vars.pos_y + Random(-9, 1), item.card_filter)
   end
 end
 
@@ -643,8 +650,17 @@ end
 ---Add mod appends to vanilla chests
 ---@param lib_path string Path to lootlib
 function lootlib.init_patches(lib_path)
-  ModLuaFileAppend("data/scripts/items/chest_random.lua", lib_path)
-  ModLuaFileAppend("data/scripts/items/chest_random_super.lua", lib_path)
+  if not ModDoesFileExist(lib_path) then
+    error("Invalid library path " .. lib_path)
+  end
+
+  for file,_ in pairs(lootlib.config.chest_script_loot_table_names) do
+    if not ModDoesFileExist(file) then
+      print_error("Invalid chest script path " .. file)
+    else
+      ModLuaFileAppend(file, lib_path)
+    end
+  end
 end
 
 ---The provided function will be called right before a chest opens.
@@ -729,6 +745,45 @@ end
 ---   Vanilla loot tables    ---
 --------------------------------
 
+lootlib.default_loot_tables.misc_items = {
+  { weight = 1, entity = "data/entities/items/pickup/safe_haven.xml" },
+  { weight = 1, entity = "data/entities/items/pickup/moon.xml" },
+  { weight = 1, entity = "data/entities/items/pickup/thunderstone.xml" },
+  { weight = 1, entity = "data/entities/items/pickup/evil_eye.xml" },
+  { weight = 1, entity = "data/entities/items/pickup/brimstone.xml" },
+  {
+    label = "die",
+    weight = 1,
+    check = { flag_persistent = "card_unlocked_duplicate" },
+    success = {
+      check = { greed_curse = true },
+      success = { entity = "data/entities/items/pickup/physics_greed_die.xml" },
+      fail = { entity = "data/entities/items/pickup/physics_die.xml" }
+    },
+    fail = { entity = "data/entities/items/pickup/potion.xml" }
+  },
+  {
+    label = "runestone",
+    weight = 1,
+    pick_random = {
+      { entity = "data/entities/items/pickup/runestones/runestone_laser.xml" },
+      { entity = "data/entities/items/pickup/runestones/runestone_fireball.xml" },
+      { entity = "data/entities/items/pickup/runestones/runestone_lava.xml" },
+      { entity = "data/entities/items/pickup/runestones/runestone_slow.xml" },
+      { entity = "data/entities/items/pickup/runestones/runestone_null.xml" },
+      { entity = "data/entities/items/pickup/runestones/runestone_disc.xml" },
+      { entity = "data/entities/items/pickup/runestones/runestone_metal.xml" },
+    }
+  },
+  {
+    label = "gold_orb",
+    weight = 1,
+    check = { greed_curse = true },
+    success = { entity = "data/entities/items/pickup/physics_gold_orb_greed.xml" },
+    fail = { entity = "data/entities/items/pickup/physics_gold_orb.xml" }
+  }
+}
+
 lootlib.default_loot_tables.chest_random = {
   { label = "bomb", weight = 7, is_bad = true, entity = "data/entities/projectiles/bomb_small.xml" },
   {
@@ -785,41 +840,7 @@ lootlib.default_loot_tables.chest_random = {
   {
     label = "misc_items",
     weight = 6,
-    pick_random = {
-      { entity = "data/entities/items/pickup/safe_haven.xml" },
-      { entity = "data/entities/items/pickup/moon.xml" },
-      { entity = "data/entities/items/pickup/thunderstone.xml" },
-      { entity = "data/entities/items/pickup/evil_eye.xml" },
-      { entity = "data/entities/items/pickup/brimstone.xml" },
-      {
-        label = "die",
-        check = { flag_persistent = "card_unlocked_duplicate" },
-        success = {
-          check = { greed_curse = true },
-          success = { entity = "data/entities/items/pickup/physics_greed_die.xml" },
-          fail = { entity = "data/entities/items/pickup/physics_die.xml" }
-        },
-        fail = { entity = "data/entities/items/pickup/potion.xml" }
-      },
-      {
-        label = "runestone",
-        pick_random = {
-          { entity = "data/entities/items/pickup/runestones/runestone_laser.xml" },
-          { entity = "data/entities/items/pickup/runestones/runestone_fireball.xml" },
-          { entity = "data/entities/items/pickup/runestones/runestone_lava.xml" },
-          { entity = "data/entities/items/pickup/runestones/runestone_slow.xml" },
-          { entity = "data/entities/items/pickup/runestones/runestone_null.xml" },
-          { entity = "data/entities/items/pickup/runestones/runestone_disc.xml" },
-          { entity = "data/entities/items/pickup/runestones/runestone_metal.xml" },
-        }
-      },
-      {
-        label = "gold_orb",
-        check = { greed_curse = true },
-        success = { entity = "data/entities/items/pickup/physics_gold_orb_greed.xml" },
-        fail = { entity = "data/entities/items/pickup/physics_gold_orb.xml" }
-      }
-    }
+    pick_weighted = lootlib.default_loot_tables.misc_items
   },
   {
     label = "random_card",
@@ -848,7 +869,7 @@ lootlib.default_loot_tables.chest_random = {
     }
   },
   {
-    label = "health",
+    label = "hearts",
     weight = 11,
     pick_weighted = {
       { weight = 88, entity = "data/entities/items/pickup/heart.xml" },
@@ -954,6 +975,40 @@ lootlib.default_loot_tables.chest_random_super = {
       EntityLoadEndGameItem("data/entities/animals/boss_centipede/sampo.xml", ctx.vars.pos_x, ctx.vars.pos_y)
     end
   },
+}
+
+lootlib.default_loot_tables.utility_box = {
+  { label = "bomb", weight = 2, entity = "data/entities/projectiles/bomb_small.xml", is_bad = true },
+  {
+    label = "spell_refresh",
+    weight = 3,
+    pick_weighted = {
+      { weight = 98, entity = "data/entities/items/pickup/spell_refresh.xml" },
+      { weight = 2, entity = "data/entities/animals/illusions/shaman_wind.xml" }
+    }
+  },
+  {
+    label = "misc_items",
+    weight = 6,
+    pick_weighted = lootlib.default_loot_tables.misc_items
+  },
+  {
+    label = "random_card",
+    weight = 86,
+    card_filter = function (card)
+      return card.type == ACTION_TYPE_UTILITY or card.type == ACTION_TYPE_MODIFIER
+    end,
+    spawn_random_cards = function()
+      local rnd = Random(0,100)
+			if rnd <= 40 then return 2
+			elseif rnd <= 60 then return 3
+			elseif rnd <= 77 then return 4
+			elseif rnd <= 90 then return 5
+			else return 6 end
+    end
+  },
+  { label = "add_2_rolls", weight = 2, var = "rolls", add = 2 },
+  { label = "add_3_rolls", weight = 3, var = "rolls", add = 3 },
 }
 
 --------------------------------

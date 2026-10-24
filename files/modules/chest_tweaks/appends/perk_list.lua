@@ -27,3 +27,9 @@ table.insert(perk_list, {
   func = function() end,
   func_remove = function() end,
 })
+
+for idx,perk in ipairs(perk_list) do
+  if perk.id == "MEGA_BEAM_STONE" then
+    table.remove(perk, idx)
+  end
+end
