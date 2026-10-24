@@ -113,6 +113,21 @@ new_actions = {
                                 current_reload_time = current_reload_time - 10
                             end,
     },
+    {
+        id                  = "HARDMOD_SPELL_MANA_REGEN",
+        name                = "$hardmod_spell_mana_regen_name",
+        description         = "$hardmod_spell_mana_regen_desc",
+        sprite              = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/mana_regen.png",
+        type                = ACTION_TYPE_PASSIVE,
+        spawn_level         = "1,2,3,4,5,6", -- MANA_REDUCE
+        spawn_probability   = "0.7,0.9,1,1,1,1", -- MANA_REDUCE
+        price               = 100,
+        mana                = 0,
+        custom_xml_file     = "mods/noita.hardmod/files/modules/rapidfire_nerfs/entities/card_mana_regen.xml",
+        action              = function()
+                                draw_actions( 1, true )
+                            end,
+    },
 }
 
 for i=1,#actions do
