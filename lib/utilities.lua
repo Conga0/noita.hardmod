@@ -248,7 +248,7 @@ end
 ---return int The mapped value
 function Remap( value, inMin, inMax, outMin, outMax )
     if inMax == inMin then
-        error( "Input range cannot have zero length" )
+        error("Input range cannot have zero length")
     end
 
     -- normalise the input value to a 0‑1 scale
@@ -261,11 +261,11 @@ end
 ---@param perk_id string The perk's ID, i.e. "REMOVE_FOG_OF_WAR"
 ---@return int The amount of times this perk was taken by the player.
 function GetPerkPickupCount( perk_id )
-    dofile_once( "data/scripts/perks/perk_list.lua" )
+    dofile_once("data/scripts/perks/perk_list.lua")
 
-    local perk = get_perk_with_id( perk_list, perk_id )
-    local flag_name = get_perk_picked_flag_name( perk_id )
-    local pickup_count = tonumber( GlobalsGetValue( flag_name .. "_PICKUP_COUNT", "0" ) )
+    local perk = get_perk_with_id(perk_list, perk_id)
+    local flag_name = get_perk_picked_flag_name(perk_id)
+    local pickup_count = tonumber( GlobalsGetValue(flag_name .. "_PICKUP_COUNT", "0"))
 
     return pickup_count
 end
