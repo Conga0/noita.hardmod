@@ -43,10 +43,21 @@ local function modify_treasure_chest()
 	ModTextFileSetContent( path, tostring(xml) )
 end
 
+local function modify_xray()
+	local path = "data/entities/projectiles/deck/xray.xml"
+	local xml = nxml.parse( ModTextFileGetContent( path ) )
+	local proj_comp = xml:first_of("ProjectileComponent")
+	if proj_comp then
+		proj_comp:set( "lifetime", 30 )
+	end
+	ModTextFileSetContent( path, tostring(xml) )
+end
+
 hooks.mod_init = function()
 	modify_master_of_blinding()
 	modify_wandstone()
 	modify_mountain_altar()
+	modify_xray()
 	-- modify_treasure_chest() -- only if we use the depth-based formula (see chest_random_append.lua)
 end
 
