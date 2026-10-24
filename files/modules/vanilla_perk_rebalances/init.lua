@@ -48,7 +48,7 @@ local function modify_xray()
 	local xml = nxml.parse( ModTextFileGetContent( path ) )
 	local proj_comp = xml:first_of("ProjectileComponent")
 	if proj_comp then
-		proj_comp:set( "lifetime", 24 )
+		proj_comp:set( "lifetime", 30 )
 	end
 	ModTextFileSetContent( path, tostring(xml) )
 end
