@@ -82,9 +82,10 @@
 
 ---[[
 ---@class LootContext
----@field entities { file: string, x: number, y: number }[] List of entities and their positions to spawn
+---@field entities { file: string, x: number, y: number, is_gold?: boolean }[] List of entities and their positions to spawn
 ---@field entity_id entity_id? Chest's entity ID
 ---@field greed_curse boolean Whether the greed curse is active
+---@field gold_is_forever boolean Whether the player has the Gold is Forever perk
 ---@field vars table<LootVariable, number> Variables
 ---]]
 
@@ -144,9 +145,16 @@ local lootlib = {
 ---@param rolls number? Initial amount of rolls to do (defaults to 1)
 ---@return LootContext
 function lootlib.create_context(pos_x, pos_y, rand_x, rand_y, entity_id, rolls)
+  local gold_is_forever = false
+  local wsc = EntityGetFirstComponent(GameGetWorldStateEntity(), "WorldStateComponent")
+  if wsc ~= nil and ComponentGetValue2(wsc, "perk_gold_is_forever") then
+    gold_is_forever = true
+  end
+
   return {
     entities = {},
     greed_curse = GameHasFlagRun("greed_curse") and not GameHasFlagRun("greed_curse_gone"),
+    gold_is_forever = gold_is_forever,
     entity_id = entity_id,
     vars = {
       pos_x = pos_x or 0,
@@ -184,6 +192,17 @@ function lootlib.generate(tbl, ctx)
     local item_comp = EntityGetFirstComponent( eid, "ItemComponent" )
     if item_comp and ComponentGetValue2(item_comp, "auto_pickup") then
       ComponentSetValue2(item_comp, "next_frame_pickable", GameGetFrameNum() + 30)
+    end
+
+    if entity.is_gold then
+      if ctx.gold_is_forever then
+        local lifetime_comp = EntityGetComponent(eid, "LifetimeComponent")
+        if lifetime_comp then
+          for _,comp in pairs(lifetime_comp) do EntityRemoveComponent(eid, comp) end
+        end
+      end
+
+      EntityAddTag(eid, "lootlib_chest_gold")
     end
   end
 
@@ -293,7 +312,7 @@ function lootlib.spawn_gold(ctx, gold)
       file = entity,
       x = ctx.vars.pos_x,
       y = ctx.vars.pos_y,
-      gold = true
+      is_gold = true
     })
   end
 end
