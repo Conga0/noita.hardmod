@@ -91,7 +91,13 @@
 
 ---@alias LootItem BaseLootItem | WeightedLootItem | ChanceLootItem
 
----@alias LootHookFunc fun(ctx: LootContext, tbl: LootTable, table_name: string)
+---@alias LootTableName
+---|"chest_random"
+---|"chest_random_super" Wrapper containing either the sampo drop or chest_random_super_base
+---|"chest_random_super_base" Edit this instead of chest_random_super
+---|"utility_box"
+---|string
+---@alias LootHookFunc fun(ctx: LootContext, tbl: LootTable, table_name: LootTableName)
 
 --------------------------------
 
@@ -118,7 +124,7 @@ LOOTLIB_DATA = LOOTLIB_DATA or {
   config = {
     chest_script_loot_table_names = {
       ["data/scripts/items/chest_random.lua"] = "chest_random",
-      ["data/scripts/items/chest_random_super.lua"] = "chest_random_super_with_sampo",
+      ["data/scripts/items/chest_random_super.lua"] = "chest_random_super",
       ["data/scripts/items/utility_box.lua"] = "utility_box",
     }
   }
@@ -174,6 +180,18 @@ end
 ---@param ctx LootContext
 ---@return LootContext
 function lootlib.generate(tbl, ctx)
+  lootlib.roll_loot(tbl, ctx)
+  lootlib.spawn_loot(ctx)
+  return ctx
+end
+
+---Generate a loot table. This might still spawn some things depending on the loot table.
+---
+---Call `lootlib.spawn_loot` to spawn the generated loot, or `lootlib.generate` instead if you just want to do both at once
+---@param tbl LootTable
+---@param ctx LootContext
+---@return LootContext
+function lootlib.roll_loot(tbl, ctx)
   SetRandomSeed(ctx.vars.rand_x, ctx.vars.rand_y)
 
   while ctx.vars.rolls > 0 do
@@ -182,13 +200,19 @@ function lootlib.generate(tbl, ctx)
     lootlib.run_item(ctx, { pick_weighted = tbl })
   end
 
+  return ctx
+end
+
+---Spawn the generated loot from a loot table (from `lootlib.roll_loot`)
+---@param ctx LootContext
+function lootlib.spawn_loot(ctx)
   if ctx.vars.gold > 0 then
     lootlib.spawn_gold(ctx, ctx.vars.gold)
   end
 
   for _,entity in pairs(ctx.entities) do
     local eid = EntityLoad(entity.file, entity.x, entity.y)
-    
+
     local item_comp = EntityGetFirstComponent( eid, "ItemComponent" )
     if item_comp and ComponentGetValue2(item_comp, "auto_pickup") then
       ComponentSetValue2(item_comp, "next_frame_pickable", GameGetFrameNum() + 30)
@@ -205,8 +229,6 @@ function lootlib.generate(tbl, ctx)
       EntityAddTag(eid, "lootlib_chest_gold")
     end
   end
-
-  return ctx
 end
 
 ---@param ctx LootContext
@@ -286,6 +308,7 @@ end
 ---@param ctx LootContext
 ---@param gold number
 function lootlib.spawn_gold(ctx, gold)
+  local spawned = 0
   local gold_nuggets = {
     { "data/entities/items/pickup/goldnugget_200000.xml", 200000 },
     { "data/entities/items/pickup/goldnugget_10000.xml", 10000 },
@@ -295,7 +318,7 @@ function lootlib.spawn_gold(ctx, gold)
     { "data/entities/items/pickup/goldnugget_10.xml", 10 },
   }
 
-  while gold > 10 do
+  while gold > 10 and spawned < 500 do
     local entity = nil
 
     for _,nugget in pairs(gold_nuggets) do
@@ -314,6 +337,8 @@ function lootlib.spawn_gold(ctx, gold)
       y = ctx.vars.pos_y,
       is_gold = true
     })
+
+    spawned = spawned + 1
   end
 end
 
@@ -525,6 +550,7 @@ end
 ---You can edit the loot table inside of patch scripts (`lootlib.add_patch_script`)
 ---
 ---Use `lootlib.generate` combined with `lootlib.create_context` to generate the loot table.
+---@param name LootTableName
 ---@return LootTable
 function lootlib.get_loot_table(name)
   lootlib.load_patches()
@@ -557,7 +583,7 @@ end
 ---Adds all items from `tbl` to the loot table.
 ---
 ---Only available inside of patch scripts (`lootlib.add_patch_script`).
----@param name_or_table string|LootTable Loot table or its name
+---@param name_or_table LootTableName|LootTable Loot table or its name
 ---@param tbl LootTable
 function lootlib.extend_loot_table(name_or_table, tbl)
   if not LOOTLIB_DATA.patching then
@@ -630,7 +656,9 @@ function lootlib.on_chest_pre_open(cb)
   table.insert(LOOTLIB_DATA.chest_pre_open_hooks, cb)
 end
 
----The provided function will be called right after a chest opens.
+---The provided function will be called right after a chest's loot table is generated, but before it is spawned.
+---
+---You can modify the passed context to add more gold or entities to spawn.
 ---@param cb LootHookFunc
 function lootlib.on_chest_post_open(cb)
   table.insert(LOOTLIB_DATA.chest_post_open_hooks, cb)
@@ -677,11 +705,13 @@ local function chest_on_open_patch(entity)
 
   SetRandomSeed(ctx.vars.rand_x, ctx.vars.rand_y)
 
-  lootlib.generate(loot_table, ctx)
-
+  lootlib.roll_loot(loot_table, ctx)
+  
   for _,hook in pairs(LOOTLIB_DATA.chest_post_open_hooks) do
     hook(ctx, loot_table, loot_table_name)
   end
+
+  lootlib.spawn_loot(ctx)
 
   if ctx.vars.bad_rolls > 0 then
     EntityLoad("data/entities/particles/image_emitters/chest_effect_bad.xml", x, y)
@@ -795,8 +825,12 @@ lootlib.default_loot_tables.chest_random = {
     label = "random_card",
     weight = 5,
     spawn_random_cards = function()
-      local rnd = Random(1, 100)
-      return math.min(5, math.max(1, math.floor((rnd + 9) / 10) - 4))
+      local rnd = Random(0,100)
+			if rnd <= 50 then return 1
+			elseif rnd <= 70 then return 2
+			elseif rnd <= 80 then return 3
+			elseif rnd <= 90 then return 4
+			else return 5 end
     end,
   },
   {
@@ -836,7 +870,7 @@ lootlib.default_loot_tables.chest_random = {
   { label = "add_3_rolls", weight = 1, var = "rolls", add = 3 },
 }
 
-lootlib.default_loot_tables.chest_random_super = {
+lootlib.default_loot_tables.chest_random_super_base = {
   {
     label = "potion",
     weight = 10,
@@ -907,15 +941,15 @@ lootlib.default_loot_tables.chest_random_super = {
   { label = "add_3_rolls", weight = 2, var = "rolls", add = 3 },
 }
 
-lootlib.default_loot_tables.chest_random_super_with_sampo = {
+lootlib.default_loot_tables.chest_random_super = {
   {
     weight = 100000,
-    pick_weighted = lootlib.default_loot_tables.chest_random_super,
+    pick_weighted = lootlib.default_loot_tables.chest_random_super_base,
   },
   {
     label = "sampo",
     -- TODO: adding max_rolls and other parameters for the root loot table would be nice
-    weight = 0.00001,
+    weight = 1,
     func = function(ctx)
       EntityLoadEndGameItem("data/entities/animals/boss_centipede/sampo.xml", ctx.vars.pos_x, ctx.vars.pos_y)
     end

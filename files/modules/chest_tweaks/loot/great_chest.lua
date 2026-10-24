@@ -1,6 +1,6 @@
 local lootlib = dofile_once("mods/noita.hardmod/lib/lootlib.lua")---@type lootlib
 
-local chest = lootlib.get_loot_table("chest_random_super")
+local chest = lootlib.get_loot_table("chest_random_super_base")
 
 local rain = lootlib.get_label(chest, "rain_gold") or {}
 rain.success.entity = nil
