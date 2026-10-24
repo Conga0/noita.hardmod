@@ -14,6 +14,18 @@ reworked_actions = {
                                 draw_actions( 1, true )
                             end,
     },
+    ["APOTHEOSIS_WATER_POWER"] = {
+        description         = "$hardmod_spell_apotheosis_water_power_desc",
+        mana                = 0,
+        custom_xml_file     = "mods/noita.hardmod/files/modules/rapidfire_nerfs/entities/card_apotheosis_water_power.xml",
+        action              = function()
+                                if reflecting or GameGetGameEffectCount( GetUpdatedEntityID(), "WET" ) > 0 then
+                                    c.fire_rate_wait    = c.fire_rate_wait - 10
+                                    current_reload_time = current_reload_time - 20
+                                end
+                                draw_actions( 1, true )
+                            end,
+    },
 }
 
 new_actions = {

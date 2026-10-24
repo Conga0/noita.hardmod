@@ -1,4 +1,3 @@
-dofile_once( "mods/noita.hardmod/lib/utilities.lua" )
 
 local entity_id = GetUpdatedEntityID()
 local wand_entity_id = EntityGetParent( entity_id )
