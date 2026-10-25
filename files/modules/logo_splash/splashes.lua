@@ -41,4 +41,5 @@ return {
 	"Saving Grace had it coming.",
 	"Beat this to unlock Epilogue 3!",
 	"Lamia was drunk",
+	"qtyui_ was here",
 }
