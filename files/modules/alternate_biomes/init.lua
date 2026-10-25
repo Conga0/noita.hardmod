@@ -17,6 +17,8 @@ local function weighted_choice(options)
 	return nil
 end
 
+ModMaterialsFileAdd("mods/noita.hardmod/files/modules/alternate_biomes/materials/materials.xml")
+
 local M = {
 	magic_numbers_and_seed_initialised = function() 
 		local replacements = dofile_once("mods/noita.hardmod/files/modules/alternate_biomes/biome_list.lua")
