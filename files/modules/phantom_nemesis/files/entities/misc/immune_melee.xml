@@ -2,13 +2,20 @@
 
 	<InheritTransformComponent 
 		_enabled="1" >
-    </InheritTransformComponent>	
-    
-    <GameEffectComponent 
-        effect="PROTECTION_MELEE"
-        frames="-1"
-    >
-	</GameEffectComponent >
+    </InheritTransformComponent>
+
+	<LuaComponent
+		_enabled="1"
+		script_source_file="mods/noita.hardmod/files/modules/phantom_nemesis/files/scripts/animals/apply_immunity.lua"
+		execute_every_n_frame="2"
+		execute_times="1"
+		>
+	</LuaComponent>
+
+	<VariableStorageComponent
+		value_string="melee"
+		>
+	</VariableStorageComponent>
 
 	<UIIconComponent
 		name="Melee Immunity"
