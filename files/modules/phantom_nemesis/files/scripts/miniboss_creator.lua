@@ -217,7 +217,7 @@ local function GetAbilityWeight(ability_id, context, tier)
             end
         },
         {
-            affected_abilities = {"immune_projectile","immune_explosion","immune_electricity","immune_melee","immune_ice","immune_radioactive","immune_drill","immune_curse","immune_holy"},
+            affected_abilities = {"immune_projectile","immune_explosion","immune_electricity","immune_melee","immune_fire","immune_ice","immune_radioactive","immune_drill","immune_curse","immune_holy"},
             weight_change = function(ability_id) --Felcesis will prioritize purchasing immunities to the damage type you're using against him the most
                 if table.concat({"immune_",most_taken_damage_type}) == ability_id then
                     weight = weight * 100
@@ -446,6 +446,7 @@ function CreateMiniboss(entity_id, x, y, tier, budget, health_mult)
     ComponentSetValue2(dmgcomp, "max_hp", hp * health_mult)
     ComponentSetValue2(dmgcomp, "hp", hp * health_mult)
     ComponentObjectSetValue2(dmgcomp,"damage_multipliers","physics_hit", math.max(0,1-((tier-1) * 0.4))) --Gain 40% physics damage reduction per tier, maxing out at physics damage immunity at tier 3
+    if tier >= 3 then ComponentSetValue2(dmgcomp,"fire_probability_of_ignition",0) end
 
     local total_possessions = GlobalsGetValue("felcesis_total_possessions","0")
     GlobalsSetValue("felcesis_total_possessions",tostring(total_possessions+1))
@@ -465,7 +466,7 @@ end
 
 function FindPossessionTarget(biomes_visited)
     local cam_x,cam_y = GameGetCameraPos()
-    local possible_targets = EntityGetInRadiusWithTag(cam_x,cam_y,math.min(64+(biomes_visited*32),512),"enemy")
+    local possible_targets = EntityGetInRadiusWithTag(cam_x,cam_y,math.min(64+(biomes_visited*32),512),"enemy") or {}
     local strongest_target = {}
     local player_id = EntityGetWithTag("player_unit")[1] or 0
     local minimum_distance_from_player = 32 --Don't let felcesis possess an enemy right that's in the player's face, too unfair
@@ -490,12 +491,12 @@ function FindPossessionTarget(biomes_visited)
         end
 
         --Filter by suspicious components
-        local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(target,"ProjectileComponent") or 0
+        local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(target,"AnimalAIComponent") or 0
         local proj_comp = EntityGetFirstComponentIncludingDisabled(target,"ProjectileComponent") or 0
         local lifetime_comp = EntityGetFirstComponentIncludingDisabled(target,"LifetimeComponent") or 0
         local damagemodel_comp = EntityGetFirstComponentIncludingDisabled(target,"DamageModelComponent") or 0
         local camerabound_comp = EntityGetFirstComponentIncludingDisabled(target,"CameraBoundComponent") or 0
-        local physics_body_comp =EntityGetFirstComponentIncludingDisabled(target,"PhysicsImageShapeComponent") or 0
+        local physics_body_comp = EntityGetFirstComponentIncludingDisabled(target,"PhysicsImageShapeComponent") or 0
         if proj_comp > 0 or lifetime_comp > 0 or camerabound_comp == 0 or damagemodel_comp == 0 then
             goto skipthistarget
         end
@@ -513,20 +514,22 @@ function FindPossessionTarget(biomes_visited)
         end
 
         --Filter by a suspiciously empty name
+        --This means half the enemies in the game can't be possessed because nolla forgot to give them name but it prevents the in-game messages from looking odd
+        --Heavily deprioritise targets with no visible name
+        local hp_max = ComponentGetValue2(damagemodel_comp,"max_hp")
         if EntityGetName(target) == "" then
-            goto skipthistarget
+            hp_max = hp_max * 0.01
         end
 
         --At this point we've found a viable target
         --Try to find the highest health target (presumably the strongest) to possess
-        local hp_max = ComponentGetValue2(damagemodel_comp,"max_hp")
         if physics_body_comp > 0 then
             hp_max = hp_max * 0.25 --Deprioritise physics body entities for possession since they're a bit tricky to work with
         elseif animal_ai_comp > 0 then
             local has_ranged_attack = ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") or false
             local has_melee_attack = ComponentGetValue2(animal_ai_comp,"attack_melee_enabled") or false
             if has_melee_attack == false and has_melee_attack == false then
-                hp_max = hp_max * 0.25 --Deprioritise enemies with no attacks
+                hp_max = hp_max * 0.15 --Severely Deprioritise enemies with no attacks
             end
         end
 
