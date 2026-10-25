@@ -29,6 +29,7 @@ local modules = {
 	"stronger_kolmi",
 	"chest_tweaks",
 	"rapidfire_nerfs",
+	"trial_perks",
 }
 
 local force_enable_state = {

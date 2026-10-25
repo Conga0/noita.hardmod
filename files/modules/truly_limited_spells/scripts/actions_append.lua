@@ -153,13 +153,13 @@ if actions ~= nil then
 											cast_price = cast_price * 2
 										end
 
+										local x, y = EntityGetTransform( GetUpdatedEntityID() )
 										if money >= cast_price then
 											ComponentSetValue2( wcomp, "money", money - cast_price )
 
 											data.action( rec )
 											mana = mana - data.mana
 
-											local x, y = EntityGetTransform( GetUpdatedEntityID() )
 											GamePlaySound( "data/audio/Desktop/event_cues.bank", "event_cues/goldnugget/create", x, y )
 											if ModSettingGet( "noita.hardmod.print_indulgence_cost" ) == true then
 												local cost_label = EntityLoadAtWandTip( GetUpdatedEntityID(), "mods/noita.hardmod/files/modules/truly_limited_spells/entities/misc/indulgence_cost_label.xml" )
@@ -167,6 +167,11 @@ if actions ~= nil then
 													name = "hardmod_indulgence_cast_price",
 													value_int = cast_price,
 												})
+											end
+										else
+											GamePlaySound( "data/audio/Desktop/items.bank", "magic_wand/out_of_mana", x, y )
+											if ModSettingGet( "noita.hardmod.print_indulgence_cost" ) == true then
+												GamePrint( "You don't have enough gold to force-cast " .. GameTextGetTranslatedOrNot( data.name ) )
 											end
 										end
 									else
