@@ -1,4 +1,4 @@
-dofile_once( "mods/noita.hardmod/files/modules/d2d_content/scripts/trial_perk_utils.lua" )
+dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
 
 function damage_received( damage, message, entity_thats_responsible, is_fatal, projectile_thats_responsible )
     local EZWand = dofile_once("mods/D2DContentPack/files/scripts/lib/ezwand.lua")

@@ -13,7 +13,7 @@
 	></LifetimeComponent>
 
     <UIIconComponent
-        icon_sprite_file="mods/noita.hardmod/files/modules/d2d_content/gfx/ui_gfx/status_effects/time_trial_overhead.png"
+        icon_sprite_file="mods/noita.hardmod/files/modules/trial_perks/gfx/ui_gfx/status_effects/time_trial_overhead.png"
         name="$hardmod_game_effect_time_trial_name"
         description="$hardmod_game_effect_time_trial_desc"
         display_in_hud="0"
@@ -23,17 +23,17 @@
     
     <VariableStorageComponent
         name="filepath"
-        value_string="mods/noita.hardmod/files/modules/d2d_content/entities/game_effects/effect_time_trial.xml"
+        value_string="mods/noita.hardmod/files/modules/trial_perks/entities/game_effects/effect_time_trial.xml"
     ></VariableStorageComponent>
 
     <LuaComponent
-    	script_source_file="mods/noita.hardmod/files/modules/d2d_content/scripts/perks/time_trial_end.lua"
+    	script_source_file="mods/noita.hardmod/files/modules/trial_perks/scripts/perks/time_trial_end.lua"
     	execute_every_n_frame="-1"
     	execute_on_removed="1"
     ></LuaComponent>
 
     <LuaComponent
-    	script_source_file="mods/noita.hardmod/files/modules/d2d_content/scripts/perks/time_trial_scan.lua"
+    	script_source_file="mods/noita.hardmod/files/modules/trial_perks/scripts/perks/time_trial_scan.lua"
     	execute_every_n_frame="60"
     ></LuaComponent>
 

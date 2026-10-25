@@ -10,7 +10,7 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
 		GamePlaySound( "data/audio/Desktop/misc.bank", "game_effect/frozen/damage", x, y )
 		GamePrintImportant( "The Glass Heart shattered" )
 
-        dofile_once( "mods/noita.hardmod/files/modules/d2d_content/scripts/trial_perk_utils.lua" )
+        dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
         EntityRemoveAllByTag( owner, "hardmod_glass_heart" )
         SwapPerkIconForSpent( owner, "$hardmod_perk_glass_heart_name", false )
         SetInternalInt( owner, "hardmod_glass_heart_start_y", 0 )

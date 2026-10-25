@@ -16,7 +16,7 @@ local function spawn_staff( x, y, player )
     wand.spread = Random( -8, -2 )
 	wand:AddSpells( "LIGHT_BULLET", "BOMB", "BOMB", "HARDMOD_ALT_FIRE_ANYTHING", "HARDMOD_PARRY" )
 	wand:RemoveSpells( "BOMB", -1 )
-	wand:SetSprite( "mods/noita.hardmod/files/modules/d2d_content/gfx/items/wand_lasi.png", 6, 4, 18, 0 )
+	wand:SetSprite( "mods/noita.hardmod/files/modules/trial_perks/gfx/items/wand_lasi.png", 6, 4, 18, 0 )
 	wand:PlaceAt( x, y )
 	EntityAddTag( wand.entity_id, "hardmod_glass_wand" )
 
@@ -28,7 +28,7 @@ local function spawn_staff( x, y, player )
 			    EntityAddComponent( player, "LuaComponent",
 			    {
 			    	_tags = "hardmod_glass_wand_on_damage",
-			        script_damage_received = "mods/noita.hardmod/files/modules/d2d_content/scripts/items/glass_wand_on_damage.lua",
+			        script_damage_received = "mods/noita.hardmod/files/modules/trial_perks/scripts/items/glass_wand_on_damage.lua",
 			        execute_every_n_frame = "-1",
 			    })
 			end
@@ -48,7 +48,7 @@ EntityLoad( "data/entities/particles/image_emitters/heart_fullhp_effect.xml", px
 
 spawn_staff( px, py - 8 )
 
-dofile_once( "mods/noita.hardmod/files/modules/d2d_content/scripts/trial_perk_utils.lua" )
+dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
 EntityRemoveAllByTag( player, "hardmod_glass_heart" )
 SwapPerkIconForSpent( player, "$hardmod_perk_glass_heart_name", true )
 SetInternalInt( player, "hardmod_glass_heart_start_y", 0 )

@@ -1,4 +1,4 @@
-dofile_once( "mods/noita.hardmod/files/modules/d2d_content/scripts/trial_perk_utils.lua" )
+dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
 dofile_once( "data/scripts/lib/utilities.lua" )
 
 local x, y = EntityGetTransform( GetUpdatedEntityID() )
@@ -31,7 +31,7 @@ for i,proj_id in ipairs( EntityGetInRadiusWithTag( x, y, 20, "projectile" ) ) do
 		local proj_x, proj_y = EntityGetTransform( proj_id )
 	    ComponentSetValue( p_dcomp, "hp", math.min( p_hp + ( proj_dmg * heal_ratio ), p_max_hp ) )
 	    GamePlaySound( "data/audio/Desktop/projectiles.bank", "projectiles/glowing_laser/destroy", proj_x, proj_y )
-		EntityLoad( "mods/noita.hardmod/files/modules/d2d_content/entities/spells/parry_heal.xml", proj_x, proj_y )
+		EntityLoad( "mods/noita.hardmod/files/modules/trial_perks/entities/spells/parry_heal.xml", proj_x, proj_y )
 
 		-- return the projectile to caster
 		local sx, sy = EntityGetTransform( proj_source )

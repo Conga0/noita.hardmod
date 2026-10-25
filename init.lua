@@ -27,7 +27,7 @@ local modules = {
 	"nerf_vanilla_cheeses",
 	"stronger_kolmi",
 	"rapidfire_nerfs",
-	"d2d_content",
+	"trial_perks",
 }
 
 local force_enable_state = {

@@ -71,12 +71,12 @@
 	></InheritTransformComponent>
 
 	<LuaComponent
-		script_source_file="mods/noita.hardmod/files/modules/d2d_content/scripts/spells/parry_update.lua"
+		script_source_file="mods/noita.hardmod/files/modules/trial_perks/scripts/spells/parry_update.lua"
 		execute_every_n_frame="1"
 	></LuaComponent>
 
 	<LuaComponent
-		script_source_file="mods/noita.hardmod/files/modules/d2d_content/scripts/spells/parry_init.lua"
+		script_source_file="mods/noita.hardmod/files/modules/trial_perks/scripts/spells/parry_init.lua"
 		execute_times="1"
 	></LuaComponent>
 

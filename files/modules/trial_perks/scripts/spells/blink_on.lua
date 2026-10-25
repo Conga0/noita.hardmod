@@ -1,4 +1,4 @@
-dofile_once( "mods/noita.hardmod/files/modules/d2d_content/scripts/trial_perk_utils.lua" )
+dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
 
 local owner = nil
 local proj_comp = EntityGetFirstComponentIncludingDisabled( GetUpdatedEntityID(), "ProjectileComponent" )

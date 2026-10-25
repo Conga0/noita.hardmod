@@ -1,4 +1,4 @@
-dofile_once( "mods/noita.hardmod/files/modules/d2d_content/scripts/trial_perk_utils.lua" )
+dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
 
 local player = EntityGetRootEntity( GetUpdatedEntityID() )
 SetInternalInt( player, "hardmod_time_trail_start_y", 0 )

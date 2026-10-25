@@ -4,13 +4,13 @@ local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 hooks.mod_post_init = function()
 	ModLuaFileAppend(
 		"data/scripts/gun/gun_actions.lua",
-		"mods/noita.hardmod/files/modules/d2d_content/scripts/actions_append.lua" )
+		"mods/noita.hardmod/files/modules/trial_perks/scripts/actions_append.lua" )
 	ModLuaFileAppend(
 		"data/scripts/perks/perk_list.lua",
-		"mods/noita.hardmod/files/modules/d2d_content/scripts/perks_append.lua")
+		"mods/noita.hardmod/files/modules/trial_perks/scripts/perks_append.lua")
 	ModLuaFileAppend(
 		"data/scripts/biomes/temple_altar.lua",
-		"mods/noita.hardmod/files/modules/d2d_content/scripts/biomes/temple_altar_append.lua" )
+		"mods/noita.hardmod/files/modules/trial_perks/scripts/biomes/temple_altar_append.lua" )
 end
 
 hooks.player_spawned = function( player, is_run_start )
@@ -18,7 +18,7 @@ hooks.player_spawned = function( player, is_run_start )
 		GameAddFlagRun( "hardmod_trial_perks_initialized" )
 
 	    EntityAddComponent2( player, "LuaComponent", {
-	    	script_source_file = "mods/noita.hardmod/files/modules/d2d_content/scripts/player/trial_perk_scan.lua",
+	    	script_source_file = "mods/noita.hardmod/files/modules/trial_perks/scripts/player/trial_perk_scan.lua",
 	    	execute_every_n_frame = 60,
 	    })
 	end

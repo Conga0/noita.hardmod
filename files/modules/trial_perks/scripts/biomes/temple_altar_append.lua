@@ -1,4 +1,4 @@
-dofile_once( "mods/noita.hardmod/files/modules/d2d_content/scripts/trial_perk_utils.lua" )
+dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
 
 local _spawn_hp = spawn_hp
 function spawn_hp( x, y )
@@ -20,7 +20,7 @@ function spawn_hp( x, y )
 					local p_max_hp = ComponentGetValue2( dmg_comp, "max_hp" )
 					ComponentSetValue2( dmg_comp, "max_hp", p_max_hp * 2 )
 
-					TriggerScriptDelayed( player, "mods/noita.hardmod/files/modules/d2d_content/scripts/perks/glass_heart_reward.lua", 45 )
+					TriggerScriptDelayed( player, "mods/noita.hardmod/files/modules/trial_perks/scripts/perks/glass_heart_reward.lua", 45 )
 					spawn_return_portal = true
 				end
 			end
@@ -29,7 +29,7 @@ function spawn_hp( x, y )
 			if start_y ~= 0 and ( y - start_y ) > 600 then
 				SetInternalInt( player, "hardmod_time_trial_start_y", 0 )
 
-				TriggerScriptDelayed( player, "mods/noita.hardmod/files/modules/d2d_content/scripts/perks/time_trial_reward.lua", 45 )
+				TriggerScriptDelayed( player, "mods/noita.hardmod/files/modules/trial_perks/scripts/perks/time_trial_reward.lua", 45 )
 				spawn_return_portal = true
 			end
 		end

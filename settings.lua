@@ -65,6 +65,11 @@ local module_data = {
         ui_name = "Alt Fire Anything",
         ui_desc = "Utility spell that lets you have 8 wand slots. Kinda.",
     },
+    {
+        id      = "trial_perks",
+        ui_name = "Trial Perks",
+        ui_desc = "A set of perks that reward you for challenging yourself.",
+    },
 }
 
 --Key binding data

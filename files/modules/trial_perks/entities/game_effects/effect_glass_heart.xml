@@ -8,7 +8,7 @@
     ></GameEffectComponent>
 
     <UIIconComponent
-        icon_sprite_file="mods/noita.hardmod/files/modules/d2d_content/gfx/ui_gfx/status_effects/glass_heart_overhead.png"
+        icon_sprite_file="mods/noita.hardmod/files/modules/trial_perks/gfx/ui_gfx/status_effects/glass_heart_overhead.png"
         name="$hardmod_game_effect_glass_heart_name"
         description="$hardmod_game_effect_glass_heart_desc"
         display_in_hud="false"
@@ -18,7 +18,7 @@
     
     <VariableStorageComponent
         name="filepath"
-        value_string="mods/noita.hardmod/files/modules/d2d_content/entities/game_effects/effect_glass_heart.xml"
+        value_string="mods/noita.hardmod/files/modules/trial_perks/entities/game_effects/effect_glass_heart.xml"
     ></VariableStorageComponent>
 
 </Entity>

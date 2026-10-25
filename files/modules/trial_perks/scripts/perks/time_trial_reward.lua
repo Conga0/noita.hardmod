@@ -1,4 +1,4 @@
-dofile_once( "mods/noita.hardmod/files/modules/d2d_content/scripts/trial_perk_utils.lua" )
+dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
 
 local function spawn_staff( x, y, frames_left )
 	local tier = 1
@@ -19,9 +19,9 @@ local function spawn_staff( x, y, frames_left )
 	wand.manaChargeSpeed = 60 * tier
 	wand.capacity = 6 * tier
 	wand.spread = 0
-	wand:AddSpells( "TELEPORT_PROJECTILE_SHORT", "LIGHT_BULLET", "LIGHT_BULLET", "HARDMOD_ALT_FIRE_ANYTHING", "HARDMOD_BLINK" )
+	wand:AddSpells( "TELEPORT_PROJECTILE_SHORT", "LIGHT_BULLET", "LIGHT_BULLET", "HARDMOD_ALT_FIRE_ANYTHING", { "HARDMOD_BLINK", tier } )
 	wand:RemoveSpells( "LIGHT_BULLET", -1 )
-	wand:SetSprite( "mods/noita.hardmod/files/modules/d2d_content/gfx/items/wand_aika.png", 8, 4, 19, 0 )
+	wand:SetSprite( "mods/noita.hardmod/files/modules/trial_perks/gfx/items/wand_aika.png", 8, 4, 19, 0 )
 	wand:PlaceAt( x, y )
 	
 	return true
