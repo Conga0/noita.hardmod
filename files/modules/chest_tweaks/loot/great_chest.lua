@@ -16,7 +16,7 @@ lootlib.extend_loot_table(chest, {
     label = "misc_items",
     weight = 6,
     pick_weighted = lootlib.get_loot_table("misc_items")
-  }
+  },
 })
 
 -- {
