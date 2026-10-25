@@ -6,8 +6,11 @@ if bomb then
   bomb.entity = nil
   bomb.pick_weighted = {
     { weight = 10, entity = "data/entities/projectiles/bomb_small.xml" },
-    { weight = 10, entity = "data/entities/projectiles/deck/tentacle_portal.xml" },
-    { weight = 10, entity = "data/entities/projectiles/deck/tentacle_portal.xml" },
+    { weight = 8, entity = "data/entities/projectiles/deck/tentacle_portal.xml" },
+    -- {
+    --   weight = 10, entity = "data/entities/misc/essences/air_bullet.xml"
+    -- }
+    -- { weight = 10, entity = "data/entities/projectiles/deck/tentacle_portal.xml" },
   }
 
   bomb.var = "rolls"
