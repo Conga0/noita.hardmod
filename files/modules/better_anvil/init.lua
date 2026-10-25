@@ -52,19 +52,19 @@ local function patch_forge_convert()
       icomp:set("play_spinning_animation", "0")
     end
 
-    local acomp = broken_spell:first_of("AbilityComponent")
-    if acomp then
-      broken_spell:remove_child(acomp)
-      -- acomp:unset("throw_as_item")
+    local comps = { "ParticleEmitterComponent", "LightComponent", "SpriteComponent", "SpriteParticleEmitterComponent" }
+    for _,name in pairs(comps) do
+      for comp in broken_spell:each_of(name) do
+        local tags = comp.attr._tags and comp.attr._tags .. "," or ""
+        comp:set("_tags", tags .. "not_enabled_in_wand")
+      end
     end
 
-    broken_spell:set("tags", "hittable,teleportable_NOT,forgeable,card_summon_portal_broken")
-
-    -- broken_spell:create_child("ItemActionComponent", {
-    --   _enabled="0",
-    --   _tags = "enabled_in_world",
-    --   action_id = "",
-    -- })
+    broken_spell:set("tags", broken_spell.attr.tags .. ",not_enabled_in_wand")
+    broken_spell:create_child("ItemActionComponent", {
+      _tags = "enabled_in_world",
+      action_id = "",
+    })
   end
   -- [[mods/noita.hardmod/files/modules/better_anvil/forge/repaired_wand.xml]]
 end
