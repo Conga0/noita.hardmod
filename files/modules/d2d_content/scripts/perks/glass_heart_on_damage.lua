@@ -1,0 +1,18 @@
+
+function damage_received( damage, message, entity_thats_responsible, is_fatal, projectile_thats_responsible )
+	local responsible_entity_tags = EntityGetTags( entity_thats_responsible )
+    local responsible_entity_is_mortal = responsible_entity_tags and string.find( responsible_entity_tags, "mortal" )
+
+    if damage > 0 then
+        local owner = GetUpdatedEntityID()
+        local x, y = EntityGetTransform( owner )
+
+		GamePlaySound( "data/audio/Desktop/misc.bank", "game_effect/frozen/damage", x, y )
+		GamePrintImportant( "The Glass Heart shattered" )
+
+        dofile_once( "mods/noita.hardmod/files/modules/d2d_content/scripts/trial_perk_utils.lua" )
+        EntityRemoveAllByTag( owner, "hardmod_glass_heart" )
+        SwapPerkIconForSpent( owner, "$hardmod_perk_glass_heart_name", false )
+        SetInternalInt( owner, "hardmod_glass_heart_start_y", 0 )
+	end
+end

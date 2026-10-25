@@ -1,0 +1,24 @@
+<Entity tags="perk_entity,hardmod_glass_heart,hardmod_glass_heart_game_effect">
+
+    <InheritTransformComponent />
+
+    <GameEffectComponent
+        effect="CUSTOM"
+        custom_effect_id="HARDMOD_GLASS_HEART"
+    ></GameEffectComponent>
+
+    <UIIconComponent
+        icon_sprite_file="mods/noita.hardmod/files/modules/d2d_content/gfx/ui_gfx/status_effects/glass_heart_overhead.png"
+        name="$hardmod_game_effect_glass_heart_name"
+        description="$hardmod_game_effect_glass_heart_desc"
+        display_in_hud="false"
+        display_above_head="true"
+        is_perk="false"
+    ></UIIconComponent>
+    
+    <VariableStorageComponent
+        name="filepath"
+        value_string="mods/noita.hardmod/files/modules/d2d_content/entities/game_effects/effect_glass_heart.xml"
+    ></VariableStorageComponent>
+
+</Entity>
