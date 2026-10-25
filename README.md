@@ -35,8 +35,11 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `cheeseless_triggers`
   - Trigger spells pay their payload's cast delay
   - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
-- `no_more_chainsaw_wrapping`
-  - Within the cast state, chainsaw and luminous drill only give cast delay to eachother, the full state is reset to what it was *before* either of the spells was cast, once another spell is cast. This means any spell completely breaks the momentum of chainsaw.
+- `rapidfire_nerfs`
+  - Chainsaw now appears much later, and costs 12 mana to cast.
+  - A new spell called Mini Chainsaw replaces the original spawns, which costs 6 mana and halves cast delay instead of setting it to 0.
+  - Add Mana has been reworked to restore less mana the longer you hold the fire button, now working in bursts only.
+  - A new spell called Mana Regen restores 12% of a wand's max mana per second, intended to make high mana, low charge speed wands more usable.
 - `trappier_traps`
   - Made a bunch of the box traps unkickable.
   - Wall traps shotgun projectiles.
