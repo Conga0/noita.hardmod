@@ -1,6 +1,8 @@
 dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
 
 local function spawn_staff( x, y, frames_left )
+    local hm_visits = tonumber( GlobalsGetValue( "HOLY_MOUNTAIN_VISITS", "0" ) )
+    local wand_lvl = hm_visits
 	local tier = 1
 	if frames_left >= 2700 then
 		tier = 3
@@ -15,12 +17,11 @@ local function spawn_staff( x, y, frames_left )
 	wand.spellsPerCast = 1
 	wand.castDelay = 30
 	wand.rechargeTime = 40
-	wand.manaMax = 360 * tier
-	wand.manaChargeSpeed = 60 * tier
-	wand.capacity = 6 * tier
+	wand.manaMax = 240 + ( wand_lvl * 120 )
+	wand.manaChargeSpeed = 90 + ( wand_lvl * 30 )
+	wand.capacity = 2 + ( wand_lvl * 3 )
 	wand.spread = 0
-	wand:AddSpells( "TELEPORT_PROJECTILE_SHORT", "LIGHT_BULLET", "LIGHT_BULLET", "HARDMOD_ALT_FIRE_ANYTHING", { "HARDMOD_BLINK", tier } )
-	wand:RemoveSpells( "LIGHT_BULLET", -1 )
+	wand:AddSpells( "TELEPORT_PROJECTILE_SHORT", "HARDMOD_ALT_FIRE_ANYTHING", { "HARDMOD_BLINK", tier } )
 	wand:SetSprite( "mods/noita.hardmod/files/modules/trial_perks/gfx/items/wand_aika.png", 8, 4, 19, 0 )
 	wand:PlaceAt( x, y )
 	
