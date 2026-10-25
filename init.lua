@@ -31,6 +31,7 @@ local modules = {
 	"chest_tweaks",
 	"rapidfire_nerfs",
 	"trial_perks",
+	"alternate_biomes",
 }
 
 local force_enable_state = {
