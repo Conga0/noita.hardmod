@@ -27,6 +27,13 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
   - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
   - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
+- `chest_tweaks`
+  - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
+  - Adds the "Better Chests" perk which makes chests contain more loot
+  - Adds the "Treasure Hunter" perk which gives more gold to chests
+  - Removes the "Summon Sädekivi" perk; chests can now drop that item instead
+  - Makes great treasure chests much better
+  - Adds an uncommon Healthy Extra HP dropped from chests, which increases your max HP by 25 and heals you by the same amount
 - `no_more_max_hp_cheesing`
   - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
   - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.
