@@ -1,6 +1,6 @@
 <Biome>
   <Topology 
-    name="$biome_coalmine"
+    name="Infested Mines"
     type="BIOME_WANG_TILE"
     background_image="mods/noita.hardmod/files/modules/alternate_biomes/biomes/background_fungalmine.png"
     background_edge_left="data/weather_gfx/edges/background_fungicave_left.png"
