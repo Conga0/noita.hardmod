@@ -1,4 +1,8 @@
+local y,m,d = GameGetDateAndTimeUTC()
+local evil_level = (y * 31469 + m * 929 + d * 541) % 100 + 1
+
 return {
+	"Evil Level Today: " .. evil_level .. "%",
 	"Dunk is bald",
 	"Now atleast 1% harder!",
 	"I hope you like dying!",
@@ -42,4 +46,13 @@ return {
 	"Beat this to unlock Epilogue 3!",
 	"Lamia was drunk",
 	"qtyui_ was here",
+	"Also try Fair Mod!",
+	"Hämis :+1:",
+	"NT Sadge",
+	"Sponsored by CEO Hiisilius IV",
+	"No Fun Allowed",
+	"0% cheese!",
+	"Fair Mod 2: This Time It's Actually Fair",
+	"I LOVE THE SEQUEL TO PHYSICSBODYCOMPONENT, PHYSICSBODY2COMPONENT!!!!!",
+	"Fixes NB-55 and NB-121",
 }
