@@ -4,6 +4,8 @@ local module = {
 
 }
 
+ModLuaFileAppend("data/scripts/biomes/temple_altar_top_shared.lua", "mods/noita.hardmod/files/modules/trappier_traps/portal_basin/generate.lua")
+
 -- the traps are trappier than before :)
 
 local igniters = {"data/entities/props/physics/trap_ignite.xml", "data/entities/props/physics/trap_ignite_enabled.xml", "data/entities/props/physics_trap_ignite.xml", "data/entities/props/physics_trap_ignite_enabled.xml"}
@@ -100,8 +102,5 @@ for _, file in ipairs(tota_traps)do
 		end
 	end
 end
-
-
-
 
 return module
