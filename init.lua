@@ -18,6 +18,7 @@ local modules = {
 	"worse_hearts",
 	"vanilla_perk_rebalances",
 	--"no_more_chainsaw_wrapping", -- shit module never enable
+	"less_explosive",
 	"holy_mountain_rework",
 	"ring_of_returning",
 	"no_more_max_hp_cheesing",
@@ -30,6 +31,8 @@ local modules = {
 	"chest_tweaks",
 	"better_anvil",
 	"rapidfire_nerfs",
+	"trial_perks",
+	"alternate_biomes",
 }
 
 local force_enable_state = {
