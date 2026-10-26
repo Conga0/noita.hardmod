@@ -52,12 +52,14 @@ local function patch_broken_spell()
     local comps = { "ParticleEmitterComponent", "LightComponent", "SpriteComponent", "SpriteParticleEmitterComponent" }
     for _,name in pairs(comps) do
       for comp in broken_spell:each_of(name) do
-        local tags = comp.attr._tags and comp.attr._tags .. "," or ""
+        local tags = comp:get("_tags")
+        tags = tags and tags .. "," or ""
+
         comp:set("_tags", tags .. "not_enabled_in_wand")
       end
     end
 
-    broken_spell:set("tags", broken_spell.attr.tags .. ",not_enabled_in_wand")
+    broken_spell:set("tags", broken_spell:get("tags") .. ",not_enabled_in_wand")
     broken_spell:create_child("ItemActionComponent", {
       _tags = "enabled_in_world",
       action_id = "HARDMOD_BROKEN_SPELL",
@@ -74,7 +76,7 @@ local function patch_random_forge_location()
 
     local orig_color_file = "data/biome_impl/snowcastle/forge_visual.png"
     for child in scenes:each_child() do
-      if child.attr.colors_filename == orig_color_file then
+      if child:get("colors_filename") == orig_color_file then
         child:set("background_filename", root.."/gfx/old_forge/background.png")
         child:set("colors_filename", root.."/gfx/old_forge/visual.png")
         child:set("material_filename", root.."/gfx/old_forge/material.png")
