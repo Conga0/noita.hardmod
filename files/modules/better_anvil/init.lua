@@ -46,7 +46,7 @@ local function patch_broken_spell()
     local icomp = broken_spell:first_of("ItemComponent")
     if icomp then
       icomp:set("preferred_inventory", "FULL")
-      icomp:set("play_spinning_animation", "0")
+      icomp:set("play_spinning_animation", false)
     end
 
     local comps = { "ParticleEmitterComponent", "LightComponent", "SpriteComponent", "SpriteParticleEmitterComponent" }
@@ -84,8 +84,8 @@ local function patch_random_forge_location()
 
     -- TODO: Please tell me if there's a better way to do this...
     scenes:create_child("PixelScene", {
-      DEBUG_RELOAD_ME = "0", clean_area_before = "1",
-      skip_biome_checks = "1", skip_edge_textures = "0",
+      DEBUG_RELOAD_ME = false, clean_area_before = true,
+      skip_biome_checks = true, skip_edge_textures = false,
       background_filename = root.."/gfx/new_forge/background.png",
       colors_filename = root.."/gfx/new_forge/visual.png",
       material_filename = root.."/gfx/new_forge/material.png",
