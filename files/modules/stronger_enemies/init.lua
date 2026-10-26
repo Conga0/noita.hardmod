@@ -44,14 +44,4 @@ end
 patch_spawn_rules()
 patch_less_annoying_blinding()
 
--- todo
---[[
-  {
-		prob   		= 0.1,
-		min_count	= 1,
-		max_count	= 1,    
-		entity 	= "data/entities/animals/barfer.xml"
-	},
-]]
-
 return {}
