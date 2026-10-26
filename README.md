@@ -34,6 +34,13 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Removes the "Summon Sädekivi" perk; chests can now drop that item instead
   - Makes great treasure chests much better
   - Adds an uncommon Healthy Extra HP dropped from chests, which increases your max HP by 25 and heals you by the same amount
+- `better_anvil`
+  - Hiisi Anvil has been moved! You now have to explore the Hiisi Base a bit to find it.
+  - In the old place in the bottom right there is a book hinting at the general location of the anvil, so you don't have to search everything
+  - Reforging a broken tablet at the anvil now guarantees a good non-shuffle wand
+  - Broken Spell has been repurposed: you can now find it on item pedestals, and reforge it on the anvil for random good spells
+  - You can put broken spells in your spell inventory to save space
+  - Additionally, you can now use Broken Wands as a weapon early game - their projectiles will home onto enemies (they still hurt you, though, so watch out!)
 - `no_more_max_hp_cheesing`
   - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
   - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.

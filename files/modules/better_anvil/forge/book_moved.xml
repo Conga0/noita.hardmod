@@ -1,0 +1,21 @@
+<Entity tags="scroll">
+	<Base file="data/entities/items/books/base_book.xml">
+		<BookComponent _enabled="0">
+		</BookComponent>
+
+		<UIInfoComponent name="$hardmod_anvil_book_moved_title"></UIInfoComponent>
+    <AbilityComponent ui_name="$hardmod_anvil_book_moved_title"></AbilityComponent>
+		
+		<ItemComponent
+			ui_sprite="data/items_gfx/book.png"
+			item_name="$hardmod_anvil_book_moved_title"
+			ui_description="$hardmod_anvil_book_moved_desc"
+    ></ItemComponent>
+
+		<ParticleEmitterComponent _enabled="0">
+		</ParticleEmitterComponent>
+		
+		<PhysicsImageShapeComponent image_file="data/items_gfx/book_small.png"></PhysicsImageShapeComponent>
+    <SpriteComponent image_file="data/items_gfx/in_hand/book_in_hand.png"></SpriteComponent>
+	</Base>
+</Entity>

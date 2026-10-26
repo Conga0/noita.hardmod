@@ -29,6 +29,7 @@ local modules = {
 	"nerf_vanilla_cheeses",
 	"stronger_kolmi",
 	"chest_tweaks",
+	"better_anvil",
 	"rapidfire_nerfs",
 	"trial_perks",
 	"alternate_biomes",
