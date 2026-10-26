@@ -19,7 +19,6 @@ local basin_materials = {
 }
 
 local evil_hms = {
-  { 900, 1500 },
   { 2400, 3000 },
   { 4400, 5100 },
   { 6000, 6700 },
