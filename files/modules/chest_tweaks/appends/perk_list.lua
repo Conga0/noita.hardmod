@@ -30,6 +30,6 @@ table.insert(perk_list, {
 
 for idx,perk in ipairs(perk_list) do
   if perk.id == "MEGA_BEAM_STONE" then
-    table.remove(perk, idx)
+    perk.not_in_default_perk_pool = true
   end
 end
