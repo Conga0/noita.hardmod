@@ -56,7 +56,7 @@ g_small_enemies =
 		prob   		= 0.2,
 		min_count	= 1,
 		max_count	= 3,    
-		entity 	= "data/entities/animals/longleg.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/longleg.xml"
 	},
 	{
 		prob   		= 0.25,
@@ -120,7 +120,7 @@ g_big_enemies =
 		prob   		= 0.2,
 		min_count	= 5,
 		max_count	= 10,    
-		entity 	= "data/entities/animals/longleg.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/longleg.xml"
 	},
 	{
 		prob   		= 0.1,
