@@ -1,4 +1,5 @@
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua")---@type nxml
+local root = "mods/noita.hardmod/files/modules/better_anvil"
 
 local function patch_broken_wand()
   modifile(
@@ -22,28 +23,24 @@ local function patch_broken_wand()
   )
 end
 
+local forge_item_convert = "data/scripts/buildings/forge_item_convert.lua"
 local function patch_forge_convert()
-  local file = "data/scripts/buildings/forge_item_convert.lua"
-
   modifile(
-    file,
+    forge_item_convert,
+    [[data/entities/items/wand_level_05_better.xml]],
+    [[data/entities/items/wand_unshuffle_05.xml]]
+  )
+end
+
+local function patch_broken_spell()
+  modifile(
+    forge_item_convert,
     [[CreateItemActionEntity( "SUMMON_PORTAL", x, y)]],
     [[dofile("mods/noita.hardmod/files/modules/better_anvil/forge/repaired_spell.lua")(x, y)]]
   )
 
-  dofile_once("data/scripts/gun/gun_actions.lua")
-  ---@diagnostic disable-next-line: undefined-global
-  for _,action in pairs(actions) do
-    if action.id == "SUMMON_PORTAL" then
-      action.spawn_probability = "0.5"
-    end
-  end
-
-  modifile(
-    file,
-    [[data/entities/items/wand_level_05_better.xml]],
-    [[data/entities/items/wand_unshuffle_05.xml]]
-  )
+  ModLuaFileAppend("data/scripts/item_spawnlists.lua", root.."/appends/item_spawnlists.lua")
+  ModLuaFileAppend("data/scripts/gun/gun_actions.lua", root.."/appends/gun_actions.lua")
 
   for broken_spell in nxml.edit_file("data/entities/items/pickup/summon_portal_broken.xml") do
     local icomp = broken_spell:first_of("ItemComponent")
@@ -63,13 +60,49 @@ local function patch_forge_convert()
     broken_spell:set("tags", broken_spell.attr.tags .. ",not_enabled_in_wand")
     broken_spell:create_child("ItemActionComponent", {
       _tags = "enabled_in_world",
-      action_id = "",
+      action_id = "HARDMOD_BROKEN_SPELL",
     })
   end
-  -- [[mods/noita.hardmod/files/modules/better_anvil/forge/repaired_wand.xml]]
+end
+
+local function patch_random_forge_location()
+  local location = dofile_once("mods/noita.hardmod/files/modules/better_anvil/forge/location.lua")
+
+  for ps in nxml.edit_file("data/biome/_pixel_scenes.xml") do
+    local scenes = ps:first_of("mBufferedPixelScenes")
+    if not scenes then return end
+
+    local orig_color_file = "data/biome_impl/snowcastle/forge_visual.png"
+    for child in scenes:each_child() do
+      if child.attr.colors_filename == orig_color_file then
+        child:set("background_filename", root.."/gfx/old_forge/background.png")
+        child:set("colors_filename", root.."/gfx/old_forge/visual.png")
+        child:set("material_filename", root.."/gfx/old_forge/material.png")
+        break
+      end
+    end
+
+    -- TODO: Please tell me if there's a better way to do this...
+    scenes:create_child("PixelScene", {
+      DEBUG_RELOAD_ME = "0", clean_area_before = "1",
+      skip_biome_checks = "1", skip_edge_textures = "0",
+      background_filename = root.."/gfx/new_forge/background.png",
+      colors_filename = root.."/gfx/new_forge/visual.png",
+      material_filename = root.."/gfx/new_forge/material.png",
+      pos_x = location.x,
+      pos_y = location.y,
+    })
+  end
 end
 
 patch_broken_wand()
 patch_forge_convert()
+patch_broken_spell()
 
-return {}
+ModLuaFileAppend("data/scripts/biomes/snowcastle.lua", root.."/appends/snowcastle.lua")
+
+return {
+  magic_numbers_and_seed_initialised = function()
+    patch_random_forge_location()
+  end
+}
