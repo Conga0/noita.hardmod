@@ -1,0 +1,22 @@
+<Entity tags="card_action">
+
+    <Base file="data/entities/base_custom_card.xml" >
+
+        <SpriteComponent 
+            image_file="mods/Apotheosis/files/ui_gfx/gun_actions/hydromancy_s.png" >
+        </SpriteComponent>
+
+        <ItemActionComponent 
+            _tags="enabled_in_world"
+            action_id="APOTHEOSIS_WATER_POWER" >
+        </ItemActionComponent>
+
+    </Base>
+
+    <LuaComponent
+        _tags="enabled_in_hand,enabled_in_inventory"
+        script_source_file="mods/noita.hardmod/files/modules/rapidfire_nerfs/scripts/card_apotheosis_water_power_update.lua"
+        execute_every_n_frame="1"
+    ></LuaComponent>
+
+</Entity>
