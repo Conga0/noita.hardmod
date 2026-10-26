@@ -3,6 +3,7 @@
 -- UserK too!!
 -- !!!ooT enyL AgnoC
 -- D2D2
+-- qtyui_ too!!!!
 
 dofile_once("mods/noita.hardmod/lib/utilities.lua")
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
@@ -16,7 +17,8 @@ local modules = {
 	"logo_splash",
 	"worse_hearts",
 	"vanilla_perk_rebalances",
-	"no_more_chainsaw_wrapping",
+	--"no_more_chainsaw_wrapping", -- shit module never enable
+	"less_explosive",
 	"holy_mountain_rework",
 	"ring_of_returning",
 	"no_more_max_hp_cheesing",
@@ -26,6 +28,10 @@ local modules = {
 	"credits",
 	"nerf_vanilla_cheeses",
 	"stronger_kolmi",
+	"chest_tweaks",
+	"rapidfire_nerfs",
+	"trial_perks",
+	"alternate_biomes",
 }
 
 local force_enable_state = {

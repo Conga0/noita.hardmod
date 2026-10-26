@@ -27,6 +27,13 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
   - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
   - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
+- `chest_tweaks`
+  - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
+  - Adds the "Better Chests" perk which makes chests contain more loot
+  - Adds the "Treasure Hunter" perk which gives more gold to chests
+  - Removes the "Summon Sädekivi" perk; chests can now drop that item instead
+  - Makes great treasure chests much better
+  - Adds an uncommon Healthy Extra HP dropped from chests, which increases your max HP by 25 and heals you by the same amount
 - `no_more_max_hp_cheesing`
   - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
   - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.
@@ -35,8 +42,11 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `cheeseless_triggers`
   - Trigger spells pay their payload's cast delay
   - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
-- `no_more_chainsaw_wrapping`
-  - Within the cast state, chainsaw and luminous drill only give cast delay to eachother, the full state is reset to what it was *before* either of the spells was cast, once another spell is cast. This means any spell completely breaks the momentum of chainsaw.
+- `rapidfire_nerfs`
+  - Chainsaw now appears much later, and costs 12 mana to cast.
+  - A new spell called Mini Chainsaw replaces the original spawns, which costs 6 mana and halves cast delay instead of setting it to 0.
+  - Add Mana has been reworked to restore less mana the longer you hold the fire button, now working in bursts only.
+  - A new spell called Mana Regen restores 12% of a wand's max mana per second, intended to make high mana, low charge speed wands more usable.
 - `trappier_traps`
   - Made a bunch of the box traps unkickable.
   - Wall traps shotgun projectiles.
@@ -47,6 +57,8 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.
 - `alt_fire_anything`
   - The [Alt Fire Anything](https://noita.wiki.gg/wiki/Mod:Alt_Fire_Anything) spell has been ported into this mod.
+- `trial_perks`
+  - Adds a set of new perks that reward the player for challenging themselves.
 - `holy_mountain_rework`
   - [readme.md](files/modules/holy_mountain_rework/readme.md)
 - `ring_of_returning`
