@@ -28,12 +28,15 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
   - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
 - `biome_map`
-  - Changes to the world layout and biomes. Very WIP
-  - Adds a secret passageway between fungal cavern and ancient laboratory, hidden with dense rock
-  - Moves alchemist/ancient laboratory to be surrounded by EDR so you can't cheese your way to alchemist
-  - Adds a barrier made out of ominous liquid between cursed rock in PWs and The Tower
+  - Changes to the world layout and biomes
+  - Adds much more side biomes and more connections between them
+  - Adds a secret passage between fungal cavern and ancient laboratory, hidden with dense rock
   - Removes the top-right gold biome. No more moneys! In its place is the new Cheese Biome filled with cheese that we bought for these 250K gold.
-  - Fixes the cursed rock entity, you can no longer stand inbetween chunk borders to not get damaged
+  - Ancient Laboratory and Alchemist is now surrounded by EDR so you can't skip to the alchemist quickly
+  - There's now a "barrier" out of ominous liquid between cursed rock in PWs and The Tower
+  - The Wizard's Den Orb now has cursed rock under it instead of EDR to make cheesing harder; Master of Masters is also surrounded by cursed rock for the same reason.
+  - The bottom right meat realm now has a section that extends down infinitely, similar to the power plant
+  - There's now a small cloudscape biome between two sky temples to troll players doing the mimicium quest
 - `chest_tweaks`
   - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
   - Adds the "Better Chests" perk which makes chests contain more loot
@@ -64,6 +67,11 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `trappier_traps`
   - Made a bunch of the box traps unkickable.
   - Wall traps shotgun projectiles.
+  - Holy mountain portals now generate with more deadly materails
+- `nerf_vanilla_cheeses`
+  - TANNEREYE IS DEAD.
+  - Steve and Scott are now 95% resistant to physics damage
+  - The cursed rock entity has been fixed, you can no longer stand inbetween chunk borders to not get damaged
 - `worse_hearts`
   - Holy mountain hearts no longer grant health increase
 - `no_more_max_hp_cheesing`
