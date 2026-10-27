@@ -9,5 +9,5 @@ function spawn_book(x, y)
 end
 
 function init(x, y)
-  LoadPixelScene("mods/noita.hardmod/files/modules/biome_map/gfx/secret_lab_path.png", "", x, y - 29, "", true)
+  LoadPixelScene("mods/noita.hardmod/files/modules/biome_map/gfx/secret_lab_path.png", "", x, y, "", true)
 end

@@ -18,4 +18,10 @@ for file in nxml.edit_file("data/biome/_biomes_all.xml") do
   end
 end
 
+modifile(
+  "data/scripts/biomes/snowcastle_cavern.lua",
+  [[local is_right = ]],
+  [[local is_right = true --]]
+)
+
 return {}
