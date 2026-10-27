@@ -1,4 +1,4 @@
-local mana_reducing_spells = { "MANA_REDUCE", "APOTHEOSIS_WATER_POWER" }
+local mana_reducing_spells = { "MANA_REDUCE", "HARDMOD_MANA_REDUCE", "APOTHEOSIS_WATER_POWER" }
 
 reworked_actions = {
 	["CHAINSAW"] = {
@@ -8,10 +8,10 @@ reworked_actions = {
         mana              = 12,
 	},
     ["MANA_REDUCE"] = {
-        mana              = -15,
         spawn_level       = "3,4,5,6,10",
 		spawn_probability = "0.7,0.8,0.9,1,1",
         price             = 160,
+        mana              = -15,
     },
     ["HEAVY_SPREAD"] = {
         mana = 6
