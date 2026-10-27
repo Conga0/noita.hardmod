@@ -55,4 +55,5 @@ return {
 	"Fair Mod 2: This Time It's Actually Fair",
 	"I LOVE THE SEQUEL TO PHYSICSBODYCOMPONENT, PHYSICSBODY2COMPONENT!!!!!",
 	"Fixes NB-55 and NB-121",
+	"Restored 5wand!",
 }
