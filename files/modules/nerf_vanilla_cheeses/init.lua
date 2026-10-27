@@ -30,5 +30,15 @@ function hooks.edit_material(elem)
     end
 end
 
+-- Fix cursed rock not damaging the player between chunks
+for file in nxml.edit_file("data/entities/misc/rock_curse.xml") do
+  local comp = file:first_of("AreaDamageComponent")
+  if comp then
+    comp:set("aabb_min.x", -257)
+    comp:set("aabb_min.y", -257)
+    comp:set("aabb_max.x", 257)
+    comp:set("aabb_max.y", 257)
+  end
+end
 
 return hooks
