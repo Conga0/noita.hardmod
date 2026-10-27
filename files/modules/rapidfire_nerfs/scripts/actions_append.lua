@@ -1,4 +1,5 @@
 local mana_reducing_spells = { "MANA_REDUCE", "HARDMOD_MANA_REDUCE", "APOTHEOSIS_WATER_POWER" }
+local materials = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIAL_CEMENT" }
 
 reworked_actions = {
 	["CHAINSAW"] = {
@@ -143,17 +144,22 @@ new_actions = {
     },
 }
 
-for i=1,#actions do
-    if reworked_actions[actions[i].id] then
-        for k,v in pairs( reworked_actions[actions[i].id] ) do
-            actions[i][k] = v
+for _,material in pairs(materials) do
+    reworked_actions[material] = {
+        mana = 8
+    }
+end
+
+for _,action in pairs(actions) do
+    if reworked_actions[action] then
+        for k,v in pairs(reworked_actions[action]) do
+            action[k] = v
         end
-        actions[i]['hardmod_reworked'] = true
+
+        action["hardmod_reworked"] = true
     end
 end
 
-if actions ~= nil then
-    for i=1, #new_actions do
-        table.insert( actions, new_actions[i] )
-    end
+for _,action in pairs(new_actions) do
+    table.insert(actions, action)
 end
