@@ -1,4 +1,4 @@
-dofile_once("mods/noita.hardmod/files/modules/stronger_enemies/patch.lua")
+dofile_once("mods/noita.hardmod/files/modules/stronger_enemies/patcher.lua")
 
 PatchEnemies(g_big_enemies, {
   ["data/entities/animals/scavenger_clusterbomb.xml"] = { ng = 2 },

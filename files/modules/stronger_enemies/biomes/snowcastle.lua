@@ -1,4 +1,4 @@
-dofile_once("mods/noita.hardmod/files/modules/stronger_enemies/patch.lua")
+dofile_once("mods/noita.hardmod/files/modules/stronger_enemies/patcher.lua")
 
 PatchEnemies(g_small_enemies, {
   -- NG+1 makes these guys spawn much more frequently
