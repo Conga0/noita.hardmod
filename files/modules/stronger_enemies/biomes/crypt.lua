@@ -6,9 +6,9 @@ PatchEnemies(g_big_enemies, {
 
 AddEnemies(g_big_enemies, {
   {
-		prob   		= 0.09,
-		min_count	= 1,
-		max_count	= 1,
-		entity 	= "data/entities/animals/thundermage_big.xml"
-	},
+    prob      = 0.09,
+    min_count = 1,
+    max_count = 1,
+    entity    = "data/entities/animals/thundermage_big.xml"
+  },
 })

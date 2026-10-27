@@ -6,17 +6,17 @@ PatchEnemies(g_big_enemies, {
 
 AddEnemies(g_small_enemies, {
   {
-		prob   		= 0.1,
-		min_count	= 1,
-		max_count	= 1,
-		entity 	= "data/entities/animals/wizard_dark.xml",
-		ngpluslevel = 1,
-	},
+    prob        = 0.1,
+    min_count   = 1,
+    max_count   = 1,
+    entity      = "data/entities/animals/wizard_dark.xml",
+    ngpluslevel = 1,
+  },
   {
-		prob   		= 0.1,
-		min_count	= 1,
-		max_count	= 1,
-		entity 	= "data/entities/animals/wizard_twitchy.xml",
-		ngpluslevel = 1,
-	},
+    prob        = 0.1,
+    min_count   = 1,
+    max_count   = 1,
+    entity      = "data/entities/animals/wizard_twitchy.xml",
+    ngpluslevel = 1,
+  },
 })

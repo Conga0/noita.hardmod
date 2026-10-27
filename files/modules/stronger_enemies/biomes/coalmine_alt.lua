@@ -6,16 +6,16 @@ PatchEnemies(g_big_enemies, {
 
 AddEnemies(g_big_enemies, {
   {
-		prob   		= 0.1,
-		min_count	= 1,
-		max_count	= 1,    
-		entity 	= "data/entities/animals/scavenger_mine.xml",
-		ngpluslevel = 1,
-	},
-	{
-		prob   		= 0.1,
-		min_count	= 1,
-		max_count	= 1,
-		entity 	= "data/entities/animals/barfer.xml"
-	},
+    prob        = 0.1,
+    min_count   = 1,
+    max_count   = 1,
+    entity      = "data/entities/animals/scavenger_mine.xml",
+    ngpluslevel = 1,
+  },
+  {
+    prob      = 0.1,
+    min_count = 1,
+    max_count = 1,
+    entity    = "data/entities/animals/barfer.xml"
+  },
 })
