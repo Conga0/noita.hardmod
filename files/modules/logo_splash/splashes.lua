@@ -2,6 +2,10 @@ local y,m,d = GameGetDateAndTimeUTC()
 local evil_level = (y * 31469 + m * 929 + d * 541) % 100 + 1
 
 return {
+	-- TODO: update this before release
+	-- (you can use `tokei`, or just ping me on discord @.qtyui)
+	"15,000 Lines Of Code",
+
 	"Evil Level Today: " .. evil_level .. "%",
 	"Dunk is bald",
 	"Now atleast 1% harder!",
