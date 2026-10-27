@@ -4,12 +4,14 @@ dofile("data/scripts/lib/mod_settings.lua")
 -- (Dani: ordering this list from (roughly) most to least impactful for the average run.)
 local module_data = {
     {
+        char = "A",
         id      = "phantom_nemesis",
         ui_name = "Phantom Nemesis",
         ui_desc = "A powerful phantom haunts you throughout your run, possessing enemies\n" ..
                   "and giving them buffs that adapt to your strengths.",
     },
     {
+        char = "B",
         id      = "truly_limited_spells",
         ui_name = "Truly Limited Spells",
         ui_desc = "A variety of changes that make it harder (but not impossible!) to\n" ..
@@ -17,6 +19,7 @@ local module_data = {
                   "all Greek spells, along with various new ways to restore spell charges.",
     },
     {
+        char = "C",
         id      = "vanilla_perk_rebalances",
         ui_name = "Vanilla Perk Rebalances",
         ui_desc = "Makes certain vanilla perks - most notably the immunity perks,\n" ..
@@ -24,11 +27,13 @@ local module_data = {
                   "or harder to obtain.",
     },
     {
+        char = "D",
         id      = "holy_mountain_rework",
         ui_name = "Holy Mountain Rework",
         ui_desc = "Reworks Holy Mountains to collapse only once you take a perk.",
     },
     {
+        char = "E",
         id      = "ring_of_returning",
         ui_name = "Ring of Returning",
         ui_desc = "Each Holy Mountain spawns a breakable item that lets you warp back to them.",
@@ -389,6 +394,14 @@ local trigger_codes = {
     gamepad_right_trigger = 1,
 }
 
+local font_dir
+if ModDoesFileExist("mods/noita.hardmod/files/fonts/module_icons.xml") then
+	font_dir = "mods/noita.hardmod/files/fonts/"
+else
+	font_dir = "../../workshop/content/881100/[WORKSHOP ID HERE!!!!!!]/files/fonts/workshop/"
+end
+local font_icons = font_dir.."module_icons.xml"
+
 function has_value (table, value)
   for _, v in ipairs(table) do
       if v == value then
@@ -631,7 +644,7 @@ function ModSettingsGui( gui, in_main_menu )
 
     GuiLayoutBeginHorizontal( gui, 0, 0, false, 12, 8 )
     GuiColorSetForNextWidget( gui, 0.5, 0.5, 0.5, 1 )
-    GuiText( gui, 0, 3, GameTextGetTranslatedOrNot( "$hardmod_settings_header_modules" ) )
+    GuiText( gui, 0, 3, "Toggle modules" )
     GuiLayoutEnd( gui )
 
     GuiColorSetForNextWidget( gui, 1, 1, 1, 1 )
@@ -639,12 +652,7 @@ function ModSettingsGui( gui, in_main_menu )
         local module_disabled = "noita.hardmod."..module.id..".disabled"
         GuiLayoutBeginHorizontal( gui, 0, 0, false, 2, 2 )
 
-        -- show the icon 
-        local icon = "mods/noita.hardmod/files/modules/"..module.id.."/module_icon_016.png"
-        if not ModDoesFileExist( icon ) then
-            icon = "data/ui_gfx/gun_actions/unidentified.png"
-        end
-        local clicked,right_clicked = GuiImageButton( gui, new_id(), 4, 0, "", icon )
+        local clicked,right_clicked = GuiButton( gui, new_id(), 4, 0, module.char or "A", 1, font_icons )
         if clicked then
             if HasSettingFlag( module_disabled ) then
                 RemoveSettingFlag( module_disabled )

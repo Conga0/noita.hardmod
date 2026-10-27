@@ -1,12 +1,5 @@
 ---@diagnostic disable: undefined-global
 
-for _,action in pairs(actions) do
-  -- TODO: change the quest?
-  if action.id == "SUMMON_PORTAL" then
-    action.spawn_probability = "0.5"
-  end
-end
-
 table.insert(actions, {
   id = "HARDMOD_BROKEN_SPELL",
   name = "$action_broken_spell",

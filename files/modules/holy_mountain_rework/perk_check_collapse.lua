@@ -9,7 +9,7 @@ local function collapse()
 	StatsBiomeReset()
 
 	EntityLoad("data/entities/misc/workshop_collapse.xml", x - 210, y - 40)
-	EntityLoad("data/entities/misc/workshop_areadamage.xml", x-110, y-10) --unmodified
+	EntityLoad("data/entities/misc/workshop_areadamage.xml", x-124, y-10)
 
 	-- Destroy workshop entities
 
@@ -41,7 +41,7 @@ local function collapse()
 	temple_set_active_flag( x, y, "0" )
 
 	GameTriggerMusicFadeOutAndDequeueAll( 2.0 )
-	GamePlaySound( "data/audio/Desktop/misc.bank", "misc/temple_collapse", x-112, y - 40 )
+	GamePlaySound( "data/audio/Desktop/misc.bank", "misc/temple_collapse", x-112, y-40 )
 end
 
 if #EntityGetInRadiusWithTag(x, y, 130, "perk") == 0 then
@@ -49,7 +49,7 @@ if #EntityGetInRadiusWithTag(x, y, 130, "perk") == 0 then
 
 	local found_crystal
 	for _,entity in ipairs(entities) do
-		found_crystal = found_crystal or EntityHasTag(entity, "worm_crystal")
+		found_crystal = found_crystal or EntityHasTag(entity, "hardmod_hm_crystal")
 
 		local name = EntityGetName(entity)
 		if name == "hardmod.hm_rework.collapse_crystal" then collapse()

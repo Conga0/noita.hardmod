@@ -5,6 +5,10 @@ local directory = "mods/noita.hardmod/files/modules/nerf_vanilla_cheeses/"
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
 
+
+ModMagicNumbersFileAdd(directory.."magic_numbers.xml")
+
+
 -- Nerf Stevari and Skoude to be 95% resistant to Physics Damage
 local reduce_physics_damage = {
 	"data/entities/animals/necromancer_shop.xml",
@@ -40,5 +44,17 @@ for file in nxml.edit_file("data/entities/misc/rock_curse.xml") do
     comp:set("aabb_max.y", 257)
   end
 end
+
+-- Nerf Tablets to not lose mWhoShot when dragged out of the inventory
+for xml in nxml.edit_file("data/entities/items/books/base_book.xml") do
+	xml:add_child(
+		nxml.new_element("LuaComponent", {
+			_tags = "enabled_in_world",
+			script_enabled_changed=directory.."scripts/check_player_cheese_throw.lua",
+			execute_every_n_frame="-1",
+		})
+	)
+end
+
 
 return hooks

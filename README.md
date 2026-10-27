@@ -37,6 +37,17 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - The Wizard's Den Orb now has cursed rock under it instead of EDR to make cheesing harder; Master of Masters is also surrounded by cursed rock for the same reason.
   - The bottom right meat realm now has a section that extends down infinitely, similar to the power plant
   - There's now a small cloudscape biome between two sky temples to troll players doing the mimicium quest
+- `chest_tweaks`
+  - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
+  - Adds the "Better Chests" perk which makes chests contain more loot
+  - Adds the "Treasure Hunter" perk which gives more gold to chests
+  - Removes the "Summon Sädekivi" perk; chests can now drop that item instead
+  - Makes great treasure chests much better
+  - Adds an uncommon Healthy Extra HP dropped from chests, which increases your max HP by 25 and heals you by the same amount
+- `stronger_enemies`
+  - Changes which enemies spawn where
+  - Some enemies that spawn in NG+1 now spawn in regular New Game
+  - The blinding effect has a bigger visible area, and now only lasts 11 seconds (this is to compensate the fact that blinding mages now spawn in collapsed mines and coal pits)
 - `better_anvil`
   - Hiisi Anvil has been moved! You now have to explore the Hiisi Base a bit to find it.
   - In the old place in the bottom right there is a book hinting at the general location of the anvil, so you don't have to search everything
@@ -59,6 +70,10 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `cheeseless_triggers`
   - Trigger spells pay their payload's cast delay
   - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
+- `vanilla_quests`
+  - Sea of Mimicium has been changed to Apotheosis's "Potion To Sea"
+  - Cessation Quest: after pouring the potion mimic onto other mimics, you now get a new spell - "Ominous Sea". You must cast it in the Ominous Temple in order to get a chest containing "Potion To Sea" and "Touch Of Grass"
+  - EoE quest: After kicking two Hand Statues you get the Summon Portal spell and Broken Spell. Kicking a third hand statue gives another broken spell.
 - `rapidfire_nerfs`
   - Chainsaw now appears much later, and costs 12 mana to cast.
   - A new spell called Mini Chainsaw replaces the original spawns, which costs 6 mana and halves cast delay instead of setting it to 0.
