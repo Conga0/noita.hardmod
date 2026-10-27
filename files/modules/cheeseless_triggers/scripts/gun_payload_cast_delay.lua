@@ -1,5 +1,6 @@
 ---@diagnostic disable: undefined-global
 payload_cast_delay_scale = 1.0 -- Fraction of the payload's cast delay
+payload_spread_degrees_scale = 0.007 -- 720 -> 5 deg
 
 local card_cast_delays = {}
 local card_spawn_helpers =
@@ -52,6 +53,7 @@ local function charge_payload_cast_delay(nested_shot)
 	if not c or c == nested_shot.state then return end
 
 	c.fire_rate_wait = c.fire_rate_wait + nested_shot.state.fire_rate_wait * payload_cast_delay_scale
+	c.spread_degrees = c.spread_degrees + nested_shot.state.spread_degrees * payload_spread_degrees_scale
 end
 
 local previous_draw_shot = draw_shot
