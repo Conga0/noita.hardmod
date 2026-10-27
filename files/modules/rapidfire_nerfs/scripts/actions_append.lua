@@ -3,14 +3,14 @@ local materials = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIA
 
 reworked_actions = {
 	["CHAINSAW"] = {
-        spawn_level       = "3,4,5,6,10",
-        spawn_probability = "0.7,0.8,0.9,1,1",
+        spawn_level       = "4,5,6,10",
+        spawn_probability = "0.8,0.9,1,1",
         price             = 160,
         mana              = 12,
 	},
     ["MANA_REDUCE"] = {
         spawn_level       = "3,4,5,6,10",
-		spawn_probability = "0.7,0.8,0.9,1,1",
+		spawn_probability = "0.8,0.9,0.9,1,1",
         price             = 160,
         mana              = -15,
     },
