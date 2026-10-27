@@ -2,6 +2,10 @@ local y,m,d = GameGetDateAndTimeUTC()
 local evil_level = (y * 31469 + m * 929 + d * 541) % 100 + 1
 
 return {
+	-- TODO: update this before release
+	-- (you can use `tokei`, or just ping me on discord @.qtyui)
+	"15,000 Lines Of Code",
+
 	"Evil Level Today: " .. evil_level .. "%",
 	"Dunk is bald",
 	"Now atleast 1% harder!",
@@ -53,7 +57,6 @@ return {
 	"No Fun Allowed",
 	"0% cheese!",
 	"Fair Mod 2: This Time It's Actually Fair",
-	"I LOVE THE SEQUEL TO PHYSICSBODYCOMPONENT, PHYSICSBODY2COMPONENT!!!!!",
 	"Fixes NB-55 and NB-121",
 	"Restored 5wand!",
 }
