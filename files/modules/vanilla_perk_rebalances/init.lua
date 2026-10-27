@@ -1,6 +1,9 @@
 local hooks = {}
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
+local lootlib = dofile_once("mods/noita.hardmod/lib/lootlib.lua") ---@type lootlib
+lootlib.add_patch_script("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/lootlib_patch.lua")
+
 -- xml modifications as separate functions for better readability
 local function modify_master_of_blinding()
 	for xml in nxml.edit_file("data/entities/animals/wizard_dark.xml") do
@@ -50,5 +53,11 @@ hooks.mod_post_init = function()
 	ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/actions_append.lua")
 	-- ModLuaFileAppend("data/scripts/magic/altar_tablet_magic.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/altar_tablet_magic_append.lua")
 end
+
+hooks.player_spawned = function ()
+	EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/items/cheese.xml", 0, -10)
+end
+
+ModLuaFileAppend("data/scripts/item_spawnlists.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/item_spawnlists_append.lua")
 
 return hooks
