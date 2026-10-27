@@ -65,7 +65,7 @@ reworked_actions = {
 new_actions = {
     {
         id                  = "HARDMOD_MANA_REDUCE",
-        name                = "$action_mana_reduce",
+        name                = "$hardmod_spell_mana_reduce_name",
         description         = "$hardmod_spell_mana_reduce_desc",
         sprite              = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/add_mana.png",
         type                = ACTION_TYPE_MODIFIER,

@@ -27,6 +27,7 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
   - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
   - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
+  - Added a new item, "Petrified Cheese". Holding it gives you melee immuniuty. It can spawn on item pedestals or drop from chests.
 - `chest_tweaks`
   - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
   - Adds the "Better Chests" perk which makes chests contain more loot
@@ -51,8 +52,9 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
 - `rapidfire_nerfs`
   - Chainsaw now appears much later, and costs 12 mana to cast.
+  - Add Mana now restores only 15 mana, and appears later & rarer
   - A new spell called Mini Chainsaw replaces the original spawns, which costs 6 mana and halves cast delay instead of setting it to 0.
-  - Add Mana has been reworked to restore less mana the longer you hold the fire button, now working in bursts only.
+  - A new spell called Mana Burst restores less mana the longer you hold the fire button, working in bursts only
   - A new spell called Mana Regen restores 12% of a wand's max mana per second, intended to make high mana, low charge speed wands more usable.
 - `trappier_traps`
   - Made a bunch of the box traps unkickable.
