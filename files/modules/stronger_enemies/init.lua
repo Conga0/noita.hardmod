@@ -8,6 +8,7 @@ local function patch_spawn_rules()
     "fungicave",
     "snowcastle",
     "snowcave",
+    "the_end",
     "vault",
   }
 

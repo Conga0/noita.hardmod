@@ -1,0 +1,46 @@
+dofile_once("mods/noita.hardmod/files/modules/stronger_enemies/patch.lua")
+
+PatchEnemies(g_small_enemies, {
+  {
+		prob   		= 0.2,
+		min_count	= 1,
+		max_count	= 1,
+		entity 	= "data/entities/animals/the_end/spearbot.xml"
+	},
+  {
+		prob   		= 0.02,
+		min_count	= 1,
+		max_count	= 1,
+		entity 	= "data/entities/animals/thundermage_big.xml"
+	},
+  {
+		prob   		= 0.05,
+		min_count	= 1,
+		max_count	= 1,
+		entity 	= "data/entities/animals/the_end/skycrystal_physics.xml"
+	},
+  {
+		prob   		= 0.004,
+		min_count	= 1,
+		max_count	= 1,
+		entity 	= "data/entities/animals/wraith_storm.xml"
+	},
+	{
+		prob   		= 0.001,
+		min_count	= 1,
+		max_count	= 1,
+		entity 	= "data/entities/animals/wraith_glowing.xml"
+	},
+  {
+		prob   		= 0.02,
+		min_count	= 1,
+		max_count	= 1,
+		entity 	= "data/entities/animals/wraith.xml"
+	},
+  {
+		prob   		= 0.02,
+		min_count	= 1,
+		max_count	= 1,
+		entity 	= "data/entities/animals/wraith_glowing.xml"
+	},
+})
