@@ -27,6 +27,13 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
   - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
   - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
+- `biome_map`
+  - Changes to the world layout and biomes. Very WIP
+  - Adds a secret passageway between fungal cavern and ancient laboratory, hidden with dense rock
+  - Moves alchemist/ancient laboratory to be surrounded by EDR so you can't cheese your way to alchemist
+  - Adds a barrier made out of ominous liquid between cursed rock in PWs and The Tower
+  - Removes the top-right gold biome. No more moneys! In its place is the new Cheese Biome filled with cheese that we bought for these 250K gold.
+  - Fixes the cursed rock entity, you can no longer stand inbetween chunk borders to not get damaged
 - `chest_tweaks`
   - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
   - Adds the "Better Chests" perk which makes chests contain more loot

@@ -32,6 +32,7 @@ local modules = {
 	"better_anvil",
 	"rapidfire_nerfs",
 	"trial_perks",
+	"biome_map",
 	"alternate_biomes",
 }
 
