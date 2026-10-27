@@ -49,6 +49,10 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `cheeseless_triggers`
   - Trigger spells pay their payload's cast delay
   - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
+- `vanilla_quests`
+  - Sea of Mimicium has been changed to Apotheosis's "Potion To Sea"
+  - Cessation Quest: after pouring the potion mimic onto other mimics, you now get a new spell - "Ominous Sea". You must cast it in the Ominous Temple in order to get a chest containing "Potion To Sea" and "Touch Of Grass"
+  - EoE quest: After kicking two Hand Statues you get the Summon Portal spell and Broken Spell. Kicking a third hand statue gives another broken spell.
 - `rapidfire_nerfs`
   - Chainsaw now appears much later, and costs 12 mana to cast.
   - A new spell called Mini Chainsaw replaces the original spawns, which costs 6 mana and halves cast delay instead of setting it to 0.
