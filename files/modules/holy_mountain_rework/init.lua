@@ -49,7 +49,14 @@ ModLuaFileAppend("data/scripts/biomes/temple_altar.lua", path.."append_altar.lua
 
 hooks.edit_material = function(elem)
 	if elem.attr.name == "templebrick_static_soft" then
-		elem.attr.durability = 9
+		elem.attr.durability = 9 --weaken the HM false-walls to be more breakable by starter-bomb spells
+	end
+end
+
+for _,ent in ipairs({"data/entities/buildings/physics_worm_deflector_crystal.xml", "data/entities/misc/greed_curse/greed_crystal.xml"}) do
+	for xml in nxml.edit_file(ent) do
+		if #xml.attr.tags == 0 then xml.attr.tags = "hm_crystal"
+		else xml.attr.tags = xml.attr.tags..",hm_crystal" end
 	end
 end
 
