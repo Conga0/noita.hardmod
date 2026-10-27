@@ -37,13 +37,6 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - The Wizard's Den Orb now has cursed rock under it instead of EDR to make cheesing harder; Master of Masters is also surrounded by cursed rock for the same reason.
   - The bottom right meat realm now has a section that extends down infinitely, similar to the power plant
   - There's now a small cloudscape biome between two sky temples to troll players doing the mimicium quest
-- `chest_tweaks`
-  - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
-  - Adds the "Better Chests" perk which makes chests contain more loot
-  - Adds the "Treasure Hunter" perk which gives more gold to chests
-  - Removes the "Summon Sädekivi" perk; chests can now drop that item instead
-  - Makes great treasure chests much better
-  - Adds an uncommon Healthy Extra HP dropped from chests, which increases your max HP by 25 and heals you by the same amount
 - `better_anvil`
   - Hiisi Anvil has been moved! You now have to explore the Hiisi Base a bit to find it.
   - In the old place in the bottom right there is a book hinting at the general location of the anvil, so you don't have to search everything
@@ -51,6 +44,13 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Broken Spell has been repurposed: you can now find it on item pedestals, and reforge it on the anvil for random good spells
   - You can put broken spells in your spell inventory to save space
   - Additionally, you can now use Broken Wands as a weapon early game - their projectiles will home onto enemies (they still hurt you, though, so watch out!)
+- `chest_tweaks`
+  - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
+  - Adds the "Better Chests" perk which makes chests contain more loot
+  - Adds the "Treasure Hunter" perk which gives more gold to chests
+  - Removes the "Summon Sädekivi" perk; chests can now drop that item instead
+  - Makes great treasure chests much better
+  - Adds an uncommon Healthy Extra HP dropped from chests, which increases your max HP by 25 and heals you by the same amount
 - `no_more_max_hp_cheesing`
   - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
   - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.
