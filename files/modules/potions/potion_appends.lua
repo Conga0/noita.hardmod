@@ -16,7 +16,7 @@ remove_materials(materials_magic, {
   "magic_liquid_protection_all",
 })
 
-table.insert(materials_standard, {
-  material = "poison",
-  cost = 300
-})
+-- table.insert(materials_standard, {
+--   material = "poison",
+--   cost = 300
+-- })
