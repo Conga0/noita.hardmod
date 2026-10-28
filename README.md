@@ -50,6 +50,7 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Pause menu will have a random splash message on it
 - `cheeseless_triggers`
   - Trigger spells pay their payload's cast delay
+  - Just like cast delay, spread inside of payloads now applies to the whole cast
   - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
 - `rapidfire_nerfs`
   - Chainsaw now appears much later, and costs 12 mana to cast.
@@ -57,6 +58,7 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - A new spell called Mini Chainsaw replaces the original spawns, which costs 6 mana and halves cast delay instead of setting it to 0.
   - A new spell called Mana Burst restores less mana the longer you hold the fire button, working in bursts only
   - A new spell called Mana Regen restores 12% of a wand's max mana per second, intended to make high mana, low charge speed wands more usable.
+  - Material spells now cost 8 mana. Heavy spread now costs 6 mana, and only adds 9 degrees of spread to work better with `cheeseless_triggers`
 - `trappier_traps`
   - Made a bunch of the box traps unkickable.
   - Wall traps shotgun projectiles.

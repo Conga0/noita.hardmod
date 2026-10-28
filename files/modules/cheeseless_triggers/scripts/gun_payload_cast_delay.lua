@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-global
 payload_cast_delay_scale = 1.0 -- Fraction of the payload's cast delay
-payload_spread_degrees_scale = 0.007 -- 720 -> 5 deg
+payload_spread_degrees_scale = 1.0
 
 local card_cast_delays = {}
 local card_spawn_helpers =

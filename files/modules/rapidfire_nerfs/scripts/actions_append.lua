@@ -1,3 +1,5 @@
+-- -@diagnostic disable: undefined-global
+
 local mana_reducing_spells = { "MANA_REDUCE", "HARDMOD_MANA_REDUCE", "APOTHEOSIS_WATER_POWER" }
 local materials = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIAL_CEMENT" }
 
@@ -15,7 +17,15 @@ reworked_actions = {
         mana              = -15,
     },
     ["HEAVY_SPREAD"] = {
-        mana = 6
+        mana   = 6,
+        sprite = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/heavy_spread.png",
+        action = function()
+            -- parity with cheeseless_triggers
+            c.spread_degrees = c.spread_degrees + 9
+            c.fire_rate_wait = c.fire_rate_wait - 7
+            current_reload_time = current_reload_time - 15
+            draw_actions(1, true)
+		end,
     },
     ["APOTHEOSIS_WATER_POWER"] = {
         description         = "$hardmod_spell_apotheosis_water_power_desc",
@@ -151,8 +161,8 @@ for _,material in pairs(materials) do
 end
 
 for _,action in pairs(actions) do
-    if reworked_actions[action] then
-        for k,v in pairs(reworked_actions[action]) do
+    if reworked_actions[action.id] then
+        for k,v in pairs(reworked_actions[action.id]) do
             action[k] = v
         end
 
