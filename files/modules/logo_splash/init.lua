@@ -30,14 +30,28 @@ local block_height = 0
 -- The glyph sprite must be generated while ModTextFileSetContent is still available.
 rotatable_text.prepare(FONT)
 
+---@type integer[]
+local splash_idx_queue = {}
+
 ---Picks a random splash index, never repeating the current one.
 ---@return integer
 local function pick_splash_index()
-	local count = #splashes
-	if splash_index == 0 or count < 2 then return math.random(1, count) end
-	local index = math.random(1, count - 1)
-	if index >= splash_index then index = index + 1 end
-	return index
+	if #splash_idx_queue < 1 then
+		for idx,_ in ipairs(splashes) do
+			table.insert(splash_idx_queue, idx)
+		end
+	end
+
+	local idx = math.random(1, #splash_idx_queue)
+	local splash = splash_idx_queue[idx]
+
+	if splash == splash_index and #splash_idx_queue > 1 then
+		return pick_splash_index()
+	end
+
+	table.remove(splash_idx_queue, idx)
+
+	return splash
 end
 
 ---Splits a splash into lines and measures them at scale 1.

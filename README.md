@@ -30,6 +30,16 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Added a new item, "Petrified Cheese". Holding it gives you melee immuniuty. It can spawn on item pedestals or drop from chests.
   - Adds a new perk "Amplified Items". This perk lets you get some immunities from having stones in your inventory (fire immunity, electricity immunity and melee immunity)
   - Wand Experimenter now heals less, and you can no longer circumvent it by dragging spells out of a wand directly onto the ground.
+- `biome_map`
+  - Changes to the world layout and biomes
+  - Adds much more side biomes and more connections between them
+  - Adds a secret passage between fungal cavern and ancient laboratory, hidden with dense rock
+  - Removes the top-right gold biome. No more moneys! In its place is the new Cheese Biome filled with cheese that we bought for these 250K gold.
+  - Ancient Laboratory and Alchemist is now surrounded by EDR so you can't skip to the alchemist quickly
+  - There's now a "barrier" out of ominous liquid between cursed rock in PWs and The Tower
+  - The Wizard's Den Orb now has cursed rock under it instead of EDR to make cheesing harder; Master of Masters is also surrounded by cursed rock for the same reason.
+  - The bottom right meat realm now has a section that extends down infinitely, similar to the power plant
+  - There's now a small cloudscape biome between two sky temples to troll players doing the mimicium quest
 - `chest_tweaks`
   - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
   - Adds the "Better Chests" perk which makes chests contain more loot
@@ -37,6 +47,10 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Removes the "Summon Sädekivi" perk; chests can now drop that item instead
   - Makes great treasure chests much better
   - Adds an uncommon Healthy Extra HP dropped from chests, which increases your max HP by 25 and heals you by the same amount
+- `stronger_enemies`
+  - Changes which enemies spawn where
+  - Some enemies that spawn in NG+1 now spawn in regular New Game
+  - The blinding effect has a bigger visible area, and now only lasts 11 seconds (this is to compensate the fact that blinding mages now spawn in collapsed mines and coal pits)
 - `better_anvil`
   - Hiisi Anvil has been moved! You now have to explore the Hiisi Base a bit to find it.
   - In the old place in the bottom right there is a book hinting at the general location of the anvil, so you don't have to search everything
@@ -44,6 +58,13 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Broken Spell has been repurposed: you can now find it on item pedestals, and reforge it on the anvil for random good spells
   - You can put broken spells in your spell inventory to save space
   - Additionally, you can now use Broken Wands as a weapon early game - their projectiles will home onto enemies (they still hurt you, though, so watch out!)
+- `chest_tweaks`
+  - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
+  - Adds the "Better Chests" perk which makes chests contain more loot
+  - Adds the "Treasure Hunter" perk which gives more gold to chests
+  - Removes the "Summon Sädekivi" perk; chests can now drop that item instead
+  - Makes great treasure chests much better
+  - Adds an uncommon Healthy Extra HP dropped from chests, which increases your max HP by 25 and heals you by the same amount
 - `no_more_max_hp_cheesing`
   - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
   - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.
@@ -53,6 +74,10 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Trigger spells pay their payload's cast delay
   - Just like cast delay, spread inside of payloads now applies to the whole cast
   - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
+- `vanilla_quests`
+  - Sea of Mimicium has been changed to Apotheosis's "Potion To Sea"
+  - Cessation Quest: after pouring the potion mimic onto other mimics, you now get a new spell - "Ominous Sea". You must cast it in the Ominous Temple in order to get a chest containing "Potion To Sea" and "Touch Of Grass"
+  - EoE quest: After kicking two Hand Statues you get the Summon Portal spell and Broken Spell. Kicking a third hand statue gives another broken spell.
 - `rapidfire_nerfs`
   - Chainsaw now appears much later, and costs 12 mana to cast. It now also reduces much less recharge time.
   - Add Mana now restores only 15 mana, and appears later & rarer
@@ -63,6 +88,11 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `trappier_traps`
   - Made a bunch of the box traps unkickable.
   - Wall traps shotgun projectiles.
+  - Holy mountain portals now generate with more deadly materails
+- `nerf_vanilla_cheeses`
+  - TANNEREYE IS DEAD.
+  - Steve and Scott are now 95% resistant to physics damage
+  - The cursed rock entity has been fixed, you can no longer stand inbetween chunk borders to not get damaged
 - `worse_hearts`
   - Holy mountain hearts no longer grant health increase
 - `no_more_max_hp_cheesing`

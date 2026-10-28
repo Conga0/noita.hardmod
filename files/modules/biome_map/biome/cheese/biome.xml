@@ -1,0 +1,8 @@
+<Biome>
+  <Topology
+    name="$mat_cheese_static"
+    type="BIOME_PROCEDURAL"
+    lua_script="mods/noita.hardmod/files/modules/biome_map/biome/cheese/biome.lua"
+    background_image="data/weather_gfx/background_cave_04.png" >
+  </Topology>
+</Biome>

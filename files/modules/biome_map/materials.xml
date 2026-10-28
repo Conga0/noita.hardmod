@@ -1,0 +1,32 @@
+<Materials>
+  <CellData
+    name="hardmod_cheese_powder"
+    ui_name="$mat_cheese_static"
+    tags="[sand_ground],[corrodible],[meltable_to_lava],[alchemy],[solid],[earth]"
+    burnable="0"
+    density="5"
+    cell_type="liquid"
+    wang_color="ffe7b45e"
+    liquid_gravity="1.2"
+    liquid_sand="1"
+    solid_static_type="1"
+    durability="5"
+    on_fire="0"
+    hp="1000"
+    platform_type="1"
+    audio_physics_material_event="slime"
+    audio_physics_material_wall="slime"
+    audio_physics_material_solid="slime"
+    show_in_creative_mode="1"
+  >
+    <Graphics
+      texture_file="mods/noita.hardmod/files/modules/biome_map/gfx/cheese_powder.png"
+      color="ffe7b45e"
+    ></Graphics>
+    <StatusEffects>
+      <Ingestion>
+        <StatusEffect />
+      </Ingestion>
+    </StatusEffects>
+  </CellData>
+</Materials>
