@@ -120,9 +120,9 @@ async function patchIcons() {
   patch(
     "files/fonts/module_icons.xml",
     (s) => s
-      .replace(/\s*<QuadChar.*\/>/g, "")
+      .replace(/\s*(<!--.+-->\s*)?<QuadChar.*\/>/g, "")
       .replace(
-        /(\s*<!--.+-->\s*)?<\/FontData>/,
+        /\s*(<!--.+-->\s*)?<\/FontData>/,
         `\n\n${XML_BANNER}${generatedQuadChars.join("\n")}\n</FontData>`
       )
   );
