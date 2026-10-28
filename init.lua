@@ -18,6 +18,7 @@ local modules = {
 	"worse_hearts",
 	"vanilla_perk_rebalances",
 	"vanilla_quests",
+	"vanilla_bosses",
 	--"no_more_chainsaw_wrapping", -- shit module never enable
 	"less_explosive",
 	"holy_mountain_rework",
@@ -28,6 +29,7 @@ local modules = {
 	"alt_fire_anything",
 	"credits",
 	"nerf_vanilla_cheeses",
+	"nerf_vanilla_damage",
 	"stronger_kolmi",
 	"chest_tweaks",
 	"better_anvil",
