@@ -28,10 +28,18 @@ reworked_actions = {
         sprite = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/heavy_spread.png",
         action = function()
             -- parity with cheeseless_triggers
-            c.spread_degrees = c.spread_degrees + 9
+            c.spread_degrees = c.spread_degrees + 12
             c.fire_rate_wait = c.fire_rate_wait - 7
             current_reload_time = current_reload_time - 15
             draw_actions(1, true)
+		end,
+    },
+    ["DIGGER"] = {
+        action = function()
+			add_projectile("data/entities/projectiles/deck/digger.xml")
+			c.fire_rate_wait = c.fire_rate_wait + 2
+            c.spread_degrees = c.spread_degrees + 4.0
+			current_reload_time = current_reload_time - 10
 		end,
     },
     ["APOTHEOSIS_WATER_POWER"] = {
