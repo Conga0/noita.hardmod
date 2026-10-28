@@ -1,6 +1,6 @@
+---@diagnostic disable: undefined-global
 perk_reworks = {
-	{
-		id = "UNLIMITED_SPELLS",
+	["UNLIMITED_SPELLS"] = {
 		not_in_default_perk_pool = true,
 	},
 }
@@ -27,28 +27,13 @@ new_perks = {
 	},
 }
 
-local function modify_perk( rework_data )
-	for i = 1, #perk_list do
-		local perk = perk_list[i]
-		if perk.id == rework_data.id then
-			for k, v in pairs( rework_data ) do
-                if k ~= "id" then
-                    perk[k] = v
-                end
-            end
-            if rework_data.clear_original_game_effect then
-            	perk.game_effect = nil
-            end
-            if rework_data.clear_original_game_effect2 then
-            	perk.game_effect2 = nil
-            end
-        end
-	end
-end
-
-if ( perk_list ~= nil ) then
-	for k, v in pairs( perk_reworks ) do
-		modify_perk( v )
+if perk_list ~= nil then
+	for _,perk in pairs(perk_list) do
+		if perk_reworks[perk.id] then
+			for k,v in pairs(perk_reworks[perk.id]) do
+				perk[k] = v
+			end
+		end
 	end
 
 	for k, v in pairs( new_perks ) do

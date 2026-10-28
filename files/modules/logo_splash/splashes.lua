@@ -1,4 +1,12 @@
+local y,m,d = GameGetDateAndTimeUTC()
+local evil_level = (y * 31469 + m * 929 + d * 541) % 100 + 1
+
 return {
+	-- TODO: update this before release
+	-- (you can use `tokei`, or just ping me on discord @.qtyui)
+	"15,000 Lines Of Code",
+
+	"Evil Level Today: " .. evil_level .. "%",
 	"Dunk is bald",
 	"Now atleast 1% harder!",
 	"I hope you like dying!",
@@ -41,4 +49,15 @@ return {
 	"Saving Grace had it coming.",
 	"Beat this to unlock Epilogue 3!",
 	"Lamia was drunk",
+	"qtyui_ was here",
+	"Also try Fair Mod!",
+	"Hämis :+1:",
+	"NT Sadge",
+	"Sponsored by CEO Hiisilius IV",
+	"No Fun Allowed",
+	"0% cheese!",
+	"Fair Mod 2: This Time It's Actually Fair",
+	"Fixes NB-13, NB-25, NB-55, NB-103 and NB-121",
+	"Restored 5wand!",
+	"exploding u :3",
 }

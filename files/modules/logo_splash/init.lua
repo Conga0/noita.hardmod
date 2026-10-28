@@ -5,11 +5,11 @@ local menu_tracker = dofile_once("mods/noita.hardmod/files/modules/logo_splash/m
 local splashes = dofile_once("mods/noita.hardmod/files/modules/logo_splash/splashes.lua") ---@type string[]
 
 local FONT = "data/fonts/font_pixel.xml"
-local TEXT_ANGLE = math.rad(60)
+local TEXT_ANGLE = math.rad(20)
 local SCREEN_MARGIN = 4
 -- Nudges the splash center off the logo's right-edge midpoint; tuned by eye.
 local ANCHOR_OFFSET_X = 8
-local ANCHOR_OFFSET_Y = -10
+local ANCHOR_OFFSET_Y = 20
 local FIRST_GLYPH_ID = 1000
 
 local gui = GuiCreate()
@@ -30,14 +30,28 @@ local block_height = 0
 -- The glyph sprite must be generated while ModTextFileSetContent is still available.
 rotatable_text.prepare(FONT)
 
+---@type integer[]
+local splash_idx_queue = {}
+
 ---Picks a random splash index, never repeating the current one.
 ---@return integer
 local function pick_splash_index()
-	local count = #splashes
-	if splash_index == 0 or count < 2 then return math.random(1, count) end
-	local index = math.random(1, count - 1)
-	if index >= splash_index then index = index + 1 end
-	return index
+	if #splash_idx_queue < 1 then
+		for idx,_ in ipairs(splashes) do
+			table.insert(splash_idx_queue, idx)
+		end
+	end
+
+	local idx = math.random(1, #splash_idx_queue)
+	local splash = splash_idx_queue[idx]
+
+	if splash == splash_index and #splash_idx_queue > 1 then
+		return pick_splash_index()
+	end
+
+	table.remove(splash_idx_queue, idx)
+
+	return splash
 end
 
 ---Splits a splash into lines and measures them at scale 1.
@@ -66,25 +80,47 @@ local function clamp_to_screen(position, size, screen_size)
 	return math.max(SCREEN_MARGIN, math.min(screen_size - SCREEN_MARGIN - size, position))
 end
 
----Draws the splash lines centered on the logo's right edge with a pulsing scale.
+---Draws the splash lines centered on the logo's bottom right corner with a pulsing scale AND ROTATION.
 ---@param screen_width number
 ---@param screen_height number
 local function draw_splash(screen_width, screen_height)
-	frame = frame + 1
-	local scale = 1.5 + math.sin(frame * 0.1) * 0.1
-	draw_options.scale = scale
+    frame = frame + 1
+    local scale = 1.5 + math.sin(frame * 0.1) * 0.1
+    draw_options.scale = scale
 
-	local width, height = block_width * scale, block_height * scale
-	local logo_right, logo_middle = menu_tracker.logo_right_middle()
-	local block_x = clamp_to_screen(logo_right + ANCHOR_OFFSET_X - width / 2, width, screen_width)
-	local line_y = clamp_to_screen(logo_middle + ANCHOR_OFFSET_Y - height / 2, height, screen_height)
-	local glyph_id = FIRST_GLYPH_ID
-	for line_index = 1, #lines do
-		local line_x = block_x + ((block_width - line_widths[line_index]) / 2 + line_origins_x[line_index]) * scale
-		local origin_y = line_y + line_origins_y[line_index] * scale
-		glyph_id = rotatable_text.draw(gui, glyph_id, line_x, origin_y, lines[line_index], TEXT_ANGLE, draw_options)
-		line_y = line_y + line_heights[line_index] * scale
-	end
+    local _, metrics = rotatable_text.prepare(draw_options.font)
+    local line_height = metrics.line_height
+
+    local widths, block_w = {}, 0
+    for i, text in ipairs(lines) do
+        widths[i] = rotatable_text.measure(text, 0, 1, draw_options.font)
+        block_w = math.max(block_w, widths[i])
+    end
+
+    local width = block_w * scale
+    local height = #lines * line_height * scale
+    local logo_right, logo_middle = menu_tracker.logo_right_middle()
+    local block_x = clamp_to_screen(logo_right + ANCHOR_OFFSET_X - width / 2, width, screen_width)
+    local block_y = clamp_to_screen(logo_middle + ANCHOR_OFFSET_Y - height / 2, height, screen_height)
+
+    local center_x = block_x + width / 2
+    local center_y = block_y + height / 2
+
+    local angle = math.sin(frame * 0.01) * TEXT_ANGLE -- radians
+    local cos_a, sin_a = math.cos(angle), math.sin(angle)
+
+    local glyph_id = FIRST_GLYPH_ID
+    for i = 1, #lines do
+        local line_x = block_x + (block_w - widths[i]) / 2 * scale
+        local line_y = block_y + (i - 1) * line_height * scale
+
+        local dx, dy = line_x - center_x, line_y - center_y
+        local rot_x = center_x + dx * cos_a - dy * sin_a
+        local rot_y = center_y + dx * sin_a + dy * cos_a
+		-- hope you don't mind me making this shit actively worse but i needed it to rotate left and right
+
+        glyph_id = rotatable_text.draw(gui, glyph_id, rot_x, rot_y, lines[i], angle, draw_options)
+    end
 end
 
 ---Draw

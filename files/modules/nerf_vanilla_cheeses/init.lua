@@ -5,6 +5,10 @@ local directory = "mods/noita.hardmod/files/modules/nerf_vanilla_cheeses/"
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
 
+
+ModMagicNumbersFileAdd(directory.."magic_numbers.xml")
+
+
 -- Nerf Stevari and Skoude to be 95% resistant to Physics Damage
 local reduce_physics_damage = {
 	"data/entities/animals/necromancer_shop.xml",
@@ -28,6 +32,28 @@ function hooks.edit_material(elem)
     if mat_name == "rock_hard_border" or mat_name == "rock_hard" then
         elem.attr.tags = elem.attr.tags:gsub(escape(",[earth]"), "")
     end
+end
+
+-- Fix cursed rock not damaging the player between chunks
+for file in nxml.edit_file("data/entities/misc/rock_curse.xml") do
+  local comp = file:first_of("AreaDamageComponent")
+  if comp then
+    comp:set("aabb_min.x", -257)
+    comp:set("aabb_min.y", -257)
+    comp:set("aabb_max.x", 257)
+    comp:set("aabb_max.y", 257)
+  end
+end
+
+-- Nerf Tablets to not lose mWhoShot when dragged out of the inventory
+for xml in nxml.edit_file("data/entities/items/books/base_book.xml") do
+	xml:add_child(
+		nxml.new_element("LuaComponent", {
+			_tags = "enabled_in_world",
+			script_enabled_changed=directory.."scripts/check_player_cheese_throw.lua",
+			execute_every_n_frame="-1",
+		})
+	)
 end
 
 

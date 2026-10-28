@@ -239,33 +239,33 @@ function SetInternalInt(entity_id, variable_name, new_value)
 	end
 end
 
---- Remaps a value between (a1,b1) to (a2,b2)
+---Remaps a value between (a1,b1) to (a2,b2)
 ---@param value int Value to remap
 ---@param inMin int Lower end of the input range
 ---@param inMax int Higher end of the input range
 ---@param outMin int Lower end of the output range
 ---@param outMax int Higher end of the output range
----return int The mapped value
+---@return int result The mapped value
 function Remap( value, inMin, inMax, outMin, outMax )
-    if inMax == inMin then
-        error( "Input range cannot have zero length" )
-    end
+	if inMax == inMin then
+		error("Input range cannot have zero length")
+	end
 
-    -- normalise the input value to a 0‑1 scale
-    local t = (value - inMin) / (inMax - inMin)
+	-- normalise the input value to a 0‑1 scale
+	local t = (value - inMin) / (inMax - inMin)
 
-    return outMin + t * (outMax - outMin)
+	return outMin + t * (outMax - outMin)
 end
 
 --- Returns the pickup count of a specific perk
 ---@param perk_id string The perk's ID, i.e. "REMOVE_FOG_OF_WAR"
----@return int The amount of times this perk was taken by the player.
+---@return number count The amount of times this perk was taken by the player.
 function GetPerkPickupCount( perk_id )
-    dofile_once( "data/scripts/perks/perk_list.lua" )
+	dofile_once("data/scripts/perks/perk_list.lua")
 
-    local perk = get_perk_with_id( perk_list, perk_id )
-    local flag_name = get_perk_picked_flag_name( perk_id )
-    local pickup_count = tonumber( GlobalsGetValue( flag_name .. "_PICKUP_COUNT", "0" ) )
+	---@diagnostic disable-next-line: undefined-global
+	local flag_name = get_perk_picked_flag_name(perk_id)
+	local pickup_count = tonumber(GlobalsGetValue(flag_name .. "_PICKUP_COUNT", "0"))
 
-    return pickup_count
+	return pickup_count or 0
 end
