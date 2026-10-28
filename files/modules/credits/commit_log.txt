@@ -10,6 +10,7 @@ Nerfed Combat Healing
 removed unnecessary hooks from nerfed_combat_healing
 fixed nxml oversight in NCH module, fixed example module issues
 Add logo splash module
+working on enemy perks, migrated some code from DR
 ya
 fixed apoth thing probably
 Fix triggers
@@ -19,6 +20,7 @@ patch chainsaw wrapping
 rename no more chainsaw wrapping folder
 Revise game mechanics descriptions in README
 fix
+added perk indicators above enemies' heads
 Add All-Seeing Eye (perk) nerf
 (oops)
 Limit Shield + Stainless Armour to 3 stacks
@@ -99,6 +101,7 @@ I LOVE THE SEQUEL TO PHYSICSBODYCOMPONENT, PHYSICSBODY2COMPONENT!!!!!
 fixed evil `nxml.parse()` code
 Update readme.md
 added new module `buff_enemies`, hmrework tweaks
+got rendering working (todo: remove unused lib file)
 refactored `buff_enemies` -> `nerf_vanilla_cheeses`
 TANNEREYE IS DEAD.
 added a few splashes
@@ -114,7 +117,9 @@ make splash not suck
 fix always false if statement
 Update standard.csv
 guitext can't use alpha, isn't it fun??
+pushing changes rq cuz wow i have a headache, i made it so you unlock enemy perks by killing enemies that have them though! also hihi credits person o/
 Kolmi starts at 8 orb power level
+working on individual perk inspector thingy
 aeugh
 add Ring of Returning
 cleaned up collapse crystal code
@@ -162,5 +167,54 @@ first floor cant be evil
 Add some splashes
 fix background
 moldy hämis
+Stronger Enemies module
+forgor
+make hell more dangerous
+rename patch.lua to patcher.lua
+i hate tabs
+remove super long splash text
+pick splash texts based on a queue system so that you can check out every single one
+splash with lines of code
 fixed tablet trick kill cheese
 reworked icon system for settings.lua
+Biome map stuff
+oh there is a module for this
+buncha changes to the biome map
+im dumb
+Cheese
+Nerf the Mimicium Quest
+update eoe quest
+make summon portal not spawnable again
+remove ambrosia from potion spawns
+forgot to remove
+Change rapidfire_nerfs
+nerf heavy spread
+further changes to heavy spread
+materials cost 8 mana
+restore original spawn rates for custom add mana
+tweak spawn rates (i totaaally know how this works and this is totally calculated and totally not me just eyeballing it)
+add cheese rock
+Item Immunities Perk
+Make the Item Immunities perk not spawn early game
+update readme
+rework heavy spread
+f
+even less respect to ur aim
+yeah but i do think it should be, and it makes a puzzle in snowy impossible
+remove saving grace from the perk pool
+oops
+perk_entity already gets removed automatically
+reworked HM basin code internally
+nerf wand experimenter and fix circumvention
+remove test item
+update sprite
+Make alchemist's flasks twice as large
+Fix missing spawn funcs
+Build script
+OOPS
+Update settings
+Update scripts/build.js
+Enemy perks are... GOOD ENOUGH. I DONT HAVE TIME FOR FEATURE CREEP, MAKE DO.
+forgor about TLs
+FIXED CRITICAL DEVASTATING BUG THAT KILLED EVERYTHING!!!!!!!!!!
+Update commit_log.txt

@@ -12,6 +12,7 @@ local modules = {
 	"test_module_dont_run",
 	"example",
 	"nerfed_combat_healing",
+	"enemy_perks",
 	"trappier_traps",
 	"cheeseless_triggers",
 	"logo_splash",
