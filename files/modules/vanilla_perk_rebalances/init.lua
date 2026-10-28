@@ -49,15 +49,15 @@ hooks.mod_init = function()
 end
 
 hooks.mod_post_init = function()
-	ModLuaFileAppend("data/scripts/perks/perk_list.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/perks_append.lua")
-	ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/actions_append.lua")
-	-- ModLuaFileAppend("data/scripts/magic/altar_tablet_magic.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/altar_tablet_magic_append.lua")
+	ModLuaFileAppend("data/scripts/perks/perk_list.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/perk_list.lua")
+	ModLuaFileAppend("data/scripts/perks/perk.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/perk.lua")
+	ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/actions.lua")
+	ModLuaFileAppend("data/scripts/item_spawnlists.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/item_spawnlists.lua")
+	-- ModLuaFileAppend("data/scripts/magic/altar_tablet_magic.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/altar_tablet_magic.lua")
 end
 
 hooks.player_spawned = function ()
 	EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/items/cheese.xml", 0, -10)
 end
-
-ModLuaFileAppend("data/scripts/item_spawnlists.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/item_spawnlists_append.lua")
 
 return hooks
