@@ -35,6 +35,7 @@ local modules = {
 	"trial_perks",
 	"biome_map",
 	"stronger_enemies",
+	"potions",
 	"alternate_biomes",
 }
 
