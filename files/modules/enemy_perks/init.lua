@@ -41,7 +41,22 @@ hooks.world_init = function()
 	SetRandomSeed(1337, -6967)
 end
 
-local function give_enemy_perk(entity_id)
+local default_level = 3
+local biome_levels = {
+	["$hardmod_biomename_infested_mines"] = 1, --infested mines
+	["$biome_excavationsite"] = 2, --coal pits
+	["$biome_fun"] = 3, --fungal caverns
+	["$biome_snowcave"] = 3, --snowy depths
+	["$biome_snowcastle"] = 4, --hiisi base
+	["$biome_rainforest"] = 5, --jungle
+	["$biome_rainforest_dark"] = 6, --lukki lair
+	["$biome_vault"] = 6,
+	["$biome_crypt"] = 7,
+}
+
+local function give_enemy_perks(entity_id, num)
+	num = num or 1
+
 	local x,y = EntityGetTransform(entity_id)
 	local enemy_perks_handler
 	for _,child in ipairs(EntityGetAllChildren(entity_id) or {}) do
@@ -52,26 +67,39 @@ local function give_enemy_perk(entity_id)
 		EntityAddChild(entity_id, enemy_perks_handler)
 	end
 
+	local already_held_perks = {}
+	local how_many_of_each_perk = {}
 	local enemy_perk_data
 	for _,varcomp in ipairs(EntityGetComponent(enemy_perks_handler, "VariableStorageComponent") or {}) do
 		if ComponentGetValue2(varcomp, "name") == "enemy_perk_data" then enemy_perk_data = varcomp break end
 	end
 	if not enemy_perk_data then
 		enemy_perk_data = EntityAddComponent2(enemy_perks_handler, "VariableStorageComponent", {name = "enemy_perk_data"})
+	else
+		for perk_id in ComponentGetValue2(enemy_perk_data, "value_string"):gmatch("([^,]+)") do
+			already_held_perks[#already_held_perks+1] = perk_id
+			how_many_of_each_perk[perk_id] = (how_many_of_each_perk[perk_id] or 0) + 1
+		end
+
 	end
 
 	local data = {
+		target_enemy = entity_id,
+		already_held_perks = already_held_perks,
+		how_many_of_each_perk = how_many_of_each_perk,
 		player = _g.player,
-		player_poly_identity = _g.player_poly_identity
+		player_poly_identity = _g.player_poly_identity,
 	}
-	local perk = ConditionalRandomFromTable(enemy_perks, data)
-	if not perk then return end
-	perk:func(entity_id)
+	for i = 1, num do
+		local perk = ConditionalRandomFromTable(enemy_perks, data)
+		if not perk then return end
+		data = perk:func(entity_id, data) or data
+		already_held_perks[#already_held_perks+1] = perk.id
+		how_many_of_each_perk[perk.id] = (how_many_of_each_perk[perk.id] or 0) + 1
+	end
 
 
-	local held_perks = ComponentGetValue2(enemy_perk_data, "value_string")
-	if #held_perks == 0 then held_perks = perk.id else held_perks = held_perks..","..perk.id end
-	ComponentSetValue2(enemy_perk_data, "value_string", held_perks)
+	ComponentSetValue2(enemy_perk_data, "value_string", table.concat(already_held_perks, ","))
 
 	if not EntityHasTag(entity_id, "hardmod_blessed") then
 		EntityAddTag(entity_id, "hardmod_blessed")
@@ -81,13 +109,10 @@ end
 
 hooks.new_eid = function(entity_id)
 	if EntityHasTag(entity_id, "enemy") and not EntityHasTag(entity_id, "hardmod_blessed") then
-		give_enemy_perk(entity_id)
-		give_enemy_perk(entity_id)
-		give_enemy_perk(entity_id)
-		give_enemy_perk(entity_id)
-		give_enemy_perk(entity_id)
-		give_enemy_perk(entity_id)
-		give_enemy_perk(entity_id)
+		local x,y = EntityGetTransform(entity_id)
+		local biome = BiomeMapGetName(x, y)
+		--if not biome_levels[biome] then print(biome) end --use to find biomes not yet assigned levels
+		give_enemy_perks(entity_id, Random(0, biome_levels[biome] or default_level))
 	end
 end
 
@@ -164,6 +189,9 @@ function hooks.post_update(frame)
 	local function render_perk(perk, x, y)
 		if perk.locked then GuiColorSetForNextWidget(gui, 0.3, 0.3, 0.3, 1) end
 		GuiImage(gui, new_id(), x, y, perk.icon, 1, 1, 1)
+		--[[ this would allow you to hover the perk to see in-game and click it to pin it to your screen
+		-- But time is running short, and I would like to get this feature out there first, I lost too much time being ill for a week and a half
+		-- Sorry!!
 		local prev = {GuiGetPreviousWidgetInfo(gui)}
 		if prev[3] then
 			local perk_hover_info
@@ -177,7 +205,7 @@ function hooks.post_update(frame)
 					}
 				}
 			end
-		end
+		end--]]
 	end
 
 	local name = GameTextGetTranslatedOrNot(EntityGetName(selected_creature))

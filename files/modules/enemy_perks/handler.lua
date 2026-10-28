@@ -15,6 +15,7 @@ for _,varcomp in ipairs(EntityGetComponent(entity_id, "VariableStorageComponent"
 	if ComponentGetValue2(varcomp, "name") == "enemy_perk_data" then enemy_perk_data = varcomp break end
 end
 
+--[[
 local function update_icons()
 	local offset_y = 0
 	for _,hitbox in ipairs(EntityGetComponent(root, "HitboxComponent") or {}) do
@@ -40,7 +41,7 @@ local function update_icons()
 			image_file = sprite,
 		})
 	end
-end
+end--]]
 
 for _,luacomp in ipairs(EntityGetComponent(root, "LuaComponent") or {}) do
 	if ComponentGetValue2(luacomp, "script_death") == "mods/noita.hardmod/files/modules/enemy_perks/perk_holder_died.lua" then return end

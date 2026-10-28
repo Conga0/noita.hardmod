@@ -1,6 +1,6 @@
 <Biome>
   <Topology 
-    name="Infested Mines"
+    name="$hardmod_biomename_infested_mines"
     type="BIOME_WANG_TILE"
     background_image="mods/noita.hardmod/files/modules/alternate_biomes/biomes/background_fungalmine.png"
     background_edge_left="data/weather_gfx/edges/background_fungicave_left.png"
@@ -269,4 +269,3 @@
   </Materials>
 
 </Biome>
-

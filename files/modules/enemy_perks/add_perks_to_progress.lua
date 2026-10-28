@@ -16,7 +16,7 @@ for _,perk in ipairs(enemy_perks) do
 		RegisterPerk(
 			perk_id,
 			perk.name,
-			perk.desc or "",
+			perk.description or "",
 			perk.icon,
 			perk.icon
 		)
