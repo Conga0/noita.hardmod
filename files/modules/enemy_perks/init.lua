@@ -140,7 +140,7 @@ function hooks.post_update(frame)
 	end
 
 
-	if InputIsKeyJustDown(18) then
+	if InputIsKeyJustDown(tonumber(ModSettingGet("noita.hardmod.enemy_perk_inspect_key")) or 18) then
 		local x,y = DEBUG_GetMouseWorld()
 		selected_creature = EntityGetClosestWithTag(x, y, "hardmod_blessed")
 		local creature_x,creature_y = EntityGetTransform(selected_creature)
