@@ -23,11 +23,13 @@ import { execSync } from "child_process";
 import sharp from "sharp";
 import { basename } from "path";
 
+// Icon file inside of each module's dir
 const MODULE_ICON_FILE = "module_icon_016.png";
 
 const ICON_SIZE_PX = 16;
 const ICON_FONT_HEIGHT_PX = 23;
 
+// Pattern for filtering commits from the credits
 const OMIT_FROM_COMMIT_LOG = /^Merge (pull|branch) /;
 
 // Comment banner for fonts
@@ -60,7 +62,7 @@ function patchWorkshopId() {
 
   writeFileSync(
     "files/fonts/workshop/module_icons.xml",
-    XML_BANNER + readFileSync("files/fonts/module_icons.xml", "utf8").replace(
+    readFileSync("files/fonts/module_icons.xml", "utf8").replace(
       /<Texture>.+<\/Texture>/,
       `<Texture>../../workshop/content/881100/${id}/files/fonts/module_icons.png</Texture>`
     )
@@ -101,7 +103,7 @@ async function patchIcons() {
 
     names.add(name);    
     compositeLayers.push({ input: file, left: iconPos, top: 0 });
-    generatedQuadChars.push(`<!-- ${name} --><QuadChar id="${iconId}" rect_x="${iconPos}" rect_y="0" offset_x="0" offset_y="0" rect_h="16" rect_w="16" width="16"/>`);
+    generatedQuadChars.push(`<!-- ${name} --><QuadChar id="${iconId}" rect_x="${iconPos}" rect_y="0" width="${ICON_SIZE_PX}" rect_h="${ICON_SIZE_PX}" rect_w="${ICON_SIZE_PX}" offset_x="0" offset_y="0" />`);
     generatedIconTable.push(`${name}="${String.fromCharCode(iconId)}"`);
 
     iconPos += ICON_SIZE_PX;
@@ -158,11 +160,14 @@ const steps = [
   patchWorkshopId,
 ];
 
+/** @type {(()=>void|Promise<void>)[]} */
+const releaseSteps = [
+  patchCommits,
+]
+
 if (process.argv.includes("--release")) {
   console.log("Patching for a mod release\n");
-  steps.push(
-    patchCommits
-  );
+  steps.push(...releaseSteps);
 }
 
 for (const step of steps) {
