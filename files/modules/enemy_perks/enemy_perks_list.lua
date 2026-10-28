@@ -62,7 +62,7 @@ for _,perk in ipairs(perks) do
 	if perk.max then --This is sane enough.
 		local cond = perk.condition or function(...) return true end
 		perk.condition = function(self, data)
-			return cond(self, data) and data.how_many_of_each_perk < self.max
+			return cond(self, data) and (data.how_many_of_each_perk[self.id] or 0) < self.max
 		end
 	end
 end
