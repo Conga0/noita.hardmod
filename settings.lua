@@ -1,7 +1,23 @@
+---@diagnostic disable: undefined-global
 dofile("data/scripts/lib/mod_settings.lua")
 
--- To set your module's icon, create a 16x16 sprite and save it as 'module_icon_016.png' in the root of your module folder.
--- You must run `scripts/build.js` to update the font file.
+--[[
+    
+    To set your module's icon, create a 16x16 sprite and save it as
+    `module_icon_016.png` in the root of your module folder.
+
+    You must run `scripts/build.js` to update the font!!!
+
+    You can put custom icons into `files/fonts/icons` if you need them for custom GUI.
+    You can use them like this:
+
+        GuiText(gui, x, y, get_icon("your_icon"), 1, font_icons)
+        GuiButton(gui, id, x, y, get_icon("your_icon"), 1, font_icons)
+        
+    `your_icon` is the icon's filename with .png omitted
+
+]]--
+
 
 -- (Dani: ordering this list from (roughly) most to least impactful for the average run.)
 local module_data = {
@@ -662,24 +678,8 @@ function ModSettingsGui( gui, in_main_menu )
         GuiLayoutBeginHorizontal( gui, 0, 0, false, 2, 2 )
 
         local icon = get_icon(module.id, "default_module_icon")
-        local clicked,right_clicked = GuiButton( gui, new_id(), 4, 0, icon, 1, font_icons )
-        if clicked then
-            if HasSettingFlag( module_disabled ) then
-                RemoveSettingFlag( module_disabled )
-            else
-                AddSettingFlag( module_disabled )
-            end
-        end
-
-        local tooltip_text = GameTextGetTranslatedOrNot( module.ui_desc ) .. "\n "
-        if HasSettingFlag( module_disabled ) then
-            GuiTooltip( gui, tooltip_text, "[ Click to enable ]" );
-        else
-            GuiTooltip( gui, tooltip_text, "[ Click to disable]" )
-        end
-
-        -- todo: what is the purpose of this?..
-        -- GuiImage( gui, new_id(), -20.2, -1.2, "mods/noita.hardmod/lib/ui_sprites/settings_content_square.png", 1, 1.2, 0 )
+        GuiText(gui, 4, 0, icon, 1, font_icons)
+        GuiText(gui, -18, 0, get_icon("blank"), 1, font_icons)
 
         if HasSettingFlag( module_disabled ) then
             GuiZSetForNextWidget( gui, -80 )
@@ -693,7 +693,24 @@ function ModSettingsGui( gui, in_main_menu )
         else
             GuiColorSetForNextWidget( gui, 1, 1, 1, 1 )
         end
-        GuiText( gui, 0, 3, GameTextGetTranslatedOrNot( module.ui_name ) )
+
+        -- im so smart
+        local offset = "       "
+        local label = GameTextGetTranslatedOrNot(module.ui_name)
+
+        local clicked,right_clicked = GuiButton(gui, new_id(), -18, 3, offset..label)
+        if clicked then
+            if HasSettingFlag( module_disabled ) then
+                RemoveSettingFlag( module_disabled )
+            else
+                AddSettingFlag( module_disabled )
+            end
+        end
+
+        local tooltip_text = GameTextGetTranslatedOrNot( module.ui_desc ) .. "\n "
+        local tooltip_status = HasSettingFlag(module_disabled) and "[Click to enable]" or "[Click to disable]"
+        GuiTooltip(gui, tooltip_text, tooltip_status)
+
         GuiLayoutEnd( gui )
     end
 

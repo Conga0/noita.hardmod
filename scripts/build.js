@@ -89,6 +89,11 @@ async function patchIcons() {
       file.replace(`/${MODULE_ICON_FILE}`, "").replace(/\.png$/, "")
     );
 
+    if (name.includes(".")) {
+      console.error("ERROR: Invalid filename", file);
+      process.exit(1);
+    }
+
     if (names.has(name)) {
       console.error("ERROR: Duplicated icon name", name, "from", file);
       process.exit(1);
