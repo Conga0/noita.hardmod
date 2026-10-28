@@ -27,8 +27,8 @@ local perks = {
 	},--]]
 	{
 		id = "LAVA_BLOOD",
-		name = "$hardmod_eperk_name_lavablood",
-		description = "$hardmod_eperk_desc_lavablood",
+		name = "$hardmod_eperk_lava_blood_name",
+		description = "$hardmod_eperk_lava_blood_desc",
 		icon = sprites_path.."lava_blood.png",
 		weight = 5,
 		max = 1,
