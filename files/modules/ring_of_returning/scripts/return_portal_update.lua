@@ -3,8 +3,17 @@ dofile_once( "mods/noita.hardmod/lib/utilities.lua" )
 local portal_id = GetUpdatedEntityID()
 local x, y = EntityGetTransform( portal_id )
 
--- destroy the portal if the player is more than 300 units away from it
-local nearby_players = EntityGetInRadiusWithTag( x, y, 300, "player_unit" )
-if nearby_players == nil or #nearby_players == 0 then
+local player = EntityGetInRadiusWithTag( x, y, 15, "player_unit" )[1]
+if player ~= nil then
+	local tx = GetInternalInt( player, "hardmod_return_portal_dest_x" )
+	local ty = GetInternalInt( player, "hardmod_return_portal_dest_y" )
+	if tx == nil or tx == 0 then return end
+
+	-- "teleport"
+	GamePlaySound( "data/audio/Desktop/misc.bank", "misc/teleport_use_end", tx, ty )
+	EntitySetTransform( player, tx, ty )
+	EntityLoad( "mods/noita.hardmod/files/modules/trial_perks/gfx/spells/blink_tele_particles.xml", x, y )
+	EntityLoad( "mods/noita.hardmod/files/modules/trial_perks/gfx/spells/blink_tele_particles.xml", tx, ty )
+	GamePrint( "Teleported!" )
 	EntityKill( portal_id )
 end
