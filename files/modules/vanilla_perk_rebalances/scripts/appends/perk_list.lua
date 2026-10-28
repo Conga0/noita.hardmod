@@ -1,30 +1,38 @@
+---@diagnostic disable: undefined-global
 
 new_perks = {
+  {
+    id = "HARDMOD_TINKER_AT_PEDESTALS",
+    ui_name = "$hardmod_perk_tinker_at_pedestals_name",
+    ui_description = "$hardmod_perk_tinker_at_pedestals_desc",
+    ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals_016.png",
+    perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals.png",
+    stackable = STACKABLE_NO,
+    one_off_effect = false,
+    usable_by_enemies = false,
+    func = function(entity_perk_item, entity_who_picked, item_name, pickup_count)
+      if pickup_count > 1 then return end
+      EntityAddChild(entity_who_picked, EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_tinker_at_pedestals.xml"))
+    end
+	},
 	{
-		id = "HARDMOD_TINKER_AT_PEDESTALS",
-		ui_name = "$hardmod_perk_tinker_at_pedestals_name",
-		ui_description = "$hardmod_perk_tinker_at_pedestals_desc",
-		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals_016.png",
-		perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals.png",
-		stackable = STACKABLE_NO,
+		id = "HARDMOD_ITEM_IMMUNITIES",
+		ui_name = "$hardmod_perk_item_immunities_name",
+		ui_description = "$hardmod_perk_item_immunities_desc",
+		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/item_immunities_016.png",
+		perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/item_immunities.png",
+		stackable = false,
 		one_off_effect = false,
 		usable_by_enemies = false,
-		func = function( entity_perk_item, entity_who_picked, item_name, pickup_count )
-        	if pickup_count > 1 then return end
-            EntityAddChild( entity_who_picked, EntityLoad( "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_tinker_at_pedestals.xml" ) )
-        end,
-        func_remove = function( entity_who_picked )
-        	local perk_entity = EntityGetAllChildren( entity_who_picked, "hardmod_tinker_at_pedestals_entity" )[1]
-			if perk_entity ~= nil then
-				EntityKill( perk_entity )
-			end
-        end,
+		func = function(perk, player, name, count)
+      if count > 1 then return end
+			EntityAddChild(player, EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_item_immunities.xml"))
+		end
 	},
 }
 
 perk_reworks = {
-	{
-		id = "REMOVE_FOG_OF_WAR",
+	["REMOVE_FOG_OF_WAR"] = {
 		ui_name = "$hardmod_perk_all_seeing_eye_name",
 		ui_description = "$hardmod_perk_all_seeing_eye_desc",
 		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/all_seeing_eye_016.png",
@@ -43,16 +51,9 @@ perk_reworks = {
 			end
         end,
 	},
-	{
-		id = "SHIELD",
-		stackable_maximum = 3,
-	},
-	{
-		id = "STAINLESS_ARMOUR",
-		stackable_maximum = 3,
-	},
-	{
-		id = "PROTECTION_FIRE",
+	["SHIELD"] = { stackable_maximum = 3 },
+	["STAINLESS_ARMOUR"] = { stackable_maximum = 3 },
+	["PROTECTION_FIRE"] = {
 		ui_name = "$hardmod_perk_protection_fire_name",
 		ui_description = "$hardmod_perk_protection_fire_desc",
 		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/protection_fire_016.png",
@@ -79,8 +80,7 @@ perk_reworks = {
 			end
 		end,
 	},
-	{
-		id = "BLEED_OIL",
+	["BLEED_OIL"] = {
 		ui_description = "$hardmod_perk_bleed_oil_desc",
 		clear_original_game_effect = true,
 		remove_other_perks = nil,
@@ -115,8 +115,7 @@ perk_reworks = {
 			end
 		end,
 	},
-	{
-		id = "PROTECTION_EXPLOSION",
+	["PROTECTION_EXPLOSION"] = {
 		ui_name = "$hardmod_perk_protection_explosion_name",
 		ui_description = "$hardmod_perk_protection_explosion_desc",
 		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/protection_explosion_016.png",
@@ -139,8 +138,7 @@ perk_reworks = {
 			end
 		end,
 	},
-	{
-		id = "EXPLODING_CORPSES",
+	["EXPLODING_CORPSES"] = {
 		ui_description = "$hardmod_perk_exploding_corpses_desc",
 		clear_original_game_effect2 = true,
 		remove_other_perks = nil,
@@ -159,8 +157,7 @@ perk_reworks = {
 			end
 		end,
 	},
-	{
-		id = "PROTECTION_ELECTRICITY",
+	["PROTECTION_ELECTRICITY"] = {
 		ui_name = "$hardmod_perk_protection_electricity_name",
 		ui_description = "$hardmod_perk_protection_electricity_desc",
 		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/protection_electricity_016.png",
@@ -183,8 +180,7 @@ perk_reworks = {
 			end
 		end,
 	},
-	{
-		id = "PROTECTION_MELEE",
+	["PROTECTION_MELEE"] = {
 		ui_name = "$hardmod_perk_protection_melee_name",
 		ui_description = "$hardmod_perk_protection_melee_desc",
 		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/protection_melee_016.png",
@@ -207,45 +203,22 @@ perk_reworks = {
 			end
 		end,
 	},
-	{
-		id = "EDIT_WANDS_EVERYWHERE",
-		not_in_default_perk_pool = true,
-	},
-	{
-		id = "NO_WAND_EDITING",
-		not_in_default_perk_pool = true,
-	},
-	{
-		id = "EXTRA_MONEY",
-		not_in_default_perk_pool = true,
-	},
+	["EDIT_WANDS_EVERYWHERE"] = { not_in_default_perk_pool = true },
+	["NO_WAND_EDITING"] = { not_in_default_perk_pool = true },
+	["EXTRA_MONEY"] = { not_in_default_perk_pool = true },
+	["SAVING_GRACE"] = { not_in_default_perk_pool = true },
 }
 
-local function modify_perk( rework_data )
-	for i = 1, #perk_list do
-		local perk = perk_list[i]
-		if perk.id == rework_data.id then
-			for k, v in pairs( rework_data ) do
-                if k ~= "id" then
-                    perk[k] = v
-                end
-            end
-            if rework_data.clear_original_game_effect then
-            	perk.game_effect = nil
-            end
-            if rework_data.clear_original_game_effect2 then
-            	perk.game_effect2 = nil
-            end
-        end
-	end
-end
-
-if ( perk_list ~= nil ) then
-	for k, v in pairs( new_perks ) do
-		table.insert( perk_list, v )
+if perk_list ~= nil then
+	for _,perk in pairs(perk_list) do
+		if perk_reworks[perk.id] then
+			for k,v in pairs(perk_reworks[perk.id]) do
+				perk[k] = v
+			end
+		end
 	end
 
-	for k, v in pairs( perk_reworks ) do
-		modify_perk( v )
+	for _,perk in pairs(new_perks) do
+		table.insert(perk_list, perk)
 	end
 end

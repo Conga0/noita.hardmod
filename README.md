@@ -27,6 +27,9 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Most Immunity perks have been reworked into Protection perks, halving damage taken by the corresponding damage type. These perks now stack up to 3 times, for a total damage reduction of up to 87.5%.
   - Exploding Corpses and Oil Blood now also grant explosion/fire protection, rather than immunity.
   - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
+  - Added a new item, "Petrified Cheese". Holding it gives you melee immuniuty. It can spawn on item pedestals or drop from chests.
+  - Adds a new perk "Amplified Items". This perk lets you get some immunities from having stones in your inventory (fire immunity, electricity immunity and melee immunity)
+  - Wand Experimenter now heals less, and you can no longer circumvent it by dragging spells out of a wand directly onto the ground.
 - `biome_map`
   - Changes to the world layout and biomes
   - Adds much more side biomes and more connections between them
@@ -69,16 +72,19 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Pause menu will have a random splash message on it
 - `cheeseless_triggers`
   - Trigger spells pay their payload's cast delay
+  - Just like cast delay, spread inside of payloads now applies to the whole cast
   - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
 - `vanilla_quests`
   - Sea of Mimicium has been changed to Apotheosis's "Potion To Sea"
   - Cessation Quest: after pouring the potion mimic onto other mimics, you now get a new spell - "Ominous Sea". You must cast it in the Ominous Temple in order to get a chest containing "Potion To Sea" and "Touch Of Grass"
   - EoE quest: After kicking two Hand Statues you get the Summon Portal spell and Broken Spell. Kicking a third hand statue gives another broken spell.
 - `rapidfire_nerfs`
-  - Chainsaw now appears much later, and costs 12 mana to cast.
+  - Chainsaw now appears much later, and costs 12 mana to cast. It now also reduces much less recharge time.
+  - Add Mana now restores only 15 mana, and appears later & rarer
   - A new spell called Mini Chainsaw replaces the original spawns, which costs 6 mana and halves cast delay instead of setting it to 0.
-  - Add Mana has been reworked to restore less mana the longer you hold the fire button, now working in bursts only.
+  - A new spell called Mana Burst restores less mana the longer you hold the fire button, working in bursts only
   - A new spell called Mana Regen restores 12% of a wand's max mana per second, intended to make high mana, low charge speed wands more usable.
+  - Material spells now cost 8 mana. Heavy spread now costs 6 mana, and only adds 9 degrees of spread to work better with `cheeseless_triggers`
 - `trappier_traps`
   - Made a bunch of the box traps unkickable.
   - Wall traps shotgun projectiles.

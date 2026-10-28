@@ -1,51 +1,45 @@
-local mana_reducing_spells = { "MANA_REDUCE", "APOTHEOSIS_WATER_POWER" }
+---@diagnostic disable: undefined-global
+
+local mana_reducing_spells = { "MANA_REDUCE", "HARDMOD_MANA_REDUCE", "APOTHEOSIS_WATER_POWER" }
 
 reworked_actions = {
 	["CHAINSAW"] = {
-        spawn_level         = "6,10",
-        spawn_probability   = "0.2,1",
-        price               = 160,
-        mana                = 12,
+        spawn_level       = "4,5,6,10",
+        spawn_probability = "0.8,0.9,1,1",
+        price             = 160,
+        mana              = 12,
+        action = function()
+			add_projectile("data/entities/projectiles/deck/chainsaw.xml")
+			c.fire_rate_wait = 0
+			c.spread_degrees = c.spread_degrees + 6.0
+			current_reload_time = current_reload_time - 3
+        end
 	},
     ["MANA_REDUCE"] = {
-        description         = "$hardmod_spell_mana_reduce_desc",
-        sprite              = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/add_mana.png",
-        type                = ACTION_TYPE_MODIFIER,
-        mana                = 0,
-        -- custom_xml_file     = "mods/noita.hardmod/files/modules/rapidfire_nerfs/entities/card_mana_reduce.xml",
-        action              = function()
-                                draw_actions( 1, true )
-
-                                local ctrlcomp = EntityGetFirstComponentIncludingDisabled( GetUpdatedEntityID(), "ControlsComponent" )
-                                if ctrlcomp then
-                                    local fire_frame = ComponentGetValue2( ctrlcomp, "mButtonFrameFire" )
-                                    local current_frame = GameGetFrameNum()
-
-                                    local frames_firing = current_frame - fire_frame
-                                    local burst_duration = 20
-                                    local max_restore = 0
-                                    if frames_firing < burst_duration then
-                                        max_restore = ( ( 50 / burst_duration ) * ( burst_duration - frames_firing ) )
-                                    end
-
-                                    local hand_cost = 0
-                                    local mana_reducing_spell_count = 1
-                                    for i,v in ipairs( hand ) do
-                                        if v.mana ~= nil then
-                                            hand_cost = hand_cost + v.mana
-                                        end
-                                        for i,id in ipairs( mana_reducing_spells ) do
-                                            if v.id == id then
-                                                mana_reducing_spell_count = mana_reducing_spell_count + 1
-                                            end
-                                        end
-                                    end
-                                    hand_cost = hand_cost / mana_reducing_spell_count
-
-                                    local restore = math.min( hand_cost, max_restore )
-                                    mana = mana + restore
-                                end
-                            end,
+        spawn_level       = "3,4,5,6,10",
+		spawn_probability = "0.8,0.9,0.9,1,1",
+        price             = 160,
+        mana              = -15,
+    },
+    ["HEAVY_SPREAD"] = {
+        description = "$hardmod_spell_heavy_spread_desc",
+        mana   = 6,
+        sprite = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/heavy_spread.png",
+        action = function()
+            -- parity with cheeseless_triggers
+            c.spread_degrees = c.spread_degrees + 12
+            c.fire_rate_wait = c.fire_rate_wait - 7
+            current_reload_time = current_reload_time - 15
+            draw_actions(1, true)
+		end,
+    },
+    ["DIGGER"] = {
+        action = function()
+			add_projectile("data/entities/projectiles/deck/digger.xml")
+			c.fire_rate_wait = c.fire_rate_wait + 2
+            c.spread_degrees = c.spread_degrees + 4.0
+			current_reload_time = current_reload_time - 10
+		end,
     },
     ["APOTHEOSIS_WATER_POWER"] = {
         description         = "$hardmod_spell_apotheosis_water_power_desc",
@@ -94,6 +88,51 @@ reworked_actions = {
 
 new_actions = {
     {
+        id                  = "HARDMOD_MANA_REDUCE",
+        name                = "$hardmod_spell_mana_reduce_name",
+        description         = "$hardmod_spell_mana_reduce_desc",
+        sprite              = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/add_mana.png",
+        type                = ACTION_TYPE_MODIFIER,
+        spawn_level         = "1,2,3,4,5,6",
+		spawn_probability   = "0.7,0.9,1,1,1,1",
+        price               = 160,
+        mana                = 0,
+        -- custom_xml_file     = "mods/noita.hardmod/files/modules/rapidfire_nerfs/entities/card_mana_reduce.xml",
+        action              = function()
+                                draw_actions( 1, true )
+
+                                local ctrlcomp = EntityGetFirstComponentIncludingDisabled( GetUpdatedEntityID(), "ControlsComponent" )
+                                if ctrlcomp then
+                                    local fire_frame = ComponentGetValue2( ctrlcomp, "mButtonFrameFire" )
+                                    local current_frame = GameGetFrameNum()
+
+                                    local frames_firing = current_frame - fire_frame
+                                    local burst_duration = 20
+                                    local max_restore = 0
+                                    if frames_firing < burst_duration then
+                                        max_restore = ( ( 50 / burst_duration ) * ( burst_duration - frames_firing ) )
+                                    end
+
+                                    local hand_cost = 0
+                                    local mana_reducing_spell_count = 1
+                                    for i,v in ipairs( hand ) do
+                                        if v.mana ~= nil then
+                                            hand_cost = hand_cost + v.mana
+                                        end
+                                        for i,id in ipairs( mana_reducing_spells ) do
+                                            if v.id == id then
+                                                mana_reducing_spell_count = mana_reducing_spell_count + 1
+                                            end
+                                        end
+                                    end
+                                    hand_cost = hand_cost / mana_reducing_spell_count
+
+                                    local restore = math.min( hand_cost, max_restore )
+                                    mana = mana + restore
+                                end
+                            end,
+    },
+    {
         id                  = "HARDMOD_MINI_CHAINSAW",
         name                = "$hardmod_spell_mini_chainsaw_name",
         description         = "$hardmod_spell_mini_chainsaw_desc",
@@ -109,7 +148,7 @@ new_actions = {
                                 add_projectile( "data/entities/projectiles/deck/chainsaw.xml" )
                                 c.fire_rate_wait = c.fire_rate_wait * 0.5
                                 c.spread_degrees = c.spread_degrees + 6.0
-                                current_reload_time = current_reload_time - 10
+                                current_reload_time = current_reload_time - 3
                             end,
     },
     {
@@ -129,17 +168,23 @@ new_actions = {
     },
 }
 
-for i=1,#actions do
-    if reworked_actions[actions[i].id] then
-        for k,v in pairs( reworked_actions[actions[i].id] ) do
-            actions[i][k] = v
+local materials = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIAL_CEMENT" }
+for _,material in pairs(materials) do
+    reworked_actions[material] = {
+        mana = 8
+    }
+end
+
+for _,action in pairs(actions) do
+    if reworked_actions[action.id] then
+        for k,v in pairs(reworked_actions[action.id]) do
+            action[k] = v
         end
-        actions[i]['hardmod_reworked'] = true
+
+        action["hardmod_reworked"] = true
     end
 end
 
-if actions ~= nil then
-    for i=1, #new_actions do
-        table.insert( actions, new_actions[i] )
-    end
+for _,action in pairs(new_actions) do
+    table.insert(actions, action)
 end

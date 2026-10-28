@@ -1,4 +1,4 @@
-reworked_actions = {
+local reworked_actions = {
 	["X_RAY"] = {
         spawn_level         = "0,1,2,3,4,5,6",
         spawn_probability   = "0.4,0.6,0.7,0.8,1,0.8,0.7",

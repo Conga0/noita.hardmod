@@ -6,7 +6,7 @@ local module = {
 
 module.edit_material = function(material)
     if material.attr.name == "oil" then
-        material.attr.burnable = "0" -- oil is really not that flammable, sorry arson enjoyers
+        -- material.attr.burnable = "0" -- oil is really not that flammable, sorry arson enjoyers
 		material.attr.tags = "[liquid],[impure],[liquid_common],[chaotic_transmutation],[evaporable_custom]"
 	end
 
