@@ -20,6 +20,19 @@ new_perks = {
 			end
         end,
 	},
+	{
+		id = "HARDMOD_ITEM_IMMUNITIES",
+		ui_name = "$hardmod_perk_item_immunities_name",
+		ui_description = "$hardmod_perk_item_immunities_desc",
+		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/item_immunities_016.png",
+		perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/item_immunities.png",
+		stackable = false,
+		one_off_effect = false,
+		usable_by_enemies = false,
+		func = function(perk, player)
+			EntityAddChild(player, EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_item_immunities.xml"))
+		end
+	},
 }
 
 perk_reworks = {

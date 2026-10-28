@@ -47,7 +47,7 @@ local function pick_location(try)
       x >= region.x[1] and x <= region.x[2]
       and y >= region.y[1] and y <= region.y[2]
     then
-      return pick_location(try + 1)
+      return pick_location((try or 0) + 1)
     end
   end
 
