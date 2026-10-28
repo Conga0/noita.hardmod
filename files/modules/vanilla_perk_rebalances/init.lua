@@ -41,11 +41,25 @@ local function modify_xray()
 	ModTextFileSetContent( path, tostring(xml) )
 end
 
+local function modify_wand_experimenter()
+	for file in nxml.edit_file("data/entities/base_wand.xml") do
+		file:create_child("LuaComponent", {
+			_enabled = true,
+			execute_every_n_frame = 2,
+			remove_after_executed = true,
+			script_source_file = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/perks/wand_experimenter/init.lua"
+		})
+	end
+
+	ModLuaFileAppend("data/scripts/perks/wand_experimenter.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/perks/wand_experimenter/append.lua")
+end
+
 hooks.mod_init = function()
 	modify_master_of_blinding()
 	modify_wandstone()
 	modify_mountain_altar()
 	modify_xray()
+	modify_wand_experimenter()
 end
 
 hooks.mod_post_init = function()

@@ -29,6 +29,7 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Stainless Armour and Permanent Shield can now be stacked a maximum of 3 times each.
   - Added a new item, "Petrified Cheese". Holding it gives you melee immuniuty. It can spawn on item pedestals or drop from chests.
   - Adds a new perk "Amplified Items". This perk lets you get some immunities from having stones in your inventory (fire immunity, electricity immunity and melee immunity)
+  - Wand Experimenter now heals less, and you can no longer circumvent it by dragging spells out of a wand directly onto the ground.
 - `chest_tweaks`
   - Adds more drops to chests/GTCs. Some of them are good, some of them are dangerous
   - Adds the "Better Chests" perk which makes chests contain more loot
