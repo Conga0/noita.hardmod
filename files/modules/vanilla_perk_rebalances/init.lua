@@ -25,8 +25,8 @@ end
 local function modify_mountain_altar()
 	for xml in nxml.edit_file("data/entities/animals/boss_centipede/ending/ending_sampo_spot_mountain.xml") do
 		xml:add_child(nxml.new_element("LuaComponent", {
-        	script_source_file="mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/altar_tablet_magic_append.lua",
-        	execute_every_n_frame="240",
+			script_source_file="mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/altar_tablet_magic.lua",
+			execute_every_n_frame="240",
 		}))
 	end
 end
