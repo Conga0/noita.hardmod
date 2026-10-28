@@ -83,8 +83,84 @@ Update commit_log.txt
 reworking some logic stuff, fixed flat HMs
 fix new game starting in HM
 added readme support
+remove indulgence GamePrint
 fixed & updated credits, tweaked readmes
+Merge remote-tracking branch 'origin/main'
+fix MoM file appends
+fix TWWE spawn variable
 fixed collapse crystal not triggering death script when fully destroyed
+remove rogue gameprint
+prevent Indulgence from spawning due to chunk unloading
 fixed flat-exits for Reworked Holy Mountains
+make Infinity (spell) a MoM reward
+add module readme.md
 finished crystal attraction effect, unfixed collapse crystal not triggering death script when fully destroyed because b2d genuinely sucks balls so bad 😭
 I LOVE THE SEQUEL TO PHYSICSBODYCOMPONENT, PHYSICSBODY2COMPONENT!!!!!
+fixed evil `nxml.parse()` code
+Update readme.md
+added new module `buff_enemies`, hmrework tweaks
+refactored `buff_enemies` -> `nerf_vanilla_cheeses`
+TANNEREYE IS DEAD.
+added a few splashes
+phantom_miniboss bug fixes
+rework Greed (perk) into Treasure Hunter
+prevent infinite while loop possibility
+add +100 gold on each Treasure Hunter chest
+add innocent splash text
+More splash texts
+Bangers.
+added a few more fun splashes, thanked lamier
+make splash not suck
+fix always false if statement
+Update standard.csv
+guitext can't use alpha, isn't it fun??
+Kolmi starts at 8 orb power level
+aeugh
+add Ring of Returning
+cleaned up collapse crystal code
+nerf Chainsaw, add Mini Chainsaw
+re-add nerfed Wand Refresh
+nerf Add Mana, buff Chainsaws
+LootLib is born!
+Start working on chest tweaks
+make Add Mana better on high-mana wands
+give ASE (spell) more charges, but less AoE
+sliiightly longer
+nerf Apoth Hydromancy
+rework Add Mana (again)
+add Mana Regen spell
+new sprite for Mana Regen
+LootLib improvements
+Add a unique icon for the Treasure Hunter perk; reuse the old icon for Better Chests perk
+Fix Gold is Forever in LootLib
+Move the Treasure Hunter perk  to Chest Tweaks
+more chest drops
+remove trailing GamePrint
+update Treasure Hunter desc
+fix formatting in shared utilities file
+add 2 Trial perks
+make Indulgence show warning if no gold
+rename module
+make Time Trial reward also scale with HM tier
+update chest loot
+start working on better_anvil
+Ira Changes
+Merge remote-tracking branch 'fork/d2d-content' into d2d-content
+Realism update real
+port alternate biomes module
+fungal mines
+Update fungal_mines.xml
+better repaired wands & repairable broken spells (and a broken inventory pickup)
+Random anvil location, book in the old location with a hint, and broken spell reforging
+Update README
+tweak loot from broken spell reforging
+(chest_tweaks) fix the Summon Sadekivi perk not getting removed properly
+use true/false instead of '0'/'1'
+use :get instead of .attr
+trappier_traps: more dangerous HM portal materials
+first floor cant be evil
+Add some splashes
+fix background
+moldy hämis
+fixed tablet trick kill cheese
+reworked icon system for settings.lua
