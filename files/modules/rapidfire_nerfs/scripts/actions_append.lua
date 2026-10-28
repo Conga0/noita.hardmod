@@ -1,7 +1,6 @@
 ---@diagnostic disable: undefined-global
 
 local mana_reducing_spells = { "MANA_REDUCE", "HARDMOD_MANA_REDUCE", "APOTHEOSIS_WATER_POWER" }
-local materials = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIAL_CEMENT" }
 
 reworked_actions = {
 	["CHAINSAW"] = {
@@ -96,7 +95,7 @@ new_actions = {
         type                = ACTION_TYPE_MODIFIER,
         spawn_level         = "1,2,3,4,5,6",
 		spawn_probability   = "0.7,0.9,1,1,1,1",
-        price               = 250,
+        price               = 160,
         mana                = 0,
         -- custom_xml_file     = "mods/noita.hardmod/files/modules/rapidfire_nerfs/entities/card_mana_reduce.xml",
         action              = function()
@@ -169,6 +168,7 @@ new_actions = {
     },
 }
 
+local materials = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIAL_CEMENT" }
 for _,material in pairs(materials) do
     reworked_actions[material] = {
         mana = 8

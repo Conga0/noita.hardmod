@@ -6,13 +6,7 @@ local comp = GetUpdatedComponentID()
 local state = GetStoredWandState(wand)
 local new_state = GetNewWandState(wand)
 
-if not state or state == invalid_state then
-  EntityRemoveComponent(wand, comp)
-  return
-end
-
-if new_state == invalid_state or new_state ~= state then
+if IsWandStateInvalid(state, new_state) then
   EntityRemoveComponent(wand, comp)
   MarkWandAsTinkered(wand)
-  return
 end

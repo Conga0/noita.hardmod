@@ -1,6 +1,5 @@
 local vsc_name = "hardmod_wand_experimenter_state"
-
-invalid_state = "tinkered"
+local invalid_state = "tinkered"
 
 function GetNewWandState(wand)
   local spells = {}
