@@ -66,6 +66,7 @@ hooks.mod_post_init = function()
 	ModLuaFileAppend("data/scripts/perks/perk_list.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/perk_list.lua")
 	ModLuaFileAppend("data/scripts/perks/perk.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/perk.lua")
 	ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/actions.lua")
+	ModLuaFileAppend("data/scripts/gun/gun_extra_modifiers.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/gun_extra_modifiers.lua")
 	ModLuaFileAppend("data/scripts/item_spawnlists.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/item_spawnlists.lua")
 	-- ModLuaFileAppend("data/scripts/magic/altar_tablet_magic.lua", "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/scripts/appends/altar_tablet_magic.lua")
 end
