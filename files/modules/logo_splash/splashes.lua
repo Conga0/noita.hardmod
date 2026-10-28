@@ -59,4 +59,5 @@ return {
 	"Fair Mod 2: This Time It's Actually Fair",
 	"Fixes NB-55 and NB-121",
 	"Restored 5wand!",
+	"exploding u :3",
 }
