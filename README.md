@@ -53,7 +53,7 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Just like cast delay, spread inside of payloads now applies to the whole cast
   - `Add Trigger`, `Add Timer` and `Add Death Trigger` don't give free modifiers anymore and properly applies spell's cast delay
 - `rapidfire_nerfs`
-  - Chainsaw now appears much later, and costs 12 mana to cast.
+  - Chainsaw now appears much later, and costs 12 mana to cast. It now also reduces much less recharge time.
   - Add Mana now restores only 15 mana, and appears later & rarer
   - A new spell called Mini Chainsaw replaces the original spawns, which costs 6 mana and halves cast delay instead of setting it to 0.
   - A new spell called Mana Burst restores less mana the longer you hold the fire button, working in bursts only

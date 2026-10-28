@@ -1,4 +1,4 @@
--- -@diagnostic disable: undefined-global
+---@diagnostic disable: undefined-global
 
 local mana_reducing_spells = { "MANA_REDUCE", "HARDMOD_MANA_REDUCE", "APOTHEOSIS_WATER_POWER" }
 local materials = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIAL_CEMENT" }
@@ -9,6 +9,12 @@ reworked_actions = {
         spawn_probability = "0.8,0.9,1,1",
         price             = 160,
         mana              = 12,
+        action = function()
+			add_projectile("data/entities/projectiles/deck/chainsaw.xml")
+			c.fire_rate_wait = 0
+			c.spread_degrees = c.spread_degrees + 6.0
+			current_reload_time = current_reload_time - 3
+        end
 	},
     ["MANA_REDUCE"] = {
         spawn_level       = "3,4,5,6,10",
@@ -17,6 +23,7 @@ reworked_actions = {
         mana              = -15,
     },
     ["HEAVY_SPREAD"] = {
+        description = "$hardmod_spell_heavy_spread_desc",
         mana   = 6,
         sprite = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/heavy_spread.png",
         action = function()
@@ -134,7 +141,7 @@ new_actions = {
                                 add_projectile( "data/entities/projectiles/deck/chainsaw.xml" )
                                 c.fire_rate_wait = c.fire_rate_wait * 0.5
                                 c.spread_degrees = c.spread_degrees + 6.0
-                                current_reload_time = current_reload_time - 10
+                                current_reload_time = current_reload_time - 3
                             end,
     },
     {
