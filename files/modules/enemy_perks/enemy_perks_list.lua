@@ -111,24 +111,24 @@ local perks = {
 			EntityAddChild(entity_id, EntityLoad( "mods/noita.hardmod/files/modules/enemy_perks/entities/protector_shield.xml", x, y))
 		end
 	},
-	{
-		id = "HARDMOD_IMPERVIOUS",
-		name = "$hardmod_eperk_impervious_name",
-		description = "$hardmod_eperk_impervious_desc",
-		icon = sprites_path.."impervious.png",
-		weight = 1,
-		max = 1,
-		func = function(self, entity_id, data)
-			local x, y = EntityGetTransform(entity_id)
-			EntityAddChild(entity_id, EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/entities/impervious_shield.xml", x, y))
+	-- {
+	-- 	id = "HARDMOD_IMPERVIOUS",
+	-- 	name = "$hardmod_eperk_impervious_name",
+	-- 	description = "$hardmod_eperk_impervious_desc",
+	-- 	icon = sprites_path.."impervious.png",
+	-- 	weight = 1,
+	-- 	max = 1,
+	-- 	func = function(self, entity_id, data)
+	-- 		local x, y = EntityGetTransform(entity_id)
+	-- 		EntityAddChild(entity_id, EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/entities/impervious_shield.xml", x, y))
 
-			local dmg_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "DamageModelComponent")
-			if dmg_comp ~= nil then
-				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "projectile", 0.0)
-				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "melee", 1000.0)
-			end			
-		end
-	},
+	-- 		local dmg_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "DamageModelComponent")
+	-- 		if dmg_comp ~= nil then
+	-- 			ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "projectile", 0.0)
+	-- 			ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "melee", 1000.0)
+	-- 		end			
+	-- 	end
+	-- },
 	{
 		id = "HARDMOD_DRY_SPELL",
 		name = "$hardmod_eperk_dry_spell_name",
