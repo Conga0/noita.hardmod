@@ -8,7 +8,8 @@ if nearby_mortals then
 		if dmg_comp ~= nil then
 			local p_hp = ComponentGetValue2( dmg_comp, "hp" )
 			local p_max_hp = ComponentGetValue2( dmg_comp, "max_hp" )
-			ComponentSetValue2( dmg_comp, "hp", math.min( p_hp + 0.12, p_max_hp ) ) -- 4 hp per iteration, 12 per second
+			ComponentSetValue2( dmg_comp, "hp", math.min( p_hp + 0.12, p_max_hp ) ) -- 3 hp per tick, 12 per second, 30 max
+
 			GamePlaySound( "data/audio/Desktop/misc.bank", "game_effect/regeneration/tick", x, y )
 		end
 	end
