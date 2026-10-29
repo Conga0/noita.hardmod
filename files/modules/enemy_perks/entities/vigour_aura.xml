@@ -1,0 +1,11 @@
+<Entity>
+	
+	<Base file="data/entities/projectiles/deck/regeneration_aura.xml">
+
+		<LifetimeComponent
+			lifetime="59" >
+		</LifetimeComponent>
+
+	</Base>
+	
+</Entity>
