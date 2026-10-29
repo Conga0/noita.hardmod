@@ -229,7 +229,7 @@ function hooks.post_update(frame)
 
 	local function render_perk(perk, x, y)
 		if perk.locked then GuiColorSetForNextWidget(gui, 0.3, 0.3, 0.3, 1) end
-		GuiImage(gui, new_id(), x, y, perk.icon, 1, 1, 1)
+		GuiImage(gui, new_id(), x, y, perk.sprite, 1, 1, 1)
 		--[[ this would allow you to hover the perk to see in-game and click it to pin it to your screen
 		-- But time is running short, and I would like to get this feature out there first, I lost too much time being ill for a week and a half
 		-- Sorry!!
@@ -238,7 +238,7 @@ function hooks.post_update(frame)
 			local perk_hover_info
 			if not cached_perk_hover_info[perk.id] then
 				cached_perk_hover_info[perk.id] = {
-					icon = perk.icon,
+					icon = perk.sprite,
 					name = GameTextGetTranslatedOrNot(perk.name),
 					box_size = {
 						x = edge_padding*2 + icon_size*2 + top_padding + math.max(GuiGetTextDimensions(gui, perk_hover_info.name), 48),
