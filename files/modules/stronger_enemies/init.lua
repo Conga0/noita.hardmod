@@ -6,6 +6,7 @@ local function patch_spawn_rules()
     "crypt",
     "excavationsite",
     "fungicave",
+    "rainforest",
     "snowcastle",
     "snowcave",
     "the_end",

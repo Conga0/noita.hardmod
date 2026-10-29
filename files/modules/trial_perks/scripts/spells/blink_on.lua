@@ -18,6 +18,6 @@ local x, y = EntityGetTransform( owner )
 EntityLoad( "mods/D2DContentPack/files/particles/tele_particles.xml", x, y )
 
 local tx, ty = ComponentGetValue2( ctrl_comp, "mMousePosition" )
-EntityApplyTransform( GetUpdatedEntityID(), tx, ty )
+EntityApplyTransform(GetUpdatedEntityID(), tx, ty)
 
 EntityKill( GetUpdatedEntityID() )
