@@ -5,8 +5,9 @@ local bomb = lootlib.get_label(chest, "bomb")
 if bomb then
   bomb.entity = nil
   bomb.pick_weighted = {
-    { weight = 10, entity = "data/entities/projectiles/bomb_small.xml" },
-    { weight = 8, entity = "data/entities/projectiles/deck/tentacle_portal.xml" },
+    { weight = 20, entity = "data/entities/projectiles/bomb_small.xml" },
+    { weight = 16, entity = "data/entities/projectiles/deck/tentacle_portal.xml" },
+    { weight = 2, entity = "data/entities/animals/thundermage.xml" },
   }
 
   bomb.var = "rolls"
