@@ -10,8 +10,12 @@ for file in nxml.edit_file("data/entities/items/pickup/potion_aggressive.xml") d
 
     local item = base:first_of("ItemComponent")
     if item then
-      item:set("ui_description", "$hardmod_item_large_potion_desc")
+      item:set("item_name", "$hardmod_item_large_potion")
     end
+
+    base:create_child("AbilityComponent", {
+      ui_name = "$hardmod_item_large_potion_with_material"
+    })
   end
 end
 
