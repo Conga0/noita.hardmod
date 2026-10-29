@@ -56,12 +56,6 @@ for biome,data in pairs(biome_levels) do
 	end
 end
 
-local function log(...)
-	if logging then
-		print(table.concat({...}, " "))
-	end
-end
-
 local function update_perk_unlock_states()
 	for _,perk in ipairs(enemy_perks) do
 		perk.locked = not HasFlagPersistent("perk_picked_enemyperk_hardmod_"..perk.id:lower())
@@ -139,21 +133,15 @@ hooks.new_eid = function(entity_id)
 		local x,y = EntityGetTransform(entity_id)
 		local biome = BiomeMapGetName(x, y)
 		local num = 0
-		log("start-------------------------------")
-		log(num)
 		local biome_data = biome_levels[biome] or biome_levels.default_biome_data
 		if biome_data.custom_func then
-			log("func")
 			num = biome_data:custom_func(entity_id) or num
-			log(num)
 		end
 		if biome_data.do_recursive_roll ~= false then
 			for _=1, biome_data.level do
-				log("roll")
 				local function plus_one_perk()
 					if Random() <= base_perk_chance then
 						num = num + 1
-						log("+1")
 						plus_one_perk()
 					end
 				end
@@ -161,11 +149,9 @@ hooks.new_eid = function(entity_id)
 			end
 		end
 		if biome_data.range then
-			log("range")
 			num = num + Random(biome_data.range[1], biome_data.range[2])
 		end
-		log(num)
-		if not biome_levels[biome] then print(biome) end --use to find biomes not yet assigned levels
+		--if not biome_levels[biome] then print(biome) end --use to find biomes not yet assigned levels
 		give_enemy_perks(entity_id, num)
 	end
 end
