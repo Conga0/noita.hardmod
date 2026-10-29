@@ -1,6 +1,8 @@
 hardmod_sampo_tooltip,Orbs: $0/$1,,,,,,,,,,,,,
 hardmod_status_nohealing_name,Wounded,Ранен,,,,,,,受创,負傷,,,,
 hardmod_status_nohealing_desc,You can not be healed.,Вы не можете быть исцелены.,,,,,,,各类治疗魔法无法治疗你。,回復魔法の効果がない。,,,,
+hardmod_status_cold_name,Cold,,,,,,,,,,,,,
+hardmod_status_cold_spells_desc,Cause: casting freezing spells,,,,,,,,,,,,,
 hardmod_enemy_perks_test,Test Perk,,,,,,,,,,,,,
 hardmod_eperk_lava_blood_name,Lava Blood,,,,,,,,,,,,,
 hardmod_eperk_lava_blood_desc,Holder will now bleed lava and take damage from water-related materials.,,,,,,,,,,,,,
