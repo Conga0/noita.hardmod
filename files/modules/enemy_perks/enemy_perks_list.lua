@@ -33,7 +33,7 @@ local perks = {
 		weight = 5,
 		max = 1,
 		condition = function(self, data)
-			if not data.blood_perk then return true end
+			return not data.blood_perk
 		end,
 		func = function(self, entity_id, data)
 			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
@@ -41,14 +41,17 @@ local perks = {
 
 			ComponentSetValue2(dmc, "blood_material", "lava")
 			ComponentSetValue2(dmc, "blood_spray_material", "lava")
-			ComponentSetValue2(dmc, "wet_status_effect_damage", 0.2)
-			EntitySetDamageFromMaterial(entity_id, "water", 0.0005)
-			EntitySetDamageFromMaterial(entity_id, "mud", 0.0005)
-			EntitySetDamageFromMaterial(entity_id, "water_swamp", 0.0005)
-			EntitySetDamageFromMaterial(entity_id, "water_salt", 0.0005)
-			EntitySetDamageFromMaterial(entity_id, "swamp", 0.0005)
-			EntitySetDamageFromMaterial(entity_id, "snow", 0.0005)
-			EntitySetDamageFromMaterial(entity_id, "water_ice", 0.0005)
+			ComponentSetValue2(dmc, "wet_status_effect_damage", 0.1)
+			EntitySetDamageFromMaterial(entity_id, "water", 0.0002)
+			EntitySetDamageFromMaterial(entity_id, "mud", 0.0002)
+			EntitySetDamageFromMaterial(entity_id, "water_swamp", 0.0002)
+			EntitySetDamageFromMaterial(entity_id, "water_salt", 0.0002)
+			EntitySetDamageFromMaterial(entity_id, "swamp", 0.0002)
+			EntitySetDamageFromMaterial(entity_id, "snow", 0.0002)
+			EntitySetDamageFromMaterial(entity_id, "water_ice", 0.0002)
+
+			EntitySetDamageFromMaterial(entity_id, "lava", 0)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_FIRE", false)
 
 			data.blood_perk = "lava" --do this for condition func so multiple blood perks aren't rolled
 		end

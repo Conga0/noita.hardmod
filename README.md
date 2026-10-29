@@ -34,7 +34,6 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Changes to the world layout and biomes
   - Adds much more side biomes and more connections between them
   - Adds a secret passage between fungal cavern and ancient laboratory, hidden with dense rock
-  - Removes the top-right gold biome. No more moneys! In its place is the new Cheese Biome filled with cheese that we bought for these 250K gold.
   - Ancient Laboratory and Alchemist is now surrounded by EDR so you can't skip to the alchemist quickly
   - There's now a "barrier" out of ominous liquid between cursed rock in PWs and The Tower
   - The Wizard's Den Orb now has cursed rock under it instead of EDR to make cheesing harder; Master of Masters is also surrounded by cursed rock for the same reason.
@@ -54,7 +53,7 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
 - `better_anvil`
   - Hiisi Anvil has been moved! You now have to explore the Hiisi Base a bit to find it.
   - In the old place in the bottom right there is a book hinting at the general location of the anvil, so you don't have to search everything
-  - Reforging a broken tablet at the anvil now guarantees a good non-shuffle wand
+  - Reforging a broken wand at the anvil now guarantees a good non-shuffle wand
   - Broken Spell has been repurposed: you can now find it on item pedestals, and reforge it on the anvil for random good spells
   - You can put broken spells in your spell inventory to save space
   - Additionally, you can now use Broken Wands as a weapon early game - their projectiles will home onto enemies (they still hurt you, though, so watch out!)
@@ -78,6 +77,9 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Sea of Mimicium has been changed to Apotheosis's "Potion To Sea"
   - Cessation Quest: after pouring the potion mimic onto other mimics, you now get a new spell - "Ominous Sea". You must cast it in the Ominous Temple in order to get a chest containing "Potion To Sea" and "Touch Of Grass"
   - EoE quest: After kicking two Hand Statues you get the Summon Portal spell and Broken Spell. Kicking a third hand statue gives another broken spell.
+- `vanilla_bosses`
+  - Tweaks to some vanilla bosses
+  - Bridge boss is no longer shreddable
 - `rapidfire_nerfs`
   - Chainsaw now appears much later, and costs 12 mana to cast. It now also reduces much less recharge time.
   - Add Mana now restores only 15 mana, and appears later & rarer
@@ -93,8 +95,8 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - TANNEREYE IS DEAD.
   - Steve and Scott are now 95% resistant to physics damage
   - The cursed rock entity has been fixed, you can no longer stand inbetween chunk borders to not get damaged
-- `worse_hearts`
-  - Holy mountain hearts no longer grant health increase
+- `nerf_vanilla_damage`
+  - Changes to vanilla damage values
 - `no_more_max_hp_cheesing`
   - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
   - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.
@@ -104,6 +106,10 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Adds a set of new perks that reward the player for challenging themselves.
 - `holy_mountain_rework`
   - [readme.md](files/modules/holy_mountain_rework/readme.md)
+- `holy_mountain_items`
+  - Spell Refresh and Heal in Holy Mountains must be purchased
+  - The cost is 15% of your current gold at the time of entering the Holy Mountain. (the minimum price is 150g)
+  - Holy Mountain Hearts no longer grant health increase
 - `ring_of_returning`
   - An item found in each Holy Mountain that, when broken, opens a portal to the last HM you discovered.
 - `credit`

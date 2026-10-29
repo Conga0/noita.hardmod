@@ -239,6 +239,30 @@ function SetInternalInt(entity_id, variable_name, new_value)
 	end
 end
 
+---Returns the player, polymorphed or not. Pass x, y and distance for a distance check.
+---@param x number?
+---@param y number?
+---@param distance number?
+---@returns entity_id?
+function GetPlayerEntity(x, y, distance)
+  local tags = {"player_unit", "polymorphed_player", "polymorphed_cessation"}
+	for _,tag in pairs(tags) do
+		local player
+
+		if x and y and distance then
+			player = EntityGetInRadiusWithTag(x, y, distance, tag)
+		else
+			player = EntityGetWithTag(tag)
+		end
+
+		if #player > 0 then
+			return player[1]
+		end
+	end
+
+  return nil
+end
+
 ---Remaps a value between (a1,b1) to (a2,b2)
 ---@param value int Value to remap
 ---@param inMin int Lower end of the input range

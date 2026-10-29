@@ -91,216 +91,215 @@ local function EntityLoadAtWandTip( player_entity_id, load_this_entity )
     return nil
 end
 
-if actions ~= nil then
-	new_actions = {
-		{
-			id					= "HARDMOD_SPELL_INDULGENCE",
-			name				= "$hardmod_spell_indulgence_name",
-			description			= "$hardmod_spell_indulgence_desc",
-			sprite				= "mods/noita.hardmod/files/modules/truly_limited_spells/gfx/ui_gfx/spells/indulgence.png",
-			type				= ACTION_TYPE_OTHER,
-			recursive 			= true,
-			spawn_level			= "0",
-			spawn_probability	= "0",
-			spawn_requires_flag = "hardmod_cannot_spawn",
-			price				= 1000,
-			mana				= 1,
-			action				= function()
-									if reflecting then return end
+local new_actions = {
+    {
+        id					= "HARDMOD_SPELL_INDULGENCE",
+        name				= "$hardmod_spell_indulgence_name",
+        description			= "$hardmod_spell_indulgence_desc",
+        sprite				= "mods/noita.hardmod/files/modules/truly_limited_spells/gfx/ui_gfx/spells/indulgence.png",
+        type				= ACTION_TYPE_OTHER,
+        recursive 			= true,
+        spawn_level			= "0",
+        spawn_probability	= "0",
+        spawn_requires_flag = "hardmod_cannot_spawn",
+        price				= 1000,
+        mana				= 1,
+        action = function()
+            if reflecting then return end
 
-									local data = {}
-									if ( #deck > 0 ) then
-										data = deck[1]
-									elseif ( #hand > 0 ) then
-										data = hand[1]
-									else
-										data = nil
-									end
-
-									local rec = check_recursion( data, recursion_level )
-									
-									if ( data ~= nil ) and ( rec > -1 ) and ( data.uses_remaining == 0 ) then
-
-										-- determine the spell's max uses
-										local max_uses = -1
-										local lua_data = get_actions_lua_data( data.id )
-										if lua_data.max_uses then
-											max_uses = lua_data.max_uses
-										end
-
-										-- how much money does the player have?
-										local player = GetUpdatedEntityID()
-										local wcomp = EntityGetFirstComponent( player, "WalletComponent" )
-										if wcomp == nil then return end
-										local money = ComponentGetValue2( wcomp, "money" )
-
-										-- determine the cost for this spell
-										local cast_price
-										if data.id == "DIVIDE_10" then
-											cast_price = 500
-										elseif max_uses <= 2 or data.recursive then -- i.e. Circle of Vigour, Greek letters
-											cast_price = 250
-										elseif max_uses <= 5 then -- i.e. Black Hole
-											cast_price = 125
-										elseif max_uses <= 10 then
-											cast_price = 50
-										elseif max_uses <= 20 then
-											cast_price = 25
-										else
-											cast_price = 10
-										end
-										if lua_data.never_unlimited then
-											cast_price = cast_price * 2
-										end
-
-										local x, y = EntityGetTransform( GetUpdatedEntityID() )
-										if money >= cast_price then
-											ComponentSetValue2( wcomp, "money", money - cast_price )
-
-											data.action( rec )
-											mana = mana - data.mana
-
-											GamePlaySound( "data/audio/Desktop/event_cues.bank", "event_cues/goldnugget/create", x, y )
-											if ModSettingGet( "noita.hardmod.print_indulgence_cost" ) == true then
-												local cost_label = EntityLoadAtWandTip( GetUpdatedEntityID(), "mods/noita.hardmod/files/modules/truly_limited_spells/entities/misc/indulgence_cost_label.xml" )
-												EntityAddComponent2( cost_label, "VariableStorageComponent", {
-													name = "hardmod_indulgence_cast_price",
-													value_int = cast_price,
-												})
-											end
-										else
-											GamePlaySound( "data/audio/Desktop/items.bank", "magic_wand/out_of_mana", x, y )
-											if ModSettingGet( "noita.hardmod.print_indulgence_cost" ) == true then
-												GamePrint( "You don't have enough gold to force-cast " .. GameTextGetTranslatedOrNot( data.name ) )
-											end
-										end
-									else
-										mana = mana + 40
-										draw_actions( 1, true )
-									end
-								end,
-		},
-		{
-			id					= "HARDMOD_SPELL_INFINITY",
-			name				= "$hardmod_spell_infinity_name",
-			description			= "$hardmod_spell_infinity_desc",
-			sprite				= "mods/noita.hardmod/files/modules/truly_limited_spells/gfx/ui_gfx/spells/infinity.png",
-			type				= ACTION_TYPE_OTHER,
-			recursive 			= true,
-			spawn_level			= "0",
-			spawn_probability	= "0",
-			spawn_requires_flag = "hardmod_cannot_spawn",
-			price				= 800,
-			mana				= 99,
-			action				= function()
-									if reflecting then return end
-
-									local data = {}
-									if ( #deck > 0 ) then
-										data = deck[1]
-									elseif ( #hand > 0 ) then
-										data = hand[1]
-									else
-										data = nil
-									end
-
-									local rec = check_recursion( data, recursion_level )
-									
-									if ( data ~= nil ) and ( rec > -1 ) and ( data.uses_remaining == 0 ) then
-										data.action( rec )
-										mana = mana - data.mana
-									else
-										mana = mana + 100
-										draw_actions( 1, true )
-									end
-								end,
-		},
-	}
-
-	reworked_actions = {
-	    ["ALPHA"] = {
-	    	max_uses = 30,
-	    	never_unlimited = true,
-	    },
-
-	    ["GAMMA"] = {
-	    	max_uses = 30,
-	    	never_unlimited = true,
-	    },
-
-	    ["TAU"] = {
-	    	max_uses = 30,
-	    	never_unlimited = true,
-	    },
-
-	    ["OMEGA"] = {
-	    	max_uses = 30,
-	    	never_unlimited = true,
-	    },
-
-	    ["MU"] = {
-	    	max_uses = 30,
-	    	never_unlimited = true,
-	    },
-
-	    ["PHI"] = {
-	    	max_uses = 30,
-	    	never_unlimited = true,
-	    },
-
-	    ["SIGMA"] = {
-	    	max_uses = 30,
-	    	never_unlimited = true,
-	    },
-
-	    ["APOTHEOSIS_CHI"] = {
-	    	max_uses = 30,
-	    	never_unlimited = true,
-	    },
-
-	    ["APOTHEOSIS_KAPPA"] = {
-	    	max_uses = 30,
-	    	never_unlimited = true,
-	    },
-
-	    ["ZETA"] = {
-			max_uses = 30,
-			never_unlimited = true,
-	    },
-
-	    ["RESET"] = {
-			action = function()
-				current_reload_time = current_reload_time - 25
-				
-				move_hand_to_discarded()
-				
-				for i,v in ipairs( deck ) do
-					-- print( "removed " .. v.id .. " from deck" )
-					table.insert( discarded, v )
-				end
-				
-				hand = {}
-				deck = {}
-				
-				if ( force_stop_draws == false ) then
-					force_stop_draws = true
-					move_discarded_to_deck()
-					order_deck()
-				end
-			end,
-	    },
-	}
-
-	for i=1, #new_actions do
-		table.insert( actions, new_actions[i] )
-	end
-
-	for i=1,#actions do
-        if reworked_actions[actions[i].id] then
-            for key, value in pairs( reworked_actions[actions[i].id] ) do
-                actions[i][key] = value
+            local data = {}
+            if ( #deck > 0 ) then
+                data = deck[1]
+            elseif ( #hand > 0 ) then
+                data = hand[1]
+            else
+                data = nil
             end
-            actions[i]['hardmod_reworked'] = true
+
+            local rec = check_recursion( data, recursion_level )
+            
+            if ( data ~= nil ) and ( rec > -1 ) and ( data.uses_remaining == 0 ) then
+
+                -- determine the spell's max uses
+                local max_uses = -1
+                local lua_data = get_actions_lua_data( data.id )
+                if lua_data.max_uses then
+                    max_uses = lua_data.max_uses
+                end
+
+                -- how much money does the player have?
+                local player = GetUpdatedEntityID()
+                local wcomp = EntityGetFirstComponent( player, "WalletComponent" )
+                if wcomp == nil then return end
+                local money = ComponentGetValue2( wcomp, "money" )
+
+                -- determine the cost for this spell
+                local cast_price
+                if data.id == "DIVIDE_10" then
+                    cast_price = 500
+                elseif max_uses <= 2 or data.recursive then -- i.e. Circle of Vigour, Greek letters
+                    cast_price = 250
+                elseif max_uses <= 5 then -- i.e. Black Hole
+                    cast_price = 125
+                elseif max_uses <= 10 then
+                    cast_price = 50
+                elseif max_uses <= 20 then
+                    cast_price = 25
+                else
+                    cast_price = 10
+                end
+                if lua_data.never_unlimited then
+                    cast_price = cast_price * 2
+                end
+
+                local x, y = EntityGetTransform( GetUpdatedEntityID() )
+                if money >= cast_price then
+                    ComponentSetValue2( wcomp, "money", money - cast_price )
+
+                    data.action( rec )
+                    mana = mana - data.mana
+
+                    GamePlaySound( "data/audio/Desktop/event_cues.bank", "event_cues/goldnugget/create", x, y )
+                    if ModSettingGet( "noita.hardmod.print_indulgence_cost" ) == true then
+                        local cost_label = EntityLoadAtWandTip( GetUpdatedEntityID(), "mods/noita.hardmod/files/modules/truly_limited_spells/entities/misc/indulgence_cost_label.xml" )
+                        EntityAddComponent2( cost_label, "VariableStorageComponent", {
+                            name = "hardmod_indulgence_cast_price",
+                            value_int = cast_price,
+                        })
+                    end
+                else
+                    GamePlaySound( "data/audio/Desktop/items.bank", "magic_wand/out_of_mana", x, y )
+                    if ModSettingGet( "noita.hardmod.print_indulgence_cost" ) == true then
+                        GamePrint( "You don't have enough gold to force-cast " .. GameTextGetTranslatedOrNot( data.name ) )
+                    end
+                end
+            else
+                mana = mana + 40
+                draw_actions( 1, true )
+            end
+        end,
+    },
+    {
+        id					= "HARDMOD_SPELL_INFINITY",
+        name				= "$hardmod_spell_infinity_name",
+        description			= "$hardmod_spell_infinity_desc",
+        sprite				= "mods/noita.hardmod/files/modules/truly_limited_spells/gfx/ui_gfx/spells/infinity.png",
+        type				= ACTION_TYPE_OTHER,
+        recursive 			= true,
+        spawn_level			= "0",
+        spawn_probability	= "0",
+        spawn_requires_flag = "hardmod_cannot_spawn",
+        price				= 800,
+        mana				= 99,
+        action = function()
+            if reflecting then return end
+
+            local data = {}
+            if ( #deck > 0 ) then
+                data = deck[1]
+            elseif ( #hand > 0 ) then
+                data = hand[1]
+            else
+                data = nil
+            end
+
+            local rec = check_recursion( data, recursion_level )
+            
+            if ( data ~= nil ) and ( rec > -1 ) and ( data.uses_remaining == 0 ) then
+                data.action( rec )
+                mana = mana - data.mana
+            else
+                mana = mana + 100
+                draw_actions( 1, true )
+            end
+        end,
+    },
+}
+
+local reworked_actions = {
+    ["ALPHA"] = {
+        max_uses = 30,
+        never_unlimited = true,
+    },
+
+    ["GAMMA"] = {
+        max_uses = 30,
+        never_unlimited = true,
+    },
+
+    ["TAU"] = {
+        max_uses = 30,
+        never_unlimited = true,
+    },
+
+    ["OMEGA"] = {
+        max_uses = 30,
+        never_unlimited = true,
+    },
+
+    ["MU"] = {
+        max_uses = 30,
+        never_unlimited = true,
+    },
+
+    ["PHI"] = {
+        max_uses = 30,
+        never_unlimited = true,
+    },
+
+    ["SIGMA"] = {
+        max_uses = 30,
+        never_unlimited = true,
+    },
+
+    ["APOTHEOSIS_CHI"] = {
+        max_uses = 30,
+        never_unlimited = true,
+    },
+
+    ["APOTHEOSIS_KAPPA"] = {
+        max_uses = 30,
+        never_unlimited = true,
+    },
+
+    ["ZETA"] = {
+        max_uses = 30,
+        never_unlimited = true,
+    },
+
+    ["RESET"] = {
+        action = function()
+            current_reload_time = current_reload_time - 25
+            
+            move_hand_to_discarded()
+            
+            for i,v in ipairs( deck ) do
+                -- print( "removed " .. v.id .. " from deck" )
+                table.insert( discarded, v )
+            end
+            
+            hand = {}
+            deck = {}
+            
+            if ( force_stop_draws == false ) then
+                force_stop_draws = true
+                move_discarded_to_deck()
+                order_deck()
+            end
+        end,
+    },
+}
+
+for _,action in pairs(actions) do
+    if reworked_actions[action.id] then
+        for k,v in pairs(reworked_actions[action.id]) do
+            action[k] = v
         end
+
+        action["hardmod_reworked"] = true
     end
+end
+
+for _,action in pairs(new_actions) do
+    table.insert(actions, action)
 end
