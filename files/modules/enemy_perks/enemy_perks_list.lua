@@ -67,9 +67,11 @@ local perks = {
 			local entity_id = data.target_enemy
 			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
             if animal_ai_comp > 0 and not ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
-				if data.how_many_of_each_perk["HARDMOD_VIGOUR"] == 0 then
-					return true
-				end
+				-- condition = function(self, data)
+				-- -- @UserK how does this workkk
+				-- 	if data.how_many_of_each_perk["HARDMOD_KAMIKAZE"] == 0 then return true end
+				-- end,
+				return true
             end
 		end,
 		func = function(self, entity_id, data)
@@ -192,9 +194,10 @@ local perks = {
 		icon = sprites_path.."vigour.png",
 		weight = 1,
 		max = 1,
-		condition = function(self, data)
-			if data.how_many_of_each_perk["HARDMOD_KAMIKAZE"] == 0 then return true end
-		end,
+		-- condition = function(self, data)
+		-- -- @UserK how does this workkk
+		-- 	if data.how_many_of_each_perk["HARDMOD_KAMIKAZE"] == 0 then return true end
+		-- end,
 		func = function(self, entity_id, data)
 			-- make the enemy explode on death
 			EntityAddComponent2(entity_id, "LuaComponent", {
@@ -203,6 +206,21 @@ local perks = {
 			})
 		end
 	},
+	{
+		id = "HARDMOD_MAGIC_RESISTANCE",
+		name = "$hardmod_eperk_magic_resistance_name",
+		description = "$hardmod_eperk_magic_resistance_desc",
+		icon = sprites_path.."magic_resistance.png",
+		weight = 10,
+		func = function(self, entity_id, data)
+			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
+			if not dmc then return end
+
+			ComponentObjectSetValue2(dmc, "damage_multipliers", "projectile",
+				ComponentObjectGetValue2(dmc, "damage_multipliers", "projectile") * .5
+			)
+		end
+	}
 }
 
 for _,perk in ipairs(perks) do

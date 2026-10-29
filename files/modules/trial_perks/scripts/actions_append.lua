@@ -10,8 +10,8 @@ local new_actions = {
         spawn_requires_flag = "hardmod_time_trial_passed",
         price               = 400,
         mana                = 200,
-        max_uses            = 3,
-        never_unlimited     = true,
+        max_uses            = 30,
+        never_unlimited     = false,
         action = function()
             c.fire_rate_wait = c.fire_rate_wait + 60
             add_projectile( "mods/noita.hardmod/files/modules/trial_perks/entities/spells/blink.xml" )

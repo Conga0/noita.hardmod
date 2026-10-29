@@ -1,5 +1,6 @@
 local hooks = {}
 local _g = GLOBAL_DATA
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua")
 
 local curr_path = "mods/noita.hardmod/files/modules/enemy_perks/"
 
@@ -121,7 +122,7 @@ local function give_enemy_perks(entity_id, num)
 		player_poly_identity = _g.player_poly_identity,
 	}
 	for i = 1, num do
-		local perk = ConditionalRandomFromTable(enemy_perks, data)
+		local perk = utils.ConditionalRandomFromTable(enemy_perks, data)
 		if not perk then return end
 		data = perk:func(entity_id, data) or data
 		already_held_perks[#already_held_perks+1] = perk.id
