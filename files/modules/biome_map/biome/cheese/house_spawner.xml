@@ -1,0 +1,6 @@
+<Entity>
+  <LuaComponent
+    script_source_file="mods/noita.hardmod/files/modules/biome_map/biome/cheese/house_spawner.lua"
+    execute_every_n_frame="10"
+  ></LuaComponent>
+</Entity>

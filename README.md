@@ -78,6 +78,9 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - Sea of Mimicium has been changed to Apotheosis's "Potion To Sea"
   - Cessation Quest: after pouring the potion mimic onto other mimics, you now get a new spell - "Ominous Sea". You must cast it in the Ominous Temple in order to get a chest containing "Potion To Sea" and "Touch Of Grass"
   - EoE quest: After kicking two Hand Statues you get the Summon Portal spell and Broken Spell. Kicking a third hand statue gives another broken spell.
+- `vanilla_bosses`
+  - Tweaks to some vanilla bosses
+  - Bridge boss is no longer shreddable
 - `rapidfire_nerfs`
   - Chainsaw now appears much later, and costs 12 mana to cast. It now also reduces much less recharge time.
   - Add Mana now restores only 15 mana, and appears later & rarer
@@ -95,6 +98,8 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - The cursed rock entity has been fixed, you can no longer stand inbetween chunk borders to not get damaged
 - `worse_hearts`
   - Holy mountain hearts no longer grant health increase
+- `nerf_vanilla_damage`
+  - Changes to vanilla damage values
 - `no_more_max_hp_cheesing`
   - The heart mage's spell now temporarily causes you to lose max HP equal to 50% of the damage you take. This max HP is not restored afterwards.
   - Changed Matosade's related_projectiles to spawn a small worm, instead of a big one.

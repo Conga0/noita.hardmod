@@ -25,7 +25,7 @@ end
 
 if purchases_left == 0 and EntityGetInRadiusWithTag( x, y, 128, "player_unit" )[1] ~= nil then
 	local sx, sy = x + 88, y
-	EntityLoad( "data/entities/particles/image_emitters/magical_symbol.xml", sx, sy )
+	EntityLoad("mods/noita.hardmod/files/modules/truly_limited_spells/entities/misc/indulgence_emitter.xml", sx, sy)
 	GamePlaySound( "data/audio/Desktop/projectiles.snd", "player_projectiles/crumbling_earth/create", sx, sy )
 	-- GamePlaySound( "data/audio/Desktop/event_cues.snd", "event_cues/barren_puzzle_completed/create", sx, sy )
 	local indulgence = CreateItemActionEntity( "HARDMOD_SPELL_INDULGENCE", sx, sy )
