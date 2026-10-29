@@ -10,7 +10,7 @@
 	<CellEaterComponent
 		ignored_material_tag="[box2d]"
 		radius="32" 
-		eat_probability="100">
+		eat_probability="10">
 	</CellEaterComponent>
 
 	<LuaComponent
