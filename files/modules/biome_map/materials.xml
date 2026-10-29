@@ -29,4 +29,12 @@
       </Ingestion>
     </StatusEffects>
   </CellData>
+
+  <CellDataChild
+    _parent="rock_box2d_hard"
+    name="hardmod_indestructible_rock_box2d_hard"
+    ui_name="$mat_rock_box2d_hard"
+    wang_color="ff2d6dbd"
+    tags="[box2d],[solid],[sunbaby_ignore_list],[matter_eater_ignore_list],[indestructible]"
+  ></CellDataChild>
 </Materials>

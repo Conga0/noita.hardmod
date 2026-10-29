@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-global
 
-new_perks = {
+local new_perks = {
   {
     id = "HARDMOD_TINKER_AT_PEDESTALS",
     ui_name = "$hardmod_perk_tinker_at_pedestals_name",
@@ -31,7 +31,7 @@ new_perks = {
 	},
 }
 
-perk_reworks = {
+local perk_reworks = {
 	["REMOVE_FOG_OF_WAR"] = {
 		ui_name = "$hardmod_perk_all_seeing_eye_name",
 		ui_description = "$hardmod_perk_all_seeing_eye_desc",

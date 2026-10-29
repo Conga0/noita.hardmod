@@ -5,7 +5,12 @@
 
 		<UIInfoComponent name="$hardmod_book_cheese_biome_title"></UIInfoComponent>
     <AbilityComponent ui_name="$hardmod_book_cheese_biome_title"></AbilityComponent>
-		
+
+		<PhysicsImageShapeComponent 
+			image_file="data/items_gfx/book_small.png"
+			material="hardmod_indestructible_rock_box2d_hard"
+		></PhysicsImageShapeComponent>
+
 		<ItemComponent
 			ui_sprite="data/items_gfx/book.png"
 			item_name="$hardmod_book_cheese_biome_title"
@@ -14,8 +19,12 @@
 
 		<ParticleEmitterComponent _enabled="0">
 		</ParticleEmitterComponent>
-		
-		<PhysicsImageShapeComponent image_file="data/items_gfx/book_small.png"></PhysicsImageShapeComponent>
-    <SpriteComponent image_file="data/items_gfx/in_hand/book_in_hand.png"></SpriteComponent>
+
+		<LuaComponent
+			script_source_file="mods/noita.hardmod/files/modules/biome_map/biome/cheese/visit_check.lua"
+			execute_every_n_frame="60"
+		></LuaComponent>
+
+		<SpriteComponent image_file="data/items_gfx/in_hand/book_in_hand.png"></SpriteComponent>
 	</Base>
 </Entity>

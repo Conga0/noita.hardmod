@@ -1,4 +1,4 @@
-new_actions = {
+local new_actions = {
     {
         id                  = "HARDMOD_BLINK",
         name                = "$hardmod_spell_blink_name",
@@ -12,12 +12,11 @@ new_actions = {
         mana                = 200,
         max_uses            = 3,
         never_unlimited     = true,
-        action              = function()
-                                c.fire_rate_wait = c.fire_rate_wait + 60
-                                add_projectile( "mods/noita.hardmod/files/modules/trial_perks/entities/spells/blink.xml" )
-                            end,
+        action = function()
+            c.fire_rate_wait = c.fire_rate_wait + 60
+            add_projectile( "mods/noita.hardmod/files/modules/trial_perks/entities/spells/blink.xml" )
+        end,
     },
-
     {
         id                  = "HARDMOD_PARRY",
         name                = "$hardmod_spell_parry_name",
@@ -31,17 +30,15 @@ new_actions = {
         mana                = 30,
         max_uses            = 30,
         never_unlimited     = true,
-        action              = function()
-                                c.fire_rate_wait = c.fire_rate_wait + 30
-                                if reflecting then return end
+        action = function()
+            c.fire_rate_wait = c.fire_rate_wait + 30
+            if reflecting then return end
 
-                                add_projectile( "mods/noita.hardmod/files/modules/trial_perks/entities/spells/parry.xml" )
-                            end,
+            add_projectile( "mods/noita.hardmod/files/modules/trial_perks/entities/spells/parry.xml" )
+        end,
     },
 }
 
-if actions ~= nil then
-    for i=1, #new_actions do
-        table.insert( actions, new_actions[i] )
-    end
+for _,action in pairs(new_actions) do
+    table.insert(actions, action)
 end
