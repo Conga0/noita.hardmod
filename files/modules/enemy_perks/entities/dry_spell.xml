@@ -46,7 +46,7 @@
 	      is_circle="1"
 	      steps_per_frame="300"
 	      from_material_tag="[liquid]"
-	      to_material="air"
+	      to_material="smoke"
 	      loop="1"
 	      kill_when_finished="0" >
 	  </MagicConvertMaterialComponent>
