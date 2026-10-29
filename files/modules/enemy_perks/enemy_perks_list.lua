@@ -99,7 +99,7 @@ local perks = {
 		name = "$hardmod_eperk_protector_name",
 		description = "$hardmod_eperk_protector_desc",
 		sprite = sprites_path.."protector.png",
-		weight = 1,
+		weight = 3,
 		max = 1,
 		condition = function(self, data)
 			local dmg_comp = EntityGetFirstComponentIncludingDisabled( data.target_enemy, "DamageModelComponent" )
@@ -222,7 +222,29 @@ local perks = {
 				ComponentObjectGetValue2(dmc, "damage_multipliers", "projectile") * .5
 			)
 		end
-	}
+	},
+	{
+		id = "AEROLORD",
+		name = "$hardmod_eperk_aerolord_name",
+		description = "$hardmod_eperk_aerolord_desc",
+		sprite = sprites_path.."aerolord.png",
+		weight = 5,
+		max = 1,
+		condition = function(self, data)
+			local entity_id = data.target_enemy
+			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
+            if animal_ai_comp > 0 and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
+            	return true
+            end
+		end,
+		func = function(self, entity_id, data)
+			GetGameEffectLoadTo(entity_id, "KNOCKBACK_IMMUNITY", true)
+			EntityAddComponent2(entity_id, "LuaComponent", {
+	            script_shot = "mods/noita.hardmod/files/modules/enemy_perks/scripts/aerolord_on_shot.lua",
+				execute_every_n_frame = -1,
+            })
+		end
+	},
 }
 
 for _,perk in ipairs(perks) do
