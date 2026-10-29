@@ -43,7 +43,20 @@ local function patch_less_annoying_blinding()
   )
 end
 
+local function patch_fixes()
+  -- swappem (makes homing even more dangerous, especially with swappers being in more biomes)
+  for file in nxml.edit_file("data/entities/animals/wizard_swapper.xml") do
+    for luacomp in file:first_of("Base"):each_of("LuaComponent") do
+      if luacomp:get("script_damage_received") then
+        luacomp:set("limit_how_many_times_per_frame", 1)
+        luacomp:set("limit_all_callbacks", true)
+      end
+    end
+  end
+end
+
 patch_spawn_rules()
 patch_less_annoying_blinding()
+patch_fixes()
 
 return {}
