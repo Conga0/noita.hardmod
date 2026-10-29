@@ -4,7 +4,7 @@ PatchEnemies(g_big_enemies, {
   ["data/entities/animals/scavenger_clusterbomb.xml"] = { ng = 2 },
 })
 
-AddEnemies(g_big_enemies, {
+AddEnemies(g_small_enemies, {
   {
     prob        = 0.1,
     min_count   = 1,
