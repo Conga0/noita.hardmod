@@ -29,13 +29,13 @@ local new_perks = {
 			EntityAddChild(player, EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_item_immunities.xml"))
 		end
 	},
-	{
-		id = "APOTHEOSIS_OVERSIZED_SHIELD",
+	{ --Nabbed from Apotheosis
+		id = "HARDMOD_OVERSIZED_SHIELD",
 		id_append = "SHIELD",
-		ui_name = "$perk_apotheosis_shield_oversized_name",
-		ui_description = "$perk_apotheosis_shield_oversized_description",
-		ui_icon = "mods/Apotheosis/files/ui_gfx/perk_icons/shield_oversized_ui.png",
-		perk_icon = "mods/Apotheosis/files/items_gfx/perks/shield_oversized.png",
+		ui_name = "$hardmod_perk_oversized_shield_name",
+		ui_description = "$hardmod_perk_oversized_shield_desc",
+		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/shield_oversized_ui.png",
+		perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/shield_oversized.png",
 		stackable = STACKABLE_YES,
 		stackable_how_often_reappears = 10,
 		stackable_maximum = 5,
@@ -43,7 +43,7 @@ local new_perks = {
 		usable_by_enemies = true,
 		func = function( entity_perk_item, entity_who_picked, item_name, pickup_count )
 			local x,y = EntityGetTransform( entity_who_picked )
-			local child_id = EntityLoad( "mods/Apotheosis/files/entities/misc/perks/shield_oversized.xml", x, y )
+			local child_id = EntityLoad( "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/perks/shield_oversized.xml", x, y )
 
 			if ModIsEnabled("quant.ew") then
 				GlobalsSetValue("PERK_SHIELD_OVERSIZED_COUNT", tostring(pickup_count-1))
@@ -82,7 +82,7 @@ local new_perks = {
 		end,
 		func_enemy = function( entity_perk_item, entity_who_picked )
 			local x,y = EntityGetTransform( entity_who_picked )
-			local child_id = EntityLoad( "mods/Apotheosis/files/entities/misc/perks/shield_oversized.xml", x, y )
+			local child_id = EntityLoad( "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/shield_oversized.xml", x, y )
 			local comps = EntityGetComponent( child_id, "EnergyShieldComponent" )
 			if( comps ~= nil ) then
 				for i,comp in ipairs( comps ) do
@@ -116,7 +116,7 @@ local new_perks = {
 			local largest_radius = 0
 			local largest_shield = 0
 			for k=1,#children do
-				if EntityGetName(children[k]) == "apotheosis_oversized_shield" then
+				if EntityGetName(children[k]) == "hardmod_oversized_shield" then
 					local r = ComponentGetValue2(EntityGetFirstComponentIncludingDisabled(children[k],"EnergyShieldComponent"),"radius")
 					if r > 0 then
 						largest_radius = r
