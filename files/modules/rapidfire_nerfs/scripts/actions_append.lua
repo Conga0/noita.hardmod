@@ -1,5 +1,7 @@
 ---@diagnostic disable: undefined-global
 
+dofile_once("mods/noita.hardmod/files/modules/rapidfire_nerfs/scripts/null_mana.lua")
+
 local mana_reducing_spells = { "MANA_REDUCE", "HARDMOD_MANA_REDUCE", "APOTHEOSIS_WATER_POWER" }
 
 local reworked_actions = {
@@ -16,10 +18,11 @@ local reworked_actions = {
         end
 	},
     ["MANA_REDUCE"] = {
-        spawn_level       = "3,4,5,6,10",
+        description = "$hardmod_spell_add_mana_desc",
+        spawn_level = "3,4,5,6,10",
 		spawn_probability = "0.8,0.9,0.9,1,1",
-        price             = 160,
-        mana              = -15,
+        price = 160,
+        mana = -15,
     },
     ["HEAVY_SPREAD"] = {
         description = "$hardmod_spell_heavy_spread_desc",
@@ -87,6 +90,22 @@ local reworked_actions = {
 }
 
 local new_actions = {
+    {
+        id = "HARDMOD_NULL_MANA",
+        name = "$hardmod_spell_null_mana_name",
+        description = "$hardmod_spell_null_mana_desc",
+        sprite = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/null_mana.png",
+        type = ACTION_TYPE_MODIFIER,
+        spawn_level = "2,3,4,5,6",
+        spawn_probability = "0.7,0.9,0.9,1,1",
+        price = 160,
+        mana = -15,
+        action = function()
+            c.fire_rate_wait = c.fire_rate_wait + 10
+            HardmodActionNullMana()
+            draw_actions(1, true)
+        end
+    },
     {
         id                  = "HARDMOD_MANA_REDUCE",
         name                = "$hardmod_spell_mana_reduce_name",

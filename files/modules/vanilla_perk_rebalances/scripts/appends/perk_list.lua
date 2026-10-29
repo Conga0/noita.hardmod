@@ -308,7 +308,6 @@ local perk_reworks = {
 	["EDIT_WANDS_EVERYWHERE"] = { not_in_default_perk_pool = true },
 	["NO_WAND_EDITING"] = { not_in_default_perk_pool = true },
 	["EXTRA_MONEY"] = { not_in_default_perk_pool = true },
-	["SAVING_GRACE"] = { not_in_default_perk_pool = true },
 	["PROJECTILE_REPULSION"] = { not_in_default_perk_pool = true },
 }
 

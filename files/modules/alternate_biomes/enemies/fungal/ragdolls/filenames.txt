@@ -1,0 +1,7 @@
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/ragdolls/head.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/ragdolls/leg1.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/ragdolls/foot1.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/ragdolls/leg2.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/ragdolls/foot2.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/ragdolls/leg3.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/ragdolls/foot3.png
