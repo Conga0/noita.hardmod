@@ -309,6 +309,7 @@ function TriggerScriptDelayed(entity_id, script_path, delay)
 		remove_after_executed = true,
 	})
 end
+
 utils = {
 	escape = escape,
 	modifile = modifile,
