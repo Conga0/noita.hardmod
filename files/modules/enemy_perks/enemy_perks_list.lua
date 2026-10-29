@@ -64,7 +64,9 @@ local perks = {
 			local entity_id = data.target_enemy
 			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
             if animal_ai_comp > 0 and not ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
-            	return true
+				if data.how_many_of_each_perk["HARDMOD_VIGOUR"] == 0 then
+					return true
+				end
             end
 		end,
 		func = function(self, entity_id, data)
@@ -107,6 +109,36 @@ local perks = {
 		end
 	},
 	{
+		id = "HARDMOD_IMPERVIOUS",
+		name = "$hardmod_eperk_impervious_name",
+		description = "$hardmod_eperk_impervious_desc",
+		icon = sprites_path.."impervious.png",
+		weight = 1,
+		max = 1,
+		func = function(self, entity_id, data)
+			local x, y = EntityGetTransform(entity_id)
+			EntityAddChild(entity_id, EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/entities/impervious_shield.xml", x, y))
+
+			local dmg_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "DamageModelComponent")
+			if dmg_comp ~= nil then
+				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "projectile", 0.0)
+				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "melee", 1000.0)
+			end			
+		end
+	},
+	{
+		id = "HARDMOD_DRY_SPELL",
+		name = "$hardmod_eperk_dry_spell_name",
+		description = "$hardmod_eperk_dry_spell_desc",
+		icon = sprites_path.."dry_spell.png",
+		weight = 2,
+		max = 1,
+		func = function(self, entity_id, data)
+			local x, y = EntityGetTransform(entity_id)
+			EntityAddChild(entity_id, EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/entities/dry_spell.xml", x, y))
+		end
+	},
+	{
 		id = "HARDMOD_THUNDERLORD",
 		name = "$hardmod_eperk_thunderlord_name",
 		description = "$hardmod_eperk_thunderlord_desc",
@@ -128,27 +160,46 @@ local perks = {
             })
 		end
 	},
-	-- {
-	-- 	id = "HARDMOD_VIGOUR",
-	-- 	name = "$hardmod_eperk_vigour_name",
-	-- 	description = "$hardmod_eperk_vigour_desc",
-	-- 	icon = sprites_path.."vigour.png",
-	-- 	weight = 1,
-	-- 	max = 1,
-	-- 	condition = function(self, data)
-	-- 		local dmg_comp = EntityGetFirstComponentIncludingDisabled( data.target_enemy, "DamageModelComponent" )
-	-- 		if dmg_comp ~= nil then
-	-- 			local max_hp = ComponentGetValue2( dmg_comp, "max_hp" )
-	-- 			if max_hp >= 2 then
-	-- 				return true
-	-- 			end
-	-- 		end
-	-- 	end,
-	-- 	func = function(self, entity_id, data)
-	-- 		local x, y = EntityGetTransform(entity_id)
-	-- 		EntityAddChild(entity_id, EntityLoad( "mods/noita.hardmod/files/modules/enemy_perks/entities/protector_shield.xml", x, y))
-	-- 	end
-	-- },
+	{
+		id = "HARDMOD_PYRELORD",
+		name = "$hardmod_eperk_pyrelord_name",
+		description = "$hardmod_eperk_pyrelord_desc",
+		icon = sprites_path.."pyrelord.png",
+		weight = 5,
+		max = 1,
+		condition = function(self, data)
+			local entity_id = data.target_enemy
+			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
+            if animal_ai_comp > 0 and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
+            	return true
+            end
+		end,
+		func = function(self, entity_id, data)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_FIRE", true)
+			EntityAddComponent2(entity_id, "LuaComponent", {
+	            script_shot = "mods/noita.hardmod/files/modules/enemy_perks/scripts/pyrelord_on_shot.lua",
+				execute_every_n_frame = -1,
+            })
+		end
+	},
+	{
+		id = "HARDMOD_VIGOUR",
+		name = "$hardmod_eperk_vigour_name",
+		description = "$hardmod_eperk_vigour_desc",
+		icon = sprites_path.."vigour.png",
+		weight = 1,
+		max = 1,
+		condition = function(self, data)
+			if data.how_many_of_each_perk["HARDMOD_KAMIKAZE"] == 0 then return true end
+		end,
+		func = function(self, entity_id, data)
+			-- make the enemy explode on death
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_death = "mods/noita.hardmod/files/modules/enemy_perks/scripts/vigour_on_death.lua",
+				execute_every_n_frame = -1,
+			})
+		end
+	},
 }
 
 for _,perk in ipairs(perks) do
