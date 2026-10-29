@@ -3,6 +3,24 @@ local eid = GetUpdatedEntityID()
 
 current_orb_count = -1
 
+local function update_orb_glyphs(orb_count)
+  dofile_once("mods/noita.hardmod/lib/utilities.lua")
+
+  if (GetInternalInt(eid, "hardmod_sampo_orb_glyphs_were_spawned") or 0) == 0 then
+    SetInternalInt(eid, "hardmod_sampo_orb_glyphs_were_spawned", 1)
+
+    local rot_step = (math.pi * 2) / orbs_required
+    local center_x, center_y = EntityGetTransform(eid)
+    for i=0, orbs_required-1 do
+      local sx = center_x - (32 * math.cos(rot_step * i)) - 6
+      local sy = center_y - (32 * math.sin(rot_step * i))
+      local glyph = EntityLoad("mods/noita.hardmod/files/modules/ending/entities/orb_glyph.xml", sx, sy)
+      SetInternalInt(glyph, "hardmod_sampo_orb_glyph_index", i+1)
+      EntityAddChild(eid, glyph, true)
+    end
+  end
+end
+
 local function update_orb_count(orb_count)
   if orb_count == current_orb_count then return end
 
@@ -14,6 +32,7 @@ local function update_orb_count(orb_count)
   end
 
   current_orb_count = orb_count
+  update_orb_glyphs(orb_count)
 end
 
 local function reenable_sampo()

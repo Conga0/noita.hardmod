@@ -6,12 +6,12 @@ for file in nxml.edit_file("data/entities/animals/boss_centipede/sampo.xml") do
     item:set("is_pickable", false)
   end
 
-  for emitter in file:each_of("ParticleEmitterComponent") do
-    if emitter:get("emitted_material_name") == "spark_blue" then
-      emitter:set("emitted_material_name", "spark_white_bright")
-      break
-    end
-  end
+  -- for emitter in file:each_of("ParticleEmitterComponent") do
+  --   if emitter:get("emitted_material_name") == "spark_blue" then
+  --     emitter:set("emitted_material_name", "spark_white_bright")
+  --     break
+  --   end
+  -- end
 
   local area_checker = file:first_of("MaterialAreaCheckerComponent")
   if area_checker then
