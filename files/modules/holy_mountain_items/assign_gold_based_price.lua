@@ -1,7 +1,7 @@
 dofile_once("mods/noita.hardmod/lib/utilities.lua")
 
 local min_item_cost = 150
-local gold_multiplier = 0.25
+local gold_multiplier = 0.15
 
 local eid = GetUpdatedEntityID()
 local cid = GetUpdatedComponentID()

@@ -108,7 +108,7 @@ A Noita Community Mod Collaboration! Following the Noita Fair Mod, this mod inte
   - [readme.md](files/modules/holy_mountain_rework/readme.md)
 - `holy_mountain_items`
   - Spell Refresh and Heal in Holy Mountains must be purchased
-  - The cost is 25% of your current gold at the time of entering the Holy Mountain. (the minimum price is 150g)
+  - The cost is 15% of your current gold at the time of entering the Holy Mountain. (the minimum price is 150g)
   - Holy Mountain Hearts no longer grant health increase
 - `ring_of_returning`
   - An item found in each Holy Mountain that, when broken, opens a portal to the last HM you discovered.
