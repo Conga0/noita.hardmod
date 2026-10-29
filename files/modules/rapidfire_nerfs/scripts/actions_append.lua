@@ -221,11 +221,11 @@ for _,action in pairs(actions) do
         action.spawn_probability = "0"
         action.mana = 1
 
-        local orig_action = action.action
-        action.action = function()
-            orig_action()
-            c.fire_rate_wait = c.fire_rate_wait + 2
-        end
+        -- local orig_action = action.action
+        -- action.action = function()
+        --     orig_action()
+        --     c.fire_rate_wait = c.fire_rate_wait + 2
+        -- end
     end
 end
 
