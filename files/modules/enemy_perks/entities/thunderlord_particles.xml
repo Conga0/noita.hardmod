@@ -1,0 +1,9 @@
+<Entity>
+	
+	<InheritTransformComponent
+		_enabled="1"
+	></InheritTransformComponent>
+
+	<Base file="data/entities/particles/electricity.xml">
+	
+</Entity>
