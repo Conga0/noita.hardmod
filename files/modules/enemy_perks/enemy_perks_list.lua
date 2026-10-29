@@ -206,6 +206,21 @@ local perks = {
 			})
 		end
 	},
+	{
+		id = "HARDMOD_MAGIC_RESISTANCE",
+		name = "$hardmod_eperk_magic_resistance_name",
+		description = "$hardmod_eperk_magic_resistance_desc",
+		icon = sprites_path.."magic_resistance.png",
+		weight = 10,
+		func = function(self, entity_id, data)
+			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
+			if not dmc then return end
+
+			ComponentObjectSetValue2(dmc, "damage_multipliers", "projectile",
+				ComponentObjectGetValue2(dmc, "damage_multipliers", "projectile") * .5
+			)
+		end
+	}
 }
 
 for _,perk in ipairs(perks) do
