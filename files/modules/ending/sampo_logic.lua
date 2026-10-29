@@ -32,7 +32,7 @@ local function update_orb_count(orb_count)
   end
 
   current_orb_count = orb_count
-  update_orb_glyphs(orb_count)
+  -- update_orb_glyphs(orb_count)
 end
 
 local function reenable_sampo()
