@@ -214,6 +214,19 @@ for _,action in pairs(actions) do
 
         action["hardmod_reworked"] = true
     end
+
+    if action.spawn_requires_flag == "card_unlocked_paint" then
+        -- they're still very good, but you have to do a quest to get them
+        action.spawn_level = ""
+        action.spawn_probability = "0"
+        action.mana = 1
+
+        local orig_action = action.action
+        action.action = function()
+            orig_action()
+            c.fire_rate_wait = c.fire_rate_wait + 2
+        end
+    end
 end
 
 for _,action in pairs(new_actions) do
