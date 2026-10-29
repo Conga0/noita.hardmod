@@ -5,7 +5,7 @@ local menu_tracker = dofile_once("mods/noita.hardmod/files/modules/logo_splash/m
 local splashes = dofile_once("mods/noita.hardmod/files/modules/logo_splash/splashes.lua") ---@type string[]
 
 local year,month,day,hour,minute,second = GameGetDateAndTimeLocal()
-SetRandomSeed(minute, second) --seed this off smth
+--math.randomseed(second + minute * hour) --seed this off smth
 
 local FONT = "data/fonts/font_pixel.xml"
 local TEXT_ANGLE = math.rad(20)

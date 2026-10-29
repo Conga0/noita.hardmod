@@ -2,6 +2,7 @@
 ---@field id string string ID
 ---@field name string? string name (viewable in progress)
 ---@field description string description of the perk (viewable in progress)
+---@field sprite string? path to the perk's sprite
 ---@field icon string? path to the perk's icon
 ---@field weight number? probability of the perk being pulled, default 10
 ---@field max int? max number of this perk an enemy can have
@@ -9,6 +10,7 @@
 ---@field func function function that actually does the stuff, is passed the `data` table
 
 local sprites_path = "mods/noita.hardmod/files/modules/enemy_perks/perk_sprites/"
+local icons_path = "mods/noita.hardmod/files/modules/enemy_perks/perk_icons/"
 
 -- The `data` table provides `target_enemy` (eid), `already_held_perks` (perk_id[]), `player` (eid) and `player_poly_identity` (table)
 
@@ -29,7 +31,7 @@ local perks = {
 		id = "LAVA_BLOOD",
 		name = "$hardmod_eperk_lava_blood_name",
 		description = "$hardmod_eperk_lava_blood_desc",
-		icon = sprites_path.."lava_blood.png",
+		sprite = sprites_path.."lava_blood.png",
 		weight = 5,
 		max = 1,
 		condition = function(self, data)
@@ -57,10 +59,10 @@ local perks = {
 		end
 	},
 	{
-		id = "HARDMOD_KAMIKAZE",
+		id = "KAMIKAZE",
 		name = "$hardmod_eperk_kamikaze_name",
 		description = "$hardmod_eperk_kamikaze_desc",
-		icon = sprites_path.."kamikaze.png",
+		sprite = sprites_path.."kamikaze.png",
 		weight = 2,
 		max = 1,
 		condition = function(self, data)
@@ -93,10 +95,10 @@ local perks = {
 		end
 	},
 	{
-		id = "HARDMOD_PROTECTOR",
+		id = "PROTECTOR",
 		name = "$hardmod_eperk_protector_name",
 		description = "$hardmod_eperk_protector_desc",
-		icon = sprites_path.."protector.png",
+		sprite = sprites_path.."protector.png",
 		weight = 1,
 		max = 1,
 		condition = function(self, data)
@@ -114,10 +116,10 @@ local perks = {
 		end
 	},
 	-- {
-	-- 	id = "HARDMOD_IMPERVIOUS",
+	-- 	id = "IMPERVIOUS",
 	-- 	name = "$hardmod_eperk_impervious_name",
 	-- 	description = "$hardmod_eperk_impervious_desc",
-	-- 	icon = sprites_path.."impervious.png",
+	-- 	sprite = sprites_path.."impervious.png",
 	-- 	weight = 1,
 	-- 	max = 1,
 	-- 	func = function(self, entity_id, data)
@@ -132,10 +134,10 @@ local perks = {
 	-- 	end
 	-- },
 	{
-		id = "HARDMOD_DRY_SPELL",
+		id = "DRY_SPELL",
 		name = "$hardmod_eperk_dry_spell_name",
 		description = "$hardmod_eperk_dry_spell_desc",
-		icon = sprites_path.."dry_spell.png",
+		sprite = sprites_path.."dry_spell.png",
 		weight = 2,
 		max = 1,
 		func = function(self, entity_id, data)
@@ -144,10 +146,10 @@ local perks = {
 		end
 	},
 	{
-		id = "HARDMOD_THUNDERLORD",
+		id = "THUNDERLORD",
 		name = "$hardmod_eperk_thunderlord_name",
 		description = "$hardmod_eperk_thunderlord_desc",
-		icon = sprites_path.."thunderlord.png",
+		sprite = sprites_path.."thunderlord.png",
 		weight = 5,
 		max = 1,
 		condition = function(self, data)
@@ -166,10 +168,10 @@ local perks = {
 		end
 	},
 	{
-		id = "HARDMOD_PYRELORD",
+		id = "PYRELORD",
 		name = "$hardmod_eperk_pyrelord_name",
 		description = "$hardmod_eperk_pyrelord_desc",
-		icon = sprites_path.."pyrelord.png",
+		sprite = sprites_path.."pyrelord.png",
 		weight = 5,
 		max = 1,
 		condition = function(self, data)
@@ -188,10 +190,10 @@ local perks = {
 		end
 	},
 	{
-		id = "HARDMOD_VIGOUR",
+		id = "VIGOUR",
 		name = "$hardmod_eperk_vigour_name",
 		description = "$hardmod_eperk_vigour_desc",
-		icon = sprites_path.."vigour.png",
+		sprite = sprites_path.."vigour.png",
 		weight = 1,
 		max = 1,
 		-- condition = function(self, data)
@@ -207,10 +209,10 @@ local perks = {
 		end
 	},
 	{
-		id = "HARDMOD_MAGIC_RESISTANCE",
+		id = "MAGIC_RESISTANCE",
 		name = "$hardmod_eperk_magic_resistance_name",
 		description = "$hardmod_eperk_magic_resistance_desc",
-		icon = sprites_path.."magic_resistance.png",
+		sprite = sprites_path.."magic_resistance.png",
 		weight = 10,
 		func = function(self, entity_id, data)
 			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
@@ -224,13 +226,21 @@ local perks = {
 }
 
 for _,perk in ipairs(perks) do
+	local id = perk.id
+	perk.id = "HARDMOD_"..perk.id
 	perk.name = perk.name or perk.id
 	perk.weight = perk.weight or 10
-	perk.icon = ModDoesFileExist(perk.icon or "") and perk.icon or "mods/noita.hardmod/files/modules/enemy_perks/perk_sprites/missing.png"
+	perk.sprite = ModDoesFileExist(perk.sprite or "") and perk.sprite
+		or ModDoesFileExist(sprites_path..id:lower()..".png") and sprites_path..id:lower()..".png"
+		or "mods/noita.hardmod/files/modules/enemy_perks/perk_sprites/missing.png"
+	perk.icon = ModDoesFileExist(perk.icon or "") and perk.icon
+		or ModDoesFileExist(icons_path..id:lower()..".png") and icons_path..id:lower()..".png"
+		or "mods/noita.hardmod/files/modules/enemy_perks/perk_icons/missing.png"
+
 	if perk.max then --This is sane enough.
 		local cond = perk.condition or function(...) return true end
-		perk.condition = function(self, data)
-			return cond(self, data) and (data.how_many_of_each_perk[self.id] or 0) < self.max
+		perk.condition = function(self, data, ...)
+			return cond(self, data, ...) and (data.how_many_of_each_perk[self.id] or 0) < self.max
 		end
 	end
 end
