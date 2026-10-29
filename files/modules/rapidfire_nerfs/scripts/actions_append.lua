@@ -23,6 +23,18 @@ local reworked_actions = {
 		spawn_probability = "0.8,0.9,0.9,1,1",
         price = 160,
         mana = -15,
+        action = function()
+            c.fire_rate_wait = c.fire_rate_wait + 7
+            current_reload_time = current_reload_time + 7
+			draw_actions(1, true)
+        end
+    },
+    ["SPREAD_REDUCE"] = {
+        mana = 2,
+        action = function ()
+            c.spread_degrees = c.spread_degrees - 20.0
+            draw_actions(1, true)
+        end
     },
     ["HEAVY_SPREAD"] = {
         description = "$hardmod_spell_heavy_spread_desc",
@@ -101,7 +113,8 @@ local new_actions = {
         price = 160,
         mana = -15,
         action = function()
-            c.fire_rate_wait = c.fire_rate_wait + 10
+            c.fire_rate_wait = c.fire_rate_wait + 7
+            current_reload_time = current_reload_time + 7
             HardmodActionNullMana()
             draw_actions(1, true)
         end
