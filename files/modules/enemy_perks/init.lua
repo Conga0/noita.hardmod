@@ -82,9 +82,11 @@ local function give_enemy_perks(entity_id, num)
 
 	-- do not give perks to entities who drop no gold
 	local vsc_comps = EntityGetAllChildren(entity_id, "VariableStorageComponent")
-	for i,vsc_comp in ipairs(vsc_comps) do
-		if ComponentHasTag(vsc_comp, "no_gold_drop") then
-			return
+	if vsc_comps then
+		for i,vsc_comp in ipairs(vsc_comps) do
+			if ComponentHasTag(vsc_comp, "no_gold_drop") then
+				return
+			end
 		end
 	end
 
