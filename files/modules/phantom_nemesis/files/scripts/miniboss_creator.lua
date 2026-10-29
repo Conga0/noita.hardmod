@@ -5,14 +5,18 @@ local abilities_list = {
     },
     {
         tier = 2,
-        abilities = {{id="ghastly",cost=200},{id="immune_explosion",cost=200},{id="immune_electricity",cost=200},{id="immune_melee",cost=200},{id="immune_ice",cost=200},{id="immune_radioactive",cost=200},{id="immune_drill",cost=200},{id="immune_curse",cost=200},{id="immune_holy",cost=200},{id="shield_big",cost=150},{id="barrage_shoot",cost=200},{id="necrobot",cost=300},{id="poison_blood",cost=100},{id="immune_stun",cost=200},{id="matter_eater",cost=200}}
+        abilities = {{id="ghastly",cost=200},{id="immune_explosion",cost=200},{id="immune_electricity",cost=200},{id="immune_melee",cost=200},{id="immune_fire",cost=200},{id="immune_ice",cost=200},{id="immune_radioactive",cost=200},{id="immune_drill",cost=200},{id="immune_curse",cost=200},{id="immune_holy",cost=200},{id="shield_big",cost=150},{id="barrage_shoot",cost=200},{id="necrobot",cost=300},{id="poison_blood",cost=100},{id="immune_stun",cost=200},{id="matter_eater",cost=200}}
     },
     {
         tier = 3,
-        abilities = {{id="immune_projectile",cost=300},{id="shield_reactive",cost=200},{id="neutral_shoot",cost=300},{id="vulnerability_shoot",cost=300},{id="rapid_regeneration",cost=200},{id="anti_ambrosia_field",cost=300},{id="flight",cost=50},{id="immune_fire",cost=50},{id="teleport_to_target",cost=250}}
+        abilities = {{id="shield_reactive",cost=200},{id="rapid_regeneration",cost=200},{id="anti_ambrosia_field",cost=300},{id="flight",cost=50},{id="teleport_to_target",cost=500}}
     },
     {
         tier = 4,
+        abilities = {{id="immune_projectile",cost=400},{id="neutral_shoot",cost=300},{id="vulnerability_shoot",cost=300}}
+    },
+    {
+        tier = 5,
         abilities = {{id="corrupted",cost=300},{id="boss_protections",cost=400},{id="heartache_barrage",cost=300},{id="wounded_shoot",cost=400}}
     }
 }
@@ -81,6 +85,20 @@ local context_checks = {
         end
     },
     {
+        id = "player_shield_count",
+        check = function(entity_id)
+            local player_id = EntityGetWithTag("player_unit")[1] or 0
+            local shield_perk_count = 0
+            if player_id > 0 then
+                local children = EntityGetAllChildren( player_id ) or {}
+                for _,child in ipairs(children) do
+                    if EntityHasTag(child,"energy_shield") then shield_perk_count = shield_perk_count + 1 end
+                end
+            end
+            return shield_perk_count
+        end
+    },
+    {
         id = "most_taken_damage_type",
         check = function(entity_id)
             local damage_types_can_resist = {"projectile","electricity","explosion","fire","melee","drill","slice","ice","radioactive","curse","holy"}
@@ -134,11 +152,12 @@ local function GetAbilityWeight(ability_id, context, tier)
     local weight = 1.0
 
     local has_animalaicomp = context.has_animalaicomp
+    local has_physicsbody = context.has_physicsbody
+    local is_worm = context.is_worm
     local has_ranged = context.has_ranged_attack
     local can_fly = context.can_fly
     local immunity_perks = context.player_immunity_perks
-    local has_physicsbody = context.has_physicsbody
-    local is_worm = context.is_worm
+    local player_shield_count = context.player_shield_count
     local most_taken_damage_type = context.most_taken_damage_type
     local banishment_ratio = context.banishment_ratio
 
@@ -150,6 +169,12 @@ local function GetAbilityWeight(ability_id, context, tier)
                     --Felcesis becomes more likely to purchase the vulnerability status effect on hit the more immunity perks the player has
                     weight = weight * (1 + (immunity_perks * 1.5))
                 end
+            end
+        },
+        {
+            affected_abilities = {"barrage_shoot"},
+            weight_change = function()
+                weight = weight * 1+player_shield_count
             end
         },
         {
@@ -230,7 +255,7 @@ local function GetAbilityWeight(ability_id, context, tier)
             affected_abilities = {"haste","teleport_to_target"},
             weight_change = function (ability_id)
                 local ratio_required = 2
-                if ability_id == "teleport_to_target" then ratio_required = 4 end
+                if ability_id == "teleport_to_target" then ratio_required = 8 end
                 local chase_modifier = math.max(banishment_ratio-ratio_required,0) --If the player is more than 3x (2x for haste) as likely to flee from felcesis, then start prioritising perks that let felcesis hunt the player down more easily to punish them for their cowardice
                 weight = weight * chase_modifier
             end
@@ -456,11 +481,15 @@ end
 
 function CalculateMinibossPower(biomes_visited)
     local phantom_anger = tonumber(GlobalsGetValue("felcesis_anger","0")) --Felcesis becomes more angry each time they're banished using pheromone, allows them to roll higher on their power variation with each banishment
-    local random_power_variation = math.random(-2,2+phantom_anger)
+    local random_power_variation = math.random(-2,1+phantom_anger)
+    local health_softcap = 15
     biomes_visited = biomes_visited + random_power_variation
     local tier = math.max(1,math.floor(1+(biomes_visited / 4)))
     local budget = math.max(450,400 + (125 * biomes_visited))
     local hp_mult = math.max(5,1+(biomes_visited * 1.5))
+    if hp_mult > health_softcap then
+        hp_mult = health_softcap + (math.log(hp_mult - health_softcap + 1) * 1.5)
+    end
     return {tier=tier,budget=budget,hp_mult=hp_mult}
 end
 
@@ -486,7 +515,7 @@ function FindPossessionTarget(biomes_visited)
         end
 
         --Filter by tag
-        if EntityHasTag(target,"boss") or EntityHasTag(target,"miniboss") or EntityHasTag(target,"miniboss_minion") or EntityHasTag(target,"helpless_animal") or EntityHasTag(target,"prop") or EntityHasTag(target,"polymorphed_player") or EntityHasTag(target,"polymorphed_cessation") or EntityHasTag(target,"player_unit") or EntityHasTag(target,"mortal") == false then
+        if EntityHasTag(target,"boss") or EntityHasTag(target,"miniboss") or EntityHasTag(target,"hardmod_blessed") or EntityHasTag(target,"miniboss_minion") or EntityHasTag(target,"helpless_animal") or EntityHasTag(target,"prop") or EntityHasTag(target,"polymorphed_player") or EntityHasTag(target,"polymorphed_cessation") or EntityHasTag(target,"player_unit") or EntityHasTag(target,"mortal") == false then
             goto skipthistarget
         end
 
