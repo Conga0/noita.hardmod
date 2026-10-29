@@ -16,9 +16,10 @@ local damagetype = ComponentGetValue2(vsc_comp,"value_string")
 local dmg_comp = EntityGetFirstComponentIncludingDisabled(host_id,"DamageModelComponent") or 0
 
 local damage_mult = 0
-if tier < 5 then
-    --Only have 75% damage resistance until Ira is tier 6, at which point they gain full damage immunity against a given type
-    damage_mult = 0.25
+local required_tier_for_immunity = damagetype == "projectile" and 7 or 5
+if tier < required_tier_for_immunity then
+    --Only have 65% damage resistance until Ira is tier 5 (tier 7 for projectile damage), at which point they gain full damage immunity against a given type
+    damage_mult = 0.35
     local ui_comp = EntityGetFirstComponentIncludingDisabled(ability_id,"UIIconComponent")
     local ui_icon_filepath = ComponentGetValue2(ui_comp,"icon_sprite_file")
     ComponentSetValue2(ui_comp,"icon_sprite_file",ui_icon_filepath:gsub("protection_","protection_soft_"))
