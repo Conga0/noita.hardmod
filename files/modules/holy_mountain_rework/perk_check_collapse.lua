@@ -49,7 +49,7 @@ if #EntityGetInRadiusWithTag(x, y, 130, "perk") == 0 then
 
 	local found_crystal
 	for _,entity in ipairs(entities) do
-		found_crystal = found_crystal or EntityHasTag(entity, "hardmod_hm_crystal")
+		found_crystal = found_crystal or EntityHasTag(entity, "hm_crystal")
 
 		local name = EntityGetName(entity)
 		if name == "hardmod.hm_rework.collapse_crystal" then collapse()
