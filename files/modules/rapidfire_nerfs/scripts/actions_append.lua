@@ -18,10 +18,11 @@ local reworked_actions = {
         end
 	},
     ["MANA_REDUCE"] = {
-        spawn_level       = "3,4,5,6,10",
+        description = "$hardmod_spell_add_mana_desc",
+        spawn_level = "3,4,5,6,10",
 		spawn_probability = "0.8,0.9,0.9,1,1",
-        price             = 160,
-        mana              = -15,
+        price = 160,
+        mana = -15,
     },
     ["HEAVY_SPREAD"] = {
         description = "$hardmod_spell_heavy_spread_desc",
