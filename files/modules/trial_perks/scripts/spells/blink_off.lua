@@ -9,5 +9,5 @@ if proj_comp then
 end
 
 local x, y = EntityGetTransform( owner )
-EntityLoad( "mods/D2DContentPack/files/particles/tele_particles.xml", x, y )
+EntityLoad( "mods/noita.hardmod/files/modules/trial_perks/gfx/spells/blink_tele_particles.xml", x, y )
 GamePlaySound( "data/audio/Desktop/player.bank", "player_projectiles/megalaser/launch", x, y )

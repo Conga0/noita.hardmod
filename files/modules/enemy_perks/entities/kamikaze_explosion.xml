@@ -1,0 +1,14 @@
+<Entity name="$projectile_default" >
+
+	<Base file="data/entities/projectiles/bomb.xml">
+
+		<ProjectileComponent
+			lifetime="0"
+			><config_explosion
+				max_durability_to_destroy="8"
+			></config_explosion>
+		</ProjectileComponent>
+
+	</Base>
+
+</Entity>

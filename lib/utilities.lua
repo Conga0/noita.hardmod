@@ -293,3 +293,17 @@ function GetPerkPickupCount( perk_id )
 
 	return pickup_count or 0
 end
+
+--- Triggers a lua script after a delay
+---@param entity_id The entity that will hold the LuaComponent
+---@param script_path Path to the script to be executed
+---@param delay Delay before script execution in frames (default 30)
+function TriggerScriptDelayed(entity_id, script_path, delay)
+	delay = delay or 30
+	EntityAddComponent2(entity_id, "LuaComponent", {
+		script_source_file = script_path,
+		execute_on_added = false,
+		execute_every_n_frame = delay,
+		remove_after_executed = true,
+	})
+end

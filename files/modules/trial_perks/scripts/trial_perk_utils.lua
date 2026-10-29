@@ -40,13 +40,3 @@ function SwapPerkIconForSpent( player_id, perk_name, use_passed_icon )
         end
     end
 end
-
-function TriggerScriptDelayed( entity_id, script_path, delay )
-	delay = delay or 30
-	EntityAddComponent2( entity_id, "LuaComponent", {
-		script_source_file = script_path,
-		execute_on_added = false,
-		execute_every_n_frame = delay,
-		remove_after_executed = true,
-	})
-end
