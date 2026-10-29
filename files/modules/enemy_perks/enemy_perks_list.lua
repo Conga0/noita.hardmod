@@ -64,9 +64,11 @@ local perks = {
 			local entity_id = data.target_enemy
 			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
             if animal_ai_comp > 0 and not ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
-				if data.how_many_of_each_perk["HARDMOD_VIGOUR"] == 0 then
-					return true
-				end
+				-- condition = function(self, data)
+				-- -- @UserK how does this workkk
+				-- 	if data.how_many_of_each_perk["HARDMOD_KAMIKAZE"] == 0 then return true end
+				-- end,
+				return true
             end
 		end,
 		func = function(self, entity_id, data)
@@ -189,9 +191,10 @@ local perks = {
 		icon = sprites_path.."vigour.png",
 		weight = 1,
 		max = 1,
-		condition = function(self, data)
-			if data.how_many_of_each_perk["HARDMOD_KAMIKAZE"] == 0 then return true end
-		end,
+		-- condition = function(self, data)
+		-- -- @UserK how does this workkk
+		-- 	if data.how_many_of_each_perk["HARDMOD_KAMIKAZE"] == 0 then return true end
+		-- end,
 		func = function(self, entity_id, data)
 			-- make the enemy explode on death
 			EntityAddComponent2(entity_id, "LuaComponent", {

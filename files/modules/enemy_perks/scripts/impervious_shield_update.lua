@@ -13,7 +13,7 @@ if #projectiles > 0 then
 			if damage and damage > 0 then
 				local players = EntityGetInRadiusWithTag(x, y, 24, "player_unit")
 				for i,player in ipairs(players) do
-					EntityInflictDamage(player, damage, "DAMAGE_HOLY", "projectile", "NORMAL", 0, 0)
+					EntityInflictDamage(player, damage * 0.5, "DAMAGE_HOLY", "projectile", "NORMAL", 0, 0)
 				end
 			end
 			
