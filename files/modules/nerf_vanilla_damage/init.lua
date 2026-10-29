@@ -29,7 +29,10 @@ local lasers = {
 for _,proj in pairs(lasers) do
   for file in nxml.edit_file(deck..proj) do
     local pcomp = file:first_of("ProjectileComponent")
-    if pcomp then pcomp:set("damage", 0) end
+    if pcomp then
+      pcomp:set("damage", 0)
+      pcomp:set("damage_every_x_frames", 15)
+    end
 
     for emitter in file:each_of("LaserEmitterComponent") do
       local laser = emitter:first_of("laser")
