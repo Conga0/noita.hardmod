@@ -28,10 +28,12 @@ local modules = {
 	"phantom_nemesis",
 	"truly_limited_spells",
 	"alt_fire_anything",
+	"ending",
 	"credits",
 	"nerf_vanilla_cheeses",
 	"nerf_vanilla_damage",
-	"stronger_kolmi",
+	-- replaced by `ending` module requiring 11 orbs to pickup sampo
+	-- "stronger_kolmi",
 	"chest_tweaks",
 	"better_anvil",
 	"rapidfire_nerfs",

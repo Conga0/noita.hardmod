@@ -1,0 +1,75 @@
+local orbs_required = 10
+local eid = GetUpdatedEntityID()
+
+current_orb_count = -1
+
+local function update_orb_count(orb_count)
+  if orb_count == current_orb_count then return end
+
+  local tooltip = GameTextGet("$hardmod_sampo_tooltip", tostring(orb_count), tostring(orbs_required))
+
+  local interaction = EntityGetFirstComponentIncludingDisabled(eid, "InteractableComponent")
+  if interaction then
+    ComponentSetValue2(interaction, "ui_text", tooltip)
+  end
+
+  current_orb_count = orb_count
+end
+
+local function reenable_sampo()
+  local emitters = EntityGetComponentIncludingDisabled(eid, "ParticleEmitterComponent") or {}
+  for _,comp in pairs(emitters) do
+    if ComponentGetValue2(comp, "emitted_material_name") == "spark_white_bright" then
+      ComponentSetValue2(comp, "emitted_material_name", "spark_blue")
+      break
+    end
+  end
+
+  local sprite = EntityGetFirstComponentIncludingDisabled(eid, "SpriteComponent")
+  if sprite then
+    ComponentSetValue2(sprite, "image_file", "mods/noita.hardmod/files/modules/ending/gfx/sampo_sprite.xml")
+  end
+
+  local item = EntityGetFirstComponentIncludingDisabled(eid, "ItemComponent")
+  if item then
+    ComponentSetValue2(item, "is_pickable", true)
+  end
+
+  local interactable = EntityGetFirstComponentIncludingDisabled(eid, "InteractableComponent")
+  if interactable then
+    EntityRemoveComponent(eid, interactable)
+  end
+
+  EntityRemoveTag(eid, "sampo_locked")
+end
+
+local function check_orb_count()
+  local is_locked = EntityHasTag(eid, "sampo_locked")
+  local orb_count = GameGetOrbCountThisRun()
+
+  update_orb_count(orb_count)
+
+  if orb_count < orbs_required then
+    if not is_locked then
+      EntityAddTag(eid, "sampo_locked")
+    end
+    return
+  end
+
+  if is_locked then
+    reenable_sampo()
+  end
+end
+
+function interacting(interactor, entity, name)
+  if name ~= "pickup_sampo" then return end
+
+  local x, y = EntityGetTransform(entity)
+
+  if current_orb_count < orbs_required then
+    GamePlaySound( "data/audio/Desktop/projectiles.snd", "projectiles/magic/create", x, y)
+    return
+  end
+end
+
+check_orb_count()
