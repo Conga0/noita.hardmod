@@ -232,6 +232,7 @@ function get_modifier_mappings()
 		local mod = resolve_modifier(modifier)
 		if mod and not result[biome] then
 			result[biome] = mod
+			BiomesWithModifiers[name] = mod
 			total_count = total_count + #mod
 		end
 	end
@@ -251,11 +252,6 @@ function apply_modifier_from_data(name, list)
 
 	for _,modifier in pairs(list) do
 		modifier.action(name, filename)
-	end
-
-	if #list > 0 and not BiomesWithModifiers[name] then
-		table.insert(biomes_with_modifier, name)
-		BiomesWithModifiers[name] = list
 	end
 
 	if #list == 1 then
