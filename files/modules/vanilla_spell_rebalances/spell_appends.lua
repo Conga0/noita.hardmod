@@ -36,6 +36,9 @@ local reworked_actions = {
 			c.fire_rate_wait = c.fire_rate_wait + 15
     end
   },
+  ["AREA_DAMAGE"] = {
+	mana = 60,
+  },
   ["EXPLOSIVE_PROJECTILE"] = {
 	mana = 60,
 	action = function ()

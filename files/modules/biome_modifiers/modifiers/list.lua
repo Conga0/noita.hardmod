@@ -6,7 +6,7 @@ BiomeModifierChances = { default = 0.3 }
 PatchModifiers({
 	CONDUCTIVE = {
 		probability = 0.08,
-		remove_from_biomes = { "coalmine", "snowcastle" },
+		remove_from_biomes = { "coalmine", "snowcastle", "wizardcave" },
 	},
 	FREEZING = {
 		probability = 0.4
@@ -43,7 +43,6 @@ PatchModifiers({
 	OMINOUS = { probability = 0.02 },
 })
 
-AddBiomeGroup({ "wizardcave", "alchemist_secret" })
 AddBiomeGroup({ "wizardcave", "alchemist_secret" })
 AddBiomeGroup({ "sandcave" })
 AddBiomeGroup({ "rainforest_dark" })
