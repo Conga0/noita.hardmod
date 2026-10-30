@@ -1,4 +1,5 @@
 dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
 new_perks = {
 	{
@@ -16,7 +17,7 @@ new_perks = {
 
 			-- register the current y position to disqualify nearby hearts
 			local x, y = EntityGetTransform( entity_who_picked )
-        	SetInternalInt( entity_who_picked, "hardmod_time_trial_start_y", y )
+        	utils.SetInternalInt( entity_who_picked, "hardmod_time_trial_start_y", y )
 
 			-- add GameEffect, if it doesn't exist already
 			local game_effect = EntityGetAllChildren( entity_who_picked, "hardmod_time_trial_game_effect" )[1]
@@ -43,7 +44,7 @@ new_perks = {
 
 			-- register the current y position to disqualify nearby hearts
 			local x, y = EntityGetTransform( entity_who_picked )
-        	SetInternalInt( entity_who_picked, "hardmod_glass_heart_start_y", y )
+        	utils.SetInternalInt( entity_who_picked, "hardmod_glass_heart_start_y", y )
 
 	        -- add a damage_received script
 	        EntityAddComponent( entity_who_picked, "LuaComponent",

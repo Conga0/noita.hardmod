@@ -1,5 +1,5 @@
 dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
-dofile_once( "data/scripts/lib/utilities.lua" )
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
 local x, y = EntityGetTransform( GetUpdatedEntityID() )
 
@@ -24,7 +24,7 @@ for i,proj_id in ipairs( EntityGetInRadiusWithTag( x, y, 20, "projectile" ) ) do
 	        local vx, vy = ComponentGetValue2( vcomp, "mVelocity" )
 	        proj_velocity = get_magnitude( vx, vy )
 	    end
-		local heal_ratio = Remap( proj_velocity, 100, 1000, 0.5, 1.0 )
+		local heal_ratio = utils.Remap( proj_velocity, 100, 1000, 0.5, 1.0 )
 
 		-- heal the player
 		local proj_dmg = ComponentGetValue2( proj_comp, "damage" )

@@ -1,4 +1,4 @@
-dofile_once("mods/noita.hardmod/lib/utilities.lua")
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
 local min_item_cost = 150
 local gold_multiplier = 0.15
@@ -7,7 +7,7 @@ local eid = GetUpdatedEntityID()
 local cid = GetUpdatedComponentID()
 local x, y = EntityGetTransform(eid)
 
-if not GetPlayerEntity(x, y, 300) then return end
+if not utils.GetPlayerEntity(x, y, 300) then return end
 
 EntityRemoveComponent(eid, cid)
 

@@ -1,3 +1,4 @@
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
 local function spawn_staff( x, y, player )
     local hm_visits = tonumber( GlobalsGetValue( "HOLY_MOUNTAIN_VISITS", "0" ) )
@@ -51,4 +52,4 @@ spawn_staff( px, py - 8 )
 dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
 EntityRemoveAllByTag( player, "hardmod_glass_heart" )
 SwapPerkIconForSpent( player, "$hardmod_perk_glass_heart_name", true )
-SetInternalInt( player, "hardmod_glass_heart_start_y", 0 )
+utils.SetInternalInt( player, "hardmod_glass_heart_start_y", 0 )
