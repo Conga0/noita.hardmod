@@ -1,14 +1,16 @@
 ---@diagnostic disable: undefined-global
 
-BiomesWithModifiers = {}
-
+---Maximum modifier count per biome (uses `default` for non specified biomes)
 MaxBiomeModifierCount = { default = 1 }
+
+---Chances for a biome to have a modifier (uses `default` for non specified biomes)
 BiomeModifierChances = {
 	default = 0.1,
 	coalmine = 0.2,
 	excavationsite = 0.15,
 }
 
+---Force-applies this modifier to a biome if the biome didn't get a modifier
 ForcedBiomeModifiers = {
   	wandcave = "FOG_OF_WAR_CLEAR_AT_PLAYER", wizardcave = "FOG_OF_WAR_CLEAR_AT_PLAYER",
 	alchemist_secret = "FOG_OF_WAR_CLEAR_AT_PLAYER",
@@ -26,6 +28,7 @@ local modifiers = {}
 local modifiers_by_id = {}
 local total_weight = 0
 
+---Patches biome modifiers
 function PatchModifiers(tbl)
 	for _,modifier in pairs(biome_modifiers) do
     if tbl[modifier.id] then
@@ -40,12 +43,14 @@ function PatchModifiers(tbl)
 	end
 end
 
+---Adds new biome modifiers
 function AddModifiers(tbl)
 	for _,modifier in pairs(tbl) do
 		table.insert(biome_modifiers, modifier)
 	end
 end
 
+---If `to_biome` is passed, adds all biome names from `tbl` to an existing biome group that contains `to_biome`. Otherwise, adds a new biome group `tbl`.
 ---@param tbl string[]
 ---@param to_biome string?
 function AddBiomeGroup(tbl, to_biome)
@@ -66,6 +71,26 @@ function AddBiomeGroup(tbl, to_biome)
 		end
 	else
 		table.insert(biomes, tbl)
+	end
+end
+
+---@class InjectSpawnsEntity
+---@field to table
+---@field prob integer
+---@field min_count integer?
+---@field max_count integer?
+---@field offset_y integer?
+---@field entity string
+
+---@param spawns InjectSpawnsEntity[]
+function InjectSpawns(spawns)
+	for _,spawn in pairs(spawns) do
+		inject_spawn(spawn.to, spawn.prob, {
+			prob = 0,
+			min_count = spawn.min_count or 1, max_count = spawn.max_count or 1,
+			offset_y = spawn.offset_y or 0,
+			entity = spawn.entity
+		})
 	end
 end
 
@@ -194,7 +219,6 @@ function get_modifier_mappings()
 
 		for _,name in pairs(biome_names) do
 			result[name] = list
-			BiomesWithModifiers[name] = list
 		end
 
 		::continue::
@@ -208,8 +232,6 @@ function get_modifier_mappings()
 		end
 	end
 
-  local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua")
-  print(utils.dumpf(result))
 	return result
 end
 
@@ -225,11 +247,6 @@ function apply_modifier_from_data(name, list)
 
 	for _,modifier in pairs(list) do
 		modifier.action(name, filename)
-	end
-
-	if #list > 0 and not BiomesWithModifiers[name] then
-		table.insert(biomes_with_modifier, name)
-		BiomesWithModifiers[name] = list
 	end
 
 	if #list == 1 then
@@ -249,7 +266,7 @@ function biome_modifiers_inject_spawns(name)
 	local mappings = get_modifier_mappings()[name] or {}
 	for _,modifier in pairs(mappings) do
 		if modifier.inject_spawns_action then
-		modifier.inject_spawns_action(name)
+			modifier.inject_spawns_action(name)
 		end
 	end
 end
