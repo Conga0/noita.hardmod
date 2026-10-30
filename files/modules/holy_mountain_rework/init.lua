@@ -67,4 +67,10 @@ for file in nxml.edit_file("data/entities/buildings/teleport_snowcave_buried_eye
 	end
 end
 
+utils.modifile(
+	"data/scripts/buildings/teleport_snowcave_buried_eye_return.lua",
+	[[local teleport_back_x = 190]],
+	[[local teleport_back_x = 150]]
+)
+
 return hooks

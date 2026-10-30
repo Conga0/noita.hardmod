@@ -1,7 +1,7 @@
 local ng_offset = 1
 
 local function entry_can_spawn(tbl, entry, x, y)
-	if not entry or not entry.prob then return false end
+	if type(entry) ~= "table" or not entry.prob then return false end
 
 	if entry.spawn_check and not entry.spawn_check() then
 		return false
