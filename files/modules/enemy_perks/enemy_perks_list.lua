@@ -4,6 +4,7 @@
 ---@field description string? description of the perk (viewable in progress)
 ---@field sprite string? path to the perk's sprite
 ---@field icon string? path to the perk's icon
+---@field not_progress boolean? if true, perk won't show up in progress menu
 ---@field weight number? probability of the perk being pulled, default 10
 ---@field priority number? priority for the order its shown above enemies' heads or in the inspect window, default 10
 ---@field max int? max number of this perk an enemy can have
@@ -12,6 +13,13 @@
 
 local sprites_path = "mods/noita.hardmod/files/modules/enemy_perks/perk_sprites/"
 local icons_path = "mods/noita.hardmod/files/modules/enemy_perks/perk_icons/"
+
+local enemy_is_ranged = function(self, data)
+	local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(data.target_enemy,"AnimalAIComponent")
+	if animal_ai_comp and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
+		return true
+	end
+end
 
 -- The `data` table provides `target_enemy` (eid), `already_held_perks` (perk_id[]), `player` (eid) and `player_poly_identity` (table)
 
@@ -69,13 +77,13 @@ local perks = {
 		condition = function(self, data)
 			local entity_id = data.target_enemy
 			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
-            if animal_ai_comp > 0 and not ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
+			if animal_ai_comp > 0 and not ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
 				-- condition = function(self, data)
 				-- -- @UserK how does this workkk
 				-- 	if data.how_many_of_each_perk["HARDMOD_KAMIKAZE"] == 0 then return true end
 				-- end,
 				return true
-            end
+			end
 		end,
 		func = function(self, entity_id, data)
 			-- show nuke particles on the enemy
@@ -153,16 +161,16 @@ local perks = {
 		condition = function(self, data)
 			local entity_id = data.target_enemy
 			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
-            if animal_ai_comp > 0 and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
-            	return true
-            end
+			if animal_ai_comp > 0 and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
+				return true
+			end
 		end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_ELECTRICITY", true)
 			EntityAddComponent2(entity_id, "LuaComponent", {
-	            script_shot = "mods/noita.hardmod/files/modules/enemy_perks/scripts/thunderlord_on_shot.lua",
+				script_shot = "mods/noita.hardmod/files/modules/enemy_perks/scripts/thunderlord_on_shot.lua",
 				execute_every_n_frame = -1,
-            })
+			})
 		end
 	},
 	{
@@ -174,16 +182,16 @@ local perks = {
 		condition = function(self, data)
 			local entity_id = data.target_enemy
 			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
-            if animal_ai_comp > 0 and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
-            	return true
-            end
+			if animal_ai_comp > 0 and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
+				return true
+			end
 		end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_FIRE", true)
 			EntityAddComponent2(entity_id, "LuaComponent", {
-	            script_shot = "mods/noita.hardmod/files/modules/enemy_perks/scripts/pyrelord_on_shot.lua",
+				script_shot = "mods/noita.hardmod/files/modules/enemy_perks/scripts/pyrelord_on_shot.lua",
 				execute_every_n_frame = -1,
-            })
+			})
 		end
 	},
 	{
@@ -230,7 +238,146 @@ local perks = {
 			ComponentSetValue2(dmc, "max_hp", ComponentGetValue2(dmc, "max_hp") * 1.5)
 			ComponentSetValue2(dmc, "hp", ComponentGetValue2(dmc, "hp") * 1.5)
 		end
-	}
+	},
+	{
+		id = "POISON_BLOOD",
+		name = "$hardmod_eperk_poison_blood_name",
+		description = "$hardmod_eperk_poison_blood_desc",
+		weight = 5,
+		priority = 5,
+		max = 1,
+		condition = function(self, data)
+			return not data.blood_perk
+		end,
+		func = function(self, entity_id, data)
+			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
+			if not dmc then return end
+
+			ComponentSetValue2(dmc, "blood_material", "poison")
+			ComponentSetValue2(dmc, "blood_spray_material", "poison")
+			EntitySetDamageFromMaterial(entity_id, "poison", 0)
+			ComponentObjectSetValue2(dmc, "damage_multipliers", "poison", 0)
+
+			data.blood_perk = "poison" --do this for condition func so multiple blood perks aren't rolled
+		end
+	},
+	{
+		id = "COLD_BLOOD",
+		name = "$hardmod_eperk_cold_blood_name",
+		description = "$hardmod_eperk_cold_blood_desc",
+		weight = 5,
+		priority = 4,
+		max = 1,
+		condition = function(self, data)
+			return not data.blood_perk
+		end,
+		func = function(self, entity_id, data)
+			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
+			if not dmc then return end
+
+			ComponentSetValue2(dmc, "blood_material", "blood_cold")
+			ComponentSetValue2(dmc, "blood_spray_material", "blood_cold")
+			EntitySetDamageFromMaterial(entity_id, "blood_cold", 0)
+			EntitySetDamageFromMaterial(entity_id, "blood_cold_vapour", 0)
+
+			data.blood_perk = "blood_cold" --do this for condition func so multiple blood perks aren't rolled
+		end
+	},
+	{
+		id = "CURSER",
+		name = "$hardmod_eperk_curser_name",
+		description = "$hardmod_eperk_curser_desc",
+		weight = 7,
+		priority = 4,
+		max = 1,
+		condition = enemy_is_ranged,
+		func = function(self, entity_id, data)
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_shot = "mods/noita.hardmod/files/modules/enemy_perks/scripts/curser_shot.lua",
+				execute_every_n_frame = -1,
+			})
+		end
+	},
+	{ --I'll implement this later, or someone can do it for me 🙏
+		not_progress = true,
+		id = "VENOMOUS_CURSER",
+		name = "$hardmod_eperk_venomous_curser_name",
+		description = "$hardmod_eperk_venomous_curser_desc",
+		weight = 9,
+		priority = 0,
+		max = 0,
+		condition = enemy_is_ranged,
+		func = function(self, entity_id, data)
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_shot = "mods/noita.hardmod/files/modules/enemy_perks/scripts/venomous_curser_shot.lua",
+				execute_every_n_frame = -1,
+			})
+		end
+	},
+	{
+		id = "RECYCLE_HEALTH",
+		name = "$hardmod_eperk_recycle_health_name",
+		description = "$hardmod_eperk_recycle_health_desc",
+		weight = 10,
+		priority = 0,
+		max = 0,
+		func = function(self, entity_id, data)
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_damage_received = "mods/noita.hardmod/files/modules/enemy_perks/scripts/recycle_health.lua",
+			})
+		end
+	},
+	{
+		id = "WET_AURA",
+		name = "$hardmod_eperk_wet_aura_name",
+		description = "$hardmod_eperk_wet_aura_desc",
+		weight = 500,
+		priority = 0,
+		max = 1,
+		func = function(self, entity_id, data)
+			EntityAddChild(entity_id, EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/entities/wet_aura.xml", data.x, data.y))
+		end
+	},
+	{
+		id = "BLACKHOLE_DEATH",
+		name = "$hardmod_eperk_blackhole_death_name",
+		description = "$hardmod_eperk_blackhole_death_desc",
+		weight = 5,
+		priority = 0,
+		max = 1,
+		func = function(self, entity_id, data)
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_death = "mods/noita.hardmod/files/modules/enemy_perks/scripts/spawn_giga_blackhole.lua"
+			})
+		end
+	},
+	{
+		id = "SKULLFLYS",
+		name = "$hardmod_eperk_skullflys_name",
+		description = "$hardmod_eperk_skullflys_desc",
+		weight = 6,
+		priority = 0,
+		max = 3,
+		condition = function(self, data)
+			return data.level > 2 --snowy or later biome
+		end,
+		func = function(self, entity_id, data)
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_death = "mods/noita.hardmod/files/modules/enemy_perks/scripts/add_skullflys.lua"
+			})
+		end
+	},
+	{
+		id = "DAMAGE_BUFFER",
+		name = "$hardmod_eperk_damage_buffer_name",
+		description = "$hardmod_eperk_damage_buffer_desc",
+		weight = 8,
+		priority = 0,
+		max = 1,
+		func = function(self, entity_id, data)
+			EntityAddChild(entity_id, EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/entities/damage_buffer.xml", data.x, data.y))
+		end
+	},
 }
 
 for _,perk in ipairs(perks) do

@@ -7,9 +7,7 @@ local eid = GetUpdatedEntityID()
 local cid = GetUpdatedComponentID()
 local x, y = EntityGetTransform(eid)
 
-print("check")
 if not GetPlayerEntity(x, y, 300) then return end
-print("found player")
 
 EntityRemoveComponent(eid, cid)
 

@@ -117,14 +117,18 @@ local function give_enemy_perks(entity_id, num)
 
 	end
 
+	local biome = BiomeMapGetName(x, y)
 	local data = {
+		x = x, y = y,
+		biome = biome,
+		level = (biome_levels[biome] or biome_levels.default_biome_data).level,
 		target_enemy = entity_id,
 		already_held_perks = already_held_perks,
 		how_many_of_each_perk = how_many_of_each_perk,
 		player = _g.player,
 		player_poly_identity = _g.player_poly_identity,
 	}
-	for i = 1, num do
+	for i=1, num do
 		local perk = utils.ConditionalRandomFromTable(enemy_perks, data)
 		if not perk then return end
 		data = perk:func(entity_id, data) or data
