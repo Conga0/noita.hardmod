@@ -7,7 +7,7 @@
 ---@field not_progress boolean? if true, perk won't show up in progress menu
 ---@field weight number? probability of the perk being pulled, default 10
 ---@field priority number? priority for the order its shown above enemies' heads or in the inspect window, default 10
----@field max int? max number of this perk an enemy can have
+---@field max integer? max number of this perk an enemy can have
 ---@field condition function? if added, this function must return true, is passed the `data` table
 ---@field func function function that actually does the stuff, is passed the `data` table
 
@@ -40,7 +40,7 @@ local perks = {
 		id = "LAVA_BLOOD",
 		name = "$hardmod_eperk_lava_blood_name",
 		description = "$hardmod_eperk_lava_blood_desc",
-		weight = 5,
+		weight = 3,
 		priority = 5,
 		max = 1,
 		condition = function(self, data)
@@ -74,17 +74,7 @@ local perks = {
 		weight = 2,
 		priority = 20,
 		max = 1,
-		condition = function(self, data)
-			local entity_id = data.target_enemy
-			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
-			if animal_ai_comp > 0 and not ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
-				-- condition = function(self, data)
-				-- -- @UserK how does this workkk
-				-- 	if data.how_many_of_each_perk["HARDMOD_KAMIKAZE"] == 0 then return true end
-				-- end,
-				return true
-			end
-		end,
+		condition = enemy_is_ranged,
 		func = function(self, entity_id, data)
 			-- show nuke particles on the enemy
 			local x, y = EntityGetTransform(entity_id)
@@ -155,16 +145,10 @@ local perks = {
 		id = "THUNDERLORD",
 		name = "$hardmod_eperk_thunderlord_name",
 		description = "$hardmod_eperk_thunderlord_desc",
-		weight = 5,
+		weight = 1,
 		priority = 7,
 		max = 1,
-		condition = function(self, data)
-			local entity_id = data.target_enemy
-			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
-			if animal_ai_comp > 0 and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
-				return true
-			end
-		end,
+		condition = enemy_is_ranged,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_ELECTRICITY", true)
 			EntityAddComponent2(entity_id, "LuaComponent", {
@@ -177,12 +161,11 @@ local perks = {
 		id = "PYRELORD",
 		name = "$hardmod_eperk_pyrelord_name",
 		description = "$hardmod_eperk_pyrelord_desc",
-		weight = 5,
+		weight = 3,
 		max = 1,
 		condition = function(self, data)
-			local entity_id = data.target_enemy
-			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
-			if animal_ai_comp > 0 and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
+			local comp = EntityGetFirstComponentIncludingDisabled(data.target_enemy, "AnimalAIComponent")
+			if comp and ComponentGetValue2(comp, "attack_ranged_enabled") then
 				return true
 			end
 		end,
@@ -217,7 +200,7 @@ local perks = {
 		id = "MAGIC_RESISTANCE",
 		name = "$hardmod_eperk_magic_resistance_name",
 		description = "$hardmod_eperk_magic_resistance_desc",
-		weight = 10,
+		weight = 3,
 		func = function(self, entity_id, data)
 			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
 			if not dmc then return end
@@ -231,14 +214,15 @@ local perks = {
 		id = "AEROLORD",
 		name = "$hardmod_eperk_aerolord_name",
 		description = "$hardmod_eperk_aerolord_desc",
-		weight = 5,
+		weight = 0.5,
 		max = 1,
 		condition = function(self, data)
-			local entity_id = data.target_enemy
-			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(entity_id,"AnimalAIComponent") or 0
-			if animal_ai_comp > 0 and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled") then
-				return true
-			end
+			if data.level < 5 then return false end
+
+			local comp = EntityGetFirstComponentIncludingDisabled(data.target_enemy, "AnimalAIComponent")
+            if comp and ComponentGetValue2(comp, "attack_ranged_enabled") then
+            	return true
+            end
 		end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "KNOCKBACK_IMMUNITY", true)
@@ -252,6 +236,7 @@ local perks = {
 		id = "EXTRA_HP",
 		name = "$hardmod_eperk_extra_hp_name",
 		description = "$hardmod_eperk_extra_hp_desc",
+		weight = 1,
 		func = function(self, entity_id, data)
 			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
 			if not dmc then return end
@@ -264,12 +249,10 @@ local perks = {
 		id = "POISON_BLOOD",
 		name = "$hardmod_eperk_poison_blood_name",
 		description = "$hardmod_eperk_poison_blood_desc",
-		weight = 5,
+		weight = 3,
 		priority = 5,
 		max = 1,
-		condition = function(self, data)
-			return not data.blood_perk
-		end,
+		condition = function(self, data) return not data.blood_perk end,
 		func = function(self, entity_id, data)
 			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
 			if not dmc then return end
@@ -286,12 +269,10 @@ local perks = {
 		id = "COLD_BLOOD",
 		name = "$hardmod_eperk_cold_blood_name",
 		description = "$hardmod_eperk_cold_blood_desc",
-		weight = 5,
+		weight = 3,
 		priority = 4,
 		max = 1,
-		condition = function(self, data)
-			return not data.blood_perk
-		end,
+		condition = function(self, data) return not data.blood_perk end,
 		func = function(self, entity_id, data)
 			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
 			if not dmc then return end
@@ -308,10 +289,12 @@ local perks = {
 		id = "CURSER",
 		name = "$hardmod_eperk_curser_name",
 		description = "$hardmod_eperk_curser_desc",
-		weight = 7,
+		weight = 1,
 		priority = 4,
 		max = 1,
-		condition = enemy_is_ranged,
+		condition = function(self, data)
+			return enemy_is_ranged(self, data) and data.level > 3
+		end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_shot = "mods/noita.hardmod/files/modules/enemy_perks/scripts/curser_shot.lua",
@@ -324,7 +307,7 @@ local perks = {
 		id = "VENOMOUS_CURSER",
 		name = "$hardmod_eperk_venomous_curser_name",
 		description = "$hardmod_eperk_venomous_curser_desc",
-		weight = 9,
+		weight = 0,
 		priority = 0,
 		max = 0,
 		condition = enemy_is_ranged,
@@ -339,7 +322,7 @@ local perks = {
 		id = "RECYCLE_HEALTH",
 		name = "$hardmod_eperk_recycle_health_name",
 		description = "$hardmod_eperk_recycle_health_desc",
-		weight = 10,
+		weight = 2,
 		priority = 0,
 		max = 0,
 		func = function(self, entity_id, data)
@@ -359,13 +342,14 @@ local perks = {
 			EntityAddChild(entity_id, EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/entities/wet_aura.xml", data.x, data.y))
 		end
 	},
-	{
+	{ -- TODO: Someone please nerf this??
 		id = "BLACKHOLE_DEATH",
 		name = "$hardmod_eperk_blackhole_death_name",
 		description = "$hardmod_eperk_blackhole_death_desc",
-		weight = 5,
+		weight = 0.1,
 		priority = 0,
 		max = 1,
+		condition = function(self, data) return data.level > 6 end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = "mods/noita.hardmod/files/modules/enemy_perks/scripts/spawn_giga_blackhole.lua"
@@ -376,25 +360,25 @@ local perks = {
 		id = "SKULLFLYS",
 		name = "$hardmod_eperk_skullflys_name",
 		description = "$hardmod_eperk_skullflys_desc",
-		weight = 6,
+		weight = 0.1,
 		priority = 0,
 		max = 3,
-		condition = function(self, data)
-			return data.level > 2 --snowy or later biome
-		end,
+		condition = function(self, data) return data.level > 4 end,
 		func = function(self, entity_id, data)
+			-- I made them spawn small skullflys instead, that was way too much
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = "mods/noita.hardmod/files/modules/enemy_perks/scripts/add_skullflys.lua"
 			})
 		end
 	},
-	{
+	{ -- TODO: Someone please nerf this??
 		id = "DAMAGE_BUFFER",
 		name = "$hardmod_eperk_damage_buffer_name",
 		description = "$hardmod_eperk_damage_buffer_desc",
-		weight = 8,
+		weight = 0.1,
 		priority = 0,
 		max = 1,
+		condition = function(self, data) return data.level > 3 end,
 		func = function(self, entity_id, data)
 			EntityAddChild(entity_id, EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/entities/damage_buffer.xml", data.x, data.y))
 		end

@@ -26,11 +26,10 @@ local function spawn_staff( x, y, player )
 		for i,player in ipairs( players ) do
 			local luacomps = EntityGetComponent( player, "LuaComponent", "hardmod_glass_wand_on_damage" )
 			if luacomps or #luacomps == 0 then
-			    EntityAddComponent( player, "LuaComponent",
-			    {
+			    EntityAddComponent2( player, "LuaComponent", {
 			    	_tags = "hardmod_glass_wand_on_damage",
-			        script_damage_received = "mods/noita.hardmod/files/modules/trial_perks/scripts/items/glass_wand_on_damage.lua",
-			        execute_every_n_frame = "-1",
+						script_damage_received = "mods/noita.hardmod/files/modules/trial_perks/scripts/items/glass_wand_on_damage.lua",
+						execute_every_n_frame = "-1",
 			    })
 			end
 		end

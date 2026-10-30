@@ -1,6 +1,8 @@
 ---@diagnostic disable: undefined-global
 
 local function apply_freeze()
+  if reflecting then return end
+
   local player = GetUpdatedEntityID()
   SetRandomSeed(GameGetFrameNum(), 123)
   if Random(1, 4) == 1 then

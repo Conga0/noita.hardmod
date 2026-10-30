@@ -5,11 +5,12 @@ for _,child in ipairs(EntityGetAllChildren(root) or {}) do
 	local name = EntityGetName(child)
 	print(name)
 	if name == "hardmod.curse_cloud_thunder" or name == "hardmod.curse_cloud_acid" then
-		local gec = EntityGetFirstComponent(child, "GameEffectComponent")
-		if not gec then return end
-		print("adding to lifetime...")
-		ComponentSetValue2(gec, "frames", ComponentGetValue2(gec, "frames") + 600)
-		EntityKill(entity_id) return
+		return
+		-- local gec = EntityGetFirstComponent(child, "GameEffectComponent")
+		-- if not gec then return end
+		-- print("adding to lifetime...")
+		-- ComponentSetValue2(gec, "frames", ComponentGetValue2(gec, "frames") + 600)
+		-- EntityKill(entity_id) return
 	end
 end
 

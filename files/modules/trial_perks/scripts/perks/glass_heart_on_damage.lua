@@ -1,3 +1,4 @@
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
 function damage_received( damage, message, entity_thats_responsible, is_fatal, projectile_thats_responsible )
 	local responsible_entity_tags = EntityGetTags( entity_thats_responsible )
