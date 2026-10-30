@@ -91,6 +91,16 @@ local function give_enemy_perks(entity_id, num)
 	num = num or 1
 	if not (num > 0) then return end
 
+	-- do not give perks to entities who drop no gold
+	local vsc_comps = EntityGetAllChildren(entity_id, "VariableStorageComponent")
+	if vsc_comps then
+		for i,vsc_comp in ipairs(vsc_comps) do
+			if ComponentHasTag(vsc_comp, "no_gold_drop") then
+				return
+			end
+		end
+	end
+
 	local x,y = EntityGetTransform(entity_id)
 	local enemy_perks_handler
 	for _,child in ipairs(EntityGetAllChildren(entity_id) or {}) do

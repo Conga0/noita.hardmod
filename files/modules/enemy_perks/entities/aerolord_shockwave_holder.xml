@@ -1,0 +1,8 @@
+<Entity>
+	
+	<LuaComponent
+		script_death="mods/noita.hardmod/files/modules/enemy_perks/scripts/aerolord_on_proj_death.lua"
+		execute_every_n_frame="-1"
+	></LuaComponent>
+	
+</Entity>
