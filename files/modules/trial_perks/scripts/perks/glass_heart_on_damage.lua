@@ -13,6 +13,6 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
         dofile_once( "mods/noita.hardmod/files/modules/trial_perks/scripts/trial_perk_utils.lua" )
         EntityRemoveAllByTag( owner, "hardmod_glass_heart" )
         SwapPerkIconForSpent( owner, "$hardmod_perk_glass_heart_name", false )
-        SetInternalInt( owner, "hardmod_glass_heart_start_y", 0 )
+        utils.SetInternalInt( owner, "hardmod_glass_heart_start_y", 0 )
 	end
 end

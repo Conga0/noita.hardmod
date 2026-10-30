@@ -1,4 +1,5 @@
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua")---@type nxml
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
 local function patch_spawn_rules()
   local patch_biomes = {
@@ -36,7 +37,7 @@ local function patch_less_annoying_blinding()
   end
 
   -- you can see more, but the visible area is darker
-  modifile(
+  utils.modifile(
     "data/shaders/post_final.frag",
     [[overlay_color_blindness.a * edge_dist*edge_dist * 40.0]],
     [[overlay_color_blindness.a * edge_dist*edge_dist * 2.0]]
