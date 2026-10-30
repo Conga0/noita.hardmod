@@ -307,4 +307,41 @@ function utils.TriggerScriptDelayed(entity_id, script_path, delay)
 	})
 end
 
+---Changes an entity's HP/max HP in DamageModelComponent. Values are 1/25
+---@param eid entity_id Entity's ID
+---@param hp integer? New HP (if nil and max_hp is present, will keep the entity's old HP but cap it)
+---@param max_hp integer? New max HP (omit to not change it)
+function utils.EntitySetHp(eid, hp, max_hp)
+	local dmc = EntityGetFirstComponent(eid, "DamageModelComponent")
+	if not dmc then return end
+
+	if not hp and max_hp then
+		hp = math.min(tonumber(ComponentGetValue2(dmc, "hp")) or max_hp, max_hp)
+	end
+
+	if max_hp then ComponentSetValue2(dmc, "max_hp", max_hp) end
+	if hp then ComponentSetValue2(dmc, "hp", hp) end
+end
+
+---Returns an entity's HP and max HP from DamageModelComponent
+---@param eid entity_id Entity's ID
+---@return { hp: integer, max_hp: int }? hp Entity's health; values are 1/25
+function utils.EntityGetHp(eid)
+	local dmc = EntityGetFirstComponent(eid, "DamageModelComponent")
+	if not dmc then return end
+	return {
+		hp = tonumber(ComponentGetValue2(dmc, "hp")),
+		max_hp = tonumber(ComponentGetValue2(dmc, "max_hp")),
+	}
+end
+
+---Adds `increment` to the entity's HP in DamageModelComponent
+---@param eid entity_id Entity's ID
+---@param increment integer Value to add (pass negative to reduce HP instead); value is 1/25
+function utils.EntityAddHp(eid, increment)
+	local hp = utils.EntityGetHp(eid)
+	if not hp then return end
+	utils.EntitySetHp(eid, hp.hp + increment)
+end
+
 return utils
