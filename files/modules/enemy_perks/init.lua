@@ -9,7 +9,7 @@ ModLuaFileAppend("data/scripts/perks/perk_reflect.lua", curr_path.."add_perks_to
 local logging = false
 
 
-local base_perk_chance = .2
+local base_perk_chance = .15
 
 
 local biome_levels = {
