@@ -4,6 +4,9 @@ MaxBiomeModifierCount = { default = 5 }
 BiomeModifierChances = { default = 0.3 }
 
 PatchModifiers({
+	FREEZING = {
+		probability = 0.4
+	},
 	FOG_OF_WAR_REAPPEARS = {
 		ui_name = "$hardmod_biomemodifier_darkness",
 		probability = 0,
@@ -24,6 +27,7 @@ AddBiomeGroup({ "sandcave" })
 AddBiomeGroup({ "fungiforest" })
 AddBiomeGroup({ "meat" })
 
-ForcedBiomeModifiers.wandcave = "FOG_OF_WAR_REAPPEARS"
-ForcedBiomeModifiers.wizardcave = "FOG_OF_WAR_REAPPEARS"
-ForcedBiomeModifiers.alchemist_secret = "FOG_OF_WAR_REAPPEARS"
+ForcedBiomeModifiers.wandcave = { id = "FOG_OF_WAR_REAPPEARS", prob = 0.5 }
+ForcedBiomeModifiers.wizardcave = { id = "FOG_OF_WAR_REAPPEARS", prob = 0.5 }
+ForcedBiomeModifiers.alchemist_secret = { id = "FOG_OF_WAR_REAPPEARS", prob = 0.5 }
+ForcedBiomeModifiers.snowcave = "FREEZING"
