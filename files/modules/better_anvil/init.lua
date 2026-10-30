@@ -1,3 +1,4 @@
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua")---@type utils
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua")---@type nxml
 local root = "mods/noita.hardmod/files/modules/better_anvil"
 
