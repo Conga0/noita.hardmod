@@ -13,7 +13,15 @@ function init(eid)
 	ComponentSetValue2(self, "mNextExecutionTime", GameGetFrameNum() + 1)
 end
 
-if entity_id == root then return end
+if entity_id == root then
+	local x,y = EntityGetTransform(entity_id)
+	for _,potential_orphan in ipairs(EntityGetInRadiusWithTag(x, y, 50, "perk_entity")) do
+		if potential_orphan == EntityGetRootEntity(potential_orphan) then
+			EntityKill(potential_orphan) --No orphan shall be spared.
+		end
+	end
+	EntityKill(entity_id)
+end
 
 local enemy_perks_indexed = dofile_once("mods/noita.hardmod/files/modules/enemy_perks/enemy_perks_index.lua")
 

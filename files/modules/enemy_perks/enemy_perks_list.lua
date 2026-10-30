@@ -291,8 +291,8 @@ local perks = {
 		id = "CURSER",
 		name = "$hardmod_eperk_curser_name",
 		description = "$hardmod_eperk_curser_desc",
-		weight = 4000,
-		priority = 4,
+		weight = 4,
+		priority = 7,
 		max = 1,
 		condition = function(self, data)
 			return enemy_is_ranged(self, data)
@@ -324,9 +324,9 @@ local perks = {
 		id = "RECYCLE_HEALTH",
 		name = "$hardmod_eperk_recycle_health_name",
 		description = "$hardmod_eperk_recycle_health_desc",
-		weight = 10,
-		priority = 0,
-		max = 0,
+		weight = 9,
+		priority = 6,
+		max = 1,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_damage_received = "mods/noita.hardmod/files/modules/enemy_perks/scripts/recycle_health.lua",
@@ -337,7 +337,7 @@ local perks = {
 		id = "WET_AURA",
 		name = "$hardmod_eperk_wet_aura_name",
 		description = "$hardmod_eperk_wet_aura_desc",
-		weight = 7,
+		weight = 6,
 		priority = 0,
 		max = 1,
 		func = function(self, entity_id, data)
@@ -349,7 +349,7 @@ local perks = {
 		name = "$hardmod_eperk_blackhole_death_name",
 		description = "$hardmod_eperk_blackhole_death_desc",
 		weight = 2,
-		priority = 0,
+		priority = 15,
 		max = 1,
 		condition = function(self, data) return data.level > 6 end,
 		func = function(self, entity_id, data)
@@ -363,7 +363,7 @@ local perks = {
 		name = "$hardmod_eperk_skullflys_name",
 		description = "$hardmod_eperk_skullflys_desc",
 		weight = 0.5,
-		priority = 0,
+		priority = 9,
 		max = 3,
 		condition = function(self, data) return data.level > 7 or data.biome == "$biome_crypt" end,
 		func = function(self, entity_id, data)
@@ -372,7 +372,7 @@ local perks = {
 			})
 		end
 	},
-	{ -- TODO: Someone please nerf this??
+	{
 		id = "DAMAGE_BUFFER",
 		name = "$hardmod_eperk_damage_buffer_name",
 		description = "$hardmod_eperk_damage_buffer_desc",
@@ -413,9 +413,9 @@ local perks = {
 		name = "$hardmod_eperk_polymorph_blood_name",
 		description = "$hardmod_eperk_polymorph_blood_desc",
 		weight = .1,
-		priority = 3,
+		priority = 15,
 		max = 1,
-		condition = function(self, data) return data.level > 7 and not data.blood end,
+		condition = function(self, data) return data.level > 5 and not data.blood end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_POLYMORPH", false)
 

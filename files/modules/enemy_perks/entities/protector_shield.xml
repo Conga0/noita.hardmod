@@ -1,4 +1,4 @@
-<Entity tags="energy_shield,d2d_mobile_fortress_shield">
+<Entity tags="energy_shield,d2d_mobile_fortress_shield,perk_entity">
 
 	<InheritTransformComponent>
 		<Transform 

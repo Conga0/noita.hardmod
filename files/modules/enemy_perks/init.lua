@@ -68,6 +68,13 @@ for biome,data in pairs(biome_levels) do
 	end
 end
 
+hooks.player_spawned = function()
+	for _,perk in ipairs(enemy_perks) do
+		RemoveFlagPersistent("perk_picked_enemyperk_"..perk.id:lower())
+		GameAddFlagRun("new_perk_picked_enemyperk_"..perk.id:lower())
+	end
+end and nil --comment `and nil` to run above func
+
 local function update_perk_unlock_states()
 	for _,perk in ipairs(enemy_perks) do
 		perk.locked = not HasFlagPersistent("perk_picked_enemyperk_"..perk.id:lower())
@@ -78,8 +85,6 @@ hooks.mod_post_init = function() --run later in case of appends
 	enemy_perks = dofile_once(curr_path.."enemy_perks_list.lua")
 	for _,perk in ipairs(enemy_perks) do
 		enemy_perks_indexed[perk.id] = perk
-		RemoveFlagPersistent("perk_picked_enemyperk_"..perk.id:lower())
-		--GameAddFlagRun("new_perk_picked_enemyperk_"..perk.id:lower())
 	end
 
 	update_perk_unlock_states()
@@ -185,7 +190,7 @@ hooks.new_eid = function(entity_id)
 			num = num + Random(biome_data.range[1], biome_data.range[2])
 		end
 		--if not biome_levels[biome] then print(biome) end --use to find biomes not yet assigned levels
-		num = 10
+		--num = 10
 		local data = {
 			x = x, y = y,
 			biome = biome,
