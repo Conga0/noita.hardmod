@@ -4,6 +4,9 @@ MaxBiomeModifierCount = { default = 5 }
 BiomeModifierChances = { default = 0.3 }
 
 PatchModifiers({
+	MOIST = {
+		remove_from_biomes = { "excavationsite" },
+	},
 	CONDUCTIVE = {
 		probability = 0.08,
 		remove_from_biomes = { "coalmine", "snowcastle", "wizardcave" },
