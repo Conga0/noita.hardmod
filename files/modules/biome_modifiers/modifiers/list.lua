@@ -17,8 +17,9 @@ PatchModifiers({
 	FOG_OF_WAR_CLEAR_AT_PLAYER = {
 		ui_name = "$hardmod_biomemodifier_gloomy"
 	},
-	OMINOUS = { probability = 0.03 },
-	PROTECTION_FIELDS = { probability = 0.032 },
+	INVISIBILITY = { probability = 0.05 },
+	PROTECTION_FIELDS = { probability = 0.03 },
+	OMINOUS = { probability = 0.02 },
 })
 
 AddBiomeGroup({ "wizardcave", "alchemist_secret" })
