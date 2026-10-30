@@ -39,6 +39,36 @@ for file in nxml.edit_file("data/entities/animals/boss_centipede/sampo.xml") do
   })
 end
 
--- ModLuaFileAppend("data/entities/animals/boss_centipede/sampo_init.lua", "mods/noita.hardmod/files/modules/ending/appends/sampo_init.lua")
+ModLuaFileAppend("data/scripts/biomes/boss_arena.lua", "mods/noita.hardmod/files/modules/ending/appends/boss_arena.lua")
+
+-- I fucking hate this shit why does it not work???????????????
+-- local function patch_material_hint()
+--   for file in nxml.edit_file("data/biome/_pixel_scenes.xml") do
+--     local root = "mods/noita.hardmod/files/modules/ending/gfx/"
+
+--     local scenes = file:first_of("mBufferedPixelScenes")
+--     if not scenes then return end
+    
+--     scenes:create_child("PixelScene", {
+--       DEBUG_RELOAD_ME = false, clean_area_before = true,
+--       skip_biome_checks = true, skip_edge_textures = false,
+--       material_filename = root.."ending_materials_hint.png",
+--       background_filename = "",
+--       colors_filename = "",
+--       pos_x = 3430, pos_y = 13103,
+--     })
+
+--     scenes:create_child("PixelScene", {
+--       DEBUG_RELOAD_ME = false, clean_area_before = true,
+--       skip_biome_checks = true, skip_edge_textures = false,
+--       material_filename = root.."ending_materials_hint_right.png",
+--       background_filename = "",
+--       colors_filename = "",
+--       pos_x = 3430 + 160, pos_y = 13103,
+--     })
+--   end
+-- end
+
+-- patch_material_hint()
 
 return {}
