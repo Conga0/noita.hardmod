@@ -56,7 +56,7 @@ local splashes = {
 	"No Fun Allowed",
 	"0% cheese!",
 	"Fair Mod 2: This Time It's Actually Fair",
-	"Fixes NB-13, NB-25, NB-55, NB-103 and NB-121",
+	"Fixes NB-13, NB-25 and NB-103",
 	"Restored 5wand!",
 	"exploding u :3",
 	"noita.harmod",
