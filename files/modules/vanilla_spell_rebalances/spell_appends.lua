@@ -35,6 +35,18 @@ local reworked_actions = {
       add_projectile("data/entities/projectiles/deck/freeze_field.xml")
 			c.fire_rate_wait = c.fire_rate_wait + 15
     end
+  },
+  ["EXPLOSIVE_PROJECTILE"] = {
+	mana = 70,
+	action = function ()
+		c.explosion_radius = c.explosion_radius + 7.5
+		c.damage_explosion_add = c.damage_explosion_add + 0.2
+		c.fire_rate_wait = c.fire_rate_wait + 40
+		c.speed_multiplier = c.speed_multiplier * 0.75
+		shot_effects.recoil_knockback = shot_effects.recoil_knockback + 30.0
+
+		draw_actions(1, true)
+	end
   }
 }
 
