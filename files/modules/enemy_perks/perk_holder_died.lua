@@ -14,8 +14,10 @@ function death(damage_type_bit_field, damage_message, entity_thats_responsible, 
 							end
 						end
 						if new_perk_discovered then GameAddFlagRun("hardmod_new_enemy_perk_discovered") end
+						break
 					end
 				end
+				break
 			end
 		end
 	end

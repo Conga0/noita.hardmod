@@ -11,13 +11,6 @@ local root = EntityGetRootEntity(entity_id)
 function init(eid)
 	local self = GetUpdatedComponentID()
 	ComponentSetValue2(self, "mNextExecutionTime", GameGetFrameNum() + 1)
-
-	for _,luacomp in ipairs(EntityGetComponent(root, "LuaComponent") or {}) do
-		if ComponentGetValue2(luacomp, "script_death") == "mods/noita.hardmod/files/modules/enemy_perks/perk_holder_died.lua" then return end
-	end
-	EntityAddComponent2(root, "LuaComponent", {
-		script_death = "mods/noita.hardmod/files/modules/enemy_perks/perk_holder_died.lua"
-	})
 end
 
 if entity_id == root then return end

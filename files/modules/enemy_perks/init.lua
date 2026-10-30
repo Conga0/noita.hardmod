@@ -113,6 +113,16 @@ local function give_enemy_perks(entity_id, num, data)
 		EntityAddChild(entity_id, enemy_perks_handler)
 	end
 
+	local has_death_handler
+	for _,luacomp in ipairs(EntityGetComponent(entity_id, "LuaComponent") or {}) do
+		if ComponentGetValue2(luacomp, "script_death") == "mods/noita.hardmod/files/modules/enemy_perks/perk_holder_died.lua" then has_death_handler = true break end
+	end
+	if not has_death_handler then
+		EntityAddComponent2(entity_id, "LuaComponent", {
+			script_death = "mods/noita.hardmod/files/modules/enemy_perks/perk_holder_died.lua"
+		})
+	end
+
 	local already_held_perks = {}
 	local how_many_of_each_perk = {}
 	local enemy_perk_data
