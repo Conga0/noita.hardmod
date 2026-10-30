@@ -7,52 +7,47 @@ last_active_biome = "_EMPTY_"
 get_modifier_mappings()
 GetBiomeTable(biomes)
 
-local function get_effect(player)
-  local effect = EntityGetAllChildren(player, "hardmod_biomemodifier_status")
-  if not effect or #effect < 1 then return nil end
-  return effect[1]
-end
-
 function biome_entered(biome_name)
-  local player = GetUpdatedEntityID()
-  local effect = get_effect(player)
+	local player = GetUpdatedEntityID()
 
-  if not effect then
-    print_error("Missing biome modifier status entity!!")
-    return
-  end
+	if last_active_biome == biome_name then return end
+	last_active_biome = biome_name
 
-  if last_active_biome == biome_name then return end
-  last_active_biome = biome_name
+	local effects = EntityGetAllChildren(player, "hardmod_biomemodifier_status") or {}
+	for _,effect in pairs(effects) do EntityKill(effect) end
 
-  local icon = EntityGetFirstComponentIncludingDisabled(effect, "UIIconComponent")
-  local biome_id = biome_ui_names[biome_name]
-  local modifiers = BiomesWithModifiers[biome_id]
+	local biome_id = biome_ui_names[biome_name]
+	local modifiers = BiomesWithModifiers[biome_id]
 
-  if biome_name == "_EMPTY_" or not biome_id or not modifiers or #modifiers < 1 then
-    if icon then EntityRemoveComponent(effect, icon) end
-    return
-  end
+	if biome_name == "_EMPTY_" or not biome_id or not modifiers or #modifiers < 1 then
+		return
+	end
 
-  local lines = {}
-  for _,modifier in pairs(modifiers) do
-    local name = modifier.ui_name or ("$hardmod_biomemodifier_"..string.lower(modifier.id))
-    table.insert(lines, GameTextGetTranslatedOrNot(name))
-  end
+	local root = "mods/noita.hardmod/files/modules/biome_modifiers/"
 
-  local list = table.concat(lines, "\n")
+	for _,modifier in pairs(modifiers) do
+		local effect = LoadGameEffectEntityTo(player, root.."entity/status_effect.xml")
 
-  if not icon then
-    icon = EntityAddComponent2(effect, "UIIconComponent", {
-      _enabled = true,
-      name = " ",
-      description = " ",
-      icon_sprite_file = "data/ui_gfx/status_indicators/ingestion_freezing.png"
-    })
-  end
+		local icon = modifier.status_icon or (root.."gfx/status_effect/"..string.lower(modifier.id)..".png")
+		if not ModDoesFileExist(icon) then
+			icon = root.."gfx/status_effect/gravity_fields.png"
+		end
 
-  ComponentSetValue2(
-    icon, "description",
-    GameTextGet("$hardmod_biomemodifier_status_desc").."\n"..list
-  )
+		local name = GameTextGetTranslatedOrNot(
+			modifier.ui_name
+			or ("$hardmod_biomemodifier_name_"..string.lower(modifier.id))
+		)
+
+		local description = (
+			GameTextGetTranslatedOrNot(modifier.ui_description)
+			.. "\n" .. GameTextGet("$hardmod_biomemodifier_status")
+		)
+
+		EntityAddComponent2(effect, "UIIconComponent", {
+			_enabled = true,
+			name = name .. " ",
+			description = description,
+			icon_sprite_file = icon
+		})
+	end
 end

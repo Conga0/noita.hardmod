@@ -10,6 +10,5 @@ return {
       script_biome_entered = "mods/noita.hardmod/files/modules/biome_modifiers/biome_entered.lua",
       execute_every_n_frame = -1
     })
-    LoadGameEffectEntityTo(player, "mods/noita.hardmod/files/modules/biome_modifiers/entity/status_effect.xml")
   end
 }
