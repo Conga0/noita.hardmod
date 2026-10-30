@@ -70,7 +70,7 @@ end
 
 local function update_perk_unlock_states()
 	for _,perk in ipairs(enemy_perks) do
-		perk.locked = not HasFlagPersistent("perk_picked_enemyperk_hardmod_"..perk.id:lower())
+		perk.locked = not HasFlagPersistent("perk_picked_enemyperk_"..perk.id:lower())
 	end
 end
 
@@ -78,6 +78,8 @@ hooks.mod_post_init = function() --run later in case of appends
 	enemy_perks = dofile_once(curr_path.."enemy_perks_list.lua")
 	for _,perk in ipairs(enemy_perks) do
 		enemy_perks_indexed[perk.id] = perk
+		RemoveFlagPersistent("perk_picked_enemyperk_"..perk.id:lower())
+		--GameAddFlagRun("new_perk_picked_enemyperk_"..perk.id:lower())
 	end
 
 	update_perk_unlock_states()
@@ -87,7 +89,7 @@ hooks.world_init = function()
 	SetRandomSeed(1337, -6967)
 end
 
-local function give_enemy_perks(entity_id, num)
+local function give_enemy_perks(entity_id, num, data)
 	num = num or 1
 	if not (num > 0) then return end
 
@@ -127,17 +129,9 @@ local function give_enemy_perks(entity_id, num)
 
 	end
 
-	local biome = BiomeMapGetName(x, y)
-	local data = {
-		x = x, y = y,
-		biome = biome,
-		level = (biome_levels[biome] or biome_levels.default_biome_data).level,
-		target_enemy = entity_id,
-		already_held_perks = already_held_perks,
-		how_many_of_each_perk = how_many_of_each_perk,
-		player = _g.player,
-		player_poly_identity = _g.player_poly_identity,
-	}
+	data.already_held_perks = already_held_perks
+	data.how_many_of_each_perk = how_many_of_each_perk
+
 	for i=1, num do
 		local perk = utils.ConditionalRandomFromTable(enemy_perks, data)
 		if not perk then return end
@@ -163,8 +157,11 @@ hooks.new_eid = function(entity_id)
 		if biome_data.custom_func then
 			num = biome_data:custom_func(entity_id) or num
 		end
+		local level = biome_data.level
+			+ (tonumber(SessionNumbersGetValue("NEW_GAME_PLUS_COUNT")) or 0) -- + NG+ iteration
+			+ (GetParallelWorldPosition(x, y) ~= 0 and 3 or 0) -- +3 if in a PW
 		if biome_data.do_recursive_roll ~= false then
-			for _=1, biome_data.level do
+			for _=1, level do
 				local function plus_one_perk()
 					if Random() <= base_perk_chance then
 						num = num + 1
@@ -178,8 +175,16 @@ hooks.new_eid = function(entity_id)
 			num = num + Random(biome_data.range[1], biome_data.range[2])
 		end
 		--if not biome_levels[biome] then print(biome) end --use to find biomes not yet assigned levels
-		--num = Random(0, 10)
-		give_enemy_perks(entity_id, num)
+		num = 10
+		local data = {
+			x = x, y = y,
+			biome = biome,
+			level = level,
+			target_enemy = entity_id,
+			player = _g.player,
+			player_poly_identity = _g.player_poly_identity,
+		}
+		give_enemy_perks(entity_id, num, data)
 	end
 end
 

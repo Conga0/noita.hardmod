@@ -1,3 +1,5 @@
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
+
 ---@class enemy_perk
 ---@field id string string ID
 ---@field name string string name (viewable in progress)
@@ -97,7 +99,7 @@ local perks = {
 		id = "PROTECTOR",
 		name = "$hardmod_eperk_protector_name",
 		description = "$hardmod_eperk_protector_desc",
-		weight = 3,
+		weight = 10,
 		max = 1,
 		condition = function(self, data)
 			local dmg_comp = EntityGetFirstComponentIncludingDisabled( data.target_enemy, "DamageModelComponent" )
@@ -134,7 +136,7 @@ local perks = {
 		id = "DRY_SPELL",
 		name = "$hardmod_eperk_dry_spell_name",
 		description = "$hardmod_eperk_dry_spell_desc",
-		weight = 2,
+		weight = 7,
 		max = 1,
 		func = function(self, entity_id, data)
 			local x, y = EntityGetTransform(entity_id)
@@ -145,7 +147,7 @@ local perks = {
 		id = "THUNDERLORD",
 		name = "$hardmod_eperk_thunderlord_name",
 		description = "$hardmod_eperk_thunderlord_desc",
-		weight = 1,
+		weight = 4,
 		priority = 7,
 		max = 1,
 		condition = enemy_is_ranged,
@@ -161,7 +163,7 @@ local perks = {
 		id = "PYRELORD",
 		name = "$hardmod_eperk_pyrelord_name",
 		description = "$hardmod_eperk_pyrelord_desc",
-		weight = 3,
+		weight = 8,
 		max = 1,
 		condition = function(self, data)
 			local comp = EntityGetFirstComponentIncludingDisabled(data.target_enemy, "AnimalAIComponent")
@@ -181,7 +183,7 @@ local perks = {
 		id = "VIGOUR",
 		name = "$hardmod_eperk_vigour_name",
 		description = "$hardmod_eperk_vigour_desc",
-		weight = 1,
+		weight = 2,
 		priority = 15,
 		max = 1,
 		-- condition = function(self, data)
@@ -200,7 +202,7 @@ local perks = {
 		id = "MAGIC_RESISTANCE",
 		name = "$hardmod_eperk_magic_resistance_name",
 		description = "$hardmod_eperk_magic_resistance_desc",
-		weight = 3,
+		weight = 4,
 		func = function(self, entity_id, data)
 			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
 			if not dmc then return end
@@ -236,7 +238,7 @@ local perks = {
 		id = "EXTRA_HP",
 		name = "$hardmod_eperk_extra_hp_name",
 		description = "$hardmod_eperk_extra_hp_desc",
-		weight = 1,
+		weight = 6,
 		func = function(self, entity_id, data)
 			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
 			if not dmc then return end
@@ -289,11 +291,11 @@ local perks = {
 		id = "CURSER",
 		name = "$hardmod_eperk_curser_name",
 		description = "$hardmod_eperk_curser_desc",
-		weight = 1,
+		weight = 4000,
 		priority = 4,
 		max = 1,
 		condition = function(self, data)
-			return enemy_is_ranged(self, data) and data.level > 3
+			return enemy_is_ranged(self, data)
 		end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
@@ -322,7 +324,7 @@ local perks = {
 		id = "RECYCLE_HEALTH",
 		name = "$hardmod_eperk_recycle_health_name",
 		description = "$hardmod_eperk_recycle_health_desc",
-		weight = 2,
+		weight = 10,
 		priority = 0,
 		max = 0,
 		func = function(self, entity_id, data)
@@ -335,7 +337,7 @@ local perks = {
 		id = "WET_AURA",
 		name = "$hardmod_eperk_wet_aura_name",
 		description = "$hardmod_eperk_wet_aura_desc",
-		weight = 5,
+		weight = 7,
 		priority = 0,
 		max = 1,
 		func = function(self, entity_id, data)
@@ -346,7 +348,7 @@ local perks = {
 		id = "BLACKHOLE_DEATH",
 		name = "$hardmod_eperk_blackhole_death_name",
 		description = "$hardmod_eperk_blackhole_death_desc",
-		weight = 0.1,
+		weight = 2,
 		priority = 0,
 		max = 1,
 		condition = function(self, data) return data.level > 6 end,
@@ -360,12 +362,11 @@ local perks = {
 		id = "SKULLFLYS",
 		name = "$hardmod_eperk_skullflys_name",
 		description = "$hardmod_eperk_skullflys_desc",
-		weight = 0.1,
+		weight = 0.5,
 		priority = 0,
 		max = 3,
-		condition = function(self, data) return data.level > 4 end,
+		condition = function(self, data) return data.level > 7 or data.biome == "$biome_crypt" end,
 		func = function(self, entity_id, data)
-			-- I made them spawn small skullflys instead, that was way too much
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = "mods/noita.hardmod/files/modules/enemy_perks/scripts/add_skullflys.lua"
 			})
@@ -375,13 +376,65 @@ local perks = {
 		id = "DAMAGE_BUFFER",
 		name = "$hardmod_eperk_damage_buffer_name",
 		description = "$hardmod_eperk_damage_buffer_desc",
-		weight = 0.1,
+		weight = 6,
 		priority = 0,
 		max = 1,
 		condition = function(self, data) return data.level > 3 end,
 		func = function(self, entity_id, data)
 			EntityAddChild(entity_id, EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/entities/damage_buffer.xml", data.x, data.y))
 		end
+	},
+	{
+		id = "EXPLOSION_IMMUNITY",
+		name = "$hardmod_eperk_explosion_immunity_name",
+		description = "$hardmod_eperk_explosion_immunity_desc",
+		weight = 5,
+		priority = 3,
+		max = 1,
+		condition = function(self, data) return GameGetGameEffectCount(data.target_enemy, "PROTECTION_EXPLOSION") == 0 end,
+		func = function(self, entity_id, data)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_EXPLOSION", false)
+		end
+	},
+	{
+		id = "POLYMORPH_IMMUNITY",
+		name = "$hardmod_eperk_polymorph_immunity_name",
+		description = "$hardmod_eperk_polymorph_immunity_desc",
+		weight = 5,
+		priority = 3,
+		max = 1,
+		condition = function(self, data) return GameGetGameEffectCount(data.target_enemy, "PROTECTION_POLYMORPH") == 0 end,
+		func = function(self, entity_id, data)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_POLYMORPH", false)
+		end,
+	},
+	{
+		id = "POLYMORPH_BLOOD",
+		name = "$hardmod_eperk_polymorph_blood_name",
+		description = "$hardmod_eperk_polymorph_blood_desc",
+		weight = .1,
+		priority = 3,
+		max = 1,
+		condition = function(self, data) return data.level > 7 and not data.blood end,
+		func = function(self, entity_id, data)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_POLYMORPH", false)
+
+			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
+			if not dmc then return end
+
+			local blood_material
+			if HerdIdToString(utils.GetHerdID(entity_id)) == "orcs" then
+				blood_material = "magic_liquid_unstable_polymorph"
+			else
+				blood_material = Random() <= .5 and "magic_liquid_polymorph" or "magic_liquid_random_polymorph"
+			end
+
+			ComponentSetValue2(dmc, "blood_material", blood_material)
+			ComponentSetValue2(dmc, "blood_spray_material", blood_material)
+			EntitySetDamageFromMaterial(entity_id, blood_material, 0)
+
+			data.blood_perk = blood_material --do this for condition func so multiple blood perks aren't rolled
+		end,
 	},
 }
 
