@@ -15,7 +15,7 @@
 			damage="0"
 			camera_shake="0.5" 
 			explosion_radius="2" 
-			explosion_sprite="mods/D2DContentPack/files/gfx/projectiles_gfx/bolt_catcher.xml"
+			explosion_sprite="mods/noita.hardmod/files/modules/trial_perks/gfx/spells/parry.xml"
 			explosion_sprite_lifetime="0" 
 			create_cell_probability="0" 
 			hole_destroy_liquid="0"

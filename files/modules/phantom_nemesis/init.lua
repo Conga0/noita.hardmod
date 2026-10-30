@@ -22,6 +22,9 @@ hooks.post_update = function ()
 
     local cam_x,cam_y = GameGetCameraBounds()
     local currbiome = BiomeMapGetName( cam_x, cam_y )
+    local last_frame_entered_new_biome = tonumber(GlobalsGetValue("felceis_last_biome_frame","0"))
+    local entered_new_biome_graceperiod = 60 * 45 --45 second safeguard against Ira when entering a new biome
+    GlobalsSetValue("felcesis_last_biome",currbiome)
     local flag = table.concat({"felcesis_",currbiome,"_visited"})
     local total_banishments_in_current_biome = tonumber(GlobalsGetValue(table.concat({"felcesis_",currbiome,"_count"}),"0"))
 
@@ -43,12 +46,14 @@ hooks.post_update = function ()
 
     if ( GameHasFlagRun( flag ) == false ) then
         GameAddFlagRun( flag )
+        GlobalsSetValue("felceis_last_biome_frame",tostring(current_frame))
+        last_frame_entered_new_biome = current_frame
         GlobalsSetValue("felcesis_biomes_visited",tostring(biomes_visited+1))
     end
 
     --GamePrint(table.concat({current_frame,", ",last_felcesis_possession_attempt,", ",felcesis_summon_cooldown}))
 
-    if current_frame > felcesis_summon_lastdeath_time + felcesis_summon_death_cooldown and current_frame > last_felcesis_possession_attempt + felcesis_summon_pursuit_cooldown then
+    if current_frame > felcesis_summon_lastdeath_time + felcesis_summon_death_cooldown and current_frame > last_felcesis_possession_attempt + felcesis_summon_pursuit_cooldown and current_frame + entered_new_biome_graceperiod > last_frame_entered_new_biome then
         local found, id, targ_x, targ_y = MinibossCreator.FindPossessionTarget(biomes_visited)
         if found then
             local miniboss_stats = MinibossCreator.CalculateMinibossPower(biomes_visited)

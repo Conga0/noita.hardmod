@@ -1,9 +1,37 @@
 local hooks = {}
 local _g = GLOBAL_DATA
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua")
 
 local curr_path = "mods/noita.hardmod/files/modules/enemy_perks/"
 
 ModLuaFileAppend("data/scripts/perks/perk_reflect.lua", curr_path.."add_perks_to_progress.lua")
+
+local logging = false
+
+
+local base_perk_chance = .2
+
+
+local biome_levels = {
+	default_biome_data = {
+		level = 3,
+		do_recursive_roll = true,
+		--range = {0, 0},
+		--custom_func = function(self, entity_id) end --return perk num
+	},
+	["$hardmod_biomename_infested_mines"] = 1, --infested mines
+	["$biome_coalmine_alt"] = 2,
+	["$biome_excavationsite"] = 2, --coal pits
+	["$biome_fun"] = 3, --fungal caverns
+	["$biome_snowcave"] = 3, --snowy depths
+	["$biome_snowcastle"] = 4, --hiisi base
+	["$biome_rainforest"] = 5, --jungle
+	["$biome_rainforest_dark"] = 6, --lukki lair
+	["$biome_vault"] = 6,
+	["$biome_crypt"] = 7,
+
+	["$biome_liquidcave"] = 4,
+}
 
 
 local enemy_perks = {}
@@ -21,7 +49,14 @@ local icon_padding = 1 --padding between perks in the perk view
 local max_perks_per_row = 5 --max perks before breaking into a new row
 local icon_size = 16 --the xy size of the perk icons
 
-RemoveFlagPersistent("perk_picked_enemyperk_hardmod_test_perk")
+for biome,data in pairs(biome_levels) do
+	if type(data) == "number" then
+		biome_levels[biome] = {
+			level = data
+		}
+	end
+end
+
 local function update_perk_unlock_states()
 	for _,perk in ipairs(enemy_perks) do
 		perk.locked = not HasFlagPersistent("perk_picked_enemyperk_hardmod_"..perk.id:lower())
@@ -41,21 +76,9 @@ hooks.world_init = function()
 	SetRandomSeed(1337, -6967)
 end
 
-local default_level = 3
-local biome_levels = {
-	["$hardmod_biomename_infested_mines"] = 1, --infested mines
-	["$biome_excavationsite"] = 2, --coal pits
-	["$biome_fun"] = 3, --fungal caverns
-	["$biome_snowcave"] = 3, --snowy depths
-	["$biome_snowcastle"] = 4, --hiisi base
-	["$biome_rainforest"] = 5, --jungle
-	["$biome_rainforest_dark"] = 6, --lukki lair
-	["$biome_vault"] = 6,
-	["$biome_crypt"] = 7,
-}
-
 local function give_enemy_perks(entity_id, num)
 	num = num or 1
+	if not (num > 0) then return end
 
 	local x,y = EntityGetTransform(entity_id)
 	local enemy_perks_handler
@@ -91,7 +114,7 @@ local function give_enemy_perks(entity_id, num)
 		player_poly_identity = _g.player_poly_identity,
 	}
 	for i = 1, num do
-		local perk = ConditionalRandomFromTable(enemy_perks, data)
+		local perk = utils.ConditionalRandomFromTable(enemy_perks, data)
 		if not perk then return end
 		data = perk:func(entity_id, data) or data
 		already_held_perks[#already_held_perks+1] = perk.id
@@ -106,13 +129,31 @@ local function give_enemy_perks(entity_id, num)
 	end
 end
 
-
 hooks.new_eid = function(entity_id)
 	if EntityHasTag(entity_id, "enemy") and not EntityHasTag(entity_id, "hardmod_blessed") then
 		local x,y = EntityGetTransform(entity_id)
 		local biome = BiomeMapGetName(x, y)
+		local num = 0
+		local biome_data = biome_levels[biome] or biome_levels.default_biome_data
+		if biome_data.custom_func then
+			num = biome_data:custom_func(entity_id) or num
+		end
+		if biome_data.do_recursive_roll ~= false then
+			for _=1, biome_data.level do
+				local function plus_one_perk()
+					if Random() <= base_perk_chance then
+						num = num + 1
+						plus_one_perk()
+					end
+				end
+				plus_one_perk()
+			end
+		end
+		if biome_data.range then
+			num = num + Random(biome_data.range[1], biome_data.range[2])
+		end
 		--if not biome_levels[biome] then print(biome) end --use to find biomes not yet assigned levels
-		give_enemy_perks(entity_id, Random(0, biome_levels[biome] or default_level))
+		give_enemy_perks(entity_id, num)
 	end
 end
 
@@ -140,7 +181,7 @@ function hooks.post_update(frame)
 	end
 
 
-	if InputIsKeyJustDown(18) then
+	if InputIsKeyJustDown(tonumber(ModSettingGet("noita.hardmod.enemy_perk_inspect_key")) or 18) then
 		local x,y = DEBUG_GetMouseWorld()
 		selected_creature = EntityGetClosestWithTag(x, y, "hardmod_blessed")
 		local creature_x,creature_y = EntityGetTransform(selected_creature)
@@ -188,7 +229,7 @@ function hooks.post_update(frame)
 
 	local function render_perk(perk, x, y)
 		if perk.locked then GuiColorSetForNextWidget(gui, 0.3, 0.3, 0.3, 1) end
-		GuiImage(gui, new_id(), x, y, perk.icon, 1, 1, 1)
+		GuiImage(gui, new_id(), x, y, perk.sprite, 1, 1, 1)
 		--[[ this would allow you to hover the perk to see in-game and click it to pin it to your screen
 		-- But time is running short, and I would like to get this feature out there first, I lost too much time being ill for a week and a half
 		-- Sorry!!
@@ -197,7 +238,7 @@ function hooks.post_update(frame)
 			local perk_hover_info
 			if not cached_perk_hover_info[perk.id] then
 				cached_perk_hover_info[perk.id] = {
-					icon = perk.icon,
+					icon = perk.sprite,
 					name = GameTextGetTranslatedOrNot(perk.name),
 					box_size = {
 						x = edge_padding*2 + icon_size*2 + top_padding + math.max(GuiGetTextDimensions(gui, perk_hover_info.name), 48),

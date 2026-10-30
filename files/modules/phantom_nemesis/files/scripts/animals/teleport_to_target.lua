@@ -5,7 +5,7 @@ local teleportation_data = EntityGetFirstComponentIncludingDisabled(module_id,"V
 
 --Teleportation data
 local next_teleport_frame = ComponentGetValue2(teleportation_data,"value_int")
-local teleportation_cooldown = 600
+local teleportation_cooldown = 1800
 local tele_distance_from_target = 128
 local current_frame = GameGetFrameNum()
 

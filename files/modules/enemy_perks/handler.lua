@@ -1,9 +1,23 @@
+local max_icons_displayed = 4
+local y_offset_amount = 14
+local icon_buffer = 10
+
+local half_icon_buffer = icon_buffer*.5
+
+
 local entity_id = GetUpdatedEntityID()
 local root = EntityGetRootEntity(entity_id)
 
 function init(eid)
 	local self = GetUpdatedComponentID()
 	ComponentSetValue2(self, "mNextExecutionTime", GameGetFrameNum() + 1)
+
+	for _,luacomp in ipairs(EntityGetComponent(root, "LuaComponent") or {}) do
+		if ComponentGetValue2(luacomp, "script_death") == "mods/noita.hardmod/files/modules/enemy_perks/perk_holder_died.lua" then return end
+	end
+	EntityAddComponent2(root, "LuaComponent", {
+		script_death = "mods/noita.hardmod/files/modules/enemy_perks/perk_holder_died.lua"
+	})
 end
 
 if entity_id == root then return end
@@ -15,13 +29,13 @@ for _,varcomp in ipairs(EntityGetComponent(entity_id, "VariableStorageComponent"
 	if ComponentGetValue2(varcomp, "name") == "enemy_perk_data" then enemy_perk_data = varcomp break end
 end
 
---[[
+-- [[
 local function update_icons()
 	local offset_y = 0
 	for _,hitbox in ipairs(EntityGetComponent(root, "HitboxComponent") or {}) do
 		offset_y = math.max(offset_y, -ComponentGetValue2(hitbox, "aabb_min_y"))
 	end
-	offset_y = offset_y + 14
+	offset_y = offset_y + y_offset_amount
 
 	for _,spr_comp in ipairs(EntityGetComponent(entity_id, "SpriteComponent") or {}) do
 		EntityRemoveComponent(entity_id, spr_comp)
@@ -32,22 +46,15 @@ local function update_icons()
 		enemy_perks[#enemy_perks+1] = enemy_perks_indexed[perk_id]
 	end
 
-	local num_icons = math.min(#enemy_perks, 3)
+	local num_icons = math.min(#enemy_perks, max_icons_displayed)
 	for i=1,num_icons do
-		local sprite = (i == 3 and #enemy_perks > 3) and "mods/noita.hardmod/files/modules/enemy_perks/expand.png" or enemy_perks[i].icon
+		local sprite = (i == max_icons_displayed and #enemy_perks > max_icons_displayed) and "mods/noita.hardmod/files/modules/enemy_perks/perk_icons/expand.png" or enemy_perks[i].icon
 		EntityAddComponent2(entity_id, "SpriteComponent", {
-			offset_x = (i*5-num_icons*2.5),
+			offset_x = -((i-1)*icon_buffer-num_icons*half_icon_buffer),
 			offset_y = offset_y,
 			image_file = sprite,
 		})
 	end
 end--]]
 
-for _,luacomp in ipairs(EntityGetComponent(root, "LuaComponent") or {}) do
-	if ComponentGetValue2(luacomp, "script_death") == "mods/noita.hardmod/files/modules/enemy_perks/perk_holder_died.lua" then return end
-end
-EntityAddComponent2(root, "LuaComponent", {
-	script_death = "mods/noita.hardmod/files/modules/enemy_perks/perk_holder_died.lua"
-})
-
---update_icons()
+update_icons()

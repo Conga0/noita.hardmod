@@ -2,18 +2,18 @@
 
 local new_perks = {
   {
-    id = "HARDMOD_TINKER_AT_PEDESTALS",
-    ui_name = "$hardmod_perk_tinker_at_pedestals_name",
-    ui_description = "$hardmod_perk_tinker_at_pedestals_desc",
-    ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals_016.png",
-    perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals.png",
-    stackable = STACKABLE_NO,
-    one_off_effect = false,
-    usable_by_enemies = false,
-    func = function(entity_perk_item, entity_who_picked, item_name, pickup_count)
-      if pickup_count > 1 then return end
-      EntityAddChild(entity_who_picked, EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_tinker_at_pedestals.xml"))
-    end
+	id = "HARDMOD_TINKER_AT_PEDESTALS",
+	ui_name = "$hardmod_perk_tinker_at_pedestals_name",
+	ui_description = "$hardmod_perk_tinker_at_pedestals_desc",
+	ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals_016.png",
+	perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals.png",
+	stackable = STACKABLE_NO,
+	one_off_effect = false,
+	usable_by_enemies = false,
+	func = function(entity_perk_item, entity_who_picked, item_name, pickup_count)
+	  if pickup_count > 1 then return end
+	  EntityAddChild(entity_who_picked, EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_tinker_at_pedestals.xml"))
+	end
 	},
 	{
 		id = "HARDMOD_ITEM_IMMUNITIES",
@@ -25,10 +25,112 @@ local new_perks = {
 		one_off_effect = false,
 		usable_by_enemies = false,
 		func = function(perk, player, name, count)
-      if count > 1 then return end
+	  if count > 1 then return end
 			EntityAddChild(player, EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_item_immunities.xml"))
 		end
 	},
+	{ --Nabbed from Apotheosis
+		id = "HARDMOD_OVERSIZED_SHIELD",
+		id_append = "SHIELD",
+		ui_name = "$hardmod_perk_oversized_shield_name",
+		ui_description = "$hardmod_perk_oversized_shield_desc",
+		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/shield_oversized.png",
+		perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/shield_oversized_ui.png",
+		stackable = STACKABLE_YES,
+		stackable_how_often_reappears = 10,
+		stackable_maximum = 5,
+		max_in_perk_pool = 2,
+		usable_by_enemies = true,
+		func = function( entity_perk_item, entity_who_picked, item_name, pickup_count )
+			local x,y = EntityGetTransform( entity_who_picked )
+			local child_id = EntityLoad( "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/perks/shield_oversized.xml", x, y )
+
+			if ModIsEnabled("quant.ew") then
+				GlobalsSetValue("PERK_SHIELD_OVERSIZED_COUNT", tostring(pickup_count-1))
+			end
+			local shield_num = tonumber( GlobalsGetValue( "PERK_SHIELD_OVERSIZED_COUNT", "0" ) )
+			local shield_radius = 75 + shield_num * 3.0
+			local charge_speed = math.max( 0.01 - shield_num * 0.05, 0.02 )
+			shield_num = shield_num + 1
+			GlobalsSetValue( "PERK_SHIELD_OVERSIZED_COUNT", tostring( shield_num ) )
+
+			local comps = EntityGetComponent( child_id, "EnergyShieldComponent" )
+			if( comps ~= nil ) then
+				for i,comp in ipairs( comps ) do
+					ComponentSetValue2( comp, "radius", shield_radius )
+					ComponentSetValue2( comp, "recharge_speed", charge_speed )
+				end
+			end
+
+			comps = EntityGetComponent( child_id, "ParticleEmitterComponent" )
+			if( comps ~= nil ) then
+				for i,comp in ipairs( comps ) do
+					local minradius,maxradius = ComponentGetValue2( comp, "area_circle_radius" )
+
+					if ( minradius ~= nil ) and ( maxradius ~= nil ) then
+						if ( minradius == 0 ) then
+							ComponentSetValue2( comp, "area_circle_radius", 0, shield_radius )
+						elseif ( minradius == 10 ) then
+							ComponentSetValue2( comp, "area_circle_radius", shield_radius, shield_radius )
+						end
+					end
+				end
+			end
+
+			EntityAddTag( child_id, "perk_entity" )
+			EntityAddChild( entity_who_picked, child_id )
+		end,
+		func_enemy = function( entity_perk_item, entity_who_picked )
+			local x,y = EntityGetTransform( entity_who_picked )
+			local child_id = EntityLoad( "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/shield_oversized.xml", x, y )
+			local comps = EntityGetComponent( child_id, "EnergyShieldComponent" )
+			if( comps ~= nil ) then
+				for i,comp in ipairs( comps ) do
+					ComponentSetValue2( comp, "radius", 64 )
+					ComponentSetValue2( comp, "recharge_speed", 0.02 )
+				end
+			end
+
+			comps = EntityGetComponent( child_id, "ParticleEmitterComponent" )
+			if( comps ~= nil ) then
+				for i,comp in ipairs( comps ) do
+					local minradius,maxradius = ComponentGetValue2( comp, "area_circle_radius" )
+
+					if ( minradius ~= nil ) and ( maxradius ~= nil ) then
+						if ( minradius == 0 ) then
+							ComponentSetValue2( comp, "area_circle_radius", 0, 64 )
+						elseif ( minradius == 10 ) then
+							ComponentSetValue2( comp, "area_circle_radius", 64, 64 )
+						end
+					end
+				end
+			end
+
+			EntityAddChild( entity_who_picked, child_id )
+		end,
+		_remove = function( entity_who_picked )
+			local shield_num = tonumber( GlobalsGetValue( "PERK_SHIELD_OVERSIZED_COUNT", "0" ) ) - 1
+			GlobalsSetValue( "PERK_SHIELD_OVERSIZED_COUNT", tostring( shield_num ) )
+
+			local children = EntityGetAllChildren(entity_who_picked) or {}
+			local largest_radius = 0
+			local largest_shield = 0
+			for k=1,#children do
+				if EntityGetName(children[k]) == "hardmod_oversized_shield" then
+					local r = ComponentGetValue2(EntityGetFirstComponentIncludingDisabled(children[k],"EnergyShieldComponent"),"radius")
+					if r > 0 then
+						largest_radius = r
+						largest_shield = children[k]
+					end
+				end
+			end
+			if largest_shield > 0 then EntityKill(largest_shield) end
+		end,
+		func_remove = function( entity_who_picked )
+			local shield_num = 0
+			GlobalsSetValue( "PERK_SHIELD_OVERSIZED_COUNT", tostring( shield_num ) )
+	end,
+	}
 }
 
 local perk_reworks = {
@@ -41,15 +143,15 @@ local perk_reworks = {
 		stackable = STACKABLE_NO,
 		one_off_effect = false,
 		usable_by_enemies = false,
-        func = function( entity_perk_item, entity_who_picked, item_name )
-            EntityAddChild( entity_who_picked, EntityLoad( "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/perks/all_seeing_eye.xml" ) )
-        end,
-        func_remove = function( entity_who_picked )
-        	local perk_entity = EntityGetAllChildren( entity_who_picked, "hardmod_all_seeing_eye_entity" )[1]
+		func = function( entity_perk_item, entity_who_picked, item_name )
+			EntityAddChild( entity_who_picked, EntityLoad( "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/perks/all_seeing_eye.xml" ) )
+		end,
+		func_remove = function( entity_who_picked )
+			local perk_entity = EntityGetAllChildren( entity_who_picked, "hardmod_all_seeing_eye_entity" )[1]
 			if perk_entity ~= nil then
 				EntityKill( perk_entity )
 			end
-        end,
+		end,
 	},
 	["SHIELD"] = { stackable_maximum = 3 },
 	["STAINLESS_ARMOUR"] = { stackable_maximum = 3 },
@@ -206,6 +308,7 @@ local perk_reworks = {
 	["EDIT_WANDS_EVERYWHERE"] = { not_in_default_perk_pool = true },
 	["NO_WAND_EDITING"] = { not_in_default_perk_pool = true },
 	["EXTRA_MONEY"] = { not_in_default_perk_pool = true },
+	["PROJECTILE_REPULSION"] = { not_in_default_perk_pool = true },
 }
 
 if perk_list ~= nil then

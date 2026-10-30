@@ -4,6 +4,9 @@ local rotatable_text = dofile_once("mods/noita.hardmod/files/modules/logo_splash
 local menu_tracker = dofile_once("mods/noita.hardmod/files/modules/logo_splash/menu_tracker.lua") ---@type menu_tracker
 local splashes = dofile_once("mods/noita.hardmod/files/modules/logo_splash/splashes.lua") ---@type string[]
 
+local year,month,day,hour,minute,second = GameGetDateAndTimeLocal()
+--math.randomseed(second + minute * hour) --seed this off smth
+
 local FONT = "data/fonts/font_pixel.xml"
 local TEXT_ANGLE = math.rad(20)
 local SCREEN_MARGIN = 4

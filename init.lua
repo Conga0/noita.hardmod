@@ -17,6 +17,7 @@ local modules = {
 	"cheeseless_triggers",
 	"logo_splash",
 	"vanilla_perk_rebalances",
+	"vanilla_spell_rebalances",
 	"vanilla_quests",
 	"vanilla_bosses",
 	--"no_more_chainsaw_wrapping", -- shit module never enable

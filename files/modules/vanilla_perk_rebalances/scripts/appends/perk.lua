@@ -1,3 +1,5 @@
+-- Currently not used
+
 local no_early_perks = {
   ["HARDMOD_ITEM_IMMUNITIES"] = true,
 }

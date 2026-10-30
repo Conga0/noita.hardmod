@@ -19,9 +19,6 @@ for k=1,#projPoolVanilla do
     table.insert(projPool, table.concat({"data/entities/projectiles/",projPoolVanilla[k],".xml"}))
 end
 
-table.insert(projPool,"data/entities/animals/boss_alchemist/wand_orb.xml")
-
-
 --Functions for corruption update file to pick a random file
 function pickrandomspell( seed_x, seed_y )
     SetRandomSeed(seed_x + seed_y, seed_x * seed_y)

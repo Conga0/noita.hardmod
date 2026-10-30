@@ -1,6 +1,8 @@
 ---@diagnostic disable: lowercase-global
 --Useful scripts.
 
+local utils = {}
+
 -- de-patterning function for dealing with string.gsub() and other pattern-utilising Lua functions.
 ---@param str string
 ---@return string
@@ -119,7 +121,7 @@ function ConditionalRandomFromTable(t, context, seed)
 	end
 
 	if #temp == 0 then return end
-	if seed then return ProceduralRandomFromTable(temp, seed) else return RandomFromTable(temp) end
+	if seed then return utils.ProceduralRandomFromTable(temp, seed) else return utils.RandomFromTable(temp) end
 end
 
 ---@generic T : Weighted
@@ -293,3 +295,36 @@ function GetPerkPickupCount( perk_id )
 
 	return pickup_count or 0
 end
+
+--- Triggers a lua script after a delay
+---@param entity_id entity_id The entity that will hold the LuaComponent
+---@param script_path string Path to the script to be executed
+---@param delay int? Delay before script execution in frames (default 30)
+function TriggerScriptDelayed(entity_id, script_path, delay)
+	delay = delay or 30
+	EntityAddComponent2(entity_id, "LuaComponent", {
+		script_source_file = script_path,
+		execute_on_added = false,
+		execute_every_n_frame = delay,
+		remove_after_executed = true,
+	})
+end
+
+utils = {
+	escape = escape,
+	modifile = modifile,
+	dump = dump,
+	dumpf = dumpf,
+	MatchDateLocal = MatchDateLocal,
+	RandomFromTable = RandomFromTable,
+	ConditionalRandomFromTable = ConditionalRandomFromTable,
+	ProceduralRandomFromTable = ProceduralRandomFromTable,
+	GetHerdID = GetHerdID,
+	ShootProjectile = ShootProjectile,
+	GetInternalInt = GetInternalInt,
+	SetInternalInt = SetInternalInt,
+	GetPlayerEntity = GetPlayerEntity,
+	Remap = Remap,
+	GetPerkPickupCount = GetPerkPickupCount,
+}
+return utils
