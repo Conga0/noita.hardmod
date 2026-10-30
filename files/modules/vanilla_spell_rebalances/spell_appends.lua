@@ -37,7 +37,7 @@ local reworked_actions = {
     end
   },
   ["EXPLOSIVE_PROJECTILE"] = {
-	mana = 70,
+	mana = 60,
 	action = function ()
 		c.explosion_radius = c.explosion_radius + 7.5
 		c.damage_explosion_add = c.damage_explosion_add + 0.2
