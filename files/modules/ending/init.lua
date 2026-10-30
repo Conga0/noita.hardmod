@@ -1,10 +1,12 @@
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua")---@type utils
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
 for file in nxml.edit_file("data/entities/animals/boss_centipede/sampo.xml") do
   local item = file:first_of("ItemComponent")
-  if item then
-    item:set("is_pickable", false)
-  end
+  if item then file:remove_child(item) end
+
+  local phys = file:first_of("SimplePhysicsComponent")
+  if phys then file:remove_child(phys) end
 
   for emitter in file:each_of("ParticleEmitterComponent") do
     if emitter:get("emitted_material_name") == "spark_blue" then
@@ -39,7 +41,11 @@ for file in nxml.edit_file("data/entities/animals/boss_centipede/sampo.xml") do
   })
 end
 
-ModLuaFileAppend("data/scripts/biomes/boss_arena.lua", "mods/noita.hardmod/files/modules/ending/appends/boss_arena.lua")
+utils.modifile(
+  "data/scripts/biomes/boss_arena.lua",
+  [[sampo.xml", x, y + 80 )]],
+  [[sampo.xml", x, y + 90); EntityLoad("mods/noita.hardmod/files/modules/ending/entities/book_hint.xml", x - 145, y - 40)]]
+)
 
 -- I fucking hate this shit why does it not work???????????????
 -- local function patch_material_hint()

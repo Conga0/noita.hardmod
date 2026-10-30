@@ -1,0 +1,13 @@
+<Entity tags="hardmod_sampo_orb_glyph">
+	
+	<SpriteComponent
+		image_file="mods/noita.hardmod/files/modules/ending/gfx/sampo_orb_indicator_1.png"
+		emissive="1"
+	></SpriteComponent>
+
+	<LuaComponent
+		script_source_file="mods/noita.hardmod/files/modules/ending/scripts/orb_glyph_scan.lua"
+		execute_every_n_frame="60"
+	></LuaComponent>
+
+</Entity>
