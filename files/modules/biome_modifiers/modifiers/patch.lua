@@ -44,7 +44,7 @@ end
 
 ---@param tbl string[]
 ---@param to_biome string?
-function AddBiomeNames(tbl, to_biome)
+function AddBiomeGroup(tbl, to_biome)
   if to_biome then
     local add_to = nil
     for _,list in pairs(biomes) do
@@ -168,6 +168,8 @@ function get_modifier_mappings()
   SetRandomSeed(347893, 90734)
   rnd = random_create(347893, 90734)
 
+  local total_count = 0
+
   for _,biome_names in pairs(biomes) do
     local biome = biome_names[1]
     local chance = BiomeModifierChances[biome] or BiomeModifierChances.default
@@ -183,8 +185,11 @@ function get_modifier_mappings()
     if count == 0 then goto continue end
 
     local list = pick_modifiers_for(biome, count)
+    total_count = total_count + #list
+
     for _,name in pairs(biome_names) do
       result[name] = list
+      BiomesWithModifiers[name] = list
     end
 
     ::continue::
@@ -194,8 +199,11 @@ function get_modifier_mappings()
     local mod = resolve_modifier(modifier)
     if mod and not result[biome] then
       result[biome] = mod
+      total_count = total_count + #mod
     end
   end
+
+  print("Generated "..total_count.." modifiers")
 
   return result
 end
