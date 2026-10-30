@@ -3,9 +3,10 @@
 dofile_once("data/scripts/biome_modifiers.lua")
 dofile_once("mods/noita.hardmod/files/modules/biome_modifiers/biome_table.lua")
 
-last_active_biome = "_EMPTY_"
-get_modifier_mappings()
-GetBiomeTable(biomes)
+local last_active_biome = "_EMPTY_"
+local active_modifiers = get_modifier_mappings()
+
+GetBiomeTableFromKeys(active_modifiers)
 
 function biome_entered(biome_name)
 	local player = GetUpdatedEntityID()
@@ -17,7 +18,7 @@ function biome_entered(biome_name)
 	for _,effect in pairs(effects) do EntityKill(effect) end
 
 	local biome_id = biome_ui_names[biome_name]
-	local modifiers = BiomesWithModifiers[biome_id]
+	local modifiers = active_modifiers[biome_id]
 
 	if biome_name == "_EMPTY_" or not biome_id or not modifiers or #modifiers < 1 then
 		return

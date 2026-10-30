@@ -15,14 +15,12 @@ local function get_biome_data(path)
   return topology:get("name")
 end
 
-function GetBiomeTable(tbl)
+function GetBiomeTableFromKeys(tbl)
   if #biome_data_table > 0 then return end
 
   local biomes = {}
-  for _,names in pairs(tbl) do
-    for _,name in pairs(names) do
-      table.insert(biomes, name)
-    end
+  for key,_ in pairs(tbl) do
+	table.insert(biomes, key)
   end
 
   for _,biome in pairs(biomes) do

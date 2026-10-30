@@ -1,8 +1,5 @@
 ---@diagnostic disable: undefined-global
 
----Resulting biome modifiers for all biomes
-BiomesWithModifiers = {}
-
 ---Maximum modifier count per biome (uses `default` for non specified biomes)
 MaxBiomeModifierCount = { default = 1 }
 
@@ -222,7 +219,6 @@ function get_modifier_mappings()
 
 		for _,name in pairs(biome_names) do
 			result[name] = list
-			BiomesWithModifiers[name] = list
 		end
 
 		::continue::
@@ -232,7 +228,6 @@ function get_modifier_mappings()
 		local mod = resolve_modifier(modifier)
 		if mod and not result[biome] then
 			result[biome] = mod
-			BiomesWithModifiers[name] = mod
 			total_count = total_count + #mod
 		end
 	end
