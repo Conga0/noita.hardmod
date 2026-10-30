@@ -46,6 +46,7 @@ PatchModifiers({
 AddBiomeGroup({ "wizardcave", "alchemist_secret" })
 AddBiomeGroup({ "wizardcave", "alchemist_secret" })
 AddBiomeGroup({ "sandcave" })
+AddBiomeGroup({ "rainforest_dark" })
 AddBiomeGroup({ "fungiforest" })
 AddBiomeGroup({ "meat" })
 
