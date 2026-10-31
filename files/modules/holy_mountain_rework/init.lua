@@ -60,4 +60,17 @@ for _,ent in ipairs({"data/entities/buildings/physics_worm_deflector_crystal.xml
 	end
 end
 
+for file in nxml.edit_file("data/entities/buildings/teleport_snowcave_buried_eye_return.xml") do
+	local comp = file:first_of("TeleportComponent")
+	if comp then
+		comp:set("target.x", 150)
+	end
+end
+
+utils.modifile(
+	"data/scripts/buildings/teleport_snowcave_buried_eye_return.lua",
+	[[local teleport_back_x = 190]],
+	[[local teleport_back_x = 150]]
+)
+
 return hooks

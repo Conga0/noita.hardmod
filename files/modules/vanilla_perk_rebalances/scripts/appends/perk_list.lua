@@ -1,19 +1,19 @@
 ---@diagnostic disable: undefined-global
 
 local new_perks = {
-  {
-	id = "HARDMOD_TINKER_AT_PEDESTALS",
-	ui_name = "$hardmod_perk_tinker_at_pedestals_name",
-	ui_description = "$hardmod_perk_tinker_at_pedestals_desc",
-	ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals_016.png",
-	perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals.png",
-	stackable = STACKABLE_NO,
-	one_off_effect = false,
-	usable_by_enemies = false,
-	func = function(entity_perk_item, entity_who_picked, item_name, pickup_count)
-	  if pickup_count > 1 then return end
-	  EntityAddChild(entity_who_picked, EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_tinker_at_pedestals.xml"))
-	end
+	{
+		id = "HARDMOD_TINKER_AT_PEDESTALS",
+		ui_name = "$hardmod_perk_tinker_at_pedestals_name",
+		ui_description = "$hardmod_perk_tinker_at_pedestals_desc",
+		ui_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals_016.png",
+		perk_icon = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/ui_gfx/perks/tinker_at_pedestals.png",
+		stackable = STACKABLE_NO,
+		one_off_effect = false,
+		usable_by_enemies = false,
+		func = function(entity_perk_item, entity_who_picked, item_name, pickup_count)
+			if pickup_count > 1 then return end
+			EntityAddChild(entity_who_picked, EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_tinker_at_pedestals.xml"))
+		end
 	},
 	{
 		id = "HARDMOD_ITEM_IMMUNITIES",
@@ -25,9 +25,47 @@ local new_perks = {
 		one_off_effect = false,
 		usable_by_enemies = false,
 		func = function(perk, player, name, count)
-	  if count > 1 then return end
+			if count > 1 then return end
 			EntityAddChild(player, EntityLoad("mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/effect_item_immunities.xml"))
 		end
+	},
+	{
+		id = "HARDMOD_PROTECTION_ELECTRIC_STUN",
+		ui_name = "$hardmod_perk_protection_electric_stun_name",
+		ui_description = "$hardmod_perk_protection_electric_stun_desc",
+		ui_icon = "data/ui_gfx/perk_icons/protection_electricity.png",
+		perk_icon = "data/items_gfx/perks/protection_electricity.png",
+		game_effect = "STUN_PROTECTION_ELECTRICITY",
+		stackable = false,
+		one_off_effect = false,
+		usable_by_enemies = false,
+		-- given from altar sacrifice
+		not_in_default_perk_pool = true,
+	},
+	{
+		id = "HARDMOD_PROTECTION_FIRE",
+		ui_name = "$perk_protection_fire",
+		ui_description = "$perkdesc_protection_fire",
+		ui_icon = "data/ui_gfx/perk_icons/protection_fire.png",
+		perk_icon = "data/items_gfx/perks/protection_fire.png",
+		game_effect = "PROTECTION_FIRE",
+		stackable = false,
+		usable_by_enemies = false,
+		-- given from altar sacrifice
+		not_in_default_perk_pool = true,
+	},
+	{
+		id = "HARDMOD_PROTECTION_FREEZE",
+		ui_name = "$perk_protection_freeze",
+		ui_description = "$perkdesc_protection_freeze",
+		ui_icon = "data/ui_gfx/perk_icons/protection_freeze.png",
+		perk_icon = "data/items_gfx/perks/protection_freeze.png",
+		game_effect = "STUN_PROTECTION_FREEZE",
+		stackable = false,
+		one_off_effect = false,
+		usable_by_enemies = false,
+		-- given from altar sacrifice
+		not_in_default_perk_pool = true,
 	},
 	{ --Nabbed from Apotheosis
 		id = "HARDMOD_OVERSIZED_SHIELD",
@@ -311,16 +349,14 @@ local perk_reworks = {
 	["PROJECTILE_REPULSION"] = { not_in_default_perk_pool = true },
 }
 
-if perk_list ~= nil then
-	for _,perk in pairs(perk_list) do
-		if perk_reworks[perk.id] then
-			for k,v in pairs(perk_reworks[perk.id]) do
-				perk[k] = v
-			end
+for _,perk in pairs(perk_list) do
+	if perk_reworks[perk.id] then
+		for k,v in pairs(perk_reworks[perk.id]) do
+			perk[k] = v
 		end
 	end
+end
 
-	for _,perk in pairs(new_perks) do
-		table.insert(perk_list, perk)
-	end
+for _,perk in pairs(new_perks) do
+	table.insert(perk_list, perk)
 end
