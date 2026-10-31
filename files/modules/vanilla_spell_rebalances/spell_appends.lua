@@ -18,6 +18,11 @@ local function apply_freeze()
 end
 
 local reworked_actions = {
+  ["BOMB"] = { max_uses = 5 },
+  ["MINE"] = { max_uses = 20 },
+  ["GRENADE"] = { max_uses = 30 },
+  ["TELEPORT_PROJECTILE"] = { mana = 20 },
+  ["TELEPORT_PROJECTILE_SHORT"] = { mana = 30 },
   ["FREEZE"] = {
     mana = 20,
     action = function()
