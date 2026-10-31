@@ -1,13 +1,14 @@
+---@class hooks
 local hooks = {
 	--Game/World Initialising
-	mod_pre_init = function() end,
-	mod_init = function() end,
-	mod_post_init = function() end,
-	magic_numbers_and_seed_initialised = function() end, --OnMagicNumbersAndWorldSeedInitialised
+	mod_pre_init = function() end, --`OnModPreInit()`
+	mod_init = function() end, --`OnModInit()`
+	mod_post_init = function() end, --`OnModPostInit()`
+	magic_numbers_and_seed_initialised = function() end, --`OnMagicNumbersAndWorldSeedInitialised()`
 	edit_material = function(elem) end, --iterates over all materials OnMagicNumbersAndWorldSeedInitialised
 	edit_reaction = function(elem) end, --iterates over all reactions OnMagicNumbersAndWorldSeedInitialised
-	biome_config = function() end,
-	world_init = function() end,
+	biome_config = function() end, --`()`
+	world_init = function() end, --`OnWorldInitialized()`
 
 	--Runtime hofunction() ends
 	pre_update = function(frame) end, --beginning of every frame
@@ -28,7 +29,7 @@ local hooks = {
 
 -- DONT INITIALISE FUNCTIONS YOU DONT NEED, THESE ARE JUST HERE TO SHOW YOU A LIST OF THEM ^^^^
 
-local gd = GLOBAL_DATA
+local gd = HARDMOD_GLOBAL_DATA
 
 gd.player = nil --This is the player's Entity ID, it is updated before player_spawned, player_changed and player_destroyed and directly passed to all 3 functions.
 gd.player_poly_identity = nil --This is the player's Polymorph Identity, it is updated before player_changed and directly passed into it.
