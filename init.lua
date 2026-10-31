@@ -131,6 +131,7 @@ function OnModPostInit()
 end
 
 function OnMagicNumbersAndWorldSeedInitialized() -- this is the last point where the Mod* API is available. after this materials.xml will be loaded.
+	SetRandomSeed(-2497, 492)
 	for _,func in ipairs(hooks.magic_numbers_and_seed_initialised) do
 		func()
 	end

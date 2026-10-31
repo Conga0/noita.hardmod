@@ -90,10 +90,6 @@ hooks.mod_post_init = function() --run later in case of appends
 	update_perk_unlock_states()
 end
 
-hooks.world_init = function()
-	SetRandomSeed(1337, -6967)
-end
-
 local function give_enemy_perks(entity_id, num, data)
 	num = num or 1
 	if not (num > 0) then return end
