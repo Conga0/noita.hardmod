@@ -5,6 +5,7 @@ BiomeModifierChances = {
 	default = 0.3,
 	coalmine = 0.2,
 	excavationsite = 0.15,
+	fungiforest = 0.4,
 }
 
 PatchModifiers({
