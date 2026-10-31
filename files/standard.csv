@@ -121,6 +121,8 @@ hardmod_spell_parry_name,Parry,,,,,,,,,,,,,
 hardmod_spell_parry_desc,"Heals you by rebounding enemy projectiles",,,,,,,,,,,,,
 hardmod_book_ending_hint_title,"Obseratum",,,,,,,,,,,,,NOTE - this is latin
 hardmod_book_ending_hint_desc,"Our grand design is only for those who know the truth of this world.\n \nWhen the essence of confusion and the essence of aimless travel are used together,\none will find true knowledge.",,,,,,,,,,,,,
+hardmod_book_secret_lab_path_title,"restitutio in integrum",,,,,,,,,,,,,NOTE - this is latin
+hardmod_book_secret_lab_path_desc,"All things in this world are granted to us by the gods,\nand in time, all things shall return to them.\n \nEven our sacred stones will be restituted to them one day,\nand when that day comes, they will repay our generosity ten-fold.",,,,,,,,,,,,,
 hardmod_book_cheese_biome_title,"Receipt",,,,,,,,,,,,,
 hardmod_book_cheese_biome_desc,"Your order of 1 noitillion kilograms of cheese is complete.\nWe have taken 250,000 gold as payment.\n \nThank you for choosing Hämis Mart!",,,,,,,,,,,,,
 hardmod_spell_sea_poison_name,Ominous Sea,,,,,,,,,,,,,
