@@ -5,7 +5,7 @@
 -- D2D2
 -- qtyui_ too!!!!
 
-dofile_once("mods/noita.hardmod/lib/utilities.lua")
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
 local modules = {
@@ -44,6 +44,8 @@ local modules = {
 	"stronger_enemies",
 	"potions",
 	"alternate_biomes",
+	"polymorph_gui",
+	"vanilla_bugfixes",
 }
 
 local force_enable_state = {
@@ -60,6 +62,7 @@ for _,module in ipairs(modules) do
 		enabled_modules[#enabled_modules+1] = module
 	end
 end
+
 
 local hooks = {
 	--Game/World Initialising
@@ -89,14 +92,14 @@ local hooks = {
 	count_secrets = {}, --OnCountSecrets
 }
 
-GLOBAL_DATA = {
+HARDMOD_GLOBAL_DATA = {
 	player = nil, --player EID.
 	player_poly_identity = nil, --contains some data on the player if they are polymorphed, nil if not polymorphed.
 	player_does_not_exist = true, --this is set to false on `player_spawned` and set to true on `player_destroyed`.
 
 	frame = 0,
 }
-local gd = GLOBAL_DATA
+local gd = HARDMOD_GLOBAL_DATA
 
 for _,module in ipairs(enabled_modules) do
 	for hook_name,hook in pairs(dofile("mods/noita.hardmod/files/modules/"..module.."/init.lua") or {}) do
