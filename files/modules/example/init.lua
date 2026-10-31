@@ -15,7 +15,7 @@ local hooks = {
 	post_update = function(frame) end, --end of every frame
 
 	--Player hofunction() ends
-	player_spawned = function(player) end, --When the player spawns in after world is initialised
+	player_spawned = function(player, is_run_start) end, --When the player spawns in after world is initialised
 	player_changed = function(player, poly_identity) end, --Runs whenever polymorphing/unpolymorphing
 	player_destroyed = function(player) end, --OnPlayerDied
 
