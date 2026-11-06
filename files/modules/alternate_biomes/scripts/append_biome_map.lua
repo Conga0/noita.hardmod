@@ -1,4 +1,4 @@
-local alt_biomes,replacement_data = unpack(dofile_once("mods/noita.hardmod/files/modules/alternate_biomes/biome_list.lua"))
+local alt_biomes = dofile_once("mods/noita.hardmod/files/modules/alternate_biomes/biome_list.lua")
 
 SetRandomSeed(-149,4297)
 
@@ -10,10 +10,10 @@ local function swap_rb(c)
 end
 
 local pixel_lookup = {}
-for _,replacement in pairs(replacement_data) do
-	if Random() <= replacement.probability or true then
+for _,alt_biome in ipairs(alt_biomes) do
+	if Random() <= alt_biome.probability then
 		--replacement.replace_with = swap_rb(replacement.replace_with)
-		pixel_lookup[swap_rb(replacement.colour_id)] = replacement
+		pixel_lookup[swap_rb(alt_biome.replaces_colour)] = alt_biome
 	end
 end
 
@@ -22,7 +22,7 @@ for x = 1, w do
 	for y = 1, h do
 		local pixel = BiomeMapGetPixel(x, y) % 2 ^ 32
 		if pixel_lookup[pixel] then
-			BiomeMapSetPixel(x, y, pixel_lookup[pixel].replace_with)
+			BiomeMapSetPixel(x, y, pixel_lookup[pixel].colour_id)
 		end
 	end
 end

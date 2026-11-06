@@ -642,6 +642,10 @@ enemy_perks = {
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = "mods/noita.hardmod/files/modules/enemy_perks/scripts/spawn_shadow_revive_orb.lua",
 			})
+			EntityAddComponent2(entity_id, "VariableStorageComponent", {_tags = "no_gold_drop"})
+			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
+			if not dmc then return end
+			ComponentSetValue2(dmc, "ragdoll_fx_forced", "DISINTEGRATED")
 		end
 	},
 	{
@@ -659,7 +663,7 @@ enemy_perks = {
 			GetGameEffectLoadTo(entity_id, "PROTECTION_FREEZE", false)
 		end
 	},
-	--{
+	--{ --waiting on reply from spoop on icon
 	--	id = "HEALTH_PARASITE",
 	--	name = "$hardmod_eperk__name",
 	--	description = "$hardmod_eperk__desc",
@@ -704,7 +708,32 @@ enemy_perks = {
 			ComponentSetValue2(dmc, "blood_multiplier", ComponentGetValue2(dmc, "blood_multiplier") * 1.5)
 		end
 	},
+	--{ --ill implement these two later
+	--	id = "POLYMORPH_AURA",
+	--	name = "$hardmod_eperk_polymorph_aura_name",
+	--	description = "$hardmod_eperk_polymorph_aura_desc",
+	--	weight = 3,
+	--	max = 0,
+	--	condition = function(self, data) self.weight = 5*0.9^(data.level) return true end, --diminishing weight, appear more early
+	--	func = function(self, entity_id, data)
+	--		EntityAddChild(entity_id, EntityLoad(dir.."entities/polymorph_aura", data.x, data.y))
+	--	end
+	--},
+	--{
+	--	id = "UNFINISHED_BUSINESS",
+	--	name = "$hardmod_eperk_unfinited_business_name",
+	--	description = "$hardmod_eperk_unfinited_business_desc",
+	--	weight = 2,
+	--	max = 0,
+	--	func = function(self, entity_id, data)
+	--		EntityAddChild(entity_id, EntityLoad(dir.."entities/polymorph_aura", data.x, data.y))
+	--	end
+	--},
 }
+
+--local perk_incompatibilities = {
+--	{"KAMIKAZE", "UNFINISHED_BUSINESS"},
+--}
 
 for _,perk in ipairs(enemy_perks) do
 	local id = perk.id

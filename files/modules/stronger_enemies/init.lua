@@ -1,7 +1,7 @@
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua")---@type nxml
 local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
-local alt_biomes = dofile_once("mods/noita.hardmod/files/modules/alternate_biomes/biome_list.lua")[1]
+local alt_biomes = dofile_once("mods/noita.hardmod/files/modules/alternate_biomes/biome_list.lua")
 
 utils.AddEnemyToProgress("hardmod_wizard_confusion", "wizard_twitchy")
 utils.AddEnemyToProgress("hardmod_mummy", "icer")
@@ -26,14 +26,14 @@ local function patch_spawn_rules()
 		"wizardcave",
 	}
 
-	for _,biome in pairs(patch_biomes) do
+	for _,biome in ipairs(patch_biomes) do
 		local append = table.concat({"mods/noita.hardmod/files/modules/stronger_enemies/biomes/",biome,".lua"})
 		ModLuaFileAppend("data/scripts/biomes/" .. biome .. ".lua", append)
 	end
 
-	for _,alt in pairs(alt_biomes) do
-		local append = table.concat({"mods/noita.hardmod/files/modules/stronger_enemies/biomes/",alt.biome,".lua"})
-		ModLuaFileAppend(alt.script, append)
+	for _,alt in ipairs(alt_biomes) do
+		local append = table.concat({"mods/noita.hardmod/files/modules/stronger_enemies/biomes/",alt.replaces,".lua"})
+		if ModDoesFileExist(append) then ModLuaFileAppend(alt.script, append) end
 	end
 
 	ModLuaFileAppend("data/scripts/director_helpers.lua", "mods/noita.hardmod/files/modules/stronger_enemies/appends/director_helpers.lua")

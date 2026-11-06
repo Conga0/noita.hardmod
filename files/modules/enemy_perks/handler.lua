@@ -62,6 +62,7 @@ for i=1,num_icons do
 		offset_y = offset_y,
 		image_file = sprite,
 		z_index = z_index,
+		never_ragdollify_on_death = true,
 	})
 end
 
