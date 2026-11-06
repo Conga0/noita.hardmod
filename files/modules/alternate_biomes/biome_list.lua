@@ -7,6 +7,7 @@ local alt_biomes = {
 	{
 		name = "$hardmod_biomename_infested_mines",
 		biome = "fungal_mines",
+		replaces = "",
 		colour_id = 0xff583e35,
 		script = root.."biomes/fungal_mines.lua",
 		weight = 100

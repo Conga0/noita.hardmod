@@ -137,7 +137,7 @@ end
 function utils.ConditionalRandomFromTable(t, context, seed)
 	local temp = {}
 	for _, entry in ipairs(t) do
-		if entry.condition and entry:condition(context) == false then goto continue end
+		if entry.condition and not entry:condition(context) then goto continue end
 		temp[#temp+1] = entry
 		::continue::
 	end

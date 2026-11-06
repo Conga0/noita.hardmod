@@ -206,7 +206,6 @@ enemy_perks = {
 		weight = 2,
 		priority = 15,
 		max = 1,
-		condition = function(self, data) return not data.kamikaze end,
 		func = function(self, entity_id, data)
 			-- make the enemy explode on death
 			EntityAddComponent2(entity_id, "LuaComponent", {
@@ -307,9 +306,7 @@ enemy_perks = {
 		weight = 3,
 		priority = 7,
 		max = 1,
-		condition = function(self, data)
-			return enemy_is_ranged_attack(self, data)
-		end,
+		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_shot = dir.."scripts/curser_shot.lua",
@@ -525,6 +522,7 @@ enemy_perks = {
 			if data.biome == "$biome_vault" or data.biome == "$biome_fungicave" then
 				self.weight = 3
 			end
+			return true
 		end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_ELECTRICITY", false)
@@ -683,7 +681,7 @@ enemy_perks = {
 		weight = 4,
 		priority = 4,
 		max = 3,
-		condition = function(self, data) if data.blood_perk then self.weight = 5 end end,
+		condition = function(self, data) if data.blood_perk then self.weight = 5 end return true end,
 		func = function(self, entity_id, data)
 			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
 			if not dmc then return end

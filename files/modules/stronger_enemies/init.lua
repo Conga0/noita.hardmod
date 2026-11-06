@@ -27,14 +27,13 @@ local function patch_spawn_rules()
 	}
 
 	for _,biome in pairs(patch_biomes) do
-		local append = "mods/noita.hardmod/files/modules/stronger_enemies/biomes/" .. biome .. ".lua"
+		local append = table.concat({"mods/noita.hardmod/files/modules/stronger_enemies/biomes/",biome,".lua"})
 		ModLuaFileAppend("data/scripts/biomes/" .. biome .. ".lua", append)
+	end
 
-		for _,alt in pairs(alt_biomes) do
-			if alt.script then
-				ModLuaFileAppend(alt.script, append)
-			end
-		end
+	for _,alt in pairs(alt_biomes) do
+		local append = table.concat({"mods/noita.hardmod/files/modules/stronger_enemies/biomes/",alt.biome,".lua"})
+		ModLuaFileAppend(alt.script, append)
 	end
 
 	ModLuaFileAppend("data/scripts/director_helpers.lua", "mods/noita.hardmod/files/modules/stronger_enemies/appends/director_helpers.lua")

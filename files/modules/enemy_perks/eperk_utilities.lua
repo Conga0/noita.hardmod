@@ -75,6 +75,9 @@ end
 ---@param perks_to_give int|table|nil pass number to pass X random perks, pass table to give specific selection of perks
 ---@param data table context passed to functions, used for both random selection and perk behaviour
 function utilities.give_enemy_perks(entity_id, perks_to_give, data)
+	print("printing local data...")
+	print(tostring(data.level))
+	print(tostring(data.biome))
 	local perks_to_give_type = type(perks_to_give)
 	local amount_of_perks = perks_to_give_type == "number" and perks_to_give
 		or perks_to_give_type == "table" and #perks_to_give

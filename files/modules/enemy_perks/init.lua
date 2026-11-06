@@ -27,10 +27,18 @@ local icon_padding = 1 --padding between perks in the perk view
 local max_perks_per_row = 5 --max perks before breaking into a new row
 local icon_size = 16 --the xy size of the perk icons
 
+
+--utils.modifile("data/biome_impl/spliced/boss_arena.xml", [[data/biome_impl/spliced/boss_arena/8.plz]], [[]])
+
 hooks.player_spawned = function()
 	for _,perk in ipairs(enemy_perks) do
 		AddFlagPersistent("perk_picked_enemyperk_"..perk.id:lower())
 		if Random() <= .2 then GameAddFlagRun("new_perk_picked_enemyperk_"..perk.id:lower()) end
+	end
+
+	dofile_once("data/scripts/perks/perk_list.lua")
+	for _,perk in ipairs(perk_list) do
+		AddFlagPersistent("perk_picked_"..perk.id:lower())
 	end
 end and nil --comment `and nil` to run above func
 
