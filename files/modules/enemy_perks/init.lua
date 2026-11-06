@@ -1,7 +1,7 @@
 local hooks = {}
 local _g = HARDMOD_GLOBAL_DATA
 local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
-local biome_index = dofile_once("mods/noita.hardmod/lib/biome_index.lua") ---@type biome_path_to_simple_id
+local biome_index ---@type biome_path_to_simple_id
 local eperk_utils ---@type eperk_utils
 
 local dir = "mods/noita.hardmod/files/modules/enemy_perks/"
@@ -48,9 +48,10 @@ local function update_perk_unlock_states()
 	end
 end
 
-hooks.mod_post_init = function() --run later in case of appends
+hooks.mod_post_init = function() --run later for appends
 	enemy_perks = dofile_once(dir.."enemy_perks_list.lua")
 	eperk_utils = dofile_once(dir.."eperk_utilities.lua")(enemy_perks)
+	biome_index = dofile_once("mods/noita.hardmod/lib/biome_index.lua")
 
 	local progress_overlay = ModImageMakeEditable(dir.."gfx/progress_overlay.png", 16, 16)
 	local cached_overlay_data = {} --store progress_overlay so we dont have to get pixel for every pixel in every perk sprite
@@ -82,6 +83,7 @@ hooks.new_eid = function(entity_id)
 		local is_boss = EntityHasTag(entity_id, "boss")
 		local x,y = EntityGetTransform(entity_id)
 		local biome = biome_index[DebugBiomeMapGetFilename(x, y)]
+		print(biome or DebugBiomeMapGetFilename(x,y))
 		local num = 0
 
 

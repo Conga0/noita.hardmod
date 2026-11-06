@@ -1,6 +1,6 @@
 local hooks = {}
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
-local simple_ids = dofile_once("mods/noita.hardmod/lib/biome_index.lua")
+local simple_ids ---@type biome_path_to_simple_id
 
 MinibossCreator = dofile_once("mods/noita.hardmod/files/modules/phantom_nemesis/files/scripts/miniboss_creator.lua")
 local possession_limit_data = dofile_once("mods/noita.hardmod/files/modules/phantom_nemesis/files/scripts/possession_limits.lua")
@@ -9,6 +9,10 @@ local possession_limit_default = possession_limit_data.default_biome_limit
 
 hooks.mod_pre_init = function()
 	ModRegisterAudioEventMappings("mods/noita.hardmod/files/modules/phantom_nemesis/files/audio/GUIDs.txt")
+end
+
+hooks.mod_post_init = function() --run late or else appends to this file wont work
+    simple_ids = dofile_once("mods/noita.hardmod/lib/biome_index.lua")
 end
 
 hooks.post_update = function ()
