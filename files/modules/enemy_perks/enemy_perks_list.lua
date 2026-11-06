@@ -44,6 +44,12 @@ local blood_perk_check = function(self, data)
 	return not (data.blood_perk or data.is_boss or EntityGetName(data.target_enemy) == "$animal_wizard_swapper")
 end
 
+local function increment_weight_with_level(self, data, multiplier)
+	multiplier = multiplier or 0.4
+	self.weight = self.weight + data.level*multiplier
+	return true
+end
+
 -- The `data` table provides `target_enemy` (eid), `already_held_perks` (perk_id[]), `player` (eid) and `player_poly_identity` (table)
 
 ---@type enemy_perk[]
@@ -401,7 +407,9 @@ enemy_perks = {
 		weight = 5,
 		priority = 3,
 		max = 1,
-		condition = function(self, data) return GameGetGameEffectCount(data.target_enemy, "PROTECTION_EXPLOSION") == 0 end,
+		condition = function(self, data)
+			increment_weight_with_level(self, data)
+			return GameGetGameEffectCount(data.target_enemy, "PROTECTION_EXPLOSION") == 0 end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_EXPLOSION", false)
 		end
@@ -414,6 +422,7 @@ enemy_perks = {
 		priority = 3,
 		max = 1,
 		condition = function(self, data)
+			increment_weight_with_level(self, data)
 			return GameGetGameEffectCount(data.target_enemy, "PROTECTION_POLYMORPH") == 0 and not (EntityHasTag(data.target_enemy, "polymorphable_NOT") or data.boss)
 		end,
 		func = function(self, entity_id, data)
@@ -642,7 +651,10 @@ enemy_perks = {
 		weight = 4,
 		priority = 3,
 		max = 1,
-		condition = function(self, data) return GameGetGameEffectCount(data.target_enemy, "PROTECTION_FREEZE") == 0 end,
+		condition = function(self, data)
+			increment_weight_with_level(self, data)
+			return GameGetGameEffectCount(data.target_enemy, "PROTECTION_FREEZE") == 0
+		end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_FREEZE", false)
 		end
