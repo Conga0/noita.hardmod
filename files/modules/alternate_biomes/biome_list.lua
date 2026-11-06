@@ -3,60 +3,34 @@ local root = "mods/noita.hardmod/files/modules/alternate_biomes/"
 -- `name` and `script` are important for other modules extending vanilla biomes
 -- or relying on UI name to identify them
 
-local list = {
-	coalmine = {
-		{
-			name = "$hardmod_biomename_infested_mines",
-			biome = "fungal_mines",
-			script = root.."biomes/fungal_mines.lua",
-			weight = 100
-		},
+local alt_biomes = {
+	{
+		name = "$hardmod_biomename_infested_mines",
+		biome = "fungal_mines",
+		colour_id = 0xff583e35,
+		script = root.."biomes/fungal_mines.lua",
+		weight = 100
 	},
-	excavationsite = {
-		{
-			name = "$hardmod_biomename_sand_pits",
-			biome = "sand_pits",
-			script = root.."biomes/sand_pits.lua",
-			weight = 100
-		}
+	{
+		name = "$hardmod_biomename_sand_pits",
+		biome = "sand_pits",
+		colour_id = 0xff78712b,
+		script = root.."biomes/sand_pits.lua",
+		weight = 100
 	}
 }
 
-local function weighted_choice(options)
-	local total = 1.0
-	for _, o in ipairs(options) do
-		local w = o.weight or 0
-		if w > 0 then total = total + w end
-	end
-	local r = Randomf(0, total)
-	if r <= 1.0 then return nil end
-	local acc = 1.0
-	for _, o in ipairs(options) do
-		local w = o.weight or 0
-		if w > 0 then
-			acc = acc + w
-			if r <= acc then return o.biome end
-		end
-	end
-	return nil
-end
-
-local function get_replacements()
-	local i = 0
-	local replacements = {}
-	for source_biome, options in pairs(list) do
-		i = i + 1
-		SetRandomSeed(i, i)
-		local target = weighted_choice(options)
-		if target then
-			replacements[source_biome] = target
-		end
-	end
-
-	return replacements
-end
-
-return {
-	list = list,
-	get_replacements = get_replacements
+local replacement_data = {
+	mines = {
+		colour_id = 0xffd57917,
+		replace_with = 0xff583e35,
+		probability = .5
+	},
+	coal_pits = {
+		colour_id = 0xff124445,
+		replace_with = 0xff78712b,
+		probability = .5
+	},
 }
+
+return {alt_biomes,replacement_data}
