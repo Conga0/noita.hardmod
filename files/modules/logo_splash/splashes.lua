@@ -103,6 +103,10 @@ local splashes = {
 	"Flummoxium stocks on the rise!",
 	"\\^-^/",
 	"\\m/ d(-_-)b",
+	"ok who broke multicast",
+	"harmod",
+	"pollen is stored in the hamis",
+	"Featuring mechanics Apotheosis would shamelessly steal 3 years prior",
 }
 
 local cool_mods = {
@@ -110,6 +114,7 @@ local cool_mods = {
 	"Perkageddon",
 	"Apotheosis",
 	"D2D Content Pack",
+	"Fungal Pain",
 }
 for _,coolmod in ipairs(cool_mods) do
 	splashes[#splashes+1] = "Also try "..coolmod.."!"
