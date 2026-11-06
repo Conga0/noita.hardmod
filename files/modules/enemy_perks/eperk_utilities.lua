@@ -120,7 +120,6 @@ function utilities.give_enemy_perks(entity_id, perks_to_give, data)
 			already_held_perks[#already_held_perks+1] = perk_id
 			how_many_of_each_perk[perk_id] = (how_many_of_each_perk[perk_id] or 0) + 1
 		end
-
 	end
 
 	data.already_held_perks = already_held_perks
@@ -129,13 +128,16 @@ function utilities.give_enemy_perks(entity_id, perks_to_give, data)
 	local selected_perks = {}
 	data.selected_perks = selected_perks --idk maybe someone can do some bullshit with this lmao
 	if perks_to_give_type == "number" then
-		for i=1, perks_to_give do
+		data.perks_to_give = perks_to_give
+		while data.perks_to_give > 0 do
 			local perk = utils.ConditionalRandomFromTable(enemy_perks, data)
 			if not perk then return end
 			perk:func(entity_id, data)
 			selected_perks[#selected_perks+1] = perk
 			already_held_perks[#already_held_perks+1] = perk.id
 			how_many_of_each_perk[perk.id] = (how_many_of_each_perk[perk.id] or 0) + 1
+
+			data.perks_to_give = data.perks_to_give - 1
 		end
 	elseif perks_to_give_type == "table" then
 		for _,perk in ipairs(perks_to_give) do

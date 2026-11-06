@@ -20,8 +20,8 @@ for _,perk in ipairs(enemy_perks) do
 			perk_id,
 			perk.name,
 			GameTextGet("$hardmod_eperk_progress_description", GameTextGetTranslatedOrNot(perk.description or "")),
-			perk.sprite,
-			perk.sprite
+			table.concat({"mods/noita.hardmod/files/modules/enemy_perks/progress_sprites/",perk.id:lower(),".png"}),
+			table.concat({"mods/noita.hardmod/files/modules/enemy_perks/progress_sprites/",perk.id:lower(),".png"})
 		)
 	end
 end

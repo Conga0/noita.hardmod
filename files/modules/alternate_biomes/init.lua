@@ -23,6 +23,3 @@ for xml in nxml.edit_file("data/biome/_biomes_all.xml") do
 		print(("%x"):format(alt_biome.colour_id))
 	end
 end
-do return end
-
-return {}

@@ -177,7 +177,7 @@ enemy_perks = {
 		max = 1,
 		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
-			GetGameEffectLoadTo(entity_id, "PROTECTION_ELECTRICITY", true)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_ELECTRICITY", false)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_shot = dir.."scripts/thunderlord_on_shot.lua",
 				execute_every_n_frame = -1,
@@ -192,7 +192,7 @@ enemy_perks = {
 		max = 1,
 		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
-			GetGameEffectLoadTo(entity_id, "PROTECTION_FIRE", true)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_FIRE", false)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_shot = dir.."scripts/pyrelord_on_shot.lua",
 				execute_every_n_frame = -1,
@@ -240,7 +240,7 @@ enemy_perks = {
 		max = 1,
 		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
-			GetGameEffectLoadTo(entity_id, "KNOCKBACK_IMMUNITY", true)
+			GetGameEffectLoadTo(entity_id, "KNOCKBACK_IMMUNITY", false)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_shot = dir.."scripts/aerolord_on_shot.lua",
 				execute_every_n_frame = -1,
@@ -399,7 +399,7 @@ enemy_perks = {
 	},
 	{
 		id = "EXPLOSION_IMMUNITY",
-		name = "$hardmod_eperk_explosion_immunity_name",
+		name = "$perk_protection_explosion",
 		description = "$hardmod_eperk_explosion_immunity_desc",
 		weight = 5,
 		priority = 3,
@@ -495,26 +495,26 @@ enemy_perks = {
 			end
 		end
 	},
-	{
-		id = "ARMED",
-		name = "$hardmod_eperk_armed_name",
-		description = "$hardmod_eperk_armed_desc",
-		weight = 7,
-		max = 0,
-		condition = function(self, data)
-			return data.level > 1 --can hold gun
-		end,
-		func = function(self, entity_id, data)
-			local wands = dofile_once(dir.."scripts/armed_wands_list.lua")
-			local new_data = utils.deepcopy(data)
-			new_data.perk = self
-			local wand_data = utils.ConditionalRandomFromTable(wands, new_data)
-			if not wand_data then return end
+	--{
+	--	id = "ARMED",
+	--	name = "$hardmod_eperk_armed_name",
+	--	description = "$hardmod_eperk_armed_desc",
+	--	weight = 7,
+	--	max = 0,
+	--	condition = function(self, data)
+	--		return data.level > 1 --can hold gun
+	--	end,
+	--	func = function(self, entity_id, data)
+	--		local wands = dofile_once(dir.."scripts/armed_wands_list.lua")
+	--		local new_data = utils.deepcopy(data)
+	--		new_data.perk = self
+	--		local wand_data = utils.ConditionalRandomFromTable(wands, new_data)
+	--		if not wand_data then return end
 
-			local wand = EntityLoad("", data.x, data.y)
-			GamePickUpInventoryItem(entity_id, wand)
-		end,
-	},
+	--		local wand = EntityLoad("", data.x, data.y)
+	--		GamePickUpInventoryItem(entity_id, wand)
+	--	end,
+	--},
 	{
 		id = "ELECTRICITY",
 		name = "$perk_electricity",
@@ -635,6 +635,59 @@ enemy_perks = {
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = "mods/noita.hardmod/files/modules/enemy_perks/scripts/spawn_shadow_revive_orb.lua",
 			})
+		end
+	},
+	{
+		id = "FREEZE_IMMUNITY",
+		name = "$hardmod_eperk_freeze_immunity_name",
+		description = "$hardmod_eperk_freeze_immunity_desc",
+		weight = 4,
+		priority = 3,
+		max = 1,
+		condition = function(self, data) return GameGetGameEffectCount(data.target_enemy, "PROTECTION_FREEZE") == 0 end,
+		func = function(self, entity_id, data)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_FREEZE", false)
+		end
+	},
+	--{
+	--	id = "HEALTH_PARASITE",
+	--	name = "$hardmod_eperk__name",
+	--	description = "$hardmod_eperk__desc",
+	--	weight = 4,
+	--	priority = 2,
+	--	max = 1,
+	--	condition = function(self, data) return GameGetGameEffectCount(data.target_enemy, "PROTECTION_FREEZE") == 0 end,
+	--	func = function(self, entity_id, data)
+	--		GetGameEffectLoadTo(entity_id, "PROTECTION_FREEZE", false)
+	--	end
+	--},
+	{
+		id = "BOUNTY",
+		name = "$hardmod_eperk_bounty_name",
+		description = "$hardmod_eperk_bounty_desc",
+		weight = 1,
+		priority = 25,
+		max = 1,
+		condition = function(self, data) return data.perks_to_give and data.level > 4 end,
+		func = function(self, entity_id, data)
+			data.perks_to_give = data.perks_to_give + 5
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_death = dir.."scripts/drop_chest_on_death.lua"
+			})
+		end
+	},
+	{
+		id = "MORE_BLOOD",
+		name = "$perk_global_gore",
+		description = "$hardmod_eperk_more_blood_desc",
+		weight = 4,
+		priority = 4,
+		max = 3,
+		condition = function(self, data) if data.blood_perk then self.weight = 5 end end,
+		func = function(self, entity_id, data)
+			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
+			if not dmc then return end
+			ComponentSetValue2(dmc, "blood_multiplier", ComponentGetValue2(dmc, "blood_multiplier") * 1.5)
 		end
 	},
 }

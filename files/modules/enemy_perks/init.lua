@@ -4,9 +4,9 @@ local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 local biome_index = dofile_once("mods/noita.hardmod/lib/biome_index.lua") ---@type biome_path_to_simple_id
 local eperk_utils ---@type eperk_utils
 
-local curr_path = "mods/noita.hardmod/files/modules/enemy_perks/"
+local dir = "mods/noita.hardmod/files/modules/enemy_perks/"
 
-ModLuaFileAppend("data/scripts/perks/perk_reflect.lua", curr_path.."add_perks_to_progress.lua")
+ModLuaFileAppend("data/scripts/perks/perk_reflect.lua", dir.."add_perks_to_progress.lua")
 
 
 local base_perk_chance = .15
@@ -29,8 +29,8 @@ local icon_size = 16 --the xy size of the perk icons
 
 hooks.player_spawned = function()
 	for _,perk in ipairs(enemy_perks) do
-		RemoveFlagPersistent("perk_picked_enemyperk_"..perk.id:lower())
-		GameAddFlagRun("new_perk_picked_enemyperk_"..perk.id:lower())
+		AddFlagPersistent("perk_picked_enemyperk_"..perk.id:lower())
+		if Random() <= .2 then GameAddFlagRun("new_perk_picked_enemyperk_"..perk.id:lower()) end
 	end
 end and nil --comment `and nil` to run above func
 
@@ -41,10 +41,29 @@ local function update_perk_unlock_states()
 end
 
 hooks.mod_post_init = function() --run later in case of appends
-	enemy_perks = dofile_once(curr_path.."enemy_perks_list.lua")
-	eperk_utils = dofile_once(curr_path.."eperk_utilities.lua")(enemy_perks)
+	enemy_perks = dofile_once(dir.."enemy_perks_list.lua")
+	eperk_utils = dofile_once(dir.."eperk_utilities.lua")(enemy_perks)
+
+	local progress_overlay = ModImageMakeEditable(dir.."gfx/progress_overlay.png", 16, 16)
+	local cached_overlay_data = {} --store progress_overlay so we dont have to get pixel for every pixel in every perk sprite
+	for y = 0, 15 do
+		for x = 0, 15 do
+			cached_overlay_data[x] = cached_overlay_data[x] or {}
+			local pixel = ModImageGetPixel(progress_overlay, x, y)
+			cached_overlay_data[x][y] = pixel ~= 0 and pixel
+		end
+	end
 	for _,perk in ipairs(enemy_perks) do
 		enemy_perks_indexed[perk.id] = perk
+
+		--create progress icons that have a redder border
+		local sprite = ModImageMakeEditable(perk.sprite, 16, 16)
+		local progress_sprite = ModImageMakeEditable(table.concat({dir,"progress_sprites/",perk.id:lower(),".png"}), 16, 16)
+		for y = 0, 15 do
+			for x = 0, 15 do
+				ModImageSetPixel(progress_sprite, x, y, cached_overlay_data[x][y] or ModImageGetPixel(sprite, x, y))
+			end
+		end
 	end
 
 	update_perk_unlock_states()
