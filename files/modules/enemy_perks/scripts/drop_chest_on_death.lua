@@ -4,6 +4,6 @@ function death(damage_type_bit_field, message, attacker, drop_items)
     if EntityHasTag(entity_id, "boss") then
         EntityLoad("data/entities/items/pickup/chest_random_super.xml", x, y)
     else
-        EntityLoad("data/entities/items/pickup/chest_random.xml")
+        EntityLoad("data/entities/items/pickup/chest_random.xml", x, y)
     end
 end

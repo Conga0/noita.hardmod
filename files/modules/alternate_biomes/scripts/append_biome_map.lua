@@ -21,7 +21,6 @@ local w,h = BiomeMapGetSize()
 for x = 1, w do
 	for y = 1, h do
 		local pixel = BiomeMapGetPixel(x, y) % 2 ^ 32
-		if x == 34 and y == 21 then print(pixel) end
 		if pixel_lookup[pixel] then
 			BiomeMapSetPixel(x, y, pixel_lookup[pixel].replace_with)
 		end

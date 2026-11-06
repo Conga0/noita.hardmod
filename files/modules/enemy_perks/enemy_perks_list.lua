@@ -481,7 +481,7 @@ enemy_perks = {
 		weight = 2,
 		max = 1,
 		condition = function(self, data)
-			return #data.already_held_perks > 0 and data.level >= 5
+			return #data.already_held_perks > 0 and data.level > 4
 		end,
 		func_handler = function(self, entity_id, root, spr_comps)
 			for _,spr_comp in ipairs(spr_comps) do
@@ -525,11 +525,11 @@ enemy_perks = {
 		id = "ELECTRICITY",
 		name = "$perk_electricity",
 		description = "$hardmod_eperk_electricity_desc",
-		weight = 8,
+		weight = 6,
 		max = 1,
 		condition = function(self, data)
 			if data.biome == "$biome_vault" or data.biome == "$biome_fungicave" then
-				self.weight = 3
+				self.weight = 2
 			end
 			return true
 		end,
@@ -678,9 +678,9 @@ enemy_perks = {
 		weight = 1,
 		priority = 25,
 		max = 1,
-		condition = function(self, data) return data.perks_to_give and data.level > 4 end,
+		condition = function(self, data) return data.perks_to_give and (data.level > 4 or data.is_boss) end,
 		func = function(self, entity_id, data)
-			data.perks_to_give = data.perks_to_give + 5
+			data.perks_to_give = data.perks_to_give + (data.is_boss and 10 or 5)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/drop_chest_on_death.lua"
 			})
@@ -693,10 +693,14 @@ enemy_perks = {
 		weight = 4,
 		priority = 4,
 		max = 3,
-		condition = function(self, data) if data.blood_perk then self.weight = 5 end return true end,
+		condition = function(self, data)
+			if data.blood_perk then self.weight = 5 end
+			return true
+		end,
 		func = function(self, entity_id, data)
 			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
 			if not dmc then return end
+			if ComponentGetValue2(dmc, "blood_material") == "blood_fading" then ComponentSetValue2(dmc, "blood_material", "blood") end
 			ComponentSetValue2(dmc, "blood_multiplier", ComponentGetValue2(dmc, "blood_multiplier") * 1.5)
 		end
 	},

@@ -83,7 +83,6 @@ hooks.new_eid = function(entity_id)
 		local is_boss = EntityHasTag(entity_id, "boss")
 		local x,y = EntityGetTransform(entity_id)
 		local biome = biome_index[DebugBiomeMapGetFilename(x, y)]
-		print(biome or DebugBiomeMapGetFilename(x,y))
 		local num = 0
 
 
