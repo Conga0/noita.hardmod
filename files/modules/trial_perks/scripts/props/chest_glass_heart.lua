@@ -12,17 +12,15 @@ local function drop_wand( x, y )
 		"data/entities/items/wand_level_02.xml",
 		"data/entities/items/wand_level_03.xml",
 		"data/entities/items/wand_level_04.xml",
-		-- these are way too OP imo
-		-- "data/entities/items/wand_level_05.xml",
-		-- "data/entities/items/wand_level_06.xml",
-		-- "data/entities/items/wand_level_10.xml",
+		"data/entities/items/wand_level_05.xml",
+		"data/entities/items/wand_level_06.xml",
 	}
 	-- 0-6 points based on hm depth, 0-4 based on completion speed
-	-- local hm_visits = tonumber( GlobalsGetValue( "HOLY_MOUNTAIN_VISITS", "0" ) )
-	-- if string.find( GameTextGetTranslatedOrNot( BiomeMapGetName( x, y ) ), "Lab" ) then
-	-- 	hm_visits = hm_visits + 1
-	-- end
-	local wand_tier_index = math.min( 4, #wand_tiers )
+	local hm_visits = tonumber( GlobalsGetValue( "HOLY_MOUNTAIN_VISITS", "0" ) )
+	if string.find( GameTextGetTranslatedOrNot( BiomeMapGetName( x, y ) ), "Lab" ) then
+		hm_visits = hm_visits + 1
+	end
+	local wand_tier_index = math.min( hm_visits, #wand_tiers )
 	local wand_lvl = wand_tier_index
 
 	local wand_entity = EntityLoad( wand_tiers[wand_tier_index],  x, y - 12 )
@@ -41,8 +39,10 @@ local function drop_wand( x, y )
 	wand:DetachSpells()
 
 	local preset_spell_count = 2
-	for i=1, preset_spell_count do
-		wand:RemoveSpellAtIndex( wand.capacity - ( preset_spell_count + i ) )
+	if wand:GetFreeSlotsCount() < preset_spell_count then
+		for i=1, preset_spell_count do
+			wand:RemoveSpellAtIndex( wand.capacity - ( preset_spell_count + i ) )
+		end
 	end
     wand:AddSpells( "HARDMOD_ALT_FIRE_ANYTHING", "HARDMOD_PARRY" )
 	wand:SetSprite( "mods/noita.hardmod/files/modules/trial_perks/gfx/items/wand_lasi.png", 6, 4, 18, 0 )
