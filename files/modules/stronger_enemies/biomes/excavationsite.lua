@@ -1,7 +1,7 @@
 dofile_once("mods/noita.hardmod/files/modules/stronger_enemies/patcher.lua")
 
 PatchEnemies(g_big_enemies, {
-  ["data/entities/animals/tank_super.xml"] = { ng = 2 },
+  ["data/entities/animals/tank_super.xml"] = { ng = 3 },
 })
 
 AddEnemies(g_small_enemies, {
@@ -25,4 +25,11 @@ AddEnemies(g_small_enemies, {
 		ngpluslevel = 2, prob = 0.09,
 		entity 	= "data/entities/animals/weakspirit.xml",
 	},
+})
+
+AddEnemies(g_big_enemies, {
+	{
+		ngpluslevel = 2, prob = 0.1,
+		entity = "data/entities/animals/tank.xml"
+	}
 })

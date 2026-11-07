@@ -11,6 +11,7 @@ local biomes = dofile_once("mods/noita.hardmod/lib/biome_index.lua")
 ---@field icon string? path to the perk's icon
 ---@field not_progress boolean? if true, perk won't show up in progress menu
 ---@field weight number? probability of the perk being pulled, default 10
+---@field biome_conditions table? custom condition functions that run if the target_enemy is in the keyed biome, if value is a number it will set the perk weight to that value
 ---@field priority number? priority for the order its shown above enemies' heads or in the inspect window, default 10
 ---@field max integer? max number of this perk an enemy can have
 ---@field condition function? if added, this function must return true, is passed the `data` table
@@ -60,11 +61,22 @@ end
 ---@type enemy_perk[]
 local enemy_perks = {}
 enemy_perks = {
+	--[[
+	{
+		id = "TEST_PERK",
+		name = "$hardmod_enemy_perks_test",
+		description = "Wow, what a great test perk!",
+		weight = 10,
+		condition = function(self, data) end,
+		func = function(self, holder, perk_entity)
+			GetGameEffectLoadTo(holder, "REGENERATION", true)
+		end
+	},--]]
 	{
 		id = "EXTRA_HP",
 		name = "$hardmod_eperk_extra_hp_name",
 		description = "$hardmod_eperk_extra_hp_desc",
-		weight = 8,
+		weight = 10,
 		condition = function(self, data) return data.dmc end,
 		func = function(self, entity_id, data)
 			ComponentSetValue2(data.dmc, "max_hp", ComponentGetValue2(data.dmc, "max_hp") * 1.5)
@@ -75,7 +87,7 @@ enemy_perks = {
 		id = "RECYCLE_HEALTH",
 		name = "$hardmod_eperk_recycle_health_name",
 		description = "$hardmod_eperk_recycle_health_desc",
-		weight = 8,
+		weight = 6,
 		priority = 6,
 		max = 1,
 		func = function(self, entity_id, data)
@@ -100,7 +112,7 @@ enemy_perks = {
 		id = "PROTECTOR",
 		name = "$hardmod_eperk_protector_name",
 		description = "$hardmod_eperk_protector_desc",
-		weight = 10,
+		weight = 8,
 		max = 1,
 		condition = function(self, data)
 			if not data.dmc then return end
@@ -118,7 +130,7 @@ enemy_perks = {
 		id = "DRY_SPELL",
 		name = "$hardmod_eperk_dry_spell_name",
 		description = "$hardmod_eperk_dry_spell_desc",
-		weight = 6,
+		weight = 5,
 		max = 1,
 		func = function(self, entity_id, data)
 			local x, y = EntityGetTransform(entity_id)
@@ -146,7 +158,7 @@ enemy_perks = {
 		id = "QUANTUM_CLONES",
 		name = "$hardmod_eperk_quantum_clones_name",
 		description = "$hardmod_eperk_quantum_clones_desc",
-		weight = 3,
+		weight = 2,
 		max = 5,
 		condition = function(self, data)
 			return data.level > 3 and not data.is_boss
@@ -232,7 +244,7 @@ enemy_perks = {
 		id = "THUNDERLORD",
 		name = "$hardmod_eperk_thunderlord_name",
 		description = "$hardmod_eperk_thunderlord_desc",
-		weight = 40,
+		weight = 4,
 		priority = 7,
 		max = 1,
 		condition = enemy_is_ranged_attack,
@@ -248,7 +260,7 @@ enemy_perks = {
 		id = "AEROLORD",
 		name = "$hardmod_eperk_aerolord_name",
 		description = "$hardmod_eperk_aerolord_desc",
-		weight = 0.5,
+		weight = 1,
 		max = 1,
 		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
@@ -301,12 +313,13 @@ enemy_perks = {
 		id = "ELECTRICITY",
 		name = "$perk_electricity",
 		description = "$hardmod_eperk_electricity_desc",
-		weight = 6,
+		weight = 5,
+		biome_conditions = {
+			fungal_caverns = 2,
+			vault = 2,
+		},
 		max = 1,
 		condition = function(self, data)
-			if data.biome == "vault" or data.biome == "fungal_caverns" then
-				self.weight = 2
-			end
 			return not is_projectile_immune(self, data)
 		end,
 		func = function(self, entity_id, data)
@@ -322,7 +335,7 @@ enemy_perks = {
 		id = "MAGIC_RESISTANCE",
 		name = "$hardmod_eperk_magic_resistance_name",
 		description = "$hardmod_eperk_magic_resistance_desc",
-		weight = 5,
+		weight = 6,
 		condition = function(self, data) return data.dmc end,
 		func = function(self, entity_id, data)
 			ComponentObjectSetValue2(data.dmc, "damage_multipliers", "projectile",
@@ -528,13 +541,15 @@ enemy_perks = {
 		id = "RATS_ON_DEATH",
 		name = "$hardmod_eperk_rats_on_death_name",
 		description = "$hardmod_eperk_rats_on_death_desc",
-		weight = 4,
+		weight = 3,
+		biome_conditions = {
+			snowy_depths = 6,
+			hiisi_base = 5,
+			temple_of_the_art = 2,
+		},
 		priority = 9,
 		max = 3,
-		condition = function(self, data)
-			if data.biome == "snowy_depths" or data.biome == "hiisi_base" then self.weight = 6 end
-			return data.level > 2
-		end,
+		condition = function(self, data) return data.level > 2 end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/rats_on_death.lua"
@@ -545,13 +560,11 @@ enemy_perks = {
 		id = "SKULLRATS_ON_DEATH",
 		name = "$hardmod_eperk_skullrats_on_death_name",
 		description = "$hardmod_eperk_skullrats_on_death_desc",
-		weight = 3,
+		weight = 2,
+		biome_conditions = { temple_of_the_art = 4 },
 		priority = 9,
 		max = 2,
-		condition = function(self, data)
-			if data.biome == "temple_of_the_art" then self.weight = 6 end
-			return data.level > 4
-		end,
+		condition = function(self, data) return data.level > 4 end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/skullrats_on_death.lua"
@@ -563,6 +576,7 @@ enemy_perks = {
 		name = "$hardmod_eperk_skullflys_name",
 		description = "$hardmod_eperk_skullflys_desc",
 		weight = 0.5,
+		biome_conditions = { temple_of_the_art = 1 },
 		priority = 9,
 		max = 3,
 		condition = function(self, data) return data.level > 7 or data.biome == "temple_of_the_art" end,
@@ -645,17 +659,6 @@ enemy_perks = {
 			})
 		end
 	},
-	--[[
-	{
-		id = "TEST_PERK",
-		name = "$hardmod_enemy_perks_test",
-		description = "Wow, what a great test perk!",
-		weight = 10,
-		condition = function(self, data) end,
-		func = function(self, holder, perk_entity)
-			GetGameEffectLoadTo(holder, "REGENERATION", true)
-		end
-	},--]]
 	-- {
 	-- 	id = "IMPERVIOUS",
 	-- 	name = "$hardmod_eperk_impervious_name",
@@ -756,8 +759,40 @@ for _,perk in ipairs(enemy_perks) do
 		end
 	end
 
+	if perk.biome_conditions then
+		local cond = perk.condition or function(...) return true end
+		perk.condition = function(self, data, ...)
+			local biome_condition = self.biome_conditions[data.biome]
+			local biome_condition_type = type(biome_condition)
+			if biome_condition_type == "number" then
+				self.weight = biome_condition
+			elseif biome_condition_type == "function" then
+				return biome_condition(self, data, ...) and cond(self,data, ...)
+			end
+			return cond(self, data, ...)
+		end
+	end
+
 	perk.func = perk.func or function(...) end
 end
+
+--[[
+local ignore_perks = {
+	HARDMOD_WORM_FLIGHT = true
+}
+local total_weight = 0
+local perks = {}
+for _,perk in ipairs(enemy_perks) do
+	if not ignore_perks[perk.id] then
+		perks[#perks+1] = {perk.id, perk.weight}
+		total_weight = total_weight + perk.weight
+	end
+end
+table.sort(perks, function(a,b) return a[2] > b[2] end)
+for _,perk in pairs(perks) do
+	print(("%s: %s%%"):format(perk[1], perk[2]*100/total_weight))
+end
+--]]
 
 eperk_utils = dofile_once("mods/noita.hardmod/files/modules/enemy_perks/eperk_utilities.lua")(enemy_perks) ---@type eperk_utils
 

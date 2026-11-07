@@ -1,0 +1,22 @@
+<Entity>
+	<LifetimeComponent lifetime="360"></LifetimeComponent>
+
+	<LoadEntitiesComponent
+        count.min="1"
+        count.max="1"
+        kill_entity="0"
+        entity_file="data/entities/particles/image_emitters/magical_symbol_fast.xml"
+	></LoadEntitiesComponent>
+
+	<Entity>
+		<InheritTransformComponent></InheritTransformComponent>
+		<MagicConvertMaterialComponent
+			from_material_array="rock_hard,gold"
+			to_material_array="rock_static_cursed,rock_static_cursed"
+			steps_per_frame="2"
+			loop="0"
+			is_circle="1"
+			radius="300"
+		></MagicConvertMaterialComponent>
+	</Entity>
+</Entity>

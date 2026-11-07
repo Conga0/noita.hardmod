@@ -36,7 +36,7 @@ local hooks = {
 		["LASER"] = { mana = 15 },
 		["TENTACLE"] = { mana = 40, spawn_level = "5,6", spawn_probability = "0.5,0.5" },
 		["TENTACLE_TIMER"] = { mana = 40, spawn_level = "5,6", spawn_probability = "0.5,0.5" },
-		["BUCKSHOT"] = { mana = 20 },
+		["BUCKSHOT"] = { mana = 40 },
 		["MIST_SLIME"] = { mana = 50 },
 		["LIFETIME"] = { mana = 20 },
 		["LIFETIME_DOWN"] = { mana = 15 },

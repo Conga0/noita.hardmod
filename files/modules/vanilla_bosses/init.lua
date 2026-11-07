@@ -66,10 +66,10 @@ for enemy,data in pairs(edit) do
 	for f in nxml.edit_file("data/entities/animals/"..enemy..".xml") do
 		local file = data.from_base and f:first_of("Base") or f
 
-		local tags = file.attr.tags or ""
+		local tags = f.attr.tags or file.attr.tags or "boss"
 		if not (','..tags..','):find(",boss,") then
 			if #tags == 0 then tags = "boss" else tags = table.concat({tags,"boss"}, ',') end
-			file.attr.tags = tags
+			f.attr.tags = tags
 		end
 		if data.tags then
 			file:set("tags", tags..','..table.concat(data.tags, ",")) --should always have boss tag at least thanks to above code

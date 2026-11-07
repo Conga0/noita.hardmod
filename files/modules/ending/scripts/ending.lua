@@ -36,8 +36,8 @@ for _,module in pairs(integral_modules) do
 	end
 end
 
-if give_reward then
-	AddFlagPersistent("hardmod_game_completed")
-else
-	AddFlagPersistent("hardmod_game_fool_completed")
+AddFlagPersistent(give_reward and "hardmod_game_completed" or "hardmod_false_game_completed")
+
+if GameHasFlagRun("hardmod_hell") then
+	AddFlagPersistent(give_reward and "hardmod_hell_completed" or "hardmod_false_hell_completed")
 end

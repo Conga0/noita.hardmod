@@ -12,9 +12,11 @@ local function in_world(eid)
 	return comp and true or false
 end
 
+local is_hellmode = GameHasFlagRun("hardmod_hell")
+
 -- tinker stone becomes TWWE
 local wandstone = EntityGetInRadiusWithTag( x, y, 128, "hardmod_wandstone" )[1]
-if wandstone ~= nil and in_world(wandstone) then
+if wandstone ~= nil and in_world(wandstone) and not is_hellmode then
 	local sx, sy = EntityGetTransform( wandstone )
 
 	if get_distance(x, y, sx, sy) < 64 then
@@ -91,10 +93,13 @@ end
 
 if sac_brimstone and sac_cheese and sac_thunderstone and not sac_all then
 	GameAddFlagRun("HARDMOD_SACRIFICE_ALL")
-	
-	dofile_once("data/scripts/perks/perk.lua")
-	perk_spawn(x, y - 30, "HARDMOD_ITEM_IMMUNITIES", true)
+	AddFlagPersistent("HARDMOD_ACHIEVEMENT_SACRIFICE_ITEMS")
 
-	EntityLoad("data/entities/particles/image_emitters/magical_symbol.xml", x, y - 30)
-	GamePlaySound("data/audio/Desktop/projectiles.snd", "player_projectiles/crumbling_earth/create", x, y)
+	if not is_hellmode then
+		dofile_once("data/scripts/perks/perk.lua")
+		perk_spawn(x, y - 30, "HARDMOD_ITEM_IMMUNITIES", true)
+
+		EntityLoad("data/entities/particles/image_emitters/magical_symbol.xml", x, y - 30)
+		GamePlaySound("data/audio/Desktop/projectiles.snd", "player_projectiles/crumbling_earth/create", x, y)
+	end
 end
