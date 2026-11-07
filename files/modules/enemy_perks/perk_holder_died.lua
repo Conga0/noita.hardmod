@@ -1,5 +1,5 @@
 function death(damage_type_bit_field, message, attacker, drop_items)
-	if EntityHasTag(entity_thats_responsible, "player_unit") or EntityHasTag(entity_thats_responsible, "polymorphed_player") then
+	if EntityHasTag(attacker, "player_unit") or EntityHasTag(attacker, "polymorphed_player") then
 		for _,child in ipairs(EntityGetAllChildren(GetUpdatedEntityID()) or {}) do
 			if EntityGetName(child) == "hardmod.enemy_perks" then
 				for _,varcomp in ipairs(EntityGetComponent(child, "VariableStorageComponent") or {}) do
@@ -7,6 +7,7 @@ function death(damage_type_bit_field, message, attacker, drop_items)
 						local new_perk_discovered
 						for perk_id in ComponentGetValue2(varcomp, "value_string"):gmatch("([^,]+)") do
 							local persistent_flag_name = "perk_picked_enemyperk_"..perk_id:lower()
+							print(persistent_flag_name)
 							if not HasFlagPersistent(persistent_flag_name) then
 								new_perk_discovered = true
 								AddFlagPersistent(persistent_flag_name)
