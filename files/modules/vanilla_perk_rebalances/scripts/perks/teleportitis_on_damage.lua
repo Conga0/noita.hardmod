@@ -2,6 +2,7 @@
 function damage_received( damage, desc, entity_who_caused, is_fatal )
     if #EntityGetWithTag( "hardmod_rewind_marker" ) == 0 then return end
     if entity_who_caused == nil then return end
+    if damage <= 0 then return end
 
     local player = GetUpdatedEntityID()
     local x, y = EntityGetTransform( player )
