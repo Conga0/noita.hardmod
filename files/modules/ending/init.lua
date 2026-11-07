@@ -63,7 +63,7 @@ utils.patchifile("data/entities/animals/boss_centipede/ending/sampo_start_ending
 	{
 		from = [[GameOnCompleted()]],
 		insert_before = [[
-			AddFlagPersistent("hardmod_game_completed")
+			dofile("mods/noita.hardmod/files/modules/ending/scripts/ending.lua")
 		]]
 	}
 })
