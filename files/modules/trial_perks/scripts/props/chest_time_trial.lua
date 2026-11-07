@@ -12,18 +12,19 @@ local function drop_wand( x, y )
 		"data/entities/items/wand_level_02.xml",
 		"data/entities/items/wand_level_03.xml",
 		"data/entities/items/wand_level_04.xml",
-		"data/entities/items/wand_level_05.xml",
-		"data/entities/items/wand_level_06.xml",
-		"data/entities/items/wand_level_10.xml",
+		-- these are way too OP imo
+		-- "data/entities/items/wand_level_05.xml",
+		-- "data/entities/items/wand_level_06.xml",
+		-- "data/entities/items/wand_level_10.xml",
 	}
 	-- 0-6 points based on hm depth, 0-4 based on completion speed
-	local hm_visits = tonumber( GlobalsGetValue( "HOLY_MOUNTAIN_VISITS", "0" ) )
-	if string.find( GameTextGetTranslatedOrNot( BiomeMapGetName( x, y ) ), "Lab" ) then
-		hm_visits = hm_visits + 1
-	end
+	-- local hm_visits = tonumber( GlobalsGetValue( "HOLY_MOUNTAIN_VISITS", "0" ) )
+	-- if string.find( GameTextGetTranslatedOrNot( BiomeMapGetName( x, y ) ), "Lab" ) then
+	-- 	hm_visits = hm_visits + 1
+	-- end
 	local chest_tier = utils.GetInternalInt( chest_id, "hardmod_trophy_chest_tier" ) or 1
-	local wand_tier_index = math.min( hm_visits + ( chest_tier - 1 ), #wand_tiers )
-	local wand_lvl = ( hm_visits - 1 ) + ( 2 * ( chest_tier - 1 ) )
+	local wand_tier_index = math.min( ( chest_tier - 1 ), #wand_tiers )
+	local wand_lvl = ( 2 * ( chest_tier - 1 ) )
 
 	local wand_entity = EntityLoad( wand_tiers[wand_tier_index],  x, y - 12 )
 	local EZWand = dofile_once( "mods/noita.hardmod/lib/ezwand.lua" )
