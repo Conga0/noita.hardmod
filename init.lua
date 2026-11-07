@@ -323,6 +323,7 @@ end
 
 function OnWorldPreUpdate()
 	gd.frame = GameGetFrameNum()
+	SetRandomSeed(-2497, 492-gd.frame) --maybe fixes stale-randomness issues?
 	check_entities()
 
 	for _,func in ipairs(hooks.pre_update) do

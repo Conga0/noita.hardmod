@@ -44,6 +44,12 @@ local blood_perk_check = function(self, data)
 	return not (data.blood_perk or data.is_boss or EntityGetName(data.target_enemy) == "$animal_wizard_swapper")
 end
 
+local function increment_weight_with_level(self, data, multiplier)
+	multiplier = multiplier or 0.5
+	self.weight = self.weight + data.level*multiplier
+	return true
+end
+
 -- The `data` table provides `target_enemy` (eid), `already_held_perks` (perk_id[]), `player` (eid) and `player_poly_identity` (table)
 
 ---@type enemy_perk[]
@@ -177,7 +183,7 @@ enemy_perks = {
 		max = 1,
 		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
-			GetGameEffectLoadTo(entity_id, "PROTECTION_ELECTRICITY", true)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_ELECTRICITY", false)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_shot = dir.."scripts/thunderlord_on_shot.lua",
 				execute_every_n_frame = -1,
@@ -192,7 +198,7 @@ enemy_perks = {
 		max = 1,
 		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
-			GetGameEffectLoadTo(entity_id, "PROTECTION_FIRE", true)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_FIRE", false)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_shot = dir.."scripts/pyrelord_on_shot.lua",
 				execute_every_n_frame = -1,
@@ -206,7 +212,6 @@ enemy_perks = {
 		weight = 2,
 		priority = 15,
 		max = 1,
-		condition = function(self, data) return not data.kamikaze end,
 		func = function(self, entity_id, data)
 			-- make the enemy explode on death
 			EntityAddComponent2(entity_id, "LuaComponent", {
@@ -240,7 +245,7 @@ enemy_perks = {
 		max = 1,
 		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
-			GetGameEffectLoadTo(entity_id, "KNOCKBACK_IMMUNITY", true)
+			GetGameEffectLoadTo(entity_id, "KNOCKBACK_IMMUNITY", false)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_shot = dir.."scripts/aerolord_on_shot.lua",
 				execute_every_n_frame = -1,
@@ -307,9 +312,7 @@ enemy_perks = {
 		weight = 3,
 		priority = 7,
 		max = 1,
-		condition = function(self, data)
-			return enemy_is_ranged_attack(self, data)
-		end,
+		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_shot = dir.."scripts/curser_shot.lua",
@@ -399,12 +402,14 @@ enemy_perks = {
 	},
 	{
 		id = "EXPLOSION_IMMUNITY",
-		name = "$hardmod_eperk_explosion_immunity_name",
+		name = "$perk_protection_explosion",
 		description = "$hardmod_eperk_explosion_immunity_desc",
 		weight = 5,
 		priority = 3,
 		max = 1,
-		condition = function(self, data) return GameGetGameEffectCount(data.target_enemy, "PROTECTION_EXPLOSION") == 0 end,
+		condition = function(self, data)
+			increment_weight_with_level(self, data)
+			return GameGetGameEffectCount(data.target_enemy, "PROTECTION_EXPLOSION") == 0 end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_EXPLOSION", false)
 		end
@@ -417,6 +422,7 @@ enemy_perks = {
 		priority = 3,
 		max = 1,
 		condition = function(self, data)
+			increment_weight_with_level(self, data)
 			return GameGetGameEffectCount(data.target_enemy, "PROTECTION_POLYMORPH") == 0 and not (EntityHasTag(data.target_enemy, "polymorphable_NOT") or data.boss)
 		end,
 		func = function(self, entity_id, data)
@@ -475,7 +481,7 @@ enemy_perks = {
 		weight = 2,
 		max = 1,
 		condition = function(self, data)
-			return #data.already_held_perks > 0 and data.level >= 5
+			return #data.already_held_perks > 0 and data.level > 4
 		end,
 		func_handler = function(self, entity_id, root, spr_comps)
 			for _,spr_comp in ipairs(spr_comps) do
@@ -495,36 +501,37 @@ enemy_perks = {
 			end
 		end
 	},
-	{
-		id = "ARMED",
-		name = "$hardmod_eperk_armed_name",
-		description = "$hardmod_eperk_armed_desc",
-		weight = 7,
-		max = 0,
-		condition = function(self, data)
-			return data.level > 1 --can hold gun
-		end,
-		func = function(self, entity_id, data)
-			local wands = dofile_once(dir.."scripts/armed_wands_list.lua")
-			local new_data = utils.deepcopy(data)
-			new_data.perk = self
-			local wand_data = utils.ConditionalRandomFromTable(wands, new_data)
-			if not wand_data then return end
+	--{
+	--	id = "ARMED",
+	--	name = "$hardmod_eperk_armed_name",
+	--	description = "$hardmod_eperk_armed_desc",
+	--	weight = 7,
+	--	max = 0,
+	--	condition = function(self, data)
+	--		return data.level > 1 --can hold gun
+	--	end,
+	--	func = function(self, entity_id, data)
+	--		local wands = dofile_once(dir.."scripts/armed_wands_list.lua")
+	--		local new_data = utils.deepcopy(data)
+	--		new_data.perk = self
+	--		local wand_data = utils.ConditionalRandomFromTable(wands, new_data)
+	--		if not wand_data then return end
 
-			local wand = EntityLoad("", data.x, data.y)
-			GamePickUpInventoryItem(entity_id, wand)
-		end,
-	},
+	--		local wand = EntityLoad("", data.x, data.y)
+	--		GamePickUpInventoryItem(entity_id, wand)
+	--	end,
+	--},
 	{
 		id = "ELECTRICITY",
 		name = "$perk_electricity",
 		description = "$hardmod_eperk_electricity_desc",
-		weight = 8,
+		weight = 6,
 		max = 1,
 		condition = function(self, data)
 			if data.biome == "$biome_vault" or data.biome == "$biome_fungicave" then
-				self.weight = 3
+				self.weight = 2
 			end
+			return true
 		end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_ELECTRICITY", false)
@@ -610,11 +617,11 @@ enemy_perks = {
 		id = "RATS_ON_DEATH",
 		name = "$hardmod_eperk_rats_on_death_name",
 		description = "$hardmod_eperk_rats_on_death_desc",
-		weight = 3,
+		weight = 4,
 		priority = 9,
 		max = 3,
 		condition = function(self, data)
-			if data.biome == "$biome_snowcave" or data.biome == "$biome_snowcastle" then self.weight = 5 end
+			if data.biome == "$biome_snowcave" or data.biome == "$biome_snowcastle" then self.weight = 6 end
 			return data.level > 2
 		end,
 		func = function(self, entity_id, data)
@@ -635,9 +642,98 @@ enemy_perks = {
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = "mods/noita.hardmod/files/modules/enemy_perks/scripts/spawn_shadow_revive_orb.lua",
 			})
+			EntityAddComponent2(entity_id, "VariableStorageComponent", {_tags = "no_gold_drop"})
+			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
+			if not dmc then return end
+			ComponentSetValue2(dmc, "ragdoll_fx_forced", "DISINTEGRATED")
 		end
 	},
+	{
+		id = "FREEZE_IMMUNITY",
+		name = "$hardmod_eperk_freeze_immunity_name",
+		description = "$hardmod_eperk_freeze_immunity_desc",
+		weight = 4,
+		priority = 3,
+		max = 1,
+		condition = function(self, data)
+			increment_weight_with_level(self, data)
+			return GameGetGameEffectCount(data.target_enemy, "PROTECTION_FREEZE") == 0
+		end,
+		func = function(self, entity_id, data)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_FREEZE", false)
+		end
+	},
+	{
+		id = "LEECH",
+		name = "$hardmod_eperk_leech_name",
+		description = "$hardmod_eperk_leech_desc",
+		weight = 3,
+		priority = 6,
+		max = 1,
+		condition = function(self, data) return data.level > 1 end,
+		func = function(self, entity_id, data)
+			EntityAddChild(data.handler, EntityLoad(dir.."entities/leech.xml", data.x, data.y))
+		end
+	},
+	{
+		id = "BOUNTY",
+		name = "$hardmod_eperk_bounty_name",
+		description = "$hardmod_eperk_bounty_desc",
+		weight = 1,
+		priority = 30,
+		max = 1,
+		condition = function(self, data) return data.perks_to_give and (data.level > 4 or data.is_boss) end,
+		func = function(self, entity_id, data)
+			data.perks_to_give = data.perks_to_give + (data.is_boss and 10 or 5)
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_death = dir.."scripts/drop_chest_on_death.lua"
+			})
+		end
+	},
+	{
+		id = "MORE_BLOOD",
+		name = "$perk_global_gore",
+		description = "$hardmod_eperk_more_blood_desc",
+		weight = 4,
+		priority = 4,
+		max = 3,
+		condition = function(self, data)
+			if data.blood_perk then self.weight = 5 end
+			return true
+		end,
+		func = function(self, entity_id, data)
+			local dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
+			if not dmc then return end
+			if ComponentGetValue2(dmc, "blood_material") == "blood_fading" then ComponentSetValue2(dmc, "blood_material", "blood") end
+			ComponentSetValue2(dmc, "blood_multiplier", ComponentGetValue2(dmc, "blood_multiplier") * 1.5)
+		end
+	},
+	--{ --ill implement these two later
+	--	id = "POLYMORPH_AURA",
+	--	name = "$hardmod_eperk_polymorph_aura_name",
+	--	description = "$hardmod_eperk_polymorph_aura_desc",
+	--	weight = 3,
+	--	max = 0,
+	--	condition = function(self, data) self.weight = 5*0.9^(data.level) return true end, --diminishing weight, appear more early
+	--	func = function(self, entity_id, data)
+	--		EntityAddChild(entity_id, EntityLoad(dir.."entities/polymorph_aura", data.x, data.y))
+	--	end
+	--},
+	--{
+	--	id = "UNFINISHED_BUSINESS",
+	--	name = "$hardmod_eperk_unfinited_business_name",
+	--	description = "$hardmod_eperk_unfinited_business_desc",
+	--	weight = 2,
+	--	max = 0,
+	--	func = function(self, entity_id, data)
+	--		EntityAddChild(entity_id, EntityLoad(dir.."entities/polymorph_aura", data.x, data.y))
+	--	end
+	--},
 }
+
+--local perk_incompatibilities = {
+--	{"KAMIKAZE", "UNFINISHED_BUSINESS"},
+--}
 
 for _,perk in ipairs(enemy_perks) do
 	local id = perk.id

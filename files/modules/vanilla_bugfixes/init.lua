@@ -493,7 +493,7 @@ function hooks.world_init()
 	end
 
 	--Enemies: We have no ability to read from or write to enemy stats, as they are stored within `Noita/save_stats/`, and we do not have an API function to interact
-	-- with them like we do `Noita/save00/persistent/flags/` via `HasPersistentFlag()`/`AddPersistentFlag()`.
+	-- with them like we do `Noita/save00/persistent/flags/` via `HasFlagPersistent()`/`AddFlagPersistent()`.
 end
 --This approach might theoretically be undesirable for a mod that intentionally has things discovered "this run" while not permanently marking them as discovered.
 -- If such a case were to occur, I may end up taking out this fix and relegating it to my Extended Fixes mod, we shall see.
