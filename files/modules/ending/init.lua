@@ -35,7 +35,7 @@ for file in nxml.edit_file("data/entities/animals/boss_centipede/sampo.xml") do
 	file:create_child("LuaComponent", {
 		script_interacting = "mods/noita.hardmod/files/modules/ending/sampo_logic.lua",
 		script_source_file = "mods/noita.hardmod/files/modules/ending/sampo_logic.lua",
-		execute_every_n_frame = 120,
+		execute_every_n_frame = 1,
 	})
 end
 

@@ -3,11 +3,45 @@
 	<SpriteComponent
 		image_file="mods/noita.hardmod/files/modules/ending/gfx/sampo_orb_indicator_1.png"
 		emissive="1"
+		additive="1"
+		alpha="0"
+		offset_x="7.5"
+		offset_y="9.5"
 	></SpriteComponent>
 
+<!-- Nuh I'm not using this when it can just be handled on the sampo_logic.lua -S -->
+<!-- 
 	<LuaComponent
 		script_source_file="mods/noita.hardmod/files/modules/ending/scripts/orb_glyph_scan.lua"
 		execute_every_n_frame="60"
 	></LuaComponent>
+-->
+
+	<ParticleEmitterComponent 
+		_tags="enabled_in_world,enabled_in_hand"
+		emitted_material_name="spark_blue"
+		gravity.y="0.0"
+		lifetime_min="1"
+		lifetime_max="3"
+		x_vel_min="-5"
+		x_vel_max="5"
+		y_vel_min="-20"
+		y_vel_max="5"
+		count_min="2"
+		count_max="2"
+		render_on_grid="1"
+		fade_based_on_lifetime="1"
+		cosmetic_force_create="1"
+		collide_with_grid="0"
+		airflow_force="0.151"
+		airflow_time="1.01"
+		airflow_scale="0.03"
+		emission_interval_min_frames="5"
+		emission_interval_max_frames="5"
+		emit_cosmetic_particles="1"
+		area_circle_radius.max="5"
+		render_back="1"
+		is_emitting="1" >
+	</ParticleEmitterComponent>
 
 </Entity>
