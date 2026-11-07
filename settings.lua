@@ -901,6 +901,7 @@ function ModSettingsGui( gui, in_main_menu )
 
 	local modules = {}
 	for i,module in ipairs( module_data ) do
+		module.scope = MOD_SETTING_SCOPE_NEW_GAME
 		if module.force_enable_state == nil then
 			table.insert( modules, module )
 		end

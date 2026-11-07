@@ -28,8 +28,8 @@
 
 local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua")---@type utils
 
-local y,m,d = GameGetDateAndTimeUTC()
-local evil_level = (y * 31469 + m * 929 + d * 541) % 100 + 1
+local year,month,day,hour,minute,second = GameGetDateAndTimeUTC()
+local evil_level = (year * 31469 + month * 929 + day * 541) % 100 + 1
 
 local months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }
 
@@ -39,9 +39,9 @@ local lines_of_code = "21,633"---Updated by `scripts/build.js`, do not edit or f
 local splashes = {
 	lines_of_code.." Lines Of Code",
 	"Evil Level Today: " .. evil_level .. "%",
-	"Today is "..months[m].." "..utils.EnglishOrd(d)..", "..y,
-	"2K"..(y % 100),
-	"(c) Hämis Corp "..(y + 10),
+	"Today is "..months[month].." "..utils.EnglishOrd(day)..", "..year,
+	"2K"..(year % 100),
+	"(c) Hämis Corp "..(year + 10),
 	"Dunk is bald",
 	"Now atleast 1% harder!",
 	"I hope you like dying!",
@@ -104,10 +104,23 @@ local splashes = {
 	"\\^-^/",
 	"\\m/ d(-_-)b",
 	"ok who broke multicast",
+	"i bet it was yui",
 	"harmod",
 	"pollen is stored in the hamis",
 	"Featuring mechanics Apotheosis would shamelessly steal 3 years prior",
+	"Happy Hallow- what? What do you mean the deadline changed??",
+	"Happy Month-in-between-halloween-and-christmas!",
+	"We have so much left to sing!",
+	"More updates to come!!",
+	"We even threw in a few vanilla bugfixes",
+	"",
+	"They said we could never make a good mod after Fairmod!\nThey might be right...",
+	"N\no\nw\n \nw\ni\nt\nh\n \nv\ne\nr\nt\ni\nc\na\nl\ni\nt\ny\n!",
+	"We killed your faves!",
 }
+
+--local seed = second*minute*hour/day*year
+--math.randomseed(seed)
 
 local cool_mods = {
 	"Fairmod",

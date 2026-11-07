@@ -72,6 +72,7 @@ utils.modifile(
 	[[local teleport_back_x = 190]],
 	[[local teleport_back_x = 150]]
 )
+utils.modifile("data/entities/buildings/teleport_meditation_cube_return.xml", [[target.x="190"]], [[target.x="150"]])
 
 
 -- Make HM not dug out by Lukki or Worms
