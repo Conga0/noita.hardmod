@@ -37,9 +37,9 @@ end
 
 GlobalsSetValue(leak_name, "1")
 
-function death(damage_type_bit_field, message, attacker, drop_items)
-	print(("DIED!\ndamage_type_bit_field: %s\nmessage: %s\nattacker: %s\nframe: %s"):format(damage_type_bit_field, message, attacker, GameGetFrameNum()))
-	if attacker then
-		print(("ATTACKER INFO:\nname: [%s]\npath: [%s]"):format(EntityGetName(attacker), EntityGetFilename(attacker)))
-	end
-end
+--function death(damage_type_bit_field, message, attacker, drop_items)
+--	print(("DIED!\ndamage_type_bit_field: %s\nmessage: %s\nattacker: %s\nframe: %s"):format(damage_type_bit_field, message, attacker, GameGetFrameNum()))
+--	if attacker then
+--		print(("ATTACKER INFO:\nname: [%s]\npath: [%s]"):format(EntityGetName(attacker), EntityGetFilename(attacker)))
+--	end
+--end
