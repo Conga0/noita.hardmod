@@ -1,0 +1,13 @@
+<Entity>
+	<InheritTransformComponent/>
+
+	<SpriteComponent
+		offset_x = "0"
+		offset_y = "0"
+		image_file = "mods/noita.hardmod/files/modules/enemy_perks/gfx/leech_bite.xml"
+		z_index = "-1.1"
+		never_ragdollify_on_death = "1"
+		additive = "1"
+		kill_entity_after_finished = "1"
+	/>
+</Entity>

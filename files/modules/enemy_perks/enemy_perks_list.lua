@@ -45,7 +45,7 @@ local blood_perk_check = function(self, data)
 end
 
 local function increment_weight_with_level(self, data, multiplier)
-	multiplier = multiplier or 0.4
+	multiplier = multiplier or 0.5
 	self.weight = self.weight + data.level*multiplier
 	return true
 end
@@ -617,11 +617,11 @@ enemy_perks = {
 		id = "RATS_ON_DEATH",
 		name = "$hardmod_eperk_rats_on_death_name",
 		description = "$hardmod_eperk_rats_on_death_desc",
-		weight = 3,
+		weight = 4,
 		priority = 9,
 		max = 3,
 		condition = function(self, data)
-			if data.biome == "$biome_snowcave" or data.biome == "$biome_snowcastle" then self.weight = 5 end
+			if data.biome == "$biome_snowcave" or data.biome == "$biome_snowcastle" then self.weight = 6 end
 			return data.level > 2
 		end,
 		func = function(self, entity_id, data)
@@ -663,24 +663,24 @@ enemy_perks = {
 			GetGameEffectLoadTo(entity_id, "PROTECTION_FREEZE", false)
 		end
 	},
-	--{ --waiting on reply from spoop on icon
-	--	id = "HEALTH_PARASITE",
-	--	name = "$hardmod_eperk__name",
-	--	description = "$hardmod_eperk__desc",
-	--	weight = 4,
-	--	priority = 2,
-	--	max = 1,
-	--	condition = function(self, data) return GameGetGameEffectCount(data.target_enemy, "PROTECTION_FREEZE") == 0 end,
-	--	func = function(self, entity_id, data)
-	--		GetGameEffectLoadTo(entity_id, "PROTECTION_FREEZE", false)
-	--	end
-	--},
+	{
+		id = "LEECH",
+		name = "$hardmod_eperk_leech_name",
+		description = "$hardmod_eperk_leech_desc",
+		weight = 3,
+		priority = 6,
+		max = 1,
+		condition = function(self, data) return data.level > 1 end,
+		func = function(self, entity_id, data)
+			EntityAddChild(data.handler, EntityLoad(dir.."entities/leech.xml", data.x, data.y))
+		end
+	},
 	{
 		id = "BOUNTY",
 		name = "$hardmod_eperk_bounty_name",
 		description = "$hardmod_eperk_bounty_desc",
 		weight = 1,
-		priority = 25,
+		priority = 30,
 		max = 1,
 		condition = function(self, data) return data.perks_to_give and (data.level > 4 or data.is_boss) end,
 		func = function(self, entity_id, data)

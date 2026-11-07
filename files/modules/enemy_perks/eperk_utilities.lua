@@ -96,6 +96,7 @@ function utilities.give_enemy_perks(entity_id, perks_to_give, data)
 		enemy_perks_handler = EntityLoad("mods/noita.hardmod/files/modules/enemy_perks/handler.xml", x, y)
 		EntityAddChild(entity_id, enemy_perks_handler)
 	end
+	data.handler = enemy_perks_handler
 
 	local has_death_handler
 	for _,luacomp in ipairs(EntityGetComponent(entity_id, "LuaComponent") or {}) do
@@ -130,7 +131,7 @@ function utilities.give_enemy_perks(entity_id, perks_to_give, data)
 	if perks_to_give_type == "number" then
 		data.perks_to_give = perks_to_give
 		while data.perks_to_give > 0 do
-			local perk = utils.ConditionalRandomFromTable(enemy_perks, data)
+			local perk = utils.ConditionalRandomFromTable(utils.deepcopy(enemy_perks), data)
 			if not perk then return end
 			perk:func(entity_id, data)
 			selected_perks[#selected_perks+1] = perk
