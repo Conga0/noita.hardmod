@@ -72,34 +72,10 @@ if HasFlagPersistent("hardmod_game_completed") then
 	goldify_wands()
 end
 
--- I fucking hate this shit why does it not work???????????????
--- local function patch_material_hint()
---   for file in nxml.edit_file("data/biome/_pixel_scenes.xml") do
---     local root = "mods/noita.hardmod/files/modules/ending/gfx/"
-
---     local scenes = file:first_of("mBufferedPixelScenes")
---     if not scenes then return end
-    
---     scenes:create_child("PixelScene", {
---       DEBUG_RELOAD_ME = false, clean_area_before = true,
---       skip_biome_checks = true, skip_edge_textures = false,
---       material_filename = root.."ending_materials_hint.png",
---       background_filename = "",
---       colors_filename = "",
---       pos_x = 3430, pos_y = 13103,
---     })
-
---     scenes:create_child("PixelScene", {
---       DEBUG_RELOAD_ME = false, clean_area_before = true,
---       skip_biome_checks = true, skip_edge_textures = false,
---       material_filename = root.."ending_materials_hint_right.png",
---       background_filename = "",
---       colors_filename = "",
---       pos_x = 3430 + 160, pos_y = 13103,
---     })
---   end
--- end
-
--- patch_material_hint()
-
-return {}
+return {
+	player_spawned = function(player, new_run)
+		if new_run and not ModSettingGet("noita.hardmod.for_the_worthy.disabled") then
+			dofile_once("mods/noita.hardmod/files/modules/for_the_worthy/scripts/spawn_perk.lua")
+		end
+	end
+}

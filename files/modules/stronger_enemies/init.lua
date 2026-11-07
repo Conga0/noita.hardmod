@@ -9,6 +9,7 @@ utils.AddEnemyToProgress("hardmod_mummy", "icer")
 local function patch_spawn_rules()
 	local patch_biomes = {
 		"coalmine_alt",
+		"coalmine",
 		"crypt",
 		"desert",
 		"excavationsite",

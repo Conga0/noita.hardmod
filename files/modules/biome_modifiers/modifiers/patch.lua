@@ -281,6 +281,19 @@ end
 function apply_modifier() end
 function apply_modifier_if_has_none() end
 
+local function patch_remove_mountain_hall()
+	for _,list in pairs(biomes) do
+		for idx,biome in ipairs(list) do
+			if biome == "mountain_hall" then
+				table.remove(list, idx)
+				return
+			end
+		end
+	end
+end
+
+patch_remove_mountain_hall()
+
 AddModifiers({ biome_modifier_cosmetic_freeze, biome_modifier_fog_of_war_clear_at_player })
 PatchModifiers({
 	FUNGAL = { category = "alternative" },

@@ -37,6 +37,8 @@ local modules = {
 	"no_more_max_hp_cheesing",
 	"phantom_nemesis",
 	"alt_fire_anything",
+	-- TODO: rename "ending" to "core", since now it also spawns the For The Worthy perk?
+	-- might also add more stuff things
 	"ending",
 	"credits",
 	"nerf_vanilla_cheeses",
@@ -54,14 +56,15 @@ local modules = {
 	"polymorph_gui",
 	"vanilla_bugfixes",
 	"spell_variety",
+	"for_the_worthy",
 }
 
 local force_enable_state = {
 	test_module_dont_run = false,
 	example = false,
+	-- Replaces vanilla credits
 	credits = true,
 }
-
 
 local enabled_modules = {}
 for _,module in ipairs(modules) do

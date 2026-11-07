@@ -10,8 +10,8 @@ return {
 			sprite              = "mods/noita.hardmod/files/modules/spell_variety/gfx/ui_gfx/spells/echo_shot.png",
 			related_projectiles	= { "mods/noita.hardmod/files/modules/spell_variety/entities/spells/echo_shot.xml" },
 			type 		        = ACTION_TYPE_PROJECTILE,
-			spawn_level         = "0,1,2,3",
-			spawn_probability   = "0.4,0.5,0.8,0.9",
+			spawn_level         = "2,3,4",
+			spawn_probability   = "0.4,0.6,0.6",
 			price               = 130,
 			mana                = 23,
 			action = function()
@@ -29,8 +29,8 @@ return {
 			sprite              = "mods/noita.hardmod/files/modules/spell_variety/gfx/ui_gfx/spells/echo_shot_timer.png",
 			related_projectiles	= { "mods/noita.hardmod/files/modules/spell_variety/entities/spells/echo_shot.xml" },
 			type 		        = ACTION_TYPE_PROJECTILE,
-			spawn_level         = "1,2,3",
-			spawn_probability   = "0.4,0.5,0.5",
+			spawn_level         = "2,3,4",
+			spawn_probability   = "0.3,0.5,0.5",
 			price               = 160,
 			mana                = 35,
 			action = function()

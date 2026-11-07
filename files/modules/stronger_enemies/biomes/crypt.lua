@@ -30,4 +30,8 @@ AddEnemies(g_big_enemies, {
 		prob = 0.15,
 		entity = "mods/noita.hardmod/files/modules/stronger_enemies/entities/hardmod_wizard_confusion.xml"
 	},
+	{
+		ngpluslevel = 2, prob = 0.08,
+		entity 	= "data/entities/buildings/snowcrystal.xml"
+	},
 })

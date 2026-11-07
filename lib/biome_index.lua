@@ -51,6 +51,7 @@ local simple_ids = { ---@class biome_path_to_simple_id
 	["data/biome/tower/solid_wall_tower_9.xml"] = "tower",
 	["data/biome/tower/solid_wall_tower_10.xml"] = "tower",
 
+	["data/biome/pyramid.xml"] = "pyramid",
 	["data/biome/teleroom.xml"] = "fast_travel",
 	["data/biome/liquidcave.xml"] = "ancient_lab",
 	["data/biome/the_sky.xml"] = "sky",
