@@ -247,7 +247,15 @@ enemy_perks = {
 		weight = 4,
 		priority = 7,
 		max = 1,
-		condition = enemy_is_ranged_attack,
+		condition = function(self, data)
+			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(data.target_enemy,"AnimalAIComponent")
+			if animal_ai_comp
+			and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled")
+			and not ComponentGetValue2(animal_ai_comp, "tries_to_ranged_attack_friends")
+			and ComponentGetValue2(animal_ai_comp, "attack_ranged_frames_between") >= 60 then -- only on slow shooters
+				return true
+			end
+		end,
 		func = function(self, entity_id, data)
 			if not is_projectile_immune(self, data) then GetGameEffectLoadTo(entity_id, "PROTECTION_ELECTRICITY", false) else print("not eimmune :)") end
 			EntityAddComponent2(entity_id, "LuaComponent", {
