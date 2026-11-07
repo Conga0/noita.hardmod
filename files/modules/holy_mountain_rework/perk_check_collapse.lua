@@ -55,11 +55,12 @@ if #EntityGetInRadiusWithTag(x, y, 130, "perk") == 0 then
 		if name == "hardmod.collapse_crystal" then collapse()
 		elseif name == "hardmod.hm_rework.crystal_attractor" then EntityKill(entity)
 		end
+
+		EntityKill(entity_id)
 	end
 
-	if not found_crystal then --if crystal is missing, anger the gods
+	if EntityGetInRadiusWithTag(x, y, 180, "player_unit") and not found_crystal then --if crystal is missing, anger the gods
 		dofile("mods/noita.hardmod/files/modules/holy_mountain_rework/anger_gods.lua")
+		EntityKill(entity_id)
 	end
-
-	EntityKill(entity_id)
 end

@@ -126,6 +126,8 @@ function utilities.give_enemy_perks(entity_id, perks_to_give, data)
 	data.already_held_perks = already_held_perks
 	data.how_many_of_each_perk = how_many_of_each_perk
 
+	data.dmc = EntityGetFirstComponent(entity_id, "DamageModelComponent")
+
 	local selected_perks = {}
 	data.selected_perks = selected_perks --idk maybe someone can do some bullshit with this lmao
 	if perks_to_give_type == "number" then
