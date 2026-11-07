@@ -58,4 +58,8 @@ AddEnemies(g_big_enemies, {
 		prob = 0.2,
 		entity = "data/entities/animals/crypt/skullfly.xml"
 	},
+	{
+		ngpluslevel = 2, prob = 0.1,
+		entity 	= "data/entities/buildings/snowcrystal.xml"
+	},
 })

@@ -37,7 +37,13 @@ hooks.spell_patches = {
 	["BOMB"] = { max_uses = 5 },
 	["MINE"] = { max_uses = 20 },
 	["GRENADE"] = { max_uses = 30 },
-
+	["TELEPORT_CAST"] = {
+		mana = 200,
+		max_uses = 10,
+		never_unlimited = true,
+		spawn_level = "10",
+		spawn_probability = "0"
+	},
 	["ADD_TRIGGER"] = { mana = 88, spawn_level = "10", spawn_probability = "0" },
 	["ADD_TIMER"] = { mana = 88, spawn_level = "10", spawn_probability = "0" },
 	["ADD_DEATH_TRIGGER"] = { mana = 88, spawn_level = "10", spawn_probability = "0" },

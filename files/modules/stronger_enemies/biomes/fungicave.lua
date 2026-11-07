@@ -1,5 +1,9 @@
 dofile_once("mods/noita.hardmod/files/modules/stronger_enemies/patcher.lua")
 
+PatchEnemies(g_big_enemies, {
+  ["data/entities/animals/drone_shield.xml"] = { ng = 3 },
+})
+
 AddEnemies(g_small_enemies, {
 	{
 		prob = 0.08,
@@ -19,5 +23,9 @@ AddEnemies(g_big_enemies, {
 	{
 		prob = 0.06,
 		entity = "data/entities/animals/weakspirit.xml",
+	},
+	{
+		ngpluslevel = 2, prob = 0.07,
+		entity 	= "data/entities/buildings/snowcrystal.xml"
 	},
 })
