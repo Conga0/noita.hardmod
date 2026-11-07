@@ -68,12 +68,12 @@ if state == 1 then
 		end
 	end
 
-	-- ULTRA JANK
-	ComponentSetValue2(comp, "script_biome_entered", list)
+	-- I LOVE STORING SHIT IN SCRIPT_PRESSURE_PLATE_CHANGE
+	ComponentSetValue2(comp, "script_pressure_plate_change", list)
 end
 
 if state == 2 then
-	local value = ComponentGetValue2(comp, "script_biome_entered")
+	local value = ComponentGetValue2(comp, "script_pressure_plate_change")
 	local active_item = utils.GetInternalInt(player, "confuse_player_active_item", false) or 0
 
 	local items = {}
