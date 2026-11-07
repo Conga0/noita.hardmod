@@ -100,7 +100,7 @@
   <ItemComponent
     _tags="enabled_in_world"
     item_name="$hardmod_item_ring_of_returning_name"
-    always_use_item_name_in_ui="true"
+    always_use_item_name_in_ui="1"
     max_child_items="0"
     is_pickable="1"
     is_equipable_forced="1"

@@ -92,6 +92,7 @@ if state == 2 then
 	end
 
 	if #swap_to > 1 then
+		SetRandomSeed(GameGetFrameNum(), 6942)
 		local item = swap_to[Random(1, #swap_to)]
 		utils.SetInternalInt(player, "confuse_player_new_active_item", item)
 	end
