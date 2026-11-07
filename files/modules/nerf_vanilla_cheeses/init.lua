@@ -15,6 +15,12 @@ local reduce_physics_damage = {
 	"data/entities/animals/necromancer_super.xml",
 	"data/entities/animals/necromancer.xml",
 }
+local polymorph_immunity = nxml.new_element("Entity", {name = "polymorph_immunity"}, {
+	nxml.new_element("InheritTransformComponent"),
+	nxml.new_element("GameEffectComponent", {
+		effect = "PROTECTION_POLYMORPH"
+	})
+})
 for _,path in ipairs(reduce_physics_damage) do
 	for xml in nxml.edit_file(path) do
 		local dmc = xml:first_of("DamageModelComponent")
@@ -22,16 +28,18 @@ for _,path in ipairs(reduce_physics_damage) do
 			local mults = dmc:first_of("damage_multipliers")
 			if mults then mults.attr.physics_hit = "0.05" end
 		end
+
+		xml:add_child(polymorph_immunity)
 	end
 end
 
 
 -- Nerf Tannerkivi to not work on Extremely Dense Rock
 function hooks.edit_material(elem)
-    local mat_name = elem.attr.name
-    if mat_name == "rock_hard_border" or mat_name == "rock_hard" then
-        elem.attr.tags = elem.attr.tags:gsub(utils.escape(",[earth]"), "")
-    end
+		local mat_name = elem.attr.name
+		if mat_name == "rock_hard_border" or mat_name == "rock_hard" then
+				elem.attr.tags = elem.attr.tags:gsub(utils.escape(",[earth]"), "")
+		end
 end
 
 -- Tablets & statues are no more
@@ -43,19 +51,19 @@ function hooks.new_eid(eid)
 
 	for _,comp in pairs(dmc) do
 		-- :)
-		ComponentObjectSetValue2(comp, "damage_multipliers", "physics_hit", 0.001)
+		ComponentObjectSetValue2(comp, "damage_multipliers", "physics_hit", 0.01)
 	end
 end
 
 -- Fix cursed rock not damaging the player between chunks
 for file in nxml.edit_file("data/entities/misc/rock_curse.xml") do
-  local comp = file:first_of("AreaDamageComponent")
-  if comp then
-    comp:set("aabb_min.x", -257)
-    comp:set("aabb_min.y", -257)
-    comp:set("aabb_max.x", 257)
-    comp:set("aabb_max.y", 257)
-  end
+	local comp = file:first_of("AreaDamageComponent")
+	if comp then
+		comp:set("aabb_min.x", -257)
+		comp:set("aabb_min.y", -257)
+		comp:set("aabb_max.x", 257)
+		comp:set("aabb_max.y", 257)
+	end
 end
 
 -- Nerf Tablets to not lose mWhoShot when dragged out of the inventory
