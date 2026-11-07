@@ -1,7 +1,7 @@
 <Entity>
 	
 	<LuaComponent
-		script_source_file="mods/noita.hardmod/files/modules/ring_of_returning/scripts/return_portal_update.lua"
+		script_source_file="mods/noita.hardmod/files/modules/holy_mountain_items/scripts/return_portal_update.lua"
 		execute_every_n_frame="1">
 	</LuaComponent>
 	
@@ -96,7 +96,7 @@
 	</ParticleEmitterComponent>
 
 	<SpriteComponent
-		image_file="mods/noita.hardmod/files/modules/ring_of_returning/gfx/buildings_gfx/portal_ring_of_returning_center.xml" 
+		image_file="mods/noita.hardmod/files/modules/holy_mountain_items/gfx/buildings_gfx/portal_ring_of_returning_center.xml" 
 		offset_x="0"
 		offset_y="0"
 		z_index="1"

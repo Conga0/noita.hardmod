@@ -34,7 +34,6 @@ local modules = {
 	"less_explosive",
 	"holy_mountain_rework",
 	"holy_mountain_items",
-	"ring_of_returning",
 	"no_more_max_hp_cheesing",
 	"phantom_nemesis",
 	"alt_fire_anything",
@@ -60,6 +59,7 @@ local modules = {
 local force_enable_state = {
 	test_module_dont_run = false,
 	example = false,
+	credits = true,
 }
 
 

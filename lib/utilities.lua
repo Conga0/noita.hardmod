@@ -465,6 +465,24 @@ function utils.AddEnemyToProgress(enemy, after_existing_enemy)
 	})
 end
 
+---Calculates the X offest of a SpriteComponent for a price using nolla's formula
+---@param cost_int integer
+---@return integer width
+function utils.GetIntegerCostOffsetX(cost_int)
+	local str = tostring(cost_int)
+	local width = 0
+
+	for i=1,#str do
+		if str[i] == "1" then
+			width = width + 3
+		else
+			width = width + 6
+		end
+	end
+
+	return width * 0.5 - 0.5
+end
+
 ---Clones a table
 ---@param orig table
 ---@param copies nil

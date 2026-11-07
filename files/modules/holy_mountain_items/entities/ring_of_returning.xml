@@ -22,7 +22,7 @@
   <PhysicsImageShapeComponent 
     body_id="1"
     centered="1"
-    image_file="mods/noita.hardmod/files/modules/ring_of_returning/gfx/items_gfx/ring_of_returning.png"
+    image_file="mods/noita.hardmod/files/modules/holy_mountain_items/gfx/items_gfx/ring_of_returning.png"
     material="gold_box2d"
   ></PhysicsImageShapeComponent>
   
@@ -100,11 +100,11 @@
   <ItemComponent
     _tags="enabled_in_world"
     item_name="$hardmod_item_ring_of_returning_name"
-    always_use_item_name_in_ui="true"
+    always_use_item_name_in_ui="1"
     max_child_items="0"
     is_pickable="1"
     is_equipable_forced="1"
-    ui_sprite="mods/noita.hardmod/files/modules/ring_of_returning/gfx/ui_gfx/ring_of_returning.png"
+    ui_sprite="mods/noita.hardmod/files/modules/holy_mountain_items/gfx/ui_gfx/ring_of_returning.png"
     ui_description="$hardmod_item_ring_of_returning_desc"
     preferred_inventory="QUICK">
   </ItemComponent>
@@ -118,14 +118,14 @@
   </HitboxComponent>
 
   <!-- <LuaComponent
-    script_source_file="mods/noita.hardmod/files/modules/ring_of_returning/scripts/ring_of_returning_init.lua"
+    script_source_file="mods/noita.hardmod/files/modules/holy_mountain_items/scripts/ring_of_returning_init.lua"
     execute_on_added="1"
     remove_after_executed="1"
   ></LuaComponent> -->
 
   <LuaComponent
     _tags="enabled_in_world"
-    script_death="mods/noita.hardmod/files/modules/ring_of_returning/scripts/ring_of_returning_on_death.lua" >
+    script_death="mods/noita.hardmod/files/modules/holy_mountain_items/scripts/ring_of_returning_on_death.lua" >
   </LuaComponent>
 
   <!-- particle glitter -->
@@ -160,7 +160,7 @@
 
   <AbilityComponent
     ui_name="$hardmod_item_ring_of_returning_name"
-    entity_file="mods/noita.hardmod/files/modules/ring_of_returning/entities/portal_ring_of_returning.xml"
+    entity_file="mods/noita.hardmod/files/modules/holy_mountain_items/entities/portal_ring_of_returning.xml"
     throw_as_item="1"
   ><gun_config
     deck_capacity="0"
@@ -172,7 +172,7 @@
     _enabled="0"
     offset_x="5"
     offset_y="9"
-    image_file="mods/noita.hardmod/files/modules/ring_of_returning/gfx/items_gfx/ring_of_returning_in_hand.png" >
+    image_file="mods/noita.hardmod/files/modules/holy_mountain_items/gfx/items_gfx/ring_of_returning_in_hand.png" >
   </SpriteComponent>
 
 </Entity>

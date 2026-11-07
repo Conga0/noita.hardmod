@@ -87,4 +87,23 @@ function utils.ImageOverlay(destination, image, offset_x, offset_y, alpha_multip
 	end
 end
 
+function utils.ReplaceImage(dest, src)
+	if not ModDoesFileExist(dest) then print("dest was not valid for ReplaceImage") return end
+	if not ModDoesFileExist(src) then print("src was not valid for ReplaceImage") return end
+
+	local dest_id, w, h = ModImageMakeEditable(dest, 0, 0)
+	local src_id, w2, h2 = ModImageMakeEditable(src, 0, 0)
+
+	if w2 ~= w or h2 ~= h then
+		print("dest and src do not match for ReplaceImage")
+		return
+	end
+
+	for y=0,h-1 do
+		for x=0,w-1 do
+			ModImageSetPixel(dest_id, x, y, ModImageGetPixel(src_id, x, y))
+		end
+	end
+end
+
 return utils

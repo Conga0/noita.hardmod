@@ -1,6 +1,6 @@
 <Sprite 
 	default_animation="stand"
-	filename="mods/noita.hardmod/files/modules/ring_of_returning/gfx/buildings_gfx/portal_ring_of_returning_center.png" 
+	filename="mods/noita.hardmod/files/modules/holy_mountain_items/gfx/buildings_gfx/portal_ring_of_returning_center.png" 
 	offset_x="48" 
 	offset_y="48"
 	>

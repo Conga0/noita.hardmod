@@ -1,0 +1,76 @@
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua")---@type utils
+
+local items = {
+	{
+		weight = 100,
+		name = "$hardmod_item_ring_of_returning_name",
+		entity = "mods/noita.hardmod/files/modules/holy_mountain_items/entities/ring_of_returning.xml",
+		sprite = "mods/noita.hardmod/files/modules/holy_mountain_items/gfx/ui_gfx/ring_of_returning.png",
+		rotate_deg = 90, offset_x = 7, offset_y = 8,
+		cost = 150,
+	},
+}
+
+local biomes = {
+	[1] = 0, [2] = 0, [3] = 0,
+	[4] = 1, [5] = 1, [6] = 1,
+	[7] = 2, [8] = 2, [9] = 2, [10] = 2, [11] = 2, [12] = 2,
+	[13] = 3, [14] = 3, [15] = 3, [16] = 3,
+	[17] = 4, [18] = 4, [19] = 4, [20] = 4,
+	[21] = 5, [22] = 5, [23] = 5, [24] = 5,
+	[25] = 6, [26] = 6, [27] = 6, [28] = 6, [29] = 6, [30] = 6, [31] = 6, [32] = 6, [33] = 6
+}
+
+function spawn_purchasable_item(x, y)
+	SetRandomSeed(x, y)
+
+	local item = utils.RandomFromTable(items)
+	local cost = item.cost
+
+	local entity = EntityLoad(
+		"mods/noita.hardmod/files/modules/holy_mountain_items/entities/shop_item.xml",
+		x, y
+	)
+
+	EntityAddComponent2(entity, "ItemCostComponent", { cost = cost })
+	EntityAddComponent2(entity, "SpriteComponent", {
+		_tags = "shop_cost,enabled_in_world",
+		image_file = "data/fonts/font_pixel_white.xml",
+        text = tostring(cost),
+        offset_x = utils.GetIntegerCostOffsetX(cost) - 2,
+        offset_y = 15,
+        is_text_sprite = true,
+        update_transform = true,
+        update_transform_rotation = false,
+        z_index = -1,
+	})
+
+	EntityAddComponent2(entity, "ItemComponent", {
+		_tags = "enabled_in_world",
+		item_name = item.name,
+		ui_sprite = item.sprite,
+		max_child_items = 0,
+		is_pickable = true,
+		is_equipable_forced = true,
+		play_spinning_animation = false,
+		preferred_inventory = "QUICK",
+	})
+
+	EntityAddComponent2(entity, "SpriteComponent", {
+		_tags = "enabled_in_world",
+		offset_x = item.offset_x or 0,
+		offset_y = item.offset_y or 0,
+		image_file = item.sprite
+	})
+
+	EntityAddComponent2(entity, "LuaComponent", {
+		script_item_picked_up = "mods/noita.hardmod/files/modules/holy_mountain_items/shop_item/pickup.lua",
+		-- I LOVE STORING SHIT IN SCRIPT_PRESSURE_PLATE_CHANGE
+		script_pressure_plate_change = item.entity,
+		remove_after_executed = true,
+	})
+
+	if item.rotate_deg then
+		EntitySetTransform(entity, x, y, math.rad(item.rotate_deg))
+	end
+end
