@@ -44,6 +44,26 @@ for file in nxml.edit_file("data/entities/animals/boss_gate/gate_monster_a.xml")
         steps_per_frame = 30,
         radius = 90,
     })
+
+	--Boss AI Action!
+	--[[
+	file:create_child("LuaComponent", {
+		script_source_file = "mods/noita.hardmod/files/modules/vanilla_bosses/scripts/gate_boss_attack_ai.lua",
+		execute_every_n_frame = 1,
+	})
+	file:create_child("VariableStorageComponent", {
+		name = "boss_ai",
+		value_int = -1,
+		value_float = 0,
+		value_string = "normal",
+		value_bool = false,
+	})
+	file:create_child("VariableStorageComponent", {
+		name = "boss_ai_extra",
+		value_int = 8,
+		value_float = 0,
+	})
+	]]
 end
 
 local gates = { "a", "b", "c", "d" }
@@ -83,3 +103,5 @@ utils.patchifile("data/entities/animals/boss_gate/gate_monster_death.lua", {{
 		for _,flag in pairs({"a","b","c","d"}) do GameRemoveFlagRun("$animal_gate_monster_"..flag.."_killed") end
 	]]
 }})
+
+--Will readd gate boss dropping spell card behavior here later

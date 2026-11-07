@@ -1,0 +1,24 @@
+<Entity name="hardmod_gateboss_spell_card" tags="monk_hand">
+    <!--Usecase of "monk_hand" tag is just to save on the tag limit n stuff-->
+
+    <SpriteComponent 
+        image_file="data/ui_gfx/gun_actions/light_bullet.png" 
+        offset_x="8"
+        offset_y="8"
+        z_index="-1.51"
+    ></SpriteComponent>
+
+    <SpriteComponent 
+        image_file="data/ui_gfx/inventory/item_bg_projectile.png" 
+        offset_x="10"
+        offset_y="10"
+        z_index="-1.5"
+    ></SpriteComponent>
+
+    <VariableStorageComponent 
+        name="spell_intel"
+        value_int="1"
+        value_float="360"
+    ></VariableStorageComponent>
+
+</Entity>
