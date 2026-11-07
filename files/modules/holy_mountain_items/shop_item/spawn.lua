@@ -4,8 +4,8 @@ local items = {
 	{
 		weight = 100,
 		name = "$hardmod_item_ring_of_returning_name",
-		entity = "mods/noita.hardmod/files/modules/ring_of_returning/entities/ring_of_returning.xml",
-		sprite = "mods/noita.hardmod/files/modules/ring_of_returning/gfx/ui_gfx/ring_of_returning.png",
+		entity = "mods/noita.hardmod/files/modules/holy_mountain_items/entities/ring_of_returning.xml",
+		sprite = "mods/noita.hardmod/files/modules/holy_mountain_items/gfx/ui_gfx/ring_of_returning.png",
 		rotate_deg = 90, offset_x = 7, offset_y = 8,
 		cost = 150,
 	},

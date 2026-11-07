@@ -162,16 +162,7 @@ local module_data = {
 			en = "Holy Mountain Items"
 		},
 		desc = {
-			en = "Makes healing and spell refresh in Holy Mountains paid"
-		},
-	},
-	{
-		id = "ring_of_returning",
-		name = {
-			en = "Ring of Returning"
-		},
-		desc = {
-			en = "Each Holy Mountain spawns a breakable item that lets you warp back to them."
+			en = "Makes healing and spell refresh in Holy Mountains paid, also adds a section with a random purchasable item\nHas a few custom items to aid you in your journey!"
 		},
 	},
 	{
