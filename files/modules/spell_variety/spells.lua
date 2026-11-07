@@ -47,11 +47,11 @@ return {
 		    description         = "$hardmod_controlled_reach_desc",
 		    sprite 		        = "mods/noita.hardmod/files/modules/spell_variety/gfx/ui_gfx/spells/controlled_reach.png",
 		    type 		        = ACTION_TYPE_MODIFIER,
-			spawn_level         = "4,5,6",
-			spawn_probability   = "0.3,0.4,0.5",
+			spawn_level         = "1,2,3,4,5",
+			spawn_probability   = "0.3,0.4,0.5,0.4,0.3",
 			related_extra_entities = { "mods/D2DContentPack/files/entities/projectiles/deck/controlled_reach.xml" },
-		    price               = 330,
-		    mana                = 25,
+		    price               = 165,
+		    mana                = 4,
 		    action = function()
 				-- for the tooltip
 				c.fire_rate_wait = c.fire_rate_wait - 10
@@ -61,6 +61,9 @@ return {
 				c.extra_entities = c.extra_entities .. "mods/noita.hardmod/files/modules/spell_variety/entities/spells/controlled_reach.xml,"
 
 				if reflecting then return end
+				-- reset; initial -10 -20 was just for the tooltip, pls no delet this
+				c.fire_rate_wait = c.fire_rate_wait + 10
+				current_reload_time = current_reload_time + 20
 
 				-- determine the distance
 				dofile_once("data/scripts/lib/utilities.lua")
@@ -68,12 +71,23 @@ return {
 				local mx, my = DEBUG_GetMouseWorld()
 				local dist = get_distance(ox, oy, mx, my)
 
+				-- if this spell is part of a trigger payload, don't raise the wand's fire rate
+				-- (there might be more performant ways to do this)
+				local apply_boost = true
+				for _,card in ipairs( hand ) do
+					if card.type == ACTION_TYPE_PROJECTILE
+						and ( string.find( card.id, "TRIGGER" ) or string.find( card.id, "TIMER" ) ) then
+						apply_boost = false
+					end
+				end
 				-- increase fire rate and projectile speed based on distance
-				local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua")
-				local buff_ratio = utils.Remap(dist, 180, 65, 0.1, 1.0)
-				c.fire_rate_wait = c.fire_rate_wait - (10 * buff_ratio)
-				current_reload_time = current_reload_time - (20 * buff_ratio)
-				c.speed_multiplier = c.speed_multiplier * (1.5 + (1.0 * buff_ratio))
+				if apply_boost then
+					local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua")
+					local buff_ratio = utils.Remap(dist, 180, 65, 0.1, 1.0)
+					c.fire_rate_wait = c.fire_rate_wait - (10 * buff_ratio)
+					current_reload_time = current_reload_time - (20 * buff_ratio)
+					c.speed_multiplier = c.speed_multiplier * (1.5 + (1.0 * buff_ratio))
+				end
 
 				-- finally, draw the next spell
 				draw_actions(1, true)
