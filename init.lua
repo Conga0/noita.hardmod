@@ -59,6 +59,7 @@ local modules = {
 local force_enable_state = {
 	test_module_dont_run = false,
 	example = false,
+	credits = true,
 }
 
 
