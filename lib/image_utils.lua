@@ -30,7 +30,7 @@ end
 ---Replaces the image at `destination` with `image`
 ---@param destination string
 ---@param image string
-function ImageReplace(destination, image)
+function utils.ImageReplace(destination, image)
 	if not ModDoesFileExist(image) then print("image was not valid for image replacement:") print(image) return end
 
 	local dest_data = {}

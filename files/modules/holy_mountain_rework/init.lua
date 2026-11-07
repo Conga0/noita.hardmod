@@ -82,6 +82,7 @@ local hm_diggers = {
 	"data/entities/animals/worm_end.xml",
 	"data/entities/animals/lukki/lukki.xml",
 	"data/entities/animals/lukki/lukki_tiny.xml",
+	"data/entities/animals/lukki/lukki_dark.xml",
 }
 
 for _,xml_path in ipairs(hm_diggers) do
