@@ -5,6 +5,9 @@ hooks.mod_post_init = function()
 	ModLuaFileAppend(
 		"data/scripts/biomes/temple_altar.lua",
 		"mods/noita.hardmod/files/modules/trial_perks/scripts/biomes/temple_altar_append.lua" )
+	ModLuaFileAppend(
+		"data/scripts/biomes/boss_arena.lua",
+		"mods/noita.hardmod/files/modules/trial_perks/scripts/biomes/temple_altar_append.lua" )
 end
 
 hooks.player_spawned = function( player, is_run_start )
