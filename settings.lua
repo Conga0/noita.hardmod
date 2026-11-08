@@ -18,11 +18,9 @@ dofile("data/scripts/lib/mod_settings.lua")
 
 ]]--
 
-
 -- (Dani: ordering this list from (roughly) most to least impactful for the average run.)
 local module_data = {
-	{
-		id = "nerfed_combat_healing",
+	nerfed_combat_healing = {
 		name = {
 			en = "Nerfed Combat Healing",
 		},
@@ -30,8 +28,7 @@ local module_data = {
 			en = "Taking damage can give you the Wounded effect, which prevents healing spells and perks.",
 		},
 	},
-	{
-		id = "enemy_perks",
+	enemy_perks = {
 		name = {
 			en = "Enemy Perks",
 		},
@@ -39,8 +36,7 @@ local module_data = {
 			en = "Some enemies now spawn with enemy-unique perks!\n(Note, they have a different pool of perks, there are no Glass Cannon enemies!!)",
 		},
 	},
-	{
-		id = "trappier_traps",
+	trappier_traps = {
 		name = {
 			en = "Trappier Traps",
 		},
@@ -48,8 +44,7 @@ local module_data = {
 			en = "Makes traps more dangerous.",
 		},
 	},
-	{
-		id = "cheeseless_triggers",
+	cheeseless_triggers = {
 		name = {
 			en = "Cheeseless Triggers",
 		},
@@ -57,8 +52,7 @@ local module_data = {
 			en = "The cast delay & spread of spells is now also applied when they are part of a trigger payload.\n(Note: best enabled together with 'Vanilla Spell Rebalances' and 'Rapidfire Nerfs')",
 		},
 	},
-	{
-		id = "starter_wands",
+	starter_wands = {
 		name = {
 			en = "Buff Starter Wands",
 		},
@@ -66,8 +60,7 @@ local module_data = {
 			en = "What it says on the tin.",
 		},
 	},
-	{
-		id = "unshuffle",
+	unshuffle = {
 		name = {
 			en = "Unshuffle"
 		},
@@ -75,8 +68,7 @@ local module_data = {
 			en = "Removes Shuffle as a mechanic from the game."
 		},
 	},
-	{
-		id = "vanilla_perk_rebalances",
+	vanilla_perk_rebalances = {
 		name = {
 			en = "Vanilla Perk Rebalances"
 		},
@@ -84,8 +76,7 @@ local module_data = {
 			en = "Rebalances, reworks, removes and replaces some vanilla perks."
 		},
 	},
-	{
-		id = "vanilla_spell_rebalances",
+	vanilla_spell_rebalances = {
 		name = {
 			en = "Vanilla Spell Rebalances"
 		},
@@ -93,8 +84,7 @@ local module_data = {
 			en = "Rebalances, reworks, removes and replaces some vanilla spells.\nIntegral to the progression."
 		},
 	},
-	{
-		id = "spells_reweighted",
+	spells_reweighted = {
 		name = {
 			en = "Spells Reweighted",
 		},
@@ -102,8 +92,7 @@ local module_data = {
 			en = "Changes vanilla spell spawn chances, where they spawn, and their mana consumption\nIntegral to the progression.",
 		}
 	},
-	{
-		id = "spell_variety",
+	spell_variety = {
 		name = {
 			en = "Spell Variety",
 		},
@@ -111,8 +100,7 @@ local module_data = {
 			en = "Adds various new spells to increase variety and raise the skill ceiling.",
 		}
 	},
-	{
-		id = "limited_spells",
+	limited_spells = {
 		name = {
 			en = "Limited Spells",
 		},
@@ -120,8 +108,7 @@ local module_data = {
 			en = "Changes vanilla spell usecounts, greek letters and related",
 		}
 	},
-	{
-		id = "vanilla_quests",
+	vanilla_quests = {
 		name = {
 			en = "Vanilla Quest Reworks"
 		},
@@ -129,8 +116,7 @@ local module_data = {
 			en = "Important changes & rebalances to vanilla quests"
 		},
 	},
-	{
-		id = "vanilla_bosses",
+	vanilla_bosses = {
 		name = {
 			en = "Vanilla Boss Reworks"
 		},
@@ -138,8 +124,7 @@ local module_data = {
 			en = "Important changes & rebalances to vanilla bosses"
 		},
 	},
-	{
-		id = "less_explosive",
+	less_explosive = {
 		name = {
 			en = "Less Explosive Barrels"
 		},
@@ -147,8 +132,7 @@ local module_data = {
 			en = "Barrels spawn a flood of material, rather than exploding."
 		},
 	},
-	{
-		id = "holy_mountain_rework",
+	holy_mountain_rework = {
 		name = {
 			en = "Holy Mountain Rework"
 		},
@@ -156,8 +140,7 @@ local module_data = {
 			en = "Reworks the Holy Mountain collapse mechanic."
 		},
 	},
-	{
-		id = "holy_mountain_items",
+	holy_mountain_items = {
 		name = {
 			en = "Holy Mountain Items"
 		},
@@ -165,8 +148,7 @@ local module_data = {
 			en = "Makes healing and spell refresh in Holy Mountains paid, also adds a section with a random purchasable item\nHas a few custom items to aid you in your journey!"
 		},
 	},
-	{
-		id = "no_more_max_hp_cheesing",
+	no_more_max_hp_cheesing = {
 		name = {
 			en = "No More Max HP Cheesing"
 		},
@@ -174,8 +156,7 @@ local module_data = {
 			en = "It had to go, sorry."
 		},
 	},
-	{
-		id = "phantom_nemesis",
+	phantom_nemesis = {
 		name = {
 			en = "Phantom Nemesis"
 		},
@@ -183,8 +164,7 @@ local module_data = {
 			en = "A powerful phantom haunts you throughout your run, possessing enemies and giving them buffs that adapt to your strengths."
 		},
 	},
-	{
-		id = "alt_fire_anything",
+	alt_fire_anything = {
 		name = {
 			en = "Alt Fire Anything"
 		},
@@ -192,17 +172,15 @@ local module_data = {
 			en = "Utility spell that lets you have 8 wand slots. Kinda."
 		},
 	},
-	{
-		id = "ending",
+	ending = {
 		name = {
-			en = "Victory"
+			en = "Progression"
 		},
 		desc = {
-			en = "Changes the final boss of the game, and adds a cosmetic that you get for winning.\nNote: the cosmetic is only given if you have all modules integral to the progression enabled"
+			en = "Integral parts of the progression; has achievement tracking & cosmetic rewards,\nand some changes to the game's endings.\n \nDisable if you don't intend to do a proper playthrough of the mod.\nNote: achievements are only given if all important modules are enabled!"
 		},
 	},
-	{
-		id = "nerf_vanilla_cheeses",
+	nerf_vanilla_cheeses = {
 		name = {
 			en = "Nerf Vanilla Cheeses",
 		},
@@ -210,8 +188,7 @@ local module_data = {
 			en = "Can't let ya have too much cheese, sorry.",
 		},
 	},
-	{
-		id = "chest_tweaks",
+	chest_tweaks = {
 		name = {
 			en = "Chest Tweaks"
 		},
@@ -219,8 +196,7 @@ local module_data = {
 			en = "Changes chest loot and adds two chest-related perks"
 		},
 	},
-	{
-		id = "better_anvil",
+	better_anvil = {
 		name = {
 			en = "Better Hiisi Anvil"
 		},
@@ -228,9 +204,8 @@ local module_data = {
 			en = "Makes repaired broken wands better, and lets you find & repair broken spells2,\nat the cost of randomizing the anvil's location."
 		},
 	},
-	{
+	rapidfire_nerfs = {
 		-- TODO: merge to vanilla spell rebalances?
-		id = "rapidfire_nerfs",
 		name = {
 			en = "Rapidfire Nerfs"
 		},
@@ -238,9 +213,8 @@ local module_data = {
 			en = "Changes to Chainsaw and Add Mana; also adds more alternative spells",
 		}
 	},
-	{
+	trial_perks = {
 		-- TODO: merge to vanilla perk rebalances?
-		id = "trial_perks",
 		name = {
 			en = "Trial Perks"
 		},
@@ -248,8 +222,7 @@ local module_data = {
 			en = "A set of perks that reward you for challenging yourself."
 		},
 	},
-	{
-		id = "biome_map",
+	biome_map = {
 		name = {
 			en = "Biome Map Changes"
 		},
@@ -257,8 +230,7 @@ local module_data = {
 			en = "Changes the entire world layout, and adds some custom things.\nIntegral to the progression"
 		},
 	},
-	{
-		id = "biome_modifiers",
+	biome_modifiers = {
 		name = {
 			en = "Biome Modifiers+"
 		},
@@ -266,8 +238,7 @@ local module_data = {
 			en = "Reworks the biome modifier system. Allows a biome to have multiple modifiers at once"
 		},
 	},
-	{
-		id = "stronger_enemies",
+	stronger_enemies = {
 		name = {
 			en = "Enemy Rebalances"
 		},
@@ -275,8 +246,7 @@ local module_data = {
 			en = "Changes what enemies spawn where, rebalances existing enemies and adds a bunch of new ones.\nIntegral to the progression."
 		},
 	},
-	{
-		id = "potions",
+	potions = {
 		name = {
 			en = "Potion Rebalances"
 		},
@@ -284,8 +254,7 @@ local module_data = {
 			en = "Makes the alchemist's flasks actually larger, and changes what potions can generate on pedestals"
 		},
 	},
-	{
-		id = "alternate_biomes",
+	alternate_biomes = {
 		name = {
 			en = "Alt. Biomes"
 		},
@@ -293,8 +262,7 @@ local module_data = {
 			en = "Adds some alternative variants to existing biomes"
 		},
 	},
-	{
-		id = "polymorph_gui",
+	polymorph_gui = {
 		name = {
 			en = "Polymorph GUI"
 		},
@@ -302,8 +270,7 @@ local module_data = {
 			en = "Baa"
 		},
 	},
-	{
-		id = "vanilla_bugfixes",
+	vanilla_bugfixes = {
 		name = {
 			en = "Vanilla Bugfixes"
 		},
@@ -311,6 +278,46 @@ local module_data = {
 			en = "Some vanilla bugfixes"
 		},
 	},
+}
+
+local module_order = {
+	"ending",
+	"vanilla_perk_rebalances",
+	"vanilla_spell_rebalances",
+	"vanilla_quests",
+	"vanilla_bosses",
+	"enemy_perks",
+	"phantom_nemesis",
+	"holy_mountain_rework",
+
+	"biome_map",
+	"stronger_enemies",
+	"alternate_biomes",
+	"biome_modifiers",
+	"limited_spells",
+
+	"rapidfire_nerfs",
+	"spells_reweighted",
+
+	"cheeseless_triggers",
+	"nerfed_combat_healing",
+	"no_more_max_hp_cheesing",
+	"nerf_vanilla_cheeses",
+	"less_explosive",
+	"trappier_traps",
+	"potions",
+
+	"unshuffle",
+	"starter_wands",
+	"spell_variety",
+	"holy_mountain_items",
+	"trial_perks",
+	"better_anvil",
+	"chest_tweaks",
+	"alt_fire_anything",
+
+	"vanilla_bugfixes",
+	"polymorph_gui",
 }
 
 local lang_keys = {
@@ -330,7 +337,7 @@ local lang_keys = {
 }
 local current_language = lang_keys[GameTextGetTranslatedOrNot("$current_language")] or "en"
 
-for _,module in ipairs(module_data) do
+for _,module in pairs(module_data) do
 	module.ui_name = module.name[current_language] and module.name[current_language] or module.name.en or "Unknown"
 	module.ui_desc = module.desc[current_language] and module.desc[current_language] or module.desc.en or ""
 end
@@ -890,11 +897,15 @@ function ModSettingsGui( gui, in_main_menu )
 
 	GuiOptionsAdd( gui, GUI_OPTION.NoPositionTween )
 
+	-- TODO: why is this being constructed EVERY FRAME??? hello???
 	local modules = {}
-	for i,module in ipairs( module_data ) do
+
+	for _,module_id in pairs(module_order) do
+		local module = module_data[module_id]
+		module.id = module_id
 		module.scope = MOD_SETTING_SCOPE_NEW_GAME
 		if module.force_enable_state == nil then
-			table.insert( modules, module )
+			table.insert(modules, module)
 		end
 	end
 
