@@ -61,7 +61,9 @@ local function spawn_on_death_blacklist(self, data)
 		["data/entities/animals/wizard_swapper.xml"] = true,
 		["data/entities/animals/rat.xml"] = true,
 		["data/entities/animals/skullrat.xml"] = true,
+		["data/entities/animals/crypt/skullrat.xml"] = true,
 		["data/entities/animals/skullfly.xml"] = true,
+		["data/entities/animals/crypt/skullfly.xml"] = true,
 	}
 
 	return not (banned_creatures[EntityGetFilename(data.target_enemy)] or data.how_many_of_each_perk["HARDMOD_BOUNTY"] or data.how_many_of_each_perk["HARDMOD_SHADOW_REVIVAL"])
