@@ -129,14 +129,18 @@ hooks.new_spells = {
 			local max_uses = spell_data.max_uses or -1
 			local cast_price = 10
 
-			if max_uses <= 2 or data.recursive then cast_price = 250
-			elseif max_uses <= 5 then cast_price = 125
-			elseif max_uses <= 10 then cast_price = 50
-			elseif max_uses <= 20 then cast_price = 25
-			end
-			if spell_data.never_unlimited then
-                cast_price = cast_price * 2
-            end
+			if spell_data.indulgence_price ~= nil then
+				cast_price = spell_data.indulgence_price
+			else
+				if max_uses <= 2 or data.recursive then cast_price = 250
+				elseif max_uses <= 5 then cast_price = 125
+				elseif max_uses <= 10 then cast_price = 50
+				elseif max_uses <= 20 then cast_price = 25
+				end
+				if spell_data.never_unlimited then
+	                cast_price = cast_price * 2
+	            end
+	        end
 
 			local x, y = EntityGetTransform(GetUpdatedEntityID())
 			if money < cast_price then
