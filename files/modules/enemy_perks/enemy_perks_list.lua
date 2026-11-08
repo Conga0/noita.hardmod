@@ -543,8 +543,8 @@ enemy_perks = {
 		description = "$hardmod_eperk_rats_on_death_desc",
 		weight = 3,
 		biome_conditions = {
-			snowy_depths = 6,
-			hiisi_base = 5,
+			snowy_depths = 5,
+			hiisi_base = 4,
 			temple_of_the_art = 2,
 		},
 		priority = 9,
@@ -590,10 +590,10 @@ enemy_perks = {
 		id = "BLACKHOLE_DEATH",
 		name = "$hardmod_eperk_blackhole_death_name",
 		description = "$hardmod_eperk_blackhole_death_desc",
-		weight = 1,
+		weight = .5,
 		priority = 15,
 		max = 1,
-		condition = function(self, data) return data.level > 6 and not data.is_boss end,
+		condition = function(self, data) return data.level > 6 and not (data.is_boss or data.how_many_of_each_perk["HARDMOD_BOUNTY"]) end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/spawn_giga_blackhole.lua"
