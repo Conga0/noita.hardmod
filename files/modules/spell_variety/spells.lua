@@ -139,8 +139,8 @@ return {
 			spawn_level			= "2,3,4", -- HEAL_BULLET
 			spawn_probability	= "0.6,0.6,0.4", -- HEAL_BULLET
 			price				= 220,
-			mana				= 30,
-			max_uses			= 30,
+			mana				= 20,
+			max_uses			= 20,
 			never_unlimited		= true,
 			action = function()
 				c.fire_rate_wait = c.fire_rate_wait + 48
