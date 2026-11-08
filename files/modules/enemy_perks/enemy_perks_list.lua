@@ -56,6 +56,17 @@ local function is_projectile_immune(self, data)
 		and GameGetGameEffectCount(data.target_enemy, "PROTECTION_PROJECTILE") == 0)
 end
 
+local function spawn_on_death_blacklist(self, data)
+	local banned_creatures = {
+		["data/entities/animals/wizard_swapper.xml"] = true,
+		["data/entities/animals/rat.xml"] = true,
+		["data/entities/animals/skullrat.xml"] = true,
+		["data/entities/animals/skullfly.xml"] = true,
+	}
+
+	return not (banned_creatures[EntityGetFilename(data.target_enemy)] or data.how_many_of_each_perk["HARDMOD_BOUNTY"] or data.how_many_of_each_perk["HARDMOD_SHADOW_REVIVAL"])
+end
+
 -- The `data` table provides `target_enemy` (eid), `already_held_perks` (perk_id[]), `player` (eid) and `player_poly_identity` (table)
 
 ---@type enemy_perk[]
@@ -569,15 +580,13 @@ enemy_perks = {
 		weight = 2,
 		priority = 15,
 		max = 1,
+		condition = spawn_on_death_blacklist,
 		func = function(self, entity_id, data)
 			-- make the enemy explode on death
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/vigour_on_death.lua",
 				execute_every_n_frame = -1,
 			})
-
-			-- make sure Kamikaze can't spawn
-			data.vigour = true
 		end
 	},
 	{
@@ -591,7 +600,7 @@ enemy_perks = {
 			coal_pits = 4,
 		},
 		condition = function(self, data)
-			return enemy_is_melee(self, data) and not enemy_is_ranged_attack(self, data) and not (data.vigour or data.is_boss)
+			return spawn_on_death_blacklist(self, data) and enemy_is_melee(self, data) and not enemy_is_ranged_attack(self, data) and not (data.vigour or data.is_boss)
 		end,
 		func = function(self, entity_id, data)
 			-- show nuke particles on the enemy
@@ -626,7 +635,7 @@ enemy_perks = {
 		},
 		priority = 9,
 		max = 3,
-		condition = function(self, data) return data.level > 2 end,
+		condition = function(self, data) return spawn_on_death_blacklist(self, data) and data.level > 2 end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/rats_on_death.lua"
@@ -638,10 +647,10 @@ enemy_perks = {
 		name = "$hardmod_eperk_skullrats_on_death_name",
 		description = "$hardmod_eperk_skullrats_on_death_desc",
 		weight = 2,
-		biome_conditions = { temple_of_the_art = 4 },
+		biome_conditions = { temple_of_the_art = 3 },
 		priority = 9,
 		max = 2,
-		condition = function(self, data) return data.level > 4 end,
+		condition = function(self, data) return spawn_on_death_blacklist(self, data) and data.level > 4 end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/skullrats_on_death.lua"
@@ -656,7 +665,7 @@ enemy_perks = {
 		biome_conditions = { temple_of_the_art = 1 },
 		priority = 9,
 		max = 3,
-		condition = function(self, data) return data.level > 7 or data.biome == "temple_of_the_art" end,
+		condition = function(self, data) return spawn_on_death_blacklist(self, data) and (data.level > 7 or data.biome == "temple_of_the_art") end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/add_skullflys.lua"
@@ -670,7 +679,10 @@ enemy_perks = {
 		weight = .5,
 		priority = 15,
 		max = 1,
-		condition = function(self, data) return data.level > 6 and not (data.is_boss or data.how_many_of_each_perk["HARDMOD_BOUNTY"]) end,
+		biome_conditions = {
+			hell = 2,
+		},
+		condition = function(self, data) return spawn_on_death_blacklist(self, data) and data.level > 6 and not data.is_boss end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/spawn_giga_blackhole.lua"
@@ -810,9 +822,9 @@ enemy_perks = {
 	-- },
 }
 
---local perk_incompatibilities = {
---	{"KAMIKAZE", "UNFINISHED_BUSINESS"},
---}
+local perk_incompatibilities = { --ill implement at some point maybe
+	{"HARDMOD_KAMIKAZE", "HARDMOD_UNFINISHED_BUSINESS"},
+}
 
 for _,perk in ipairs(enemy_perks) do
 	local id = perk.id

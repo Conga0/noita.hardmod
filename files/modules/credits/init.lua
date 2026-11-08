@@ -8,6 +8,11 @@ local dev_messages = {
 		from = "Conga Lyne",
 		message = "Thankyou for playing Hardmod and thankyou for playing Noita!\nThis community is a very warm place to be and I'm happy to be part of it!\nI hope my own pursuits can live up to even a tenth of the beauty Noita has within it.",
 		credit = "https://congalyne.dev/"
+	},
+	{
+		from = "UserK",
+		message = "This project took up way too much of my time, genuinely egregious.\nHere's to it taking even more in the future!",
+		credit = "UserK"
 	}
 }
 

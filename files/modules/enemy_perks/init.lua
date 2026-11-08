@@ -11,6 +11,8 @@ ModLuaFileAppend("data/scripts/perks/perk_reflect.lua", dir.."add_perks_to_progr
 
 local base_perk_chance = .15
 
+local inspect_bind = tonumber(ModSettingGet("noita.hardmod.enemy_perk_inspect_key")) or 18
+
 
 local enemy_perks = {}
 local enemy_perks_indexed = {}
@@ -79,7 +81,7 @@ hooks.mod_post_init = function() --run later for appends
 end
 
 hooks.new_eid = function(entity_id)
-	if EntityHasTag(entity_id, "enemy") and not EntityHasTag(entity_id, "hardmod_blessed") then
+	if EntityHasTag(entity_id, "enemy") and not EntityHasTag(entity_id, "hardmod_blessed") or EntityHasTag(entity_id, "no_enemy_perks") then
 		local is_boss = EntityHasTag(entity_id, "boss")
 		local x,y = EntityGetTransform(entity_id)
 		local biome = biome_index[DebugBiomeMapGetFilename(x, y)]
@@ -150,8 +152,12 @@ function hooks.post_update(frame)
 		GameRemoveFlagRun("hardmod_new_enemy_perk_discovered")
 	end
 
+	if frame % 60 == 33 then
+		inspect_bind = tonumber(ModSettingGet("noita.hardmod.enemy_perk_inspect_key")) or 18
+	end
 
-	if InputIsKeyJustDown(tonumber(ModSettingGet("noita.hardmod.enemy_perk_inspect_key")) or 18) then
+
+	if InputIsKeyJustDown(inspect_bind) then
 		local x,y = DEBUG_GetMouseWorld()
 		selected_creature = EntityGetClosestWithTag(x, y, "hardmod_blessed")
 		local creature_x,creature_y = EntityGetTransform(selected_creature)
