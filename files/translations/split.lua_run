@@ -106,6 +106,7 @@ end
 
 local function transcribe_line(line)
 	if line:sub(1,1) == ',' then return end
+	if line:sub(1,#"hardmod_setting_") == "hardmod_setting_" then return end
 
 
 	local current_column = 1

@@ -11,6 +11,14 @@ local items = {
 	},
 }
 
+local ring_of_elevation = {
+	name = "$hardmod_item_ring_of_elevation_name",
+	entity = "mods/noita.hardmod/files/modules/holy_mountain_items/entities/ring_of_elevation.xml",
+	sprite = "mods/noita.hardmod/files/modules/holy_mountain_items/gfx/ui_gfx/ring_of_elevation.png",
+	rotate_deg = 90, offset_x = 7, offset_y = 8,
+	cost = 150,
+}
+
 local biomes = {
 	[1] = 0, [2] = 0, [3] = 0,
 	[4] = 1, [5] = 1, [6] = 1,
@@ -21,10 +29,38 @@ local biomes = {
 	[25] = 6, [26] = 6, [27] = 6, [28] = 6, [29] = 6, [30] = 6, [31] = 6, [32] = 6, [33] = 6
 }
 
-function spawn_purchasable_item(x, y)
+---@diagnostic disable-next-line: lowercase-global
+function hardmod_spawn_purchasable_item(x, y)
 	SetRandomSeed(x, y)
 
-	local item = utils.RandomFromTable(items)
+	local levels = {
+		2,
+		5,
+		9,
+		12,
+		16,
+		20,
+		25,
+	}
+
+	local y_chunk_level = math.floor(y/512)
+	local hm_level = 0
+	for i,stage_boundary in ipairs(levels) do
+		if stage_boundary > y_chunk_level then break end
+		hm_level = i
+	end
+
+	local data = {
+		x = x, y = y,
+		hm_level = hm_level,
+	}
+
+	local item = utils.ConditionalRandomFromTable(items, data)
+	if not item then return end
+
+	if hm_level == 7 then
+		item = ring_of_elevation --guarantee a way to the previous holy mountain
+	end
 	local cost = item.cost
 
 	local entity = EntityLoad(

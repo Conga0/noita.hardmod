@@ -16,7 +16,7 @@ local patches = {
 local edit = {
 	["boss_centipede/boss_centipede"] = {
 		damagecomp = { materials_damage = false },
-		tags = { "touchmagic_immunity" },
+		tags = "touchmagic_immunity,no_enemy_perks",
 	},
 	["boss_dragon"] = {
 		effects = { "STUN_PROTECTION_FREEZE" }
@@ -72,7 +72,7 @@ for enemy,data in pairs(edit) do
 			f.attr.tags = tags
 		end
 		if data.tags then
-			file:set("tags", tags..','..table.concat(data.tags, ",")) --should always have boss tag at least thanks to above code
+			file:set("tags", tags..','..data.tags) --should always have boss tag at least thanks to above code
 		end
 
 		if data.damagecomp then

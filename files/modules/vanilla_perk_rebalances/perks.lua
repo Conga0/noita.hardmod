@@ -1,58 +1,57 @@
----@diagnostic disable: undefined-global
 local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
 local hooks = {}
-local root = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/"
+local dir = "mods/noita.hardmod/files/modules/vanilla_perk_rebalances/"
 
 hooks.new_perks = {
 	{
 		id = "HARDMOD_PERK_SPELL_GEMS",
 		ui_name = "$hardmod_perk_spell_gems_name",
 		ui_description = "$hardmod_perk_spell_gems_desc",
-		ui_icon = root.."ui_gfx/perks/spell_gems_016.png",
-		perk_icon = root.."ui_gfx/perks/spell_gems.png",
+		ui_icon = dir.."ui_gfx/perks/spell_gems_016.png",
+		perk_icon = dir.."ui_gfx/perks/spell_gems.png",
 		stackable = false,
 		one_off_effect = false,
 		usable_by_enemies = false,
-        func = function(entity_perk_item, entity_who_picked, item_name, stacks)
+		func = function(entity_perk_item, entity_who_picked, item_name, stacks)
 			if stacks > 0 then return end
-            EntityAddChild(entity_who_picked, EntityLoad(root.."entities/perks/spell_gems.xml"))
-        end
+			EntityAddChild(entity_who_picked, EntityLoad(dir.."entities/perks/spell_gems.xml"))
+		end
 	},
 	{
 		id = "HARDMOD_TINKER_AT_PEDESTALS",
 		ui_name = "$hardmod_perk_tinker_at_pedestals_name",
 		ui_description = "$hardmod_perk_tinker_at_pedestals_desc",
-		ui_icon = root.."ui_gfx/perks/tinker_at_pedestals_016.png",
-		perk_icon = root.."ui_gfx/perks/tinker_at_pedestals.png",
+		ui_icon = dir.."ui_gfx/perks/tinker_at_pedestals_016.png",
+		perk_icon = dir.."ui_gfx/perks/tinker_at_pedestals.png",
 		stackable = false,
 		one_off_effect = false,
 		usable_by_enemies = false,
 		func = function(entity_perk_item, entity_who_picked, item_name, pickup_count)
 			if pickup_count > 1 then return end
-			EntityAddChild(entity_who_picked, EntityLoad(root.."entities/effect_tinker_at_pedestals.xml"))
+			EntityAddChild(entity_who_picked, EntityLoad(dir.."entities/effect_tinker_at_pedestals.xml"))
 		end
 	},
 	{
 		id = "HARDMOD_ITEM_IMMUNITIES",
 		ui_name = "$hardmod_perk_item_immunities_name",
 		ui_description = "$hardmod_perk_item_immunities_desc",
-		ui_icon = root.."ui_gfx/perks/item_immunities_016.png",
-		perk_icon = root.."ui_gfx/perks/item_immunities.png",
+		ui_icon = dir.."ui_gfx/perks/item_immunities_016.png",
+		perk_icon = dir.."ui_gfx/perks/item_immunities.png",
 		stackable = false,
 		one_off_effect = false,
 		usable_by_enemies = false,
 		func = function(perk, player, name, count)
 			if count > 1 then return end
-			EntityAddChild(player, EntityLoad(root.."entities/effect_item_immunities.xml"))
+			EntityAddChild(player, EntityLoad(dir.."entities/effect_item_immunities.xml"))
 		end
 	},
 	{
 		id = "HARDMOD_PROTECTION_ELECTRIC_STUN",
 		ui_name = "$hardmod_perk_protection_electric_stun_name",
 		ui_description = "$hardmod_perk_protection_electric_stun_desc",
-		ui_icon = root.."ui_gfx/perks/protection_electric_stun_016.png",
-		perk_icon = root.."ui_gfx/perks/protection_electric_stun.png",
+		ui_icon = dir.."ui_gfx/perks/protection_electric_stun_016.png",
+		perk_icon = dir.."ui_gfx/perks/protection_electric_stun.png",
 		game_effect = "STUN_PROTECTION_ELECTRICITY",
 		stackable = false,
 		one_off_effect = false,
@@ -77,8 +76,8 @@ hooks.new_perks = {
 		id = "HARDMOD_OVERSIZED_SHIELD",
 		ui_name = "$hardmod_perk_oversized_shield_name",
 		ui_description = "$hardmod_perk_oversized_shield_desc",
-		ui_icon = root.."ui_gfx/perks/shield_oversized_016.png",
-		perk_icon = root.."ui_gfx/perks/shield_oversized.png",
+		ui_icon = dir.."ui_gfx/perks/shield_oversized_016.png",
+		perk_icon = dir.."ui_gfx/perks/shield_oversized.png",
 		stackable = true,
 		stackable_how_often_reappears = 10,
 		stackable_maximum = 5,
@@ -86,7 +85,7 @@ hooks.new_perks = {
 		usable_by_enemies = false,
 		func = function(entity_perk_item, entity_who_picked, item_name, pickup_count)
 			local x,y = EntityGetTransform(entity_who_picked)
-			local child_id = EntityLoad(root.."entities/perks/shield_oversized.xml", x, y)
+			local child_id = EntityLoad(dir.."entities/perks/shield_oversized.xml", x, y)
 
 			if ModIsEnabled("quant.ew") then
 				GlobalsSetValue("PERK_SHIELD_OVERSIZED_COUNT", tostring(pickup_count-1))
@@ -128,29 +127,29 @@ hooks.new_perks = {
 		id = "HARDMOD_SUMMON_TOOLBOX",
 		ui_name = "$hardmod_perk_summon_toolbox_name",
 		ui_description = "$hardmod_perk_summon_toolbox_desc",
-		ui_icon = root.."ui_gfx/perks/summon_toolbox_016.png",
-		perk_icon = root.."ui_gfx/perks/summon_toolbox.png",
+		ui_icon = dir.."ui_gfx/perks/summon_toolbox_016.png",
+		perk_icon = dir.."ui_gfx/perks/summon_toolbox.png",
 		stackable = false,
 		one_off_effect = true,
 		usable_by_enemies = false,
-        func = function( entity_perk_item, entity_who_picked, item_name, pickup_count )
-        	if pickup_count > 1 then return end
+		func = function( entity_perk_item, entity_who_picked, item_name, pickup_count )
+			if pickup_count > 1 then return end
 
-        	local x, y = EntityGetTransform( entity_who_picked )
-        	local toolbox_id = EntityLoad( root.."entities/items/toolbox.xml", x, y - 8 )
-        	EntityAddComponent2( toolbox_id, "LuaComponent", {
-        		_tags = "enabled_in_hand,enabled_in_inventory",
-		        script_source_file = root.."scripts/perks/toolbox_scan.lua",
-		        execute_every_n_frame = 60,
-        	})
-        end,
+			local x, y = EntityGetTransform( entity_who_picked )
+			local toolbox_id = EntityLoad( dir.."entities/items/toolbox.xml", x, y - 8 )
+			EntityAddComponent2( toolbox_id, "LuaComponent", {
+				_tags = "enabled_in_hand,enabled_in_inventory",
+				script_source_file = dir.."scripts/perks/toolbox_scan.lua",
+				execute_every_n_frame = 60,
+			})
+		end,
 	},
 	{
 		id = "HARDMOD_PYROMANIAC",
 		ui_name = "$hardmod_perk_pyromaniac_name",
 		ui_description = "$hardmod_perk_pyromaniac_desc",
-		ui_icon = root.."ui_gfx/perks/pyromaniac_016.png",
-		perk_icon = root.."ui_gfx/perks/pyromaniac.png",
+		ui_icon = dir.."ui_gfx/perks/pyromaniac_016.png",
+		perk_icon = dir.."ui_gfx/perks/pyromaniac.png",
 		stackable = false,
 		one_off_effect = false,
 		usable_by_enemies = false,
@@ -158,7 +157,7 @@ hooks.new_perks = {
 		remove_other_perks = { "PROTECTION_FIRE" },
 		func = function(perk, entity, name)
 			local x, y = EntityGetTransform(entity)
-			local effect = EntityLoad(root.."entities/effect_pyromaniac.xml", x, y)
+			local effect = EntityLoad(dir.."entities/effect_pyromaniac.xml", x, y)
 			EntityAddChild(entity, effect)
 		end
 	},
@@ -168,14 +167,14 @@ hooks.perk_patches = {
 	["REMOVE_FOG_OF_WAR"] = {
 		ui_name = "$hardmod_perk_all_seeing_eye_name",
 		ui_description = "$hardmod_perk_all_seeing_eye_desc",
-		ui_icon = root.."ui_gfx/perks/all_seeing_eye_016.png",
-		perk_icon = root.."ui_gfx/perks/all_seeing_eye.png",
+		ui_icon = dir.."ui_gfx/perks/all_seeing_eye_016.png",
+		perk_icon = dir.."ui_gfx/perks/all_seeing_eye.png",
 		clear_original_game_effect = true,
 		stackable = false,
 		one_off_effect = false,
 		usable_by_enemies = false,
 		func = function( entity_perk_item, entity_who_picked, item_name )
-			EntityAddChild( entity_who_picked, EntityLoad( root.."entities/perks/all_seeing_eye.xml" ) )
+			EntityAddChild( entity_who_picked, EntityLoad( dir.."entities/perks/all_seeing_eye.xml" ) )
 		end,
 		func_remove = function( entity_who_picked )
 			local perk_entity = EntityGetAllChildren( entity_who_picked, "hardmod_all_seeing_eye_entity" )[1]
@@ -189,8 +188,8 @@ hooks.perk_patches = {
 		id = "HARDMOD_GOLD_IS_DUST",
 		ui_name = "$hardmod_gold_is_dust_perkname",
 		ui_description = "$hardmod_gold_is_dust_perkdesc",
-		perk_icon = root.."gold_is_dust/perk.png",
-		ui_icon = root.."gold_is_dust/icon.png",
+		perk_icon = dir.."gold_is_dust/perk.png",
+		ui_icon = dir.."gold_is_dust/icon.png",
 		stackable = false,
 		func = function()
 			GameAddFlagRun("hardmod.gold_is_dust_perk")
@@ -202,13 +201,13 @@ hooks.perk_patches = {
 	["ABILITY_ACTIONS_MATERIALIZED"] = { --works with most spells now, not just a specific selection of bomb spells
 		ui_name = "$hardmod_spells_materialised_perkname",
 		ui_description = "$hardmod_spells_materialised_perkdesc",
-		perk_icon = root.."spells_materialised/perk.png",
-		ui_icon = root.."spells_materialised/icon.png",
+		perk_icon = dir.."spells_materialised/perk.png",
+		ui_icon = dir.."spells_materialised/icon.png",
 	},
 	["EXTRA_MANA"] = { --buff mana slightly, change 50% decrease in capacity to flat decrease 1-3 plus 10% of current capacity rounded down
 		ui_description = "$hardmod_extra_mana_perkdesc",
 		func = function(perk, taker, perk_name)
-			local wand = GetHeldWand(taker)
+			local wand = utils.GetHeldWand(taker)
 			if not wand then return end
 			local x,y = EntityGetTransform(wand)
 
@@ -269,19 +268,19 @@ hooks.perk_patches = {
 	["TELEPORTITIS"] = {
 		clear_original_game_effect = true,
 		ui_description = "$hardmod_perk_teleportitis_desc",
-		ui_icon = root.."ui_gfx/perks/teleportitis_016.png",
-		perk_icon = root.."ui_gfx/perks/teleportitis.png",
+		ui_icon = dir.."ui_gfx/perks/teleportitis_016.png",
+		perk_icon = dir.."ui_gfx/perks/teleportitis.png",
 		stackable = false,
 		usable_by_enemies = false,
 		func = function( entity_perk_item, entity_who_picked, item_name )
 			EntityAddComponent2( entity_who_picked, "LuaComponent", {
 				_tags = "perk_component,hardmod_teleportitis",
-				script_source_file = root.."scripts/perks/teleportitis_update.lua",
+				script_source_file = dir.."scripts/perks/teleportitis_update.lua",
 				execute_every_n_frame = 1,
 			} )
 			EntityAddComponent2( entity_who_picked, "LuaComponent", {
 				_tags = "perk_component,hardmod_teleportitis",
-				script_damage_received = root.."scripts/perks/teleportitis_on_damage.lua",
+				script_damage_received = dir.."scripts/perks/teleportitis_on_damage.lua",
 				execute_every_n_frame = -1,
 			} )
 		end,
@@ -294,12 +293,12 @@ hooks.perk_patches = {
 		ui_description = "$hardmod_perk_no_recoil_desc",
 	},
 	["ITEM_RADAR"] = {
-		ui_icon = root.."ui_gfx/perks/item_radar_016.png",
-		perk_icon = root.."ui_gfx/perks/item_radar.png",
+		ui_icon = dir.."ui_gfx/perks/item_radar_016.png",
+		perk_icon = dir.."ui_gfx/perks/item_radar.png",
 	},
 	["CONTACT_DAMAGE"] = {
-		ui_icon = root.."ui_gfx/perks/contact_damage_016.png",
-		perk_icon = root.."ui_gfx/perks/contact_damage.png",
+		ui_icon = dir.."ui_gfx/perks/contact_damage_016.png",
+		perk_icon = dir.."ui_gfx/perks/contact_damage.png",
 		ui_description = "$hardmod_perk_contact_damage_desc",
 		game_effect = "PROTECTION_MELEE",
 	},
@@ -314,19 +313,20 @@ local remove_perks = {
 	"CORDYCEPS",
 	"MOLD",
 	"FUNGAL_DISEASE",
-	"GENOME_MORE_LOVE",
-	"LUKKI_MINION",
-	"GLOBAL_GORE",
+	"GENOME_MORE_LOVE", --bad design
+	"LUKKI_MINION", --very ass
+	"GLOBAL_GORE", --kinda ass
 	"PERSONAL_LASER",
 	"WORM_ATTRACTOR",
 	"WORM_SMALLER_HOLES",
 	"DUPLICATE_PROJECTILE",
-	"MEGA_BEAM_STONE",
+	"MEGA_BEAM_STONE", --damn i like this one tho :(
 	"LASER_AIM", -- replaced by Pinpointer spell
 	"EXTRA_MANA", -- replaced by Summon Toolbox
 	"EXTRA_SLOTS", -- replaced by Summon Toolbox
 	"FASTER_WANDS", -- replaced by Summon Toolbox
 	"FIRE_GAS", -- replaced by Pyromaniac
+	"HOMUNCULUS",
 }
 
 --bomb materialised, lukki mutation, no wand tinkering, more blood, personal plasma beam, low recoil, phasing, pinpointer, proj dupe, levitation trail, worm perks
