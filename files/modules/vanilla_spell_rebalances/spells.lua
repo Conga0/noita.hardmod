@@ -36,15 +36,19 @@ hooks.spell_patches = {
 	["ADD_TIMER"] = { mana = 88, spawn_level = "10", spawn_probability = "0" },
 	["ADD_DEATH_TRIGGER"] = { mana = 88, spawn_level = "10", spawn_probability = "0" },
 	["PIERCING_SHOT"] = {
-		name = "$hardmod_spell_piercing_shot_name",
-        description = "$hardmod_spell_piercing_shot_desc",
+		spawn_level = "5,6", -- PIERCING_SHOT
+		spawn_probability = "0.5,0.4", -- PIERCING_SHOT
+		-- name = "$hardmod_spell_piercing_shot_name",
+        -- description = "$hardmod_spell_piercing_shot_desc",
 		action = function()
-			local entity = "mods/noita.hardmod/files/modules/vanilla_spell_rebalances/entity/piercing_shot_tracker.xml,"
-            if not c.extra_entities:find(entity) then
-                c.extra_entities = c.extra_entities .. entity
-            end
+			-- local entity = "mods/noita.hardmod/files/modules/vanilla_spell_rebalances/entities/piercing_shot_tracker.xml,"
+            -- if not c.extra_entities:find(entity) then
+            --     c.extra_entities = c.extra_entities .. entity
+            -- end
 
-            c.extra_entities = c.extra_entities .. "data/entities/misc/piercing_shot.xml,mods/noita.hardmod/files/modules/vanilla_spell_rebalances/entity/piercing_shot_init.xml,"
+            c.extra_entities = c.extra_entities .. "data/entities/misc/piercing_shot.xml,mods/noita.hardmod/files/modules/vanilla_spell_rebalances/entities/piercing_shot_init.xml,"
+			c.damage_projectile_add = c.damage_projectile_add - 0.4
+			c.friendly_fire = true
             draw_actions(1, true)
         end
 	},
