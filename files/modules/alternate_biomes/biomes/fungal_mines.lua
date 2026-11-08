@@ -71,6 +71,12 @@ g_small_enemies =
 		max_count	= 1,    
 		entity 	= "data/entities/animals/shotgunner_weak.xml"
 	},
+	{
+		prob   		= 0.15,
+		min_count	= 1,
+		max_count	= 2,
+		entity 	= "data/entities/animals/fungus.xml"
+	},
 }
 
 g_big_enemies =
@@ -178,6 +184,41 @@ g_big_enemies =
 		max_count	= 1,    
 		entity 	= "data/entities/animals/drone_shield.xml",
 		ngpluslevel = 2,
+	},
+	{
+		prob   		= 0.2,
+		min_count	= 1,
+		max_count	= 2,
+		entity 	= "data/entities/animals/fungus.xml"
+	},
+	{
+		prob   		= 0.03,
+		min_count	= 1,
+		max_count	= 1,
+		entity 	= "data/entities/animals/fungus_big.xml"
+	},
+	{
+		prob   		= 0.01,
+		min_count	= 1,
+		max_count	= 1,
+		entities 	= {
+			{
+				min_count	= 1,
+				max_count	= 3,
+				entity	= "data/entities/animals/fungus.xml",
+			},
+			{
+				min_count	= 1,
+				max_count	= 1,
+				entity	= "data/entities/animals/fungus_big.xml",
+			},
+		},
+	},
+	{
+		prob   		= 0.01,
+		min_count	= 1,
+		max_count	= 1,
+		entity 	= "data/entities/animals/fungus_giga.xml"
 	},
 }
 
