@@ -129,5 +129,34 @@ return {
 				draw_actions(1, true)
 			end,
 		},
+		{
+			id					= "HARDMOD_PARRY",
+			name				= "$hardmod_spell_parry_name",
+			description			= "$hardmod_spell_parry_desc",
+			sprite				= "mods/noita.hardmod/files/modules/trial_perks/gfx/ui_gfx/spells/parry.png",
+			related_projectiles	= { "mods/noita.hardmod/files/modules/trial_perks/entities/spells/parry.xml" },
+			type				= ACTION_TYPE_STATIC_PROJECTILE,
+			spawn_level			= "2,3,4", -- HEAL_BULLET
+			spawn_probability	= "0.6,0.6,0.4", -- HEAL_BULLET
+			price				= 220,
+			mana				= 30,
+			max_uses			= 30,
+			never_unlimited		= true,
+			action = function()
+				c.fire_rate_wait = c.fire_rate_wait + 48
+				if reflecting then return end
+
+				local utils = dofile_once( "mods/noita.hardmod/lib/utilities.lua" )
+				local x, y = EntityGetTransform( GetUpdatedEntityID() )
+				local prev_cast_frame = utils.GetInternalInt( GetUpdatedEntityID(), "hardmod_parry_prev_cast_frame" ) or 0
+				local current_frame = GameGetFrameNum()
+				if current_frame - prev_cast_frame > 48 then
+					add_projectile( "mods/noita.hardmod/files/modules/trial_perks/entities/spells/parry.xml" )
+					utils.SetInternalInt( GetUpdatedEntityID(), "hardmod_parry_prev_cast_frame", current_frame )
+				else
+                    add_projectile( "data/entities/projectiles/deck/fizzle.xml" )
+				end
+			end,
+		},
 	}
 }
