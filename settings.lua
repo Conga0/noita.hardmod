@@ -42,6 +42,7 @@ local module_ids = {
 	"spells_reweighted",
 
 	"cheeseless_triggers",
+	"no_more_instant_recharge",
 	"nerfed_combat_healing",
 	"no_more_max_hp_cheesing",
 	"nerf_vanilla_cheeses",

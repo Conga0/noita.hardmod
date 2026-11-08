@@ -22,7 +22,7 @@ local function drop_wand( x, y )
 	end
 	local chest_tier = utils.GetInternalInt( chest_id, "hardmod_trophy_chest_tier" ) or 1
 	local wand_tier_index = math.min( hm_visits, #wand_tiers )
-	local wand_lvl = math.min( hm_visits - 1, 6 ) + math.min( 2 * ( chest_tier - 1 ), 4 ) -- pre-release emergency safeguard
+	local wand_lvl = math.min( hm_visits - 1, 6 ) + math.min( chest_tier - 1, 4 ) -- pre-release emergency safeguard
 
 	local wand_entity = EntityLoad( wand_tiers[wand_tier_index],  x, y - 12 )
 	local EZWand = dofile_once( "mods/noita.hardmod/lib/ezwand.lua" )
