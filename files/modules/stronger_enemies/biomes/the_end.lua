@@ -29,7 +29,7 @@ AddEnemies(g_small_enemies, {
 		prob = 0.02,
 		entity = "data/entities/animals/wraith_glowing.xml"
 	},
-  	{
+	{
 		prob = 0.1,
 		entity = "data/entities/animals/weakspirit.xml",
 	},
