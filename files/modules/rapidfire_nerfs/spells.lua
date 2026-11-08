@@ -165,7 +165,7 @@ hooks.new_spells = {
 		end,
 	},
 	{
-		id = "HARDMOD_SPELL_MANA_REGEN",
+		id = "HARDMOD_MANA_REGEN",
 		name = "$hardmod_spell_mana_regen_name",
 		description = "$hardmod_spell_mana_regen_desc",
 		sprite = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/mana_regen.png",

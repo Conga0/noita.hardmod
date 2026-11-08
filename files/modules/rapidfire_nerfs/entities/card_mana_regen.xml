@@ -8,7 +8,7 @@
 
         <ItemActionComponent 
             _tags="enabled_in_world"
-            action_id="HARDMOD_SPELL_MANA_REGEN" >
+            action_id="HARDMOD_MANA_REGEN" >
         </ItemActionComponent>
 
     </Base>
