@@ -1,4 +1,4 @@
-<Entity>
+<Entity tags="spirit_weaken_effect">
 	<InheritTransformComponent _enabled="1"></InheritTransformComponent>	
     
     <LuaComponent
