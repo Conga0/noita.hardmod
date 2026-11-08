@@ -8,6 +8,7 @@ local custom_biomes = {
 	{ h = 2, color = "ffde88e3", file = "secret_lab_path.xml" },
 	{ h = 0, color = "ffff56a5", file = "pw_barrier.xml" },
 	{ h = 0, color = "ffffe098", file = "cheese/biome.xml" },
+	{ h = 0, color = "ffffdf94", file = "orbroom_sky.xml" }
 }
 
 for file in nxml.edit_file("data/biome/_biomes_all.xml") do
@@ -51,7 +52,6 @@ for file in nxml.edit_file("data/biome_impl/spliced/gourd_room.xml") do
 	end
 end
 
-ModMagicNumbersFileAdd("mods/noita.hardmod/files/modules/biome_map/magic_numbers.xml")
 utils.modifile(
 	"data/scripts/biomes/snowcastle_cavern.lua",
 	[[local is_right = ]],
@@ -59,7 +59,15 @@ utils.modifile(
 )
 
 imutil.ImageOverlay("data/biome_impl/robot_egg.png", "mods/noita.hardmod/files/modules/biome_map/gfx/robot_egg.png")
+imutil.ImageReplace("data/biome_impl/pyramid/top_visual.png", "mods/noita.hardmod/files/modules/biome_map/gfx/pyramid_top_visual.png")
 
+utils.modifile(
+	"data/scripts/biomes/pyramid_top.lua",
+	[[EntityLoad( "data/entities/items/orbs/orb_01.xml", x, y )]],
+	[[--]]
+)
+
+ModMagicNumbersFileAdd("mods/noita.hardmod/files/modules/biome_map/magic_numbers.xml")
 ModMaterialsFileAdd("mods/noita.hardmod/files/modules/biome_map/materials.xml")
 
 function hooks.player_spawned(p, is_run_start)

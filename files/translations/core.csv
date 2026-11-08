@@ -133,12 +133,20 @@ hardmod_spell_blink_name,Blink,Мерцание,,,,,,,,,,,,
 hardmod_spell_blink_desc,Teleports you to the cursor,Телепортирует вас к курсору,,,,,,,,,,,,
 hardmod_spell_parry_name,Parry,Парирование,,,,,,,,,,,,
 hardmod_spell_parry_desc,Heals you by rebounding enemy projectiles,"Лечит вас, отражая вражеские снаряды.",,,,,,,,,,,,
+,,,,,,,,,,,,,appears in the final boss room and hints at 'Flummoxium' and 'Unstable Teleportatium' producing 'Guiding Powder' which directs you to the nearest orb.
+,,,,,,,,,,,,,the mod enables a 10-orb requirement and moves some orbs so this hint is important
 hardmod_book_ending_hint_title,Obseratum,Обсератиум,,,,,,,,,,,,
 hardmod_book_ending_hint_desc,"Our grand design is only for those who know the truth of this world.\n \nWhen the essence of confusion and the essence of aimless travel are used together,\none will begin their journey to enlightenment.","Великий замысел наш открыт только тем, кто Истины мира сего не мечется.\n \nВ нестабильной жизни Вашей, смятении и следовании пути тонкому\nбудет получено Истинное знание.",,,,,,,,,,,,
+,,,,,,,,,,,,,appears in a secret passageway in fungal cavern and hints at new Mountain Altar interactions with e.g. Ukkoskivi
 hardmod_book_secret_lab_path_title,restitutio in integrum,Восстановление в целостности,,,,,,,,,,,,
 hardmod_book_secret_lab_path_desc,"All things in this world are granted to us by the gods,\nand in time, all things shall return to them.\n \nEven our sacred stones will be restituted to them one day,\nand when that day comes, they will repay our generosity ten-fold.","Всё, чем наделил нас мир, даровано богами, и всё со временем возвратится к ним.\n\nДаже священные камни наши однажды лягут у их стоп.\nИ в день сей боги узрят нашу щедрость да воздадут нам сторицею.",,,,,,,,,,,,
+,,,,,,,,,,,,,appears in the new Cheese Biome which replaces the top-right Gold Room
 hardmod_book_cheese_biome_title,Receipt,Квитанция,,,,,,,,,,,,
 hardmod_book_cheese_biome_desc,"Your order of 1 noitillion kilograms of cheese is complete.\nWe have taken 250,000 gold as payment.\n \nThank you for choosing Hämis Mart!","Ваш заказ на 1 ноитиллион килограммов сыра выполнен.\nМы взяли 250 тысяч золота в качестве оплаты.\n \nБлагодарим, что выбрали Hämis Mart!",,,,,,,,,,,,
+,,,,,,,,,,,,,this book is a quote from 'The Turba Philosophorum' page 128; appears in a new orb room and doesnt really reference anything special
+hardmod_book_sky_orbroom_title,"Turba Philosophorum",,,,,,,,,,,,
+hardmod_book_sky_orbroom_desc,"What ye seek is not of small price.\nWoe unto you who seek the very great and compensating treasure of God!\nKnow ye not that for the smallest purpose in the world,\nalchemists will give themselves to death, and what, therefore,\nought they to do for this most excellent and almost impossible offering?",,,,,,,,,,,,
+,,,,,,,,,,,,,
 hardmod_spell_sea_poison_name,Ominous Sea,Зловещее море,,,,,,,,,,,,
 hardmod_spell_sea_poison_desc,As luminosity decreases...,По мере уменьшения освещённости...,,,,,,,,,,,,
 hardmod_spell_potion_to_sea_name,Potion to Sea,Зелье в море,,,,,,,,,,,,
