@@ -132,6 +132,10 @@ enemy_perks = {
 		description = "$hardmod_eperk_dry_spell_desc",
 		weight = 5,
 		max = 1,
+		biome_conditions = {
+			sandcave = 10,
+			hell = 10,
+		},
 		func = function(self, entity_id, data)
 			local x, y = EntityGetTransform(entity_id)
 			EntityAddChild(entity_id, EntityLoad(dir.."entities/dry_spell.xml", x, y))
@@ -160,6 +164,10 @@ enemy_perks = {
 		description = "$hardmod_eperk_quantum_clones_desc",
 		weight = 2,
 		max = 5,
+		biome_conditions = {
+			magical_temple = 4,
+			wizards_den = 4,
+		},
 		condition = function(self, data)
 			return data.level > 3 and not data.is_boss
 		end,
@@ -262,6 +270,9 @@ enemy_perks = {
 		weight = 4,
 		priority = 7,
 		max = 1,
+		biome_conditions = {
+			sky = 8,
+		},
 		condition = function(self, data)
 			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(data.target_enemy,"AnimalAIComponent")
 			if animal_ai_comp
@@ -285,6 +296,9 @@ enemy_perks = {
 		description = "$hardmod_eperk_aerolord_desc",
 		weight = 1,
 		max = 1,
+		biome_conditions = {
+			sky = 2,
+		},
 		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "KNOCKBACK_IMMUNITY", false)
@@ -359,6 +373,11 @@ enemy_perks = {
 		name = "$hardmod_eperk_magic_resistance_name",
 		description = "$hardmod_eperk_magic_resistance_desc",
 		weight = 6,
+		biome_conditions = {
+			magical_temple = 10,
+			temple_of_the_art = 10,
+			wizards_den = 10,
+		},
 		condition = function(self, data) return data.dmc end,
 		func = function(self, entity_id, data)
 			ComponentObjectSetValue2(data.dmc, "damage_multipliers", "projectile",
@@ -387,6 +406,11 @@ enemy_perks = {
 		weight = 3,
 		priority = 3,
 		max = 1,
+		biome_conditions = {
+			frozen_vault = 6,
+			sandcave = 6,
+			hell = 6,
+		},
 		condition = function(self, data)
 			increment_weight_with_level(self, data)
 			return data.level > 2 and GameGetGameEffectCount(data.target_enemy, "PROTECTION_FREEZE") == 0 and not is_projectile_immune(self, data)
@@ -402,6 +426,9 @@ enemy_perks = {
 		weight = 5,
 		priority = 3,
 		max = 1,
+		biome_conditions = {
+			ancient_lab = 10,
+		},
 		condition = function(self, data)
 			increment_weight_with_level(self, data)
 			return GameGetGameEffectCount(data.target_enemy, "PROTECTION_POLYMORPH") == 0 and not (EntityHasTag(data.target_enemy, "polymorphable_NOT") or data.boss)
@@ -417,6 +444,9 @@ enemy_perks = {
 		weight = 4,
 		priority = 4,
 		max = 3,
+		biome_conditions = {
+			meat_realm = 8,
+		},
 		condition = function(self, data)
 			if data.blood_perk then self.weight = 8 end
 			return data.dmc
@@ -433,6 +463,10 @@ enemy_perks = {
 		weight = 3,
 		priority = 4,
 		max = 1,
+		biome_conditions = {
+			snowy_depths = 6,
+			frozen_vault = 6,
+		},
 		condition = blood_perk_check,
 		func = function(self, entity_id, data)
 			ComponentSetValue2(data.dmc, "blood_material", "blood_cold")
@@ -493,6 +527,9 @@ enemy_perks = {
 		weight = .1,
 		priority = 15,
 		max = 1,
+		biome_conditions = {
+			ancient_lab = 1,
+		},
 		condition = function(self, data) return data.level > 5 and blood_perk_check(self, data) end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_POLYMORPH", false)
@@ -536,6 +573,9 @@ enemy_perks = {
 		weight = 2,
 		priority = 20,
 		max = 1,
+		biome_conditions = {
+			coal_pits = 4,
+		},
 		condition = function(self, data)
 			return enemy_is_melee(self, data) and not enemy_is_ranged_attack(self, data) and not (data.vigour or data.is_boss)
 		end,
@@ -616,6 +656,9 @@ enemy_perks = {
 		weight = 1,
 		priority = 15,
 		max = 1,
+		biome_conditions = {
+			hell = 2,
+		},
 		condition = function(self, data) return data.level > 6 and not data.is_boss end,
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
@@ -682,23 +725,6 @@ enemy_perks = {
 			})
 		end
 	},
-	-- {
-	-- 	id = "IMPERVIOUS",
-	-- 	name = "$hardmod_eperk_impervious_name",
-	-- 	description = "$hardmod_eperk_impervious_desc",
-	-- 	weight = 1,
-	-- 	max = 1,
-	-- 	func = function(self, entity_id, data)
-	-- 		local x, y = EntityGetTransform(entity_id)
-	-- 		EntityAddChild(entity_id, EntityLoad(dir.."entities/impervious_shield.xml", x, y))
-
-	-- 		local dmg_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "DamageModelComponent")
-	-- 		if dmg_comp ~= nil then
-	-- 			ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "projectile", 0.0)
-	-- 			ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "melee", 1000.0)
-	-- 		end			
-	-- 	end
-	-- },
 	--{ --I'll implement this later, or someone can do it for me 🙏
 	--	not_progress = true,
 	--	id = "VENOMOUS_CURSER",
