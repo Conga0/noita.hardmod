@@ -23,7 +23,7 @@ AddEnemies(g_small_enemies, {
 		entity 	= "data/entities/animals/weakspirit.xml",
 	},
 	{
-		ngpluslevel = 2, prob = 0.08,
+		ngpluslevel = 2, prob = 0.01,
 		entity 	= "data/entities/buildings/snowcrystal.xml"
 	},
 })
