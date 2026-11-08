@@ -12,8 +12,8 @@ function item_pickup(item, player)
 	EntityLoad(root.."entity/pick_effect.xml", x, visual_y)
 
 	EntityAddComponent2(player, "UIIconComponent", {
-		name = "$hardmod_for_the_worthy",
-		description = "$hardmod_for_the_worthy_detail_desc",
+		name = "$hardmod_hell_mode_detail_title",
+		description = "$hardmod_hell_mode_detail_desc",
 		icon_sprite_file = "mods/noita.hardmod/files/modules/for_the_worthy/gfx/hell_perk_016.png",
 		is_perk = true,
 	})
@@ -26,7 +26,7 @@ function item_pickup(item, player)
 		end
 	end
 
-	GamePrintImportant("$hardmod_for_the_worthy", "$hardmod_for_the_worthy_activated_desc")
+	GamePrintImportant("$hardmod_hell_mode_popup_title", "$hardmod_hell_mode_popup_desc")
 	GameScreenshake(150)
 	EntityKill(item)
 end

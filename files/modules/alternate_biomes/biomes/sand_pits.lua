@@ -976,12 +976,12 @@ g_tower_tops =
 }
 
 function init()
-	BiomeObjectSetValue(biome_name, "modifiers", "dust_amount", 100)
-	BiomeVegetationSetValue(biome_name, "grass", "tree_material", "grass_dry")
-	BiomeSetValue(biome_name, "color_grading_r", 1)
-	BiomeSetValue(biome_name, "color_grading_g", 0.9)
-	BiomeSetValue(biome_name, "color_grading_b", 0.85)
-	BiomeSetValue(biome_name, "color_grading_grayscale", 0.075)
+	-- BiomeObjectSetValue(biome_name, "modifiers", "dust_amount", 100)
+	-- BiomeVegetationSetValue(biome_name, "grass", "tree_material", "grass_dry")
+	-- BiomeSetValue(biome_name, "color_grading_r", 1)
+	-- BiomeSetValue(biome_name, "color_grading_g", 0.9)
+	-- BiomeSetValue(biome_name, "color_grading_b", 0.85)
+	-- BiomeSetValue(biome_name, "color_grading_grayscale", 0.075)
 end
 
 -- this is a special function tweaked for spawning things in coal mines

@@ -8,10 +8,27 @@ BiomeModifierChances = {
 	fungiforest = 0.4,
 }
 
+local alts = {
+	fungal_mines = "mods/noita.hardmod/files/modules/alternate_biomes/biomes/fungal_mines.xml",
+	sand_pits = "mods/noita.hardmod/files/modules/alternate_biomes/biomes/sand_pits.xml",
+}
+
 PatchModifiers({
 	SHIELDED = { probability = 0.08 },
 	PERFORATED = { probability = 0.1 },
-	HOT = { probability = 0.5 },
+	HOT = {
+		probability = 0.5,
+		action = function(name, filename)
+			BiomeVegetationSetValue(filename, "grass", "tree_material", "grass_dry")
+			BiomeVegetationSetValue(filename, "fungus_loose", "tree_probability", 0.0)
+			BiomeObjectSetValue(filename, "modifiers", "reaction_unfreeze_chance", 12)
+			BiomeObjectSetValue(filename, "modifiers", "dust_amount", 100)
+			BiomeSetValue(filename, "color_grading_r", 1)
+			BiomeSetValue(filename, "color_grading_g", 0.9)
+			BiomeSetValue(filename, "color_grading_b", 0.85)
+			BiomeSetValue(filename, "color_grading_grayscale", 0.075)
+		end
+	},
 	FREEZING = { probability = 0.4 },
 	FLOODED = { probability = 0.5 },
 	MOIST = {
@@ -80,9 +97,14 @@ AddBiomeGroup({ "rainforest_dark" })
 AddBiomeGroup({ "fungiforest" })
 AddBiomeGroup({ "meat" })
 
+AddBiomeGroup({ alts.fungal_mines }, "coalmine")
+AddBiomeGroup({ alts.sand_pits })
+
 ForcedBiomeModifiers.wandcave = nil
 ForcedBiomeModifiers.wizardcave = nil
 ForcedBiomeModifiers.alchemist_secret = nil
+
+ForcedBiomeModifiers[alts.sand_pits] = "HOT"
 
 -- Was FREEZING, but hell no, that's just lag and inconvenience
 ForcedBiomeModifiers.snowcave = "FREEZING_COSMETIC"
