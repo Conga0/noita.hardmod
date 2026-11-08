@@ -53,6 +53,12 @@ local function goldify_wands()
 	end
 end
 
+local function reddify_wands()
+	for file in nxml.edit_file("data/items_gfx/handgun.xml") do
+		file:set("filename", "mods/noita.hardmod/files/modules/ending/gfx/blood_wands/handgun.png")
+	end
+end
+
 utils.modifile(
 	"data/scripts/biomes/boss_arena.lua",
 	[[sampo.xml", x, y + 80 )]],
@@ -70,6 +76,10 @@ utils.patchifile("data/entities/animals/boss_centipede/ending/sampo_start_ending
 
 if HasFlagPersistent("hardmod_game_completed") then
 	goldify_wands()
+end
+
+if HasFlagPersistent("hardmod_hell_completed") then
+	reddify_wands()
 end
 
 return {
