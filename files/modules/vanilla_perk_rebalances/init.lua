@@ -127,7 +127,7 @@ end
 
 
 
-ModLuaFileAppend("data/scripts/items/_drop_money.lua", dir.."scripts/append_gold_drops.lua")
+ModLuaFileAppend("data/scripts/items/__drop_money.lua", dir.."scripts/append_gold_drops.lua")
 
 
 hooks.mod_init = function()

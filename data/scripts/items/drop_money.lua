@@ -214,7 +214,7 @@ hooks = { ---@class drop_money_hooks
 	nuggets_indexed = {}
 }
 
-for _,path in ipairs(ModLuaFileGetAppends("data/scripts/items/_drop_money.lua")) do
+for _,path in ipairs(ModLuaFileGetAppends("data/scripts/items/__drop_money.lua")) do
 	dofile_once(path)(hooks)
 end
 

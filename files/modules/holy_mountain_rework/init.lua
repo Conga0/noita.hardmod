@@ -2,10 +2,10 @@ local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 local img = dofile_once("mods/noita.hardmod/lib/image_utils.lua")
 
 local hooks = {} ---@hooks
-local path = "mods/noita.hardmod/files/modules/holy_mountain_rework/"
+local dir = "mods/noita.hardmod/files/modules/holy_mountain_rework/"
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
-ModMaterialsFileAdd(path.."materials.xml")
+ModMaterialsFileAdd(dir.."materials.xml")
 
 local move_targets = {
 	["data/biome_impl/temple/altar_snowcave_capsule.png"] = true,
@@ -30,22 +30,23 @@ local visual_references = {
 	"data/scripts/biomes/temple_altar_right.lua",
 }
 
-local visual_path = path.."images/visual.png"
-local bg_path = path.."images/background.png"
-local append_path = path.."append_right_altar.lua"
+local visual_path = dir.."images/visual.png"
+local bg_path = dir.."images/background.png"
+local append_path = dir.."append_right_altar.lua"
 for _,file in ipairs(visual_references) do
 	utils.modifile(file, [[data/biome_impl/temple/altar_right_visual.png]], visual_path)
 	utils.modifile(file, [[data/biome_impl/temple/altar_right_background.png]], bg_path)
 	ModLuaFileAppend(file, append_path)
 end
-img.ImageOverlay("data/biome_impl/temple/altar_right.png", path.."images/material.png", 0, 8)
-img.ImageOverlay("data/biome_impl/temple/altar_right_snowcastle.png", path.."images/material_flat_exit.png", 0, 8)
+img.ImageOverlay("data/biome_impl/temple/altar_right.png", dir.."images/material.png", 0, 8)
+img.ImageOverlay("data/biome_impl/temple/altar_right_snowcastle.png", dir.."images/material_flat_exit.png", 0, 8)
 
 utils.modifile("data/scripts/perks/perk.lua",
 		[[if( Random( 1, 100 ) <= perk_destroy_chance ) then]],
 		[[if( Random( 1, 100 ) <= perk_destroy_chance ) then dofile("mods/noita.hardmod/files/modules/holy_mountain_rework/perk_disappear_hook.lua")(pos_x, pos_y);]]
 )
-ModLuaFileAppend("data/scripts/biomes/temple_altar.lua", path.."append_altar.lua")
+ModLuaFileAppend("data/scripts/biomes/temple_altar.lua", dir.."append_altar.lua")
+ModLuaFileAppend("data/scripts/biomes/boss_arena.lua", dir.."append_boss_arena.lua")
 
 for _,ent in ipairs({"data/entities/buildings/physics_worm_deflector_crystal.xml", "data/entities/misc/greed_curse/greed_crystal.xml"}) do
 	for xml in nxml.edit_file(ent) do
@@ -114,7 +115,7 @@ for xml in nxml.edit_file("data/entities/animals/boss_centipede/ending/ending_sa
 	xml:add_child(nxml.new_element("Entity", {name = "hardmod.collapse_crystal_check"}, {
 		nxml.new_element("InheritTransformComponent"),
 		nxml.new_element("LuaComponent", {
-			script_source_file = path.."crystal/mountain_altar_check_crystal.lua",
+			script_source_file = dir.."crystal/mountain_altar_check_crystal.lua",
 			execute_every_n_frame = "80"
 		})
 	}))
