@@ -796,6 +796,21 @@ enemy_perks = {
 	--		EntityAddChild(entity_id, EntityLoad(dir.."entities/polymorph_aura", data.x, data.y))
 	--	end
 	--},
+	-- this one needs a player-only berserk effect (doable but cba rn)
+	-- {
+	-- 	id = "SHORT_TEMPER",
+	-- 	name = "$hardmod_eperk_short_temper_name",
+	-- 	description = "$hardmod_eperk_short_temper_desc",
+	-- 	weight = 400,
+	-- 	priority = 10,
+	-- 	max = 1,
+	-- 	func = function(self, entity_id, data)
+	-- 		EntityAddComponent2(entity_id, "LuaComponent", {
+	-- 			script_damage_received = "mods/noita.hardmod/files/modules/enemy_perks/scripts/short_temper_on_damage.lua",
+	-- 			execute_every_n_frame = -1,
+	-- 		})
+	-- 	end
+	-- },
 }
 
 --local perk_incompatibilities = {
