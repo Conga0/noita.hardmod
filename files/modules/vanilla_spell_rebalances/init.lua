@@ -1,5 +1,6 @@
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 local lootlib = dofile_once("mods/noita.hardmod/lib/lootlib.lua") ---@type lootlib
+local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 local hooks = {}
 
 lootlib.add_patch_script("mods/noita.hardmod/files/modules/vanilla_spell_rebalances/lootlib_patch.lua")
@@ -74,5 +75,23 @@ for _,note in pairs(notes) do
 end
 
 dofile_once("mods/noita.hardmod/files/modules/vanilla_spell_rebalances/damage.lua")
+
+utils.patchifile("data/scripts/gun/procedural/level_1_wand.lua", {
+	{ from = "BLACK_HOLE_BIG", to = "SLOW_BULLET" },
+	{ from = "BLACK_HOLE", to = "SLOW_BULLET" },
+	{ from = "LUMINOUS_DRILL", to = "SPITTER_TIER_2" },
+	{ from = "CHAINSAW", to = "SPITTER_TIER_3" },
+	{ from = "FREEZE_FIELD", to = "BERSERK_FIELD" },
+	{ from = "LIGHT_BULLET_TRIGGER", to = "SPITTER_TIMER" },
+})
+
+-- only one type of portal per run
+utils.modifile("data/scripts/magic/ocarina.lua", "ocarina_secret_00", "kantele_secret_00")
+
+-- todo: custom musical curiosit(ies)?
+-- these for both kantele and ocarina:
+-- * a random perk (could be hinted at in background near the crystal)
+-- * full heal (hinted at in background near e.g. dark acave)
+-- * idk
 
 return hooks
