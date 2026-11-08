@@ -1,17 +1,5 @@
 ---@diagnostic disable: undefined-global
 
-local action_id_table = nil
-local function get_spell_data(action_id)
-	if not action_id_table then
-		action_id_table = {}
-		for _,action in pairs(actions) do
-			action_id_table[action.id] = action
-		end
-	end
-
-	return action_id_table[action_id]
-end
-
 local function apply_freeze()
 	if reflecting then return end
 
@@ -47,6 +35,19 @@ hooks.spell_patches = {
 	["ADD_TRIGGER"] = { mana = 88, spawn_level = "10", spawn_probability = "0" },
 	["ADD_TIMER"] = { mana = 88, spawn_level = "10", spawn_probability = "0" },
 	["ADD_DEATH_TRIGGER"] = { mana = 88, spawn_level = "10", spawn_probability = "0" },
+	["PIERCING_SHOT"] = {
+		name = "$hardmod_spell_piercing_shot_name",
+        description = "$hardmod_spell_piercing_shot_desc",
+		action = function()
+			local entity = "mods/noita.hardmod/files/modules/vanilla_spell_rebalances/entity/piercing_shot_tracker.xml,"
+            if not c.extra_entities:find(entity) then
+                c.extra_entities = c.extra_entities .. entity
+            end
+
+            c.extra_entities = c.extra_entities .. "data/entities/misc/piercing_shot.xml,mods/noita.hardmod/files/modules/vanilla_spell_rebalances/entity/piercing_shot_init.xml,"
+            draw_actions(1, true)
+        end
+	},
 	["SCATTER_2"] = {
 		action = function()
 			draw_actions(2, true)
@@ -99,7 +100,7 @@ hooks.spell_patches = {
 		action = function ()
 			c.explosion_radius = c.explosion_radius + 7.5
 			c.damage_explosion_add = c.damage_explosion_add + 0.2
-			c.fire_rate_wait = c.fire_rate_wait + 40
+			c.fire_rate_wait = c.fire_rate_wait + 30
 			c.speed_multiplier = c.speed_multiplier * 0.75
 			shot_effects.recoil_knockback = shot_effects.recoil_knockback + 30.0
 
@@ -152,6 +153,10 @@ hooks.spell_patches = {
 			c.spread_degrees = c.spread_degrees + 6.0
 		end,
 	},
+	["LASER_EMITTER"] = { mana = 80 },
+	["LASER_EMITTER_CUTTER"] = { mana = 80 },
+	["LASER_EMITTER_FOUR"] = { mana = 120 },
+	["ORBIT_LASERS"] = { mana = 140, max_uses = 5 },
 }
 
 local mats = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIAL_CEMENT", "WATER_TRAIL" }

@@ -1,0 +1,6 @@
+<Entity>
+    <LuaComponent
+        script_source_file="mods/noita.hardmod/files/modules/vanilla_spell_rebalances/scripts/piercing_shot_tracker.lua"
+        execute_every_n_frame="1"
+	></LuaComponent>
+</Entity>

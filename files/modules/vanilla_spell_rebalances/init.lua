@@ -75,19 +75,4 @@ end
 
 dofile_once("mods/noita.hardmod/files/modules/vanilla_spell_rebalances/damage.lua")
 
--- matter eaten't
-local matter_eatent_list = {
-	rock_hard_border = true,
-	templebrick_static = true,
-	templebrick_noedge_static = true,
-}
-
-function hooks.edit_material(mat)
-	if matter_eatent_list[mat.attr.name] then
-		local tags = mat.attr.tags
-		tags = tags and (tags .. ",") or ""
-		mat.attr.tags = tags .. "[matter_eater_ignore_list]"
-	end
-end
-
 return hooks
