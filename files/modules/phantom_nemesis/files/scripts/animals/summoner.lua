@@ -12,6 +12,7 @@ if #targets < 4 then
 	--Wipe angelings
 	local targets2 = EntityGetInRadiusWithTag( x, y, 600, "miniboss_minion" ) or {}
 	for z=1,#targets2 do
+		GameDropAllItems(targets2[z])
 		EntityKill(targets2[z])
 	end
 	
@@ -38,9 +39,10 @@ if #targets < 4 then
 
 		EntityAddComponent2(
 			minion_id,
-			"LifetimeComponent",
+			"LuaComponent",
 			{
-				lifetime=720
+				script_source_file = "mods/noita.hardmod/files/modules/phantom_nemesis/files/scripts/kill_creature.lua",
+				execute_every_n_frame = 720
 			}
 		)
 	end

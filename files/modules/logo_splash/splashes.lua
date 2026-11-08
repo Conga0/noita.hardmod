@@ -117,6 +117,9 @@ local splashes = {
 	"They said we could never make a good mod after Fairmod!\nThey might be right...",
 	"N\no\nw\n \nw\ni\nt\nh\n \nv\ne\nr\nt\ni\nc\na\nl\ni\nt\ny\n!",
 	"We killed your faves!",
+	"Need me some of those \"chest_tweaks\"",
+	"Now with less rotta-singularities!",
+	"Need me some of those \"eperks\"",
 }
 
 --local seed = second*minute*hour/day*year

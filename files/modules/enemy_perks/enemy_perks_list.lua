@@ -718,7 +718,7 @@ enemy_perks = {
 	--	description = "$hardmod_eperk_polymorph_aura_desc",
 	--	weight = 3,
 	--	max = 0,
-	--	condition = function(self, data) self.weight = 5*0.9^(data.level) return true end, --diminishing weight, appear more early
+	--	condition = function(self, data) increment_weight_with_level(self, data, -.2) end,
 	--	func = function(self, entity_id, data)
 	--		EntityAddChild(entity_id, EntityLoad(dir.."entities/polymorph_aura", data.x, data.y))
 	--	end
