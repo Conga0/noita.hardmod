@@ -105,10 +105,6 @@
 
 --------------------------------
 
-if not actions then dofile_once("data/scripts/gun/gun_actions.lua") end
-
---------------------------------
-
 LOOTLIB_DATA = LOOTLIB_DATA or {
   patching = false,
   patched = false,
@@ -295,6 +291,10 @@ end
 ---@return entity_id?
 function lootlib.spawn_random_card(x, y, filter)
   local found = nil
+
+  if not actions then
+    dofile_once("data/scripts/gun/gun_actions.lua")
+  end
 
   for _=1,999 do
     ---@diagnostic disable-next-line: undefined-global
