@@ -344,8 +344,8 @@ hardmod_item_trophy_chest_silver,Silver Trophy Chest,Серебряный тро
 hardmod_item_trophy_chest_gold,Gold Trophy Chest,Золотой трофейный сундук,,,,,,,,,,,,
 hardmod_spell_recharge_shield_name,Recharge Shield,Щит перезарядки,,,,,,,,,,,,
 hardmod_spell_recharge_shield_desc,"Grants a shield, mana regen and move speed while the wand recharges","Даёт щит, восстановление маны и скорость передвижения, пока жезл перезаряжается",,,,,,,,,,,,
-hardmod_spell_piercing_shot_name,Penetrating Shot,,,,,,,,,,,,,
-hardmod_spell_piercing_shot_desc,Makes a projectile penetrate enemies 5 times,,,,,,,,,,,,,
+hardmod_eperk_stinky_aura_name,Stinky Aura,,,,,,,,,,,,,
+hardmod_eperk_stinky_aura_desc,This enemy lacks personal hygiene.,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,The following keys (hardmod_setting_*) are only present in the mod's settings.lua
