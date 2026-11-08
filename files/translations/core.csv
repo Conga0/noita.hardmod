@@ -417,3 +417,5 @@ hardmod_setting_module_vanilla_bugfixes_name,"Vanilla Bugfixes","Исправл�
 hardmod_setting_module_vanilla_bugfixes_desc,"Some vanilla bugfixes","Чуть-чуть багфиксов ванилы",,,,,,,,,,,,
 hardmod_setting_module_worse_digging_name,"Worse Digging","Ослабление копания",,,,,,,,,,,,
 hardmod_setting_module_worse_digging_desc,"Makes most spells unable to dig EDR/Cursed Rock, and Black Holes spawn much later.","Забирает у некоторых заклинаний возможность копать ЭПК/Проклятый камень, Черные дыры появляются гораздо позже.",,,,,,,,,,,,
+hardmod_setting_module_no_more_instant_recharge_name,"No More Instant Recharge","Ослабление копания",,,,,,,,,,,,
+hardmod_setting_module_no_more_instant_recharge_desc,"The instant recharge trick no longer works. Go find a faster wand!","Забирает у некоторых заклинаний возможность копать ЭПК/Проклятый камень, Черные дыры появляются гораздо позже.",,,,,,,,,,,,

@@ -58,6 +58,7 @@ local modules = {
 	"vanilla_bugfixes",
 	"spell_variety",
 	"for_the_worthy",
+	"no_more_instant_recharge",
 	"snail",
 }
 

@@ -16,7 +16,7 @@ local function try_reroll_trial_perks( x, y )
 			local perk_x, perk_y = EntityGetTransform( perk )
 			EntityKill( perk )
 
-			-- spawn a new one
+			-- spawn a new one (does not consider its neighbours so might spawn a duplicate)
 			dofile_once( "data/scripts/perks/perk.lua" )
 			perk_spawn_random( perk_x, perk_y )
 		end

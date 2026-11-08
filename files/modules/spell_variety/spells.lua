@@ -100,7 +100,7 @@ return {
 			sprite				= "mods/noita.hardmod/files/modules/spell_variety/gfx/ui_gfx/spells/big_shot.png",
 			type				= ACTION_TYPE_MODIFIER,
 			spawn_level         = "2,3,4,5,6",
-			spawn_probability   = "0.3,0.4,0.2,0.5,0.6",
+			spawn_probability   = "0.2,0.3,0.4,0.5,0.6",
 			price				= 200,
 			mana				= 50,
 			custom_xml_file		= "mods/noita.hardmod/files/modules/spell_variety/entities/cards/card_big_shot.xml",
@@ -147,13 +147,14 @@ return {
 				if reflecting then return end
 
 				local utils = dofile_once( "mods/noita.hardmod/lib/utilities.lua" )
-				local x, y = EntityGetTransform( GetUpdatedEntityID() )
 				local prev_cast_frame = utils.GetInternalInt( GetUpdatedEntityID(), "hardmod_parry_prev_cast_frame" ) or 0
 				local current_frame = GameGetFrameNum()
 				if current_frame - prev_cast_frame > 48 then
 					add_projectile( "mods/noita.hardmod/files/modules/trial_perks/entities/spells/parry.xml" )
 					utils.SetInternalInt( GetUpdatedEntityID(), "hardmod_parry_prev_cast_frame", current_frame )
 				else
+					local x, y = EntityGetTransform( GetUpdatedEntityID() )
+                    GamePlaySound( "data/audio/Desktop/items.bank", "magic_wand/not_enough_mana_for_action", x, y )
                     add_projectile( "data/entities/projectiles/deck/fizzle.xml" )
 				end
 			end,
