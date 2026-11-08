@@ -8,10 +8,10 @@
 		execute_every_n_frame="3"
 	></LuaComponent>
 
-	<UIInfoComponent name="$hardmod_for_the_worthy"></UIInfoComponent>
+	<UIInfoComponent name="$hardmod_hell_mode_pickup_title"></UIInfoComponent>
 	<ItemComponent
-		item_name="$hardmod_for_the_worthy"
-		ui_description="$hardmod_for_the_worthy_pickup_desc"
+		item_name="$hardmod_hell_mode_pickup_title"
+		ui_description="$hardmod_hell_mode_pickup_desc"
 		ui_display_description_on_pick_up_hint="1"
 		play_spinning_animation="0"
 		play_hover_animation="0"

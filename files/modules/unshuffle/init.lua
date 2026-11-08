@@ -8,7 +8,7 @@ utils.patchifile("data/scripts/gun/procedural/level_1_wand.lua", {
 			ComponentObjectSetValue2(ability_comp, "gun_config", "shuffle_deck_when_empty", false)
 		
 			if fire_rate_wait < 10 then
-				ComponentObjectSetValue2(ability_comp, "gun_config", "fire_rate_wait", 10)
+				ComponentObjectSetValue2(ability_comp, "gunaction_config", "fire_rate_wait", 10)
 				fire_rate_wait = 10
 			end
 

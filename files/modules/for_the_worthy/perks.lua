@@ -16,7 +16,7 @@ hooks.new_perks = {
 			local dmg_comp = EntityGetFirstComponent(player, "DamageModelComponent")
 			if dmg_comp then
 				local current_mtp = ComponentObjectGetValue2(dmg_comp, "damage_multipliers", "explosion")
-				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "explosion", current_mtp * 0.25)
+				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "explosion", current_mtp * 0.5)
 			end
 		end,
 		func_remove = function(player)
@@ -41,7 +41,7 @@ hooks.new_perks = {
 			local dmg_comp = EntityGetFirstComponent(player, "DamageModelComponent")
 			if dmg_comp then
 				local current_mtp = ComponentObjectGetValue2(dmg_comp, "damage_multipliers", "explosion")
-				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "explosion", current_mtp * 0.25)
+				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "explosion", current_mtp * 0.5)
 			end
 		end,
 		func_remove = function(player)
@@ -63,7 +63,7 @@ hooks.new_perks = {
 			local dmg_comp = EntityGetFirstComponent(player, "DamageModelComponent")
 			if dmg_comp then
 				local current_mtp = ComponentObjectGetValue2(dmg_comp, "damage_multipliers", "electricity")
-				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "electricity", current_mtp * 0.25)
+				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "electricity", current_mtp * 0.5)
 			end
 		end,
 		func_remove = function(player)
@@ -85,7 +85,7 @@ hooks.new_perks = {
 			local dmg_comp = EntityGetFirstComponent(player, "DamageModelComponent")
 			if dmg_comp then
 				local current_mtp = ComponentObjectGetValue2(dmg_comp, "damage_multipliers", "melee")
-				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "melee", current_mtp * 0.25)
+				ComponentObjectSetValue2(dmg_comp, "damage_multipliers", "melee", current_mtp * 0.5)
 			end
 		end,
 		func_remove = function(player)
