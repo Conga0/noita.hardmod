@@ -230,14 +230,29 @@ enemy_perks = {
 		name = "$hardmod_eperk_pyrelord_name",
 		description = "$hardmod_eperk_pyrelord_desc",
 		weight = 8,
-		max = 1,
+		max = 2,
+		biome_conditions = {
+			snowy_depths = 1,
+			frozen_vault = 1,
+			sandcave = 10,
+			hell = 10,
+		},
 		condition = enemy_is_ranged_attack,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_FIRE", false)
-			EntityAddComponent2(entity_id, "LuaComponent", {
-				script_shot = dir.."scripts/pyrelord_on_shot.lua",
-				execute_every_n_frame = -1,
-			})
+			
+			local stacks = data.how_many_of_each_perk[self.id] or 0
+			if stacks == 0 then
+				EntityAddComponent2(entity_id, "LuaComponent", {
+					script_shot = dir.."scripts/pyrelord_on_shot.lua",
+					execute_every_n_frame = -1,
+				})
+			elseif stacks == 1 then
+				EntityAddComponent2(entity_id, "LuaComponent", {
+					script_shot = dir.."scripts/pyrelord_plus_on_shot.lua",
+					execute_every_n_frame = -1,
+				})
+			end
 		end
 	},
 	{
