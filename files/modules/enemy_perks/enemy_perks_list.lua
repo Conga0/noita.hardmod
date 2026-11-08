@@ -347,6 +347,20 @@ enemy_perks = {
 		end
 	},
 	{
+		id = "STINKY_AURA",
+		name = "$hardmod_eperk_stinky_aura_name",
+		description = "$hardmod_eperk_stinky_aura_desc",
+		weight = 2,
+		priority = 0,
+		max = 1,
+		conditions = function(self, data)
+			return HerdIdToString(utils.GetHerdID(data.target_enemy)) == "slimes"
+		end,
+		func = function(self, entity_id, data)
+			EntityAddChild(entity_id, EntityLoad(dir.."entities/stinky_aura.xml", data.x, data.y))
+		end
+	},
+	{
 		id = "ELECTRICITY",
 		name = "$perk_electricity",
 		description = "$hardmod_eperk_electricity_desc",
