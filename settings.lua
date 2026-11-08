@@ -49,15 +49,6 @@ local module_data = {
 		},
 	},
 	{
-		id = "cheeseless_triggers",
-		name = {
-			en = "Cheeseless Triggers",
-		},
-		desc = {
-			en = "The cast delay & spread of spells is now also applied when they are part of a trigger payload.\n(Note: best enabled together with 'Vanilla Spell Rebalances' and 'Rapidfire Nerfs')",
-		},
-	},
-	{
 		id = "starter_wands",
 		name = {
 			en = "Buff Starter Wands",
@@ -237,6 +228,24 @@ local module_data = {
 		desc = {
 			en = "Changes to Chainsaw and Add Mana; also adds more alternative spells",
 		}
+	},
+	{
+		id = "cheeseless_triggers",
+		name = {
+			en = "Cheeseless Triggers",
+		},
+		desc = {
+			en = "The cast delay & spread of spells is now also applied when they are part of a trigger payload.\n(Note: best enabled together with 'Vanilla Spell Rebalances' and 'Rapidfire Nerfs')",
+		},
+	},
+	{
+		id = "no_more_instant_recharge",
+		name = {
+			en = "No More Instant Recharge",
+		},
+		desc = {
+			en = "The instant recharge trick no longer works. Go find a faster wand!",
+		},
 	},
 	{
 		-- TODO: merge to vanilla perk rebalances?

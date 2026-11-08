@@ -57,6 +57,7 @@ local modules = {
 	"vanilla_bugfixes",
 	"spell_variety",
 	"for_the_worthy",
+	"no_more_instant_recharge",
 }
 
 local force_enable_state = {
