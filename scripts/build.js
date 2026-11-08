@@ -104,7 +104,7 @@ async function patchIcons() {
 		names.add(name);
 		compositeLayers.push({ input: file, left: iconPos, top: 0 });
 		generatedQuadChars.push(`<!-- ${name} --><QuadChar id="${iconId}" rect_x="${iconPos}" rect_y="0" width="${ICON_SIZE_PX}" rect_h="${ICON_SIZE_PX}" rect_w="${ICON_SIZE_PX}" offset_x="0" offset_y="0" />`);
-		generatedIconTable.push(`${name}="${String.fromCharCode(iconId)}"`);
+		generatedIconTable.push(`${name}=${JSON.stringify(String.fromCharCode(iconId))}`);
 
 		iconPos += ICON_SIZE_PX;
 		iconId++;
