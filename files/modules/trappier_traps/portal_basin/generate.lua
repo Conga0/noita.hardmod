@@ -1,6 +1,6 @@
 local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
-local basin_mats = {
+local basin_materials = {
 	{
 		weight = 15,
 		material = "air",
@@ -33,6 +33,14 @@ local basin_mats = {
 		weight = 2,
 		material = "blood",
 	},
+	{
+		weight = 0.5,
+		material = "magic_liquid_faster_levitation_and_movement"
+	},
+	{
+		weight = 0.5,
+		material = "magic_liquid_berserk"
+	},
 }
 
 local evil_hms = {
@@ -53,7 +61,7 @@ local function get_material(x, y)
 	end
 
 	SetRandomSeed(x, y)
-	return utils.RandomFromTable(basin_mats).material
+	return utils.RandomFromTable(basin_materials).material
 end
 
 function spawn_altar_top(x, y, is_solid)

@@ -8,6 +8,7 @@ local custom_biomes = {
 	{ h = 2, color = "ffde88e3", file = "secret_lab_path.xml" },
 	{ h = 0, color = "ffff56a5", file = "pw_barrier.xml" },
 	{ h = 0, color = "ffffe098", file = "cheese/biome.xml" },
+	{ h = 0, color = "ffffdf94", file = "orbroom_sky.xml" },
 }
 
 for file in nxml.edit_file("data/biome/_biomes_all.xml") do
@@ -20,6 +21,7 @@ for file in nxml.edit_file("data/biome/_biomes_all.xml") do
 	end
 end
 
+-- remove bottom part of the lava lake pit (replaced with collapsed mines)
 for file in nxml.edit_file("data/biome/_pixel_scenes.xml") do
 	local ps = file:first_of("PixelSceneFiles")
 	if not ps then break end
@@ -36,13 +38,12 @@ for file in nxml.edit_file("data/biome/_pixel_scenes.xml") do
 	end
 end
 
+-- move gourd room from the cloudscape (chunk Y=-6656) to the lake (chunk Y=0)
 for file in nxml.edit_file("data/biome_impl/spliced/gourd_room.xml") do
 	local ps = file:first_of("mBufferedPixelScenes")
 	if not ps then break end
 
-	-- move gourd room from the cloudscape (chunk Y=-6656) to the lake (chunk Y=0)
 	local offset = 6656
-
 	for scene in ps:each_of("PixelScene") do
 		local y = tonumber(scene:get("pos_y"))
 		if y then
@@ -51,17 +52,45 @@ for file in nxml.edit_file("data/biome_impl/spliced/gourd_room.xml") do
 	end
 end
 
-ModMagicNumbersFileAdd("mods/noita.hardmod/files/modules/biome_map/magic_numbers.xml")
+-- the hiisi shop & hourglass can now only generate on the right
 utils.modifile(
 	"data/scripts/biomes/snowcastle_cavern.lua",
 	[[local is_right = ]],
 	[[local is_right = true --]]
 )
 
+utils.modifile(
+	"data/scripts/buildings/teleport_hourglass_return.lua",
+	[[ProceduralRandom(0,0) > 0.5]],
+	[[true]]
+)
+
+-- fast travel room needs to be unlocked per-run
+-- (the boss kill script already adds both game flag and persistent flag)
+utils.modifile(
+	"data/scripts/buildings/teleroom.lua",
+	[[HasFlagPersistent( "miniboss_fish" )]],
+	[[GameHasFlagRun("miniboss_fish")]]
+)
+-- TODO: teleroom is temporarily removed, i dont feel like fixing all the portals for now
+--	     color on biome map = #5f8fab
+
+-- robot egg is moved to be a side path to the hell, accessible with a quest
 imutil.ImageOverlay("data/biome_impl/robot_egg.png", "mods/noita.hardmod/files/modules/biome_map/gfx/robot_egg.png")
 
+-- pyramid orb is moved to top-right cloudscape
+imutil.ImageReplace("data/biome_impl/pyramid/top_visual.png", "mods/noita.hardmod/files/modules/biome_map/gfx/pyramid_top_visual.png")
+utils.modifile(
+	"data/scripts/biomes/pyramid_top.lua",
+	[[EntityLoad( "data/entities/items/orbs/orb_01.xml", x, y )]],
+	[[--]]
+)
+
+--
+ModMagicNumbersFileAdd("mods/noita.hardmod/files/modules/biome_map/magic_numbers.xml")
 ModMaterialsFileAdd("mods/noita.hardmod/files/modules/biome_map/materials.xml")
 
+-- :)
 function hooks.player_spawned(p, is_run_start)
 	if is_run_start then
 		EntitySetDamageFromMaterial(p, "hardmod_cursed_liquid", 0.003)

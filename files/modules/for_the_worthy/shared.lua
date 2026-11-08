@@ -1,6 +1,5 @@
 local biome_index ---@type biome_path_to_simple_id
 
--- yoinked from nightmare
 local hell_damage_multipliers = {
 	melee = 3,
 	projectile = 2,
@@ -10,24 +9,27 @@ local hell_damage_multipliers = {
 	drill = 2,
 	slice = 2,
 	ice = 2,
+	healing = 0.75,
 	radioactive = 2,
 	poison = 3,
+	curse = 3,
+	holy = 2,
 }
 
 local hell_enemy_biome_multipliers = {
-	["mines"] = { hp = 1.5, speed = 0.75 },
-	["collapsed_mines"] = { hp = 1.5, speed = 0.75 },
+	["mines"] = { hp = 2, speed = 0.6 },
+	["collapsed_mines"] = { hp = 2, speed = 0.6 },
 	["coal_pits"] = { hp = 2, speed = 0.5 },
-	["fungal_caverns"] = { hp = 3, speed = 0.5 },
-	["snowy_depths"] = { hp = 2, speed = 0.5 },
-	["hiisi_base"] = { hp = 3, speed = 0.6 },
-	["jungle"] = { hp = 5, speed = 0.5 },
-	["ancient_lab"] = { hp = 5, speed = 0.5 },
-	["lukki_lair"] = { hp = 6, speed = 0.5 },
-	["vault"] = { hp = 8, speed = 0.5 },
-	["magical_temple"] = { hp = 8, speed = 0.5 },
-	["temple_of_the_art"] = { hp = 8, speed = 0.3 },
-	["wizards_den"] = { hp = 8, speed = 0.5 },
+	["fungal_caverns"] = { hp = 3, speed = 0.4 },
+	["snowy_depths"] = { hp = 3.5, speed = 0.5 },
+	["hiisi_base"] = { hp = 4, speed = 0.6 },
+	["jungle"] = { hp = 7, speed = 0.4 },
+	["ancient_lab"] = { hp = 8, speed = 0.4 },
+	["lukki_lair"] = { hp = 8, speed = 0.4 },
+	["vault"] = { hp = 9, speed = 0.4 },
+	["magical_temple"] = { hp = 9, speed = 0.4 },
+	["temple_of_the_art"] = { hp = 9, speed = 0.3 },
+	["wizards_den"] = { hp = 9, speed = 0.5 },
 
 	["surface_forest"] = { hp = 15, speed = 0.5 },
 	["surface_desert"] = { hp = 15, speed = 0.5 },
@@ -66,6 +68,9 @@ function HardmodEnableHell(player)
 		ComponentSetValue2(dmg, "max_hp", 8)
 		ComponentSetValue2(dmg, "hp", 8)
 
+		ComponentSetValue2(dmg, "air_in_lungs", 7)
+		ComponentSetValue2(dmg, "air_in_lungs_max", 7)
+
 		for key,mult in pairs(hell_damage_multipliers) do
 			local value = ComponentObjectGetValue2(dmg, "damage_multipliers", key)
 			local multiplied = value * mult
@@ -85,6 +90,7 @@ end
 
 function HardmodTransformEnemyHell(eid)
 	if EntityHasTag(eid, "hardmod_hell_mult") then return end
+	if EntityHasTag(eid, "boss") then return end
 
 	if not biome_index then
 		biome_index = dofile_once("mods/noita.hardmod/lib/biome_index.lua")

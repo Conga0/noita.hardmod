@@ -1,8 +1,13 @@
-local script_interval_frames = 30
+local script_interval_frames = 20
 
 local entity = GetUpdatedEntityID()
 local player = EntityGetRootEntity(entity)
 local inventory
+
+local weakening = EntityGetAllChildren(player, "spirit_weaken_effect")
+if weakening and #weakening > 0 then
+	return
+end
 
 for _,child in pairs(EntityGetAllChildren(player) or {}) do
   if EntityGetName(child) == "inventory_quick" then

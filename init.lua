@@ -54,10 +54,12 @@ local modules = {
 	"potions",
 	"alternate_biomes",
 	"polymorph_gui",
+	"worse_digging",
 	"vanilla_bugfixes",
 	"spell_variety",
 	"for_the_worthy",
 	"no_more_instant_recharge",
+	"snail",
 }
 
 local force_enable_state = {

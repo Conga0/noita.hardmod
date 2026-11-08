@@ -21,6 +21,7 @@
 import { writeFileSync, existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join as pjoin } from "node:path";
 import { execSync } from "node:child_process";
+import * as CSV from "csv-parse/sync";
 import sharp from "sharp";
 
 // Icon file inside of each module's dir
@@ -52,7 +53,7 @@ function getWorkshopId() {
 function patchWorkshopId() {
 	const id = getWorkshopId();
 	if (id == "0") {
-		console.error("WARN: Missing/invalid workshop_id.txt! Run this script again after publishing to workshop");
+		console.error("\x1b[33mWARN: Missing/invalid workshop_id.txt! Run this script again after publishing to workshop\x1b[0m");
 	}
 
 	patch("settings.lua", (s) => s.replace(
@@ -104,7 +105,7 @@ async function patchIcons() {
 		names.add(name);
 		compositeLayers.push({ input: file, left: iconPos, top: 0 });
 		generatedQuadChars.push(`<!-- ${name} --><QuadChar id="${iconId}" rect_x="${iconPos}" rect_y="0" width="${ICON_SIZE_PX}" rect_h="${ICON_SIZE_PX}" rect_w="${ICON_SIZE_PX}" offset_x="0" offset_y="0" />`);
-		generatedIconTable.push(`${name}="${String.fromCharCode(iconId)}"`);
+		generatedIconTable.push(`${name}=${JSON.stringify(String.fromCharCode(iconId))}`);
 
 		iconPos += ICON_SIZE_PX;
 		iconId++;
@@ -140,6 +141,73 @@ async function patchIcons() {
 	));
 
 	console.log("Generated and patched custom font for settings.lua");
+}
+
+async function patchSettingLocale() {
+	const settingSuffix = "hardmod_setting_";
+	const localeKeys = [
+		"en",
+		"ru",
+		"ptbr",
+		"eses",
+		"de",
+		"frfr",
+		"it",
+		"pl",
+		"zhcn",
+		"jp",
+		"ko",
+		"ukr",
+		"trtr",
+	];
+
+	const locale = CSV.parse(readFileSync("files/translations/core.csv"), {
+		relaxQuotes: true,
+		relaxColumnCount: true,
+	});
+
+	const parsed = {};
+
+	for (const line of locale) {
+		if (!line[0].startsWith(settingSuffix)) continue;
+
+		const key = line[0].slice(settingSuffix.length);
+		const translation = {};
+
+		if (parsed[key]) {
+			console.warn(`\x1b[33mWARN: Duplicated locale key ${line[0]}\x1b[0m`);
+		}
+		parsed[key] = translation;
+
+		for (let idx = 0; idx < localeKeys.length; idx++) {
+			const val = line[idx + 1].replace(
+				/\\(.)/g,
+				(_, ch) => ({
+					"n": "\n",
+					"r": "\r",
+					"t": "\t",
+				})[ch] || ch
+			);
+			if (val.trim()) {
+				translation[localeKeys[idx]] = val;
+			}
+		}
+	}
+
+	const encoded = Object.entries(parsed).map(
+		([key, tr]) => `${key}={${
+			Object.entries(tr).map(
+				([code, str]) => `${code}=${JSON.stringify(str)}`
+			).join(",")
+		}}`
+	);
+
+	patch("settings.lua", (s) => s.replace(
+		/local _locale_data = .+/,
+		`local _locale_data = {${encoded.join(",")}}`
+	));
+
+	console.log("Patched settings.lua with", encoded.length, "locale keys", `(${settingSuffix}*)`);
 }
 
 function patchCommits() {
@@ -187,6 +255,7 @@ function patchCodeLength() {
 /** @type {(()=>void|Promise<void>)[]} */
 const steps = [
 	patchIcons,
+	patchSettingLocale,
 	patchWorkshopId,
 ];
 
