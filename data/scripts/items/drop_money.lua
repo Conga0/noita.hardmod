@@ -256,8 +256,8 @@ function do_money_drop(amount_multiplier, trick_kill, damage_type_bit_field, mes
 		multiplier = amount_multiplier,
 		target_gold_group = "gold",
 		greed_curse_multiplier = 3,
-		minimum_amount = 10,
 		no_gold_drop = false,
+		remove_timer = false,
 		entity = entity,
 		x = x, y = y,
 		amount = 10,
@@ -285,8 +285,9 @@ function do_money_drop(amount_multiplier, trick_kill, damage_type_bit_field, mes
 		data.amount = math.max(data.amount, math.floor(data.health) * 10)
 	end
 
-	data.amount = math.min(data.minimum_amount, data.amount * data.multiplier)
 
+
+	data.amount = data.amount * data.multiplier
 
 	for _,v in ipairs(hooks.funcs) do
 		v.func(data)
