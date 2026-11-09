@@ -120,6 +120,7 @@ local splashes = {
 	"Need me some of those \"chest_tweaks\"",
 	"Now with less rotta-singularities!",
 	"Need me some of those \"eperks\"",
+	"*drops 12 enemies 10 hours before release*",
 }
 
 --local seed = second*minute*hour/day*year
