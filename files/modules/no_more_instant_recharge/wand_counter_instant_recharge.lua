@@ -62,7 +62,7 @@ function enabled_changed( entity_id, state )
 		if reload_time > 60 then
 			local x, y = EntityGetTransform( owner )
 			GamePlaySound( "data/audio/Desktop/items.bank", "magic_wand/recharging", x, y )
-			GamePrint( "The instant recharge trick no longer works. Go find a faster wand!" )
+			GamePrint( "$hardmod_gameprint_instant_recharge_fail" )
 		end
 
 		ComponentSetValue2( vsc, "value_int", 0 )

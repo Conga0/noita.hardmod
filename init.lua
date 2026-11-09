@@ -58,7 +58,7 @@ local modules = {
 	"vanilla_bugfixes",
 	"spell_variety",
 	"for_the_worthy",
-	"no_more_instant_recharge",
+	-- "no_more_instant_recharge", -- needs to be fixed
 	"snail",
 	"greed_curse_rework",
 }
