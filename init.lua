@@ -240,6 +240,11 @@ function OnPlayerSpawned(p)
 	GameAddFlagRun("noita.hardmod.on_player_spawned_flag")
 
 	if nxml_missing then GamePrint("$hardmod_nxml_missing") end
+
+	do -- very important things
+		local dmc = EntityGetFirstComponent(p, "DamageModelComponent") or 0
+		ComponentSetValue2(dmc, "max_hp", ComponentGetValue2(dmc, "max_hp")-0.04)
+	end
 end
 
 function OnPlayerDied(p)
