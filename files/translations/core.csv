@@ -155,7 +155,7 @@ hardmod_spell_sea_poison_desc,As luminosity decreases...,По мере умен�
 hardmod_spell_potion_to_sea_name,Potion to Sea,Зелье в море,,,,,,,,,,,,
 hardmod_spell_potion_to_sea_desc,The first flask in your inventory is shattered and converted into a sea of the same material,Первое зелье в вашем инвентаре разбивается и превращается в море,,,,,,,,,,,,
 hardmod_spell_null_mana_name,Null Mana,Нейтральная мана,,,,,,,,,,,,
-hardmod_spell_null_mana_desc,"Restores 40 mana, but removes all damage from the cast","Восстанавливает 40 маны, но обнуляет весь урон снаряда",,,,,,,,,,,,
+hardmod_spell_null_mana_desc,"Restores 30 mana, but removes all damage from the cast","Восстанавливает 30 маны, но обнуляет весь урон снаряда",,,,,,,,,,,,
 hardmod_material_oil_vapour,Oil Vapour,Пары нефти,,,,,,,,,,,,
 hardmod_biomename_infested_mines,Infested Mines,Заражённые Шахты,,,,,,,,,,,,
 hardmod_biomename_sand_pits,Deserted Pits,Заброшенные ямы,,,,,,,,,,,,

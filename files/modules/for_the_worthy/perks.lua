@@ -7,7 +7,7 @@ dofile_once(root.."shared.lua")
 hooks.new_perks = {
 	{
 		id = "HARDMOD_HELL_PROTECTION_EXPLOSION",
-		ui_name = "$perk_protection_explosion",
+		ui_name = "$hardmod_perk_protection_explosion_name",
 		ui_description = "$hardmod_perk_protection_explosion_desc",
 		ui_icon = root.."gfx/perks/protection_explosion_016.png",
 		perk_icon = root.."gfx/perks/protection_explosion.png",
