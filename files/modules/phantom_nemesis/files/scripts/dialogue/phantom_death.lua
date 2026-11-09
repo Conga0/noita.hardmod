@@ -7,8 +7,17 @@ function death( damage_type_bit_field, damage_message, entity_thats_responsible,
     local possession_limit_default = possession_limit_data.default_biome_limit
     local entity_id = GetUpdatedEntityID()
     local pos_x,pos_y = EntityGetTransform(entity_id)
-    local currbiome = BiomeMapGetName( pos_x, pos_y )
+    local currbiome = BiomeMapGetName( pos_x, pos_y ) --Failsafe in case the below VSC method fails for some reason
     if currbiome == "$biome_holymountain" then currbiome = BiomeMapGetName( pos_x, pos_y-196 ) end --If Ira died inside a holy mountain basin, check what the biome directly above of them is.
+
+    local children = EntityGetAllChildren(entity_id) or {}
+    for _,brain_id in ipairs(children) do
+        if EntityGetName(brain_id) == "felcesis_brain" then
+            local brain_vsc_comp_location = EntityGetComponentIncludingDisabled(brain_id,"VariableStorageComponent")[2]
+            currbiome = ComponentGetValue2(brain_vsc_comp_location,"value_string") --Gets the biome Ira spawned in
+        end
+    end
+
     local total_banishments_in_current_biome = tonumber(GlobalsGetValue(table.concat({"felcesis_",currbiome,"_count"}),"0"))
     local total_deaths = tonumber(GlobalsGetValue("felcesis_total_deaths","0"))
     total_banishments_in_current_biome = total_banishments_in_current_biome + 1

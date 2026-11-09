@@ -1,12 +1,12 @@
 local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
 local hooks = {}
-local directory = "mods/noita.hardmod/files/modules/nerf_vanilla_cheeses/"
+local dir = "mods/noita.hardmod/files/modules/nerf_vanilla_cheeses/"
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
 
 
-ModMagicNumbersFileAdd(directory.."magic_numbers.xml")
+ModMagicNumbersFileAdd(dir.."magic_numbers.xml")
 
 
 -- Nerf Stevari and Skoude to be 95% resistant to Physics Damage
@@ -59,10 +59,10 @@ end
 for file in nxml.edit_file("data/entities/misc/rock_curse.xml") do
 	local comp = file:first_of("AreaDamageComponent")
 	if comp then
-		comp:set("aabb_min.x", -257)
-		comp:set("aabb_min.y", -257)
-		comp:set("aabb_max.x", 257)
-		comp:set("aabb_max.y", 257)
+		comp:set("aabb_min.x", -256)
+		comp:set("aabb_min.y", -256)
+		comp:set("aabb_max.x", 256)
+		comp:set("aabb_max.y", 256)
 	end
 end
 
@@ -71,11 +71,15 @@ for xml in nxml.edit_file("data/entities/items/books/base_book.xml") do
 	xml:add_child(
 		nxml.new_element("LuaComponent", {
 			_tags = "enabled_in_world",
-			script_enabled_changed=directory.."scripts/check_player_cheese_throw.lua",
+			script_enabled_changed=dir.."scripts/check_player_cheese_throw.lua",
 			execute_every_n_frame="-1",
 		})
 	)
+	local proj_comp = xml:first_of("ProjectileComponent")
+	if proj_comp then proj_comp.attr.damage = "0" end
 end
+
+ModLuaFileAppend("data/scripts/biomes/roadblock.lua", dir.."scripts/roadblock_append.lua")
 
 
 return hooks
