@@ -1,0 +1,9 @@
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/ragdolls/torso.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/ragdolls/head.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/ragdolls/gun.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/ragdolls/left_arm.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/ragdolls/left_hand.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/ragdolls/left_thigh.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/ragdolls/left_foot.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/ragdolls/right_thigh.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/ragdolls/right_foot.png

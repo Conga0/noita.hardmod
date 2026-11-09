@@ -1,0 +1,11 @@
+<Entity >
+
+	<SpriteComponent
+		image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/tentacles/slime_tentacle_piece_thin_alt.png"
+		offset_x="0"
+		offset_y="0.5"
+		update_transform="0"
+		update_transform_rotation="0" >
+	</SpriteComponent>
+
+</Entity>

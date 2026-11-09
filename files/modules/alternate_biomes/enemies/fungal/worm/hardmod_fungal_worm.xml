@@ -1,0 +1,90 @@
+<Entity name="$animal_hardmod_fungal_worm">
+	<Base file="data/entities/animals/worm.xml">
+		<DamageModelComponent
+			ragdoll_material="fungus_loose"
+			blood_material="blood_fungi"
+			blood_spray_material="blood_fungi"
+			blood_sprite_directional="data/particles/bloodsplatters/bloodsplatter_directional_purple_$[1-3].xml"
+			blood_sprite_large="data/particles/bloodsplatters/bloodsplatter_purple_$[1-3].xml" >
+			<damage_multipliers
+				fire="1.5" >
+			</damage_multipliers>
+		</DamageModelComponent>
+
+		<GenomeDataComponent
+			herd_id="fungus" >
+		</GenomeDataComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/worm/worm_head.xml" >
+		</SpriteComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/worm/worm_body.xml" >
+		</SpriteComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/worm/worm_body.xml" >
+		</SpriteComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/worm/worm_body.xml" >
+		</SpriteComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/worm/worm_body.xml" >
+		</SpriteComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/worm/worm_tail.xml" >
+		</SpriteComponent>
+	</Base>
+
+	<ParticleEmitterComponent
+		emitted_material_name="fungi"
+		x_pos_offset_min="-4"
+		x_pos_offset_max="4"
+		y_pos_offset_min="-4"
+		y_pos_offset_max="4"
+		count_min="1"
+		count_max="2"
+		lifetime_min="0.1"
+		lifetime_max="0.3"
+		create_real_particles="1"
+		emit_cosmetic_particles="0"
+		emission_interval_min_frames="20"
+		emission_interval_max_frames="40"
+		is_emitting="1" >
+	</ParticleEmitterComponent>
+
+	<ParticleEmitterComponent
+		emitted_material_name="plasma_fading_pink"
+		x_pos_offset_min="-5"
+		x_pos_offset_max="5"
+		y_pos_offset_min="-5"
+		y_pos_offset_max="5"
+		x_vel_min="-10"
+		x_vel_max="10"
+		y_vel_min="-10"
+		y_vel_max="10"
+		count_min="1"
+		count_max="3"
+		lifetime_min="0.4"
+		lifetime_max="1.2"
+		create_real_particles="0"
+		emit_cosmetic_particles="1"
+		emission_interval_min_frames="2"
+		emission_interval_max_frames="5"
+		is_emitting="1" >
+	</ParticleEmitterComponent>
+
+	<VariableStorageComponent
+		_tags="spore_count"
+		value_int="10" >
+	</VariableStorageComponent>
+
+	<!-- <LuaComponent
+		script_death="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/spores/scripts/spore_death.lua"
+		execute_every_n_frame="-1" >
+	</LuaComponent> -->
+</Entity>

@@ -2,8 +2,8 @@
 local _move_hand_to_discarded = move_hand_to_discarded
 function move_hand_to_discarded()
 	_move_hand_to_discarded()
-	
-	if GetUpdatedEntityID() ~= 0 then
+
+	if not reflecting and GetUpdatedEntityID() ~= 0 then
 		local vsc = EntityGetFirstComponentIncludingDisabled( GetUpdatedEntityID(), "VariableStorageComponent", "hardmod_wand_spells_cast" )
 		if vsc then
 			ComponentSetValue2( vsc, "value_int", #discarded )
@@ -11,6 +11,16 @@ function move_hand_to_discarded()
 			vsc = EntityAddComponent2( GetUpdatedEntityID(), "VariableStorageComponent", {
 				_tags = "hardmod_wand_spells_cast",
 				name = "hardmod_wand_spells_cast",
+				value_int = #discarded,
+			})
+		end
+		vsc = EntityGetFirstComponentIncludingDisabled( GetUpdatedEntityID(), "VariableStorageComponent", "hardmod_wand_reload_time" )
+		if vsc then
+			ComponentSetValue2( vsc, "value_int", current_reload_time )
+		else
+			vsc = EntityAddComponent2( GetUpdatedEntityID(), "VariableStorageComponent", {
+				_tags = "hardmod_wand_reload_time",
+				name = "hardmod_wand_reload_time",
 				value_int = #discarded,
 			})
 		end

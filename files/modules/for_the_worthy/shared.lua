@@ -33,14 +33,14 @@ local hell_enemy_biome_multipliers = {
 
 	["surface_forest"] = { hp = 15, speed = 0.5 },
 	["surface_desert"] = { hp = 15, speed = 0.5 },
-	["pyramid"] = { hp = 7, speed = 0.4 },
+	["pyramid"] = { hp = 10, speed = 0.4 },
 	["sandcave"] = { hp = 10, speed = 0.4 },
 	["wandmart"] = { hp = 10, speed = 0.5 },
 	["hell"] = { hp = 20, speed = 0.1 },
 	["tower"] = { hp = 20, speed = 0.1 },
 	["sky"] = { hp = 20, speed = 0.1 },
-	["cloudscape"] = { hp = 16, speed = 0.25 },
-	["meat_realm"] = { hp = 16, speed = 0.25 },
+	["cloudscape"] = { hp = 20, speed = 0.25 },
+	["meat_realm"] = { hp = 20, speed = 0.25 },
 	["frozen_vault"] = { hp = 16, speed = 0.25 },
 	["powerplant"] = { hp = 16, speed = 0.25 },
 }

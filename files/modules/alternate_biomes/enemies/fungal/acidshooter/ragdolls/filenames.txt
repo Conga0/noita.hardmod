@@ -1,0 +1,9 @@
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/ragdolls/torso.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/ragdolls/tentacle_1_a.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/ragdolls/tentacle_1_b.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/ragdolls/tentacle_2_a.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/ragdolls/tentacle_2_b.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/ragdolls/tentacle_3_a.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/ragdolls/tentacle_3_b.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/ragdolls/tentacle_4_a.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/ragdolls/tentacle_4_b.png

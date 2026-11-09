@@ -1,5 +1,5 @@
-local level = 5
-local extra_level = 5
+local level = 4
+local extra_level = 4
 local max_extras = 2
 
 return function (x, y)

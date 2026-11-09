@@ -45,32 +45,38 @@ g_small_enemies =
 		prob   		= 0.5,
 		min_count	= 1,
 		max_count	= 2,    
-		entity 	= "data/entities/animals/zombie_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/zombie/hardmod_fungal_zombie.xml"
 	},
 	{
 		prob   		= 0.1,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/slimeshooter_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/slimeshooter/hardmod_fungal_slimeshooter.xml"
 	},
 	{
 		prob   		= 0.2,
 		min_count	= 1,
 		max_count	= 3,    
-		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/hardmod_fungal_longleg.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/longleg/hardmod_fungal_longleg.xml"
 	},
 	{
 		prob   		= 0.25,
 		min_count	= 1,
 		max_count	= 2,    
-		entity 	= "data/entities/animals/miner_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/hardmod_fungal_miner.xml"
 	},
 	{
 		prob   		= 0.1,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/shotgunner_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/hardmod_fungal_shotgunner.xml"
 	},
+	-- {
+	-- 	prob   		= 0.15,
+	-- 	min_count	= 1,
+	-- 	max_count	= 2,
+	-- 	entity 	= "data/entities/animals/fungus.xml"
+	-- },
 }
 
 g_big_enemies =
@@ -88,28 +94,28 @@ g_big_enemies =
 		prob   		= 0.2,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/firemage_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/firemage/hardmod_fungal_firemage.xml"
 	},
 	{
 		prob   		= 0.01,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/worm.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/worm/hardmod_fungal_worm.xml"
 	},
 	{
 		prob   		= 0.2,
 		min_count	= 5,
 		max_count	= 10,    
-		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/hardmod_fungal_longleg.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/longleg/hardmod_fungal_longleg.xml"
 	},
 	{
 		prob   		= 0.1,
 		min_count	= 1,
 		max_count	= 1,    
 		entities 	= {
-			"data/entities/animals/miner_weak.xml",
-			"data/entities/animals/miner_weak.xml",
-			"data/entities/animals/shotgunner_weak.xml",
+			"mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/hardmod_fungal_miner.xml",
+			"mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/hardmod_fungal_miner.xml",
+			"mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/hardmod_fungal_shotgunner.xml",
 		}
 	},
 	{
@@ -131,25 +137,25 @@ g_big_enemies =
 		prob   		= 0.20,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/shotgunner_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/hardmod_fungal_shotgunner.xml"
 	},
 	{
 		prob   		= 0.1,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/acidshooter_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/hardmod_fungal_acidshooter.xml"
 	},
 	{
 		prob   		= 0.08,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/giantshooter_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/giantshooter/hardmod_fungal_giantshooter.xml"
 	},
 	{
 		prob   		= 0.09,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/fireskull.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/skull/hardmod_fungal_skull.xml"
 	},	
 	{
 		prob   		= 0.3,
@@ -170,7 +176,7 @@ g_big_enemies =
 		prob   		= 0.02,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/shaman.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shaman/hardmod_fungal_shaman.xml"
 	},
 	{
 		prob   		= 0.1,
@@ -179,6 +185,42 @@ g_big_enemies =
 		entity 	= "data/entities/animals/drone_shield.xml",
 		ngpluslevel = 2,
 	},
+	-- why 😭️
+	-- {
+	-- 	prob   		= 0.2,
+	-- 	min_count	= 1,
+	-- 	max_count	= 2,
+	-- 	entity 	= "data/entities/animals/fungus.xml"
+	-- },
+	-- {
+	-- 	prob   		= 0.03,
+	-- 	min_count	= 1,
+	-- 	max_count	= 1,
+	-- 	entity 	= "data/entities/animals/fungus_big.xml"
+	-- },
+	-- {
+	-- 	prob   		= 0.01,
+	-- 	min_count	= 1,
+	-- 	max_count	= 1,
+	-- 	entities 	= {
+	-- 		{
+	-- 			min_count	= 1,
+	-- 			max_count	= 3,
+	-- 			entity	= "data/entities/animals/fungus.xml",
+	-- 		},
+	-- 		{
+	-- 			min_count	= 1,
+	-- 			max_count	= 1,
+	-- 			entity	= "data/entities/animals/fungus_big.xml",
+	-- 		},
+	-- 	},
+	-- },
+	-- {
+	-- 	prob   		= 0.01,
+	-- 	min_count	= 1,
+	-- 	max_count	= 1,
+	-- 	entity 	= "data/entities/animals/fungus_giga.xml"
+	-- },
 }
 
 g_lamp =
@@ -216,19 +258,19 @@ g_unique_enemy =
 		prob   		= 0.5,
 		min_count	= 1,
 		max_count	= 3,    
-		entity 	= "data/entities/animals/slimeshooter_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/slimeshooter/hardmod_fungal_slimeshooter.xml"
 	},
 	{
 		prob   		= 0.3,
 		min_count	= 1,
 		max_count	= 2,    
-		entity 	= "data/entities/animals/acidshooter_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/hardmod_fungal_acidshooter.xml"
 	},
 	{
 		prob   		= 0.1,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/giantshooter_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/giantshooter/hardmod_fungal_giantshooter.xml"
 	},
 }
 
@@ -262,19 +304,19 @@ g_unique_enemy2 =
 		prob   		= 0.85,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/shotgunner_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/hardmod_fungal_shotgunner.xml"
 	},
 	{
 		prob   		= 0.5,
 		min_count	= 2,
 		max_count	= 2,    
-		entity 	= "data/entities/animals/miner_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/hardmod_fungal_miner.xml"
 	},
 	{
 		prob   		= 0.5,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/slimeshooter_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/slimeshooter/hardmod_fungal_slimeshooter.xml"
 	},
 }
 
@@ -293,19 +335,20 @@ g_unique_enemy3 =
 		prob   		= 0.7,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/firemage_weak.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/firemage/hardmod_fungal_firemage.xml"
 	},
 	{
 		prob   		= 0.3,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/alchemist.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/hardmod_fungal_alchemist.xml"
 	},
 	{
-		prob   		= 0.1,
+		-- TODO: idk what this enemy does, was 0.1, chnaged to 0.01 because idk if its too hard
+		prob   		= 0.01,
 		min_count	= 1,
 		max_count	= 1,    
-		entity 	= "data/entities/animals/thundermage.xml"
+		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/hardmod_fungal_thundermage.xml"
 	},
 }
 
@@ -320,18 +363,18 @@ g_fungi =
 		entity 	= ""
 	},
 	-- add skullflys after this step
-	{
-		prob   		= 0.5,
-		min_count	= 1,
-		max_count	= 1,    
-		entity 	= "data/entities/animals/fungus.xml"
-	},
-	{
-		prob   		= 0.05,
-		min_count	= 1,
-		max_count	= 1,    
-		entity 	= "data/entities/animals/fungus_big.xml"
-	},
+	-- {
+	-- 	prob   		= 0.5,
+	-- 	min_count	= 1,
+	-- 	max_count	= 1,    
+	-- 	entity 	= "data/entities/animals/fungus.xml"
+	-- },
+	-- {
+	-- 	prob   		= 0.05,
+	-- 	min_count	= 1,
+	-- 	max_count	= 1,    
+	-- 	entity 	= "data/entities/animals/fungus_big.xml"
+	-- },
 }
 
 ------------ items -------------------------------
@@ -1213,7 +1256,7 @@ function spawn_bbqbox( x, y )
 		spawn_heart( x + 10, y + 10 )
 	else
 		EntityLoadCameraBound( "data/entities/items/pickup/jar_of_urine.xml", x, y )
-		EntityLoad( "data/entities/animals/shotgunner_weak.xml", x + 10, y )
+		EntityLoad( "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/hardmod_fungal_shotgunner.xml", x + 10, y )
 	end
 end
 

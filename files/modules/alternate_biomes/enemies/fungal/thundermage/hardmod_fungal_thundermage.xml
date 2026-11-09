@@ -1,0 +1,34 @@
+<Entity name="$animal_hardmod_fungal_thundermage" tags="thundermage">
+	<Base file="data/entities/animals/thundermage.xml">
+		<AnimalAIComponent
+			attack_ranged_entity_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/projectiles/spore_thunderball.xml" >
+		</AnimalAIComponent>
+
+		<DamageModelComponent
+			ragdoll_filenames_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/filenames.txt"
+			ragdoll_material="fungus_loose"
+			blood_material="blood_fungi"
+			blood_spray_material="blood_fungi"
+			blood_sprite_directional="data/particles/bloodsplatters/bloodsplatter_directional_purple_$[1-3].xml"
+			blood_sprite_large="data/particles/bloodsplatters/bloodsplatter_purple_$[1-3].xml" >
+		</DamageModelComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/thundermage.xml" >
+		</SpriteComponent>
+
+		<GenomeDataComponent
+			herd_id="fungus" >
+		</GenomeDataComponent>
+
+		<LightComponent
+			r="80"
+			g="220"
+			b="200" >
+		</LightComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/thundermage_emissive.xml" >
+		</SpriteComponent>
+	</Base>
+</Entity>
