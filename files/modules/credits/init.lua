@@ -9,6 +9,11 @@ local dev_messages = {
 		message = "Thankyou for playing Hardmod and thankyou for playing Noita!\nThis community is a very warm place to be and I'm happy to be part of it!\nI hope my own pursuits can live up to even a tenth of the beauty Noita has within it.",
 		credit = "https://congalyne.dev/"
 	}
+	{
+		from = "Dani2D",
+		message = "Working on Hardmod with my lovely colleagues at Notla Games has been\none of the best unpaid part-time jobs I'll ever have. I hope playing\nit has brought you as much enjoyment and frustration as it brought us\nwhile making it.\nThank you for playing!",
+		credit = "https://meyer.games/"
+	}
 }
 
 local FINAL_WORDS = [[
