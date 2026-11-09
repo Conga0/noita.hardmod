@@ -13,6 +13,11 @@ local dev_messages = {
 		from = "UserK",
 		message = "This project took up way too much of my time, genuinely egregious.\nHere's to it taking even more in the future!",
 		credit = "UserK"
+	},
+	{
+		from = "Copi",
+		message = "Copi\n\n\nThis project took up way too little of my time, barely egregious. The others deserve all the recognition they can get for their hard work, cheers to another community collab & a rushed workshop image.",
+		credit = "Copi"
 	}
 }
 
@@ -23,7 +28,7 @@ local FINAL_WORDS = [[
 FINAL WORDS
 ===========
  
- 
+Find the hidden ARG!
  
  
  
