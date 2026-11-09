@@ -29,6 +29,10 @@ local dev_messages = {
 		message = "Hiii I am to blame for making this happen again.\nThis time I had not a lot of motivation to actually add stuff though.\nAnyway die die die die die die die die die snail die die die die die\ndie die die die die die die die die die die\ndie die die solve my riddle.",
 		credit = "https://evaisa.dev/"
 	},
+	{
+		from = "Lamia",
+		message = "Lamia asked me to write 'im tired' for them, all praise Lamia \\o/"
+	},
 }
 
 local FINAL_WORDS = [[
