@@ -9,7 +9,7 @@ function shot( entity_id )
         "HomingComponent",
         {
             target_tag="prey",
-            homing_targeting_coeff=5,
+            homing_targeting_coeff=4,
             homing_velocity_multiplier=0.95,
             just_rotate_towards_target=true
         }
