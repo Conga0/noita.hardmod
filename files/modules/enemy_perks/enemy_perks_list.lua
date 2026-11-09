@@ -370,6 +370,7 @@ enemy_perks = {
 			return HerdIdToString(utils.GetHerdID(data.target_enemy)) == "slimes"
 		end,
 		func = function(self, entity_id, data)
+			GetGameEffectLoadTo(entity_id, "PROTECTION_RADIOACTIVITY", false)
 			EntityAddChild(entity_id, EntityLoad(dir.."entities/stinky_aura.xml", data.x, data.y))
 		end
 	},
