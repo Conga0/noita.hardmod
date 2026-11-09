@@ -41,8 +41,8 @@ if #targets < 4 then
 			minion_id,
 			"LuaComponent",
 			{
-				script_source_file = "mods/noita.hardmod/files/modules/phantom_nemesis/files/scripts/kill_creature.lua",
-				execute_every_n_frame = 720
+				script_source_file = "mods/noita.hardmod/files/modules/phantom_nemesis/files/scripts/animals/kill_creature.lua",
+				execute_every_n_frame = 1020
 			}
 		)
 	end

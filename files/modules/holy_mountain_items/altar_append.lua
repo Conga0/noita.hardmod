@@ -1,4 +1,4 @@
-RegisterSpawnFunction(0xff6411ff, "spawn_purchasable_item")
+RegisterSpawnFunction(0xff6411ff, "hardmod_spawn_purchasable_item")
 dofile_once("mods/noita.hardmod/files/modules/holy_mountain_items/shop_item/spawn.lua")
 
 function spawn_hp(x, y)
@@ -6,4 +6,46 @@ function spawn_hp(x, y)
 
 	EntityLoad("mods/noita.hardmod/files/modules/holy_mountain_items/entities/heal_shop.xml", x-16, y)
 	EntityLoad("mods/noita.hardmod/files/modules/holy_mountain_items/entities/spell_refresh_shop.xml", x+16, y)
+end
+
+local old_spawn_all_shopitems = spawn_all_shopitems
+
+function spawn_all_shopitems(x, y, ...)
+	old_spawn_all_shopitems(x,y,...)
+	do return end
+	local levels = {
+		2,
+		5,
+		9,
+		12,
+		16,
+		20,
+		25,
+	}
+
+	local y_chunk_level = math.floor(y/512)
+	local hm_level = 0
+	for i,stage_boundary in ipairs(levels) do
+		if stage_boundary > y_chunk_level then break end
+		hm_level = i
+	end
+
+	if hm_level == 6 then
+		local shop_items = {}
+		local shop_spells = EntityGetInRadiusWithTag(x+256, y+256, 300, "card_action")
+		local shop_wands = EntityGetInRadiusWithTag(x+256, y+256, 300, "wand")
+		for _,item in ipairs(shop_spells) do
+			local cost_component = EntityGetFirstComponent(item, "ItemCostComponent")
+			if cost_component then
+				shop_items[#shop_items+1] = {item, cost_component, true}
+			end
+		end
+		for _,item in ipairs(shop_spells) do
+			local cost_component = EntityGetFirstComponent(item, "ItemCostComponent")
+			if cost_component then
+				
+				shop_items[#shop_items+1] = {item, cost_component, false}
+			end
+		end
+	end
 end

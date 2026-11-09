@@ -1,0 +1,10 @@
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/torso.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/thighs.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/right_foot.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/right_arm.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/right_hand.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/fuse.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/left_foot.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/left_arm.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/left_hand.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/head.png

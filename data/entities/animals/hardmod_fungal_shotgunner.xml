@@ -1,0 +1,3 @@
+<Entity name="$animal_hardmod_fungal_shotgunner">
+	<Base file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/hardmod_fungal_shotgunner.xml" include_children="1"></Base>
+</Entity>

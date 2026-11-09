@@ -3,4 +3,30 @@
 		script_source_file="mods/noita.hardmod/files/modules/holy_mountain_rework/perk_check_collapse.lua"
 		execute_every_n_frame="60"
 	/>
+
+	<ParticleEmitterComponent
+		emitted_material_name="spark_red"
+		x_pos_offset_min="1"
+		x_pos_offset_max="59"
+		y_pos_offset_min="7"
+		y_pos_offset_max="11"
+		collide_with_grid="0"
+
+		gravity.y="-4"
+		lifetime_min="0"
+		lifetime_max="60"
+		count_min="0"
+		count_max="1"
+		render_on_grid="1"
+		fade_based_on_lifetime="1"
+		cosmetic_force_create="1"
+		airflow_force="0.101"
+		airflow_time="0.51"
+		airflow_scale="0.05"
+    
+		emission_interval_min_frames="4"
+		emission_interval_max_frames="9"
+		emit_cosmetic_particles="1"
+		is_emitting="1"
+	/>
 </Entity>

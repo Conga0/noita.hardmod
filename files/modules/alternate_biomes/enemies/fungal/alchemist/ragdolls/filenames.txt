@@ -1,0 +1,8 @@
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/ragdolls/torso.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/ragdolls/head.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/ragdolls/cowl.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/ragdolls/left_arm.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/ragdolls/left_hand.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/ragdolls/right_hand.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/ragdolls/left_foot.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/ragdolls/right_foot.png

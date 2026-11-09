@@ -247,7 +247,7 @@ local function GetAbilityWeight(ability_id, context, tier)
 				if table.concat({"immune_",most_taken_damage_type}) == ability_id then
 					weight = weight * 100
 				else
-					weight = weight * 0.02
+					weight = weight * 0.01
 				end
 			end
 		},
@@ -336,7 +336,6 @@ function CreateMiniboss(entity_id, x, y, tier, budget, health_mult)
 	GamePrint(GameTextGet("$hardmod_phantom_possession",phantom_name,victim_name))
 
 	--local filepath = EntityGetFilename(entity_id)
-	if EntityGetIsAlive(entity_id) == false or IsValidEnemy(EntityGetFilename(entity_id)) == false or EntityGetName(entity_id) == "" or EntityHasTag(entity_id, "miniboss_minion") or EntityHasTag(entity_id, "helpless_animal") then return end
 
 	local fx = {}
 
@@ -381,7 +380,7 @@ function CreateMiniboss(entity_id, x, y, tier, budget, health_mult)
 
 	--Add Felcesis's particles & necessary tags to the possessed entity
 	local brain_id = EntityLoad("mods/noita.hardmod/files/modules/phantom_nemesis/files/entities/felcesis_brain.xml", x, y)
-	local brain_vsc_comp = EntityGetFirstComponentIncludingDisabled(brain_id,"VariableStorageComponent")
+	local brain_vsc_comp = EntityGetFirstComponentIncludingDisabled(brain_id,"VariableStorageComponent") or 0
 	ComponentSetValue2(brain_vsc_comp,"value_string",table.concat(selected_abilities_list,","))
 	EntityAddChild(entity_id,brain_id)
 	EntityAddTag(entity_id, "polymorphable_NOT")
@@ -396,9 +395,10 @@ function CreateMiniboss(entity_id, x, y, tier, budget, health_mult)
 		hitbox_height_y = ComponentGetValue2(hitbox_comp, "aabb_min_y")
 	end
 
-	local brain_vsc_comp = EntityGetFirstComponentIncludingDisabled(brain_id,"VariableStorageComponent") or 0
 	ComponentSetValue2(brain_vsc_comp,"value_int",GameGetFrameNum())
 	ComponentSetValue2(brain_vsc_comp,"value_float",tier)
+	local brain_vsc_comp_location = EntityGetComponentIncludingDisabled(brain_id,"VariableStorageComponent")[2]
+	ComponentSetValue2(brain_vsc_comp_location,"value_string",BiomeMapGetName(x,y))
 
 	--Dialogue
 	EntityAddComponent2(brain_id,"LuaComponent",{
@@ -515,6 +515,11 @@ function FindPossessionTarget(biomes_visited)
 			if distance < minimum_distance_from_player then
 				goto skipthistarget
 			end
+		end
+
+		--Filter by directory
+		if EntityGetIsAlive(target) == false or IsValidEnemy(EntityGetFilename(target)) == false then
+			goto skipthistarget
 		end
 
 		--Filter by tag
