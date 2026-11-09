@@ -15,14 +15,14 @@ local dev_messages = {
 		credit = "UserK"
 	},
 	{
-		from = "Dani2D",
-		message = "Working on Hardmod with my lovely colleagues at Notla Games has been\none of the best unpaid part-time jobs I'll ever have. I hope playing\nit has brought you as much enjoyment and frustration as it brought us\nwhile making it.\nThank you for playing!",
-		credit = "https://meyer.games/"
-	},
-	{
 		from = "Copi",
 		message = "Copi\n\n\nThis project took up way too little of my time, barely egregious. The others deserve all the recognition they can get for their hard work, cheers to another community collab & a rushed workshop image.",
 		credit = "Copi"
+	},
+	{
+		from = "Dani2D",
+		message = "Working on Hardmod with my lovely colleagues at Notla Games has been\none of the best unpaid part-time jobs I'll ever have. I hope playing\nit has brought you as much enjoyment and frustration as it brought us\nwhile making it.\nThank you for playing!",
+		credit = "https://meyer.games/"
 	},
 }
 
