@@ -42,4 +42,5 @@
 <!-- vanilla_perk_rebalances --><QuadChar id="99" rect_x="544" rect_y="0" width="16" rect_h="16" rect_w="16" offset_x="0" offset_y="0" />
 <!-- vanilla_quests --><QuadChar id="100" rect_x="560" rect_y="0" width="16" rect_h="16" rect_w="16" offset_x="0" offset_y="0" />
 <!-- vanilla_spell_rebalances --><QuadChar id="101" rect_x="576" rect_y="0" width="16" rect_h="16" rect_w="16" offset_x="0" offset_y="0" />
+<!-- worse_digging --><QuadChar id="102" rect_x="592" rect_y="0" width="16" rect_h="16" rect_w="16" offset_x="0" offset_y="0" />
 </FontData>

@@ -302,6 +302,15 @@ hooks.perk_patches = {
 		ui_description = "$hardmod_perk_contact_damage_desc",
 		game_effect = "PROTECTION_MELEE",
 	},
+	--["LEVITATION_TRAIL"] = {
+	--	func = function(perk_entity, entity_id, perk_name)
+	--		EntityAddComponent2(entity_id, "LuaComponent", {
+	--			_tags="perk_component",
+	--			script_source_file = dir.."/levitation_trail/levitation_trail.lua",
+	--			execute_every_n_frame = 3,
+	--		} )
+	--	end
+	--},
 }
 
 local remove_perks = {
