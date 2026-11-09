@@ -1,0 +1,28 @@
+<Entity name="$projectile_default">
+	<Base file="data/entities/projectiles/thunderball.xml">
+		<ProjectileComponent
+			shoot_light_flash_r="90"
+			shoot_light_flash_g="230"
+			shoot_light_flash_b="210" >
+			<config_explosion
+				load_this_entity="data/entities/particles/particle_explosion/main_blue.xml,data/entities/misc/loose_ground.xml,data/entities/misc/explosion_was_here.xml,mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/spores/spore_burst.xml"
+				create_cell_probability="8"
+				create_cell_material="fungi"
+				spark_material="spark_teal"
+				light_r="60"
+				light_g="170"
+				light_b="150" >
+			</config_explosion>
+		</ProjectileComponent>
+
+		<LightComponent
+			r="60"
+			g="200"
+			b="180" >
+		</LightComponent>
+
+		<VariableStorageComponent
+			value_string="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/projectiles/spore_thunderball.xml" >
+		</VariableStorageComponent>
+	</Base>
+</Entity>

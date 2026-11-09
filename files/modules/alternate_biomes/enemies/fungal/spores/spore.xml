@@ -1,0 +1,7 @@
+<Entity name="$projectile_default" tags="projectile_player,hittable">
+	<Base file="data/entities/projectiles/pollen.xml">
+		<ProjectileComponent
+			direction_random_rad="0.3" >
+		</ProjectileComponent>
+	</Base>
+</Entity>

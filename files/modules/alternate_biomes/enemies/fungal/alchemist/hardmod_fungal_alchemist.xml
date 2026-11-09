@@ -1,0 +1,34 @@
+<Entity name="$animal_hardmod_fungal_alchemist">
+	<Base file="data/entities/animals/alchemist.xml">
+		<AnimalAIComponent
+			food_material="blood_fungi"
+			attack_ranged_entity_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/projectiles/potion_fungal.xml" >
+		</AnimalAIComponent>
+
+		<DamageModelComponent
+			ragdoll_filenames_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/ragdolls/filenames.txt"
+			ragdoll_material="fungus_loose"
+			blood_material="blood_fungi"
+			blood_spray_material="blood_fungi"
+			blood_sprite_directional="data/particles/bloodsplatters/bloodsplatter_directional_purple_$[1-3].xml"
+			blood_sprite_large="data/particles/bloodsplatters/bloodsplatter_purple_$[1-3].xml" >
+			<damage_multipliers
+				fire="1.5" >
+			</damage_multipliers>
+		</DamageModelComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/alchemist.xml" >
+		</SpriteComponent>
+
+		<GenomeDataComponent
+			herd_id="fungus" >
+		</GenomeDataComponent>
+
+		<LightComponent
+			r="200"
+			g="230"
+			b="140" >
+		</LightComponent>
+	</Base>
+</Entity>

@@ -1,0 +1,11 @@
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/torso.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/right_thigh.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/right_foot.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/right_arm.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/right_hand.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/left_thigh.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/left_foot.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/left_arm.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/left_hand.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/head.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/ragdolls/hood.png

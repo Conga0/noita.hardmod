@@ -1,0 +1,3 @@
+<Entity name="$animal_hardmod_fungal_thundermage">
+	<Base file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/hardmod_fungal_thundermage.xml" include_children="1"></Base>
+</Entity>

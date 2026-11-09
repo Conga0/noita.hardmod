@@ -1,0 +1,37 @@
+<Entity name="$projectile_default">
+	<Base file="data/entities/projectiles/radioactive_blob.xml">
+		<ProjectileComponent
+			shoot_light_flash_r="220"
+			shoot_light_flash_g="200"
+			shoot_light_flash_b="170" >
+			<config_explosion
+				explosion_sprite="data/particles/explosion_032_pink.xml"
+				create_cell_probability="10"
+				create_cell_material="fungisoil"
+				load_this_entity="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/spores/spore_burst_small.xml" >
+			</config_explosion>
+		</ProjectileComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/slimeshooter/projectiles/puffball_blob_sprite.xml" >
+		</SpriteComponent>
+
+		<ParticleEmitterComponent
+			emitted_material_name="blood_fungi" >
+		</ParticleEmitterComponent>
+
+		<LightComponent
+			r="220"
+			g="200"
+			b="170" >
+		</LightComponent>
+
+		<DamageModelComponent
+			blood_material="blood_fungi" >
+		</DamageModelComponent>
+
+		<VariableStorageComponent
+			value_string="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/slimeshooter/projectiles/puffball_blob.xml" >
+		</VariableStorageComponent>
+	</Base>
+</Entity>
