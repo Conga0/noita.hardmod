@@ -20,11 +20,11 @@ hooks.spell_patches = {
 		end
 	},
 	["MANA_REDUCE"] = {
-		description = "$hardmod_spell_add_mana_desc",
-		spawn_level = "3,4,5,6,10",
-		spawn_probability = "0.8,0.9,0.9,1,1",
+		-- description = "$hardmod_spell_add_mana_desc",
+		spawn_level = "4,5,6,10",
+		spawn_probability = "0.8,0.8,0.9,0.8",
 		price = 160,
-		mana = -15,
+		mana = -30,
 		action = function()
 			c.fire_rate_wait = c.fire_rate_wait + 7
 			current_reload_time = current_reload_time + 2
@@ -33,12 +33,12 @@ hooks.spell_patches = {
 	},
 	["SLOW_BUT_STEADY"] = {
 		description = "$hardmod_spell_slow_but_steady_desc",
-		mana = -40,
-		action = function ()
-			current_reload_time = math.max(90, current_reload_time)
-			shot_effects.recoil_knockback = shot_effects.recoil_knockback - 100.0
-			draw_actions(1, true)
-		end
+		mana = -50,
+		-- action = function ()
+		-- 	current_reload_time = math.max(90, current_reload_time)
+		-- 	shot_effects.recoil_knockback = shot_effects.recoil_knockback - 100.0
+		-- 	draw_actions(1, true)
+		-- end
 	},
 	["I_SHAPE"] = { mana = 4 }, --5deg
 	["W_SHAPE"] = { mana = 4 }, --5deg
@@ -64,7 +64,7 @@ hooks.spell_patches = {
 		spawn_level = "2,4,5,6",
 		spawn_probability = "0.6,0.7,0.7,0.6",
 		description = "$hardmod_spell_heavy_spread_desc",
-		mana = 8,
+		mana = 6,
 		sprite = "mods/noita.hardmod/files/modules/rapidfire_nerfs/ui_gfx/heavy_spread.png",
 		action = function()
 			-- parity with cheeseless_triggers
@@ -75,13 +75,16 @@ hooks.spell_patches = {
 		end,
 	},
 	["DIGGER"] = {
-		mana = 7,
+		mana = 5,
 		action = function()
 			add_projectile("data/entities/projectiles/deck/digger.xml")
 			c.fire_rate_wait = c.fire_rate_wait + 2
 			c.spread_degrees = c.spread_degrees + 4.0
 			current_reload_time = current_reload_time - 9
 		end,
+	},
+	["POWERDIGGER"] = {
+		mana = 4,
 	},
 	["APOTHEOSIS_WATER_POWER"] = {
 		description = "$hardmod_spell_apotheosis_water_power_desc",
@@ -137,7 +140,7 @@ hooks.new_spells = {
 		spawn_level = "2,3,4,5,6",
 		spawn_probability = "0.6,0.8,0.9,1,1",
 		price = 160,
-		mana = -20,
+		mana = -40,
 		action = function()
 			c.fire_rate_wait = c.fire_rate_wait + 6
 			current_reload_time = current_reload_time + 1
