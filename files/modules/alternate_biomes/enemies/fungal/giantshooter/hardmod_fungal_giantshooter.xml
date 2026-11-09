@@ -1,8 +1,8 @@
 <Entity name="$animal_hardmod_fungal_giantshooter">
 	<Base file="data/entities/animals/giantshooter_weak.xml">
-		<AnimalAIComponent
+		<!-- <AnimalAIComponent
 			attack_ranged_entity_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/projectiles/mold_spit.xml" >
-		</AnimalAIComponent>
+		</AnimalAIComponent> -->
 
 		<DamageModelComponent
 			ragdoll_filenames_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/giantshooter/ragdolls/filenames.txt"
@@ -30,18 +30,18 @@
 			b="210" >
 		</LightComponent>
 
-		<ExplodeOnDamageComponent>
+		<!-- <ExplodeOnDamageComponent>
 			<config_explosion
 				explosion_sprite="data/particles/explosion_032_pink.xml"
 				create_cell_probability="5"
 				create_cell_material="fungus_powder_bad"
 				load_this_entity="data/entities/particles/particle_explosion/main_pink.xml,mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/spores/spore_burst_large.xml" >
 			</config_explosion>
-		</ExplodeOnDamageComponent>
+		</ExplodeOnDamageComponent> -->
 
-		<LuaComponent
+		<!-- <LuaComponent
 			script_damage_received="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/giantshooter/scripts/giantshooter_split.lua" >
-		</LuaComponent>
+		</LuaComponent> -->
 	</Base>
 
 	<VariableStorageComponent
@@ -49,11 +49,11 @@
 		value_int="400" >
 	</VariableStorageComponent>
 
-	<LuaComponent
+	<!-- <LuaComponent
 		script_source_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/scripts/fungal_inventory.lua"
 		execute_on_added="1"
 		remove_after_executed="1" >
-	</LuaComponent>
+	</LuaComponent> -->
 
 	<Entity><Base file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/giantshooter/tentacles/hypha_alt_02.xml"><InheritTransformComponent><Transform position.x="-3" position.y="-1" ></Transform></InheritTransformComponent></Base></Entity>
 	<Entity><Base file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/giantshooter/tentacles/hypha_alt_01.xml"><InheritTransformComponent><Transform position.x="-6" position.y="-1" ></Transform></InheritTransformComponent></Base></Entity>

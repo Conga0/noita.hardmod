@@ -1,8 +1,8 @@
 <Entity name="$animal_hardmod_fungal_firemage" tags="firemage">
 	<Base file="data/entities/animals/firemage_weak.xml">
-		<AnimalAIComponent
+		<!-- <AnimalAIComponent
 			attack_ranged_entity_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/firemage/projectiles/spore_ball.xml" >
-		</AnimalAIComponent>
+		</AnimalAIComponent> -->
 
 		<DamageModelComponent
 			ragdoll_filenames_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/firemage/ragdolls/filenames.txt"

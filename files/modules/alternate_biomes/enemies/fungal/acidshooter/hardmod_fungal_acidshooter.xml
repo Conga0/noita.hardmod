@@ -1,8 +1,8 @@
 <Entity name="$animal_hardmod_fungal_acidshooter">
 	<Base file="data/entities/animals/acidshooter_weak.xml">
-		<AnimalAIComponent
+		<!-- <AnimalAIComponent
 			attack_ranged_entity_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/projectiles/mold_spit.xml" >
-		</AnimalAIComponent>
+		</AnimalAIComponent> -->
 
 		<DamageModelComponent
 			ragdoll_filenames_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/ragdolls/filenames.txt"
@@ -36,11 +36,11 @@
 		value_int="200" >
 	</VariableStorageComponent>
 
-	<LuaComponent
+	<!-- <LuaComponent
 		script_source_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/scripts/fungal_inventory.lua"
 		execute_on_added="1"
 		remove_after_executed="1" >
-	</LuaComponent>
+	</LuaComponent> -->
 
 	<Entity><Base file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/tentacles/hypha_alt_02.xml"><InheritTransformComponent><Transform position.x="-3" position.y="-1" ></Transform></InheritTransformComponent></Base></Entity>
 	<Entity><Base file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/tentacles/hypha_alt_01.xml"><InheritTransformComponent><Transform position.x="-4" position.y="-1" ></Transform></InheritTransformComponent></Base></Entity>

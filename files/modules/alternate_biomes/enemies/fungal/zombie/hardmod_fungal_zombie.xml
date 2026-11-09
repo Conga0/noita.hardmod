@@ -34,8 +34,8 @@
 		value_int="5" >
 	</VariableStorageComponent>
 
-	<LuaComponent
+	<!-- <LuaComponent
 		script_death="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/spores/scripts/spore_death.lua"
 		execute_every_n_frame="-1" >
-	</LuaComponent>
+	</LuaComponent> -->
 </Entity>
