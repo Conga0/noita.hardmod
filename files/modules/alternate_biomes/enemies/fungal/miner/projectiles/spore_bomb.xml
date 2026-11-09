@@ -1,0 +1,37 @@
+<Entity name="$projectile_default">
+	<Base file="data/entities/projectiles/tnt.xml">
+		<PhysicsImageShapeComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/projectiles/spore_bomb.png" >
+		</PhysicsImageShapeComponent>
+
+		<ProjectileComponent>
+			<config_explosion
+				load_this_entity="data/entities/particles/particle_explosion/main_pink.xml,mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/spores/spore_burst.xml"
+				explosion_sprite="data/particles/explosion_032_pink.xml"
+				create_cell_probability="4"
+				create_cell_material="fungus_powder_bad"
+				spark_material="plasma_fading_pink" >
+			</config_explosion>
+		</ProjectileComponent>
+
+		<ParticleEmitterComponent
+			emitted_material_name="plasma_fading_pink"
+			create_real_particles="0"
+			emit_cosmetic_particles="1"
+			count_min="0"
+			count_max="2" >
+		</ParticleEmitterComponent>
+
+		<ParticleEmitterComponent
+			emitted_material_name="plasma_fading_pink" >
+		</ParticleEmitterComponent>
+
+		<ParticleEmitterComponent
+			emitted_material_name="plasma_fading_pink" >
+		</ParticleEmitterComponent>
+
+		<VariableStorageComponent
+			value_string="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/projectiles/spore_bomb.xml" >
+		</VariableStorageComponent>
+	</Base>
+</Entity>

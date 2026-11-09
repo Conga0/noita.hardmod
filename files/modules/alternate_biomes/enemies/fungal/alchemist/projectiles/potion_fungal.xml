@@ -1,0 +1,7 @@
+<Entity tags="projectile_item">
+	<Base file="data/entities/items/pickup/potion_aggressive.xml">
+		<LuaComponent
+			script_source_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/scripts/potion_fungal.lua" >
+		</LuaComponent>
+	</Base>
+</Entity>

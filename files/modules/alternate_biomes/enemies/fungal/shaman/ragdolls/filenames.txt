@@ -1,0 +1,8 @@
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shaman/ragdolls/torso.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shaman/ragdolls/head.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shaman/ragdolls/hand.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shaman/ragdolls/lantern.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shaman/ragdolls/leg_l.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shaman/ragdolls/leg_r.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shaman/ragdolls/tentacle_l.png
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shaman/ragdolls/tentacle_r.png

@@ -1,0 +1,31 @@
+<Entity name="$projectile_default">
+	<Base file="data/entities/projectiles/acidshot.xml">
+		<ProjectileComponent
+			shoot_light_flash_r="140"
+			shoot_light_flash_g="170"
+			shoot_light_flash_b="100"
+			damage_game_effect_entities="data/entities/misc/effect_trip_00.xml," >
+			<config_explosion
+				explosion_sprite="data/particles/explosion_032_pink.xml"
+				create_cell_material="fungal_gas"
+				create_cell_probability="60" >
+			</config_explosion>
+		</ProjectileComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/projectiles/mold_spit_sprite.xml" >
+		</SpriteComponent>
+
+		<ParticleEmitterComponent
+			emitted_material_name="blood_fungi" >
+		</ParticleEmitterComponent>
+
+		<DamageModelComponent
+			blood_material="blood_fungi" >
+		</DamageModelComponent>
+
+		<VariableStorageComponent
+			value_string="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/acidshooter/projectiles/mold_spit.xml" >
+		</VariableStorageComponent>
+	</Base>
+</Entity>

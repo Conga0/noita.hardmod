@@ -1,0 +1,1 @@
+mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/skull/ragdolls/head.png

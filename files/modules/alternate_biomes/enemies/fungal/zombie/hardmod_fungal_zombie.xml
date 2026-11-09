@@ -1,0 +1,41 @@
+<Entity name="$animal_hardmod_fungal_zombie" tags="zombie,hardmod_trip_on_hit">
+	<Base file="data/entities/animals/zombie_weak.xml">
+		<AnimalAIComponent
+			food_material="blood_fungi" >
+		</AnimalAIComponent>
+
+		<DamageModelComponent
+			ragdoll_filenames_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/zombie/ragdolls/filenames.txt"
+			ragdoll_material="fungus_loose"
+			blood_material="blood_fungi"
+			blood_spray_material="blood_fungi"
+			blood_sprite_directional="data/particles/bloodsplatters/bloodsplatter_directional_purple_$[1-3].xml"
+			blood_sprite_large="data/particles/bloodsplatters/bloodsplatter_purple_$[1-3].xml" >
+			<damage_multipliers
+				fire="1.5" >
+			</damage_multipliers>
+		</DamageModelComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/zombie/zombie.xml" >
+		</SpriteComponent>
+
+		<GenomeDataComponent
+			herd_id="fungus" >
+		</GenomeDataComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/zombie/zombie_emissive.xml" >
+		</SpriteComponent>
+	</Base>
+
+	<VariableStorageComponent
+		_tags="spore_count"
+		value_int="5" >
+	</VariableStorageComponent>
+
+	<!-- <LuaComponent
+		script_death="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/spores/scripts/spore_death.lua"
+		execute_every_n_frame="-1" >
+	</LuaComponent> -->
+</Entity>

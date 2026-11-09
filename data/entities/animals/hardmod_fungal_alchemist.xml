@@ -1,0 +1,3 @@
+<Entity name="$animal_hardmod_fungal_alchemist">
+	<Base file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/hardmod_fungal_alchemist.xml" include_children="1"></Base>
+</Entity>

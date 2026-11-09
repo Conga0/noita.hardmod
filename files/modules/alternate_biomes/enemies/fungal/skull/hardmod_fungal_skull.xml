@@ -1,0 +1,63 @@
+<Entity name="$animal_hardmod_fungal_skull">
+	<Base file="data/entities/animals/fireskull.xml">
+		<DamageModelComponent
+			ragdoll_filenames_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/skull/ragdolls/filenames.txt"
+			materials_that_damage="acid,poison"
+			materials_how_much_damage="0.004,0.001"
+			wet_status_effect_damage="0"
+			fire_probability_of_ignition="0.5"
+			ragdoll_material="fungus_loose"
+			blood_material="fungus_powder_bad"
+			blood_spray_material="blood_fungi"
+			blood_multiplier="0.1"
+			blood_sprite_directional="data/particles/bloodsplatters/bloodsplatter_directional_purple_$[1-3].xml"
+			blood_sprite_large="data/particles/bloodsplatters/bloodsplatter_purple_$[1-3].xml" >
+			<damage_multipliers
+				fire="1.5" >
+			</damage_multipliers>
+		</DamageModelComponent>
+
+		<SpriteComponent
+			image_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/skull/skull.xml" >
+		</SpriteComponent>
+
+		<GenomeDataComponent
+			herd_id="fungus" >
+		</GenomeDataComponent>
+
+		<LightComponent
+			r="255"
+			g="90"
+			b="220" >
+		</LightComponent>
+
+		<ParticleEmitterComponent
+			emitted_material_name="fungal_gas"
+			count_min="1"
+			count_max="1"
+			emission_interval_min_frames="30"
+			emission_interval_max_frames="60" >
+		</ParticleEmitterComponent>
+
+		<ParticleEmitterComponent
+			emitted_material_name="plasma_fading_pink"
+			custom_style="NONE"
+			count_min="1"
+			count_max="3"
+			create_real_particles="0"
+			emit_cosmetic_particles="1"
+			emission_interval_min_frames="2"
+			emission_interval_max_frames="4" >
+		</ParticleEmitterComponent>
+	</Base>
+
+	<VariableStorageComponent
+		_tags="spore_count"
+		value_int="5" >
+	</VariableStorageComponent>
+
+	<!-- <LuaComponent
+		script_source_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/skull/scripts/spore_shed.lua"
+		execute_every_n_frame="90" >
+	</LuaComponent> -->
+</Entity>

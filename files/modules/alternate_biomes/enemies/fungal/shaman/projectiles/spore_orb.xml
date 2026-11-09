@@ -1,0 +1,36 @@
+<Entity name="$projectile_default" tags="hardmod_trip_on_hit">
+	<Base file="data/entities/projectiles/orb_cursed.xml">
+		<ProjectileComponent
+			shoot_light_flash_r="230"
+			shoot_light_flash_g="90"
+			shoot_light_flash_b="200"
+			damage_game_effect_entities="" >
+			<config_explosion
+				explosion_sprite="data/particles/explosion_016_plasma_pink.xml"
+				light_r="230"
+				light_g="90"
+				light_b="200" >
+			</config_explosion>
+		</ProjectileComponent>
+
+		<SpriteComponent
+			image_file="data/projectiles_gfx/orb_pink.xml" >
+		</SpriteComponent>
+
+		<SpriteComponent
+			image_file="data/particles/explosion_016_plasma_pink.xml" >
+		</SpriteComponent>
+
+		<ParticleEmitterComponent
+			emitted_material_name="spark_purple_bright" >
+		</ParticleEmitterComponent>
+
+		<ParticleEmitterComponent
+			emitted_material_name="plasma_fading_pink" >
+		</ParticleEmitterComponent>
+
+		<VariableStorageComponent
+			value_string="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shaman/projectiles/spore_orb.xml" >
+		</VariableStorageComponent>
+	</Base>
+</Entity>

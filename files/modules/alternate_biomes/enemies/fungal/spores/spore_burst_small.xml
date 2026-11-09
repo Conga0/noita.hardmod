@@ -1,0 +1,18 @@
+<Entity>
+	<GenomeDataComponent
+		herd_id="fungus" >
+	</GenomeDataComponent>
+
+	<VariableStorageComponent
+		_tags="spore_count"
+		name="spore_count"
+		value_int="3" >
+	</VariableStorageComponent>
+
+	<LuaComponent
+		script_source_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/spores/scripts/spore_burst_entity.lua"
+		execute_on_added="1"
+		execute_every_n_frame="-1"
+		remove_after_executed="1" >
+	</LuaComponent>
+</Entity>
