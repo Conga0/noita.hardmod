@@ -31,7 +31,8 @@ local dev_messages = {
 	},
 	{
 		from = "Lamia",
-		message = "Lamia asked me to write 'im tired' for them, all praise Lamia \\o/"
+		message = "Lamia asked me to write 'im tired' for them, all praise Lamia \\o/",
+		credit = "Zamia",
 	},
 }
 

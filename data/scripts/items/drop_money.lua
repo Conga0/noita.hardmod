@@ -285,7 +285,7 @@ function do_money_drop(amount_multiplier, trick_kill, damage_type_bit_field, mes
 		data.amount = math.max(data.amount, math.floor(data.health) * 10)
 	end
 
-	data.amount = math.min(data.minimum_amount, data.amount * data.multiplier)
+	data.amount = math.max(data.minimum_amount, data.amount * data.multiplier)
 
 
 	for _,v in ipairs(hooks.funcs) do
