@@ -1,9 +1,9 @@
 <Entity name="$animal_hardmod_fungal_miner">
 	<Base file="data/entities/animals/miner_weak.xml" include_children="1">
-		<AnimalAIComponent
+		<!-- <AnimalAIComponent
 			food_material="blood_fungi"
 			attack_ranged_entity_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/projectiles/spore_bomb.xml" >
-		</AnimalAIComponent>
+		</AnimalAIComponent> -->
 
 		<DamageModelComponent
 			ragdoll_filenames_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/miner/ragdolls/filenames.txt"

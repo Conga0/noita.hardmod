@@ -6,8 +6,8 @@ local hooks = {}
 -- matter eaten't
 local matter_eatent_list = {
 	rock_hard_border = true,
-	templebrick_static = true,
-	templebrick_noedge_static = true,
+	-- templebrick_static = true,
+	-- templebrick_noedge_static = true,
 }
 local durability_override = {
 	rock_hard_border = 16,

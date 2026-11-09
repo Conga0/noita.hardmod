@@ -1,9 +1,9 @@
 <Entity name="$animal_hardmod_fungal_alchemist">
 	<Base file="data/entities/animals/alchemist.xml">
-		<AnimalAIComponent
+		<!-- <AnimalAIComponent
 			food_material="blood_fungi"
 			attack_ranged_entity_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/projectiles/potion_fungal.xml" >
-		</AnimalAIComponent>
+		</AnimalAIComponent> -->
 
 		<DamageModelComponent
 			ragdoll_filenames_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/ragdolls/filenames.txt"

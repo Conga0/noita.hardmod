@@ -56,8 +56,8 @@
 		value_int="5" >
 	</VariableStorageComponent>
 
-	<LuaComponent
+	<!-- <LuaComponent
 		script_source_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/skull/scripts/spore_shed.lua"
 		execute_every_n_frame="90" >
-	</LuaComponent>
+	</LuaComponent> -->
 </Entity>

@@ -71,12 +71,12 @@ g_small_enemies =
 		max_count	= 1,    
 		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/hardmod_fungal_shotgunner.xml"
 	},
-	{
-		prob   		= 0.15,
-		min_count	= 1,
-		max_count	= 2,
-		entity 	= "data/entities/animals/fungus.xml"
-	},
+	-- {
+	-- 	prob   		= 0.15,
+	-- 	min_count	= 1,
+	-- 	max_count	= 2,
+	-- 	entity 	= "data/entities/animals/fungus.xml"
+	-- },
 }
 
 g_big_enemies =
@@ -185,41 +185,42 @@ g_big_enemies =
 		entity 	= "data/entities/animals/drone_shield.xml",
 		ngpluslevel = 2,
 	},
-	{
-		prob   		= 0.2,
-		min_count	= 1,
-		max_count	= 2,
-		entity 	= "data/entities/animals/fungus.xml"
-	},
-	{
-		prob   		= 0.03,
-		min_count	= 1,
-		max_count	= 1,
-		entity 	= "data/entities/animals/fungus_big.xml"
-	},
-	{
-		prob   		= 0.01,
-		min_count	= 1,
-		max_count	= 1,
-		entities 	= {
-			{
-				min_count	= 1,
-				max_count	= 3,
-				entity	= "data/entities/animals/fungus.xml",
-			},
-			{
-				min_count	= 1,
-				max_count	= 1,
-				entity	= "data/entities/animals/fungus_big.xml",
-			},
-		},
-	},
-	{
-		prob   		= 0.01,
-		min_count	= 1,
-		max_count	= 1,
-		entity 	= "data/entities/animals/fungus_giga.xml"
-	},
+	-- why 😭️
+	-- {
+	-- 	prob   		= 0.2,
+	-- 	min_count	= 1,
+	-- 	max_count	= 2,
+	-- 	entity 	= "data/entities/animals/fungus.xml"
+	-- },
+	-- {
+	-- 	prob   		= 0.03,
+	-- 	min_count	= 1,
+	-- 	max_count	= 1,
+	-- 	entity 	= "data/entities/animals/fungus_big.xml"
+	-- },
+	-- {
+	-- 	prob   		= 0.01,
+	-- 	min_count	= 1,
+	-- 	max_count	= 1,
+	-- 	entities 	= {
+	-- 		{
+	-- 			min_count	= 1,
+	-- 			max_count	= 3,
+	-- 			entity	= "data/entities/animals/fungus.xml",
+	-- 		},
+	-- 		{
+	-- 			min_count	= 1,
+	-- 			max_count	= 1,
+	-- 			entity	= "data/entities/animals/fungus_big.xml",
+	-- 		},
+	-- 	},
+	-- },
+	-- {
+	-- 	prob   		= 0.01,
+	-- 	min_count	= 1,
+	-- 	max_count	= 1,
+	-- 	entity 	= "data/entities/animals/fungus_giga.xml"
+	-- },
 }
 
 g_lamp =
@@ -343,7 +344,8 @@ g_unique_enemy3 =
 		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/alchemist/hardmod_fungal_alchemist.xml"
 	},
 	{
-		prob   		= 0.1,
+		-- TODO: idk what this enemy does, was 0.1, chnaged to 0.01 because idk if its too hard
+		prob   		= 0.01,
 		min_count	= 1,
 		max_count	= 1,    
 		entity 	= "mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/thundermage/hardmod_fungal_thundermage.xml"
@@ -361,18 +363,18 @@ g_fungi =
 		entity 	= ""
 	},
 	-- add skullflys after this step
-	{
-		prob   		= 0.5,
-		min_count	= 1,
-		max_count	= 1,    
-		entity 	= "data/entities/animals/fungus.xml"
-	},
-	{
-		prob   		= 0.05,
-		min_count	= 1,
-		max_count	= 1,    
-		entity 	= "data/entities/animals/fungus_big.xml"
-	},
+	-- {
+	-- 	prob   		= 0.5,
+	-- 	min_count	= 1,
+	-- 	max_count	= 1,    
+	-- 	entity 	= "data/entities/animals/fungus.xml"
+	-- },
+	-- {
+	-- 	prob   		= 0.05,
+	-- 	min_count	= 1,
+	-- 	max_count	= 1,    
+	-- 	entity 	= "data/entities/animals/fungus_big.xml"
+	-- },
 }
 
 ------------ items -------------------------------

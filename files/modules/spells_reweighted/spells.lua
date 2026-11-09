@@ -1,7 +1,15 @@
 local hooks = {
 	spell_patches = {
-		["TELEPORT_PROJECTILE"] = { mana = 20 },
-		["TELEPORT_PROJECTILE_SHORT"] = { mana = 30 },
+		["TELEPORT_PROJECTILE"] = {
+			mana = 20,
+			spawn_level = "1,2,4,5,6",
+			spawn_probability = "0.5,0.7,0.7,0.8,0.8",
+		},
+		["TELEPORT_PROJECTILE_SHORT"] = {
+			mana = 30,
+			spawn_level = "2,4,5,6",
+			spawn_probability = "0.7,0.7,0.8,0.8",
+		},
 		["ALPHA"] = { mana = 80 },
 		["GAMMA"] = { mana = 80 },
 		["TAU"] = { mana = 120 },

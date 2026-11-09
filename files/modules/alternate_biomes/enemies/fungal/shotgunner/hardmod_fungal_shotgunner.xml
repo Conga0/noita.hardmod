@@ -1,9 +1,9 @@
 <Entity name="$animal_hardmod_fungal_shotgunner">
 	<Base file="data/entities/animals/shotgunner_weak.xml" include_children="1">
-		<AnimalAIComponent
+		<!-- <AnimalAIComponent
 			food_material="blood_fungi"
 			attack_ranged_entity_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/projectiles/spore_shot.xml" >
-		</AnimalAIComponent>
+		</AnimalAIComponent> -->
 
 		<DamageModelComponent
 			ragdoll_filenames_file="mods/noita.hardmod/files/modules/alternate_biomes/enemies/fungal/shotgunner/ragdolls/filenames.txt"
