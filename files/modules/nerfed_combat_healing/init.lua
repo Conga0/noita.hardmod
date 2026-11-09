@@ -1,19 +1,30 @@
 local hooks = {}
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
+local dir = "mods/noita.hardmod/files/modules/nerfed_combat_healing/"
 
 hooks.mod_init = function()
 	for xml in nxml.edit_file("data/entities/player_base.xml") do
 		xml:add_child(nxml.new_element("LuaComponent", {
-			script_damage_received = "mods/noita.hardmod/files/modules/nerfed_combat_healing/scripts/wound_on_damage.lua",
+			script_damage_received = dir.."wound_on_damage.lua",
 		}))
 	end
+end
 
-	-- Modular translation injection
-	-- local translations_filepath = "mods/noita.hardmod/files/standard.csv"
-	-- local translations = ModTextFileGetContent(translations_filepath)
-	-- local new_translations = ModTextFileGetContent("mods/noita.hardmod/files/modules/anti_cov_spam/translations.csv")
-	-- translations = translations .. "\n" .. new_translations .. "\n"
-	-- ModTextFileSetContent(translations_filepath, translations)
+
+local items_that_remove_status = {
+	"data/entities/items/pickup/heart_fullhp_temple.xml",
+	"data/entities/items/pickup/heart_fullhp.xml",
+}
+
+local negate_healblock = nxml.new_element("LuaComponent", {
+	script_item_picked_up = dir.."remove_healblock.lua",
+	execute_every_n_frame = "-1"
+})
+
+for _,path in ipairs(items_that_remove_status) do
+	for xml in nxml.edit_file(path) do
+		xml:add_child(negate_healblock)
+	end
 end
 
 return hooks --Don't forget to do this if you want your changes to apply!!!!

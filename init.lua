@@ -60,6 +60,7 @@ local modules = {
 	"for_the_worthy",
 	"no_more_instant_recharge",
 	"snail",
+	"greed_curse_rework",
 }
 
 local force_enable_state = {
@@ -141,8 +142,11 @@ for _,module in ipairs(enabled_modules) do
 	end
 end
 
+
+
 ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.hardmod/files/scripts/spells.lua")
 ModLuaFileAppend("data/scripts/perks/perk_list.lua", "mods/noita.hardmod/files/scripts/perks.lua")
+
 
 dofile("mods/noita.hardmod/files/translations/debug_split.lua")
 local translations = ModTextFileGetContent("data/translations/common.csv")
@@ -169,14 +173,7 @@ utils.modifile("data/scripts/perks/perk_reflect.lua",
 		) end]]
 )
 
--- todo this doesnt work
--- utils.patchifile("data/scripts/gun/gun_collect_metadata.lua", {
--- 	{
--- 		from = [[register_action( c )]],
--- 		insert_before = [[ if not action.not_progress then ]],
--- 		insert_after = [[ end ]]
--- 	}
--- })
+
 
 function OnModPreInit()
 	for _,func in ipairs(hooks.mod_pre_init) do
