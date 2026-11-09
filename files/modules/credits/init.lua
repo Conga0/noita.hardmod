@@ -15,6 +15,11 @@ local dev_messages = {
 		credit = "UserK"
 	},
 	{
+		from = "Copi",
+		message = "Copi\n\n\nThis project took up way too little of my time, barely egregious. The others deserve all the recognition they can get for their hard work, cheers to another community collab & a rushed workshop image.",
+		credit = "Copi"
+	},
+	{
 		from = "Dani2D",
 		message = "Working on Hardmod with my lovely colleagues at Notla Games has been\none of the best unpaid part-time jobs I'll ever have. I hope playing\nit has brought you as much enjoyment and frustration as it brought us\nwhile making it.\nThank you for playing!",
 		credit = "https://meyer.games/"
@@ -22,8 +27,8 @@ local dev_messages = {
 	{
 		from = "Evaisa",
 		message = "Hiii I am to blame for making this happen again.\nThis time I had not a lot of motivation to actually add stuff though.\nAnyway die die die die die die die die die snail die die die die die\ndie die die die die die die die die die die\ndie die die solve my riddle.",
-		credit = "https://evaisa.dev/"		
-	}
+		credit = "https://evaisa.dev/"
+	},
 }
 
 local FINAL_WORDS = [[
@@ -36,7 +41,7 @@ local FINAL_WORDS = [[
 FINAL WORDS
 ===========
  
- 
+Find the hidden ARG!
  
  
  
