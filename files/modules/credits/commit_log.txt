@@ -338,6 +338,7 @@ grrr
 Add a custom .yaml locale system
 Update 02_ru.yaml
 added 2 new damage modifiers
+add missing translations
 fix broken translation file
 update credits
 reward for winning :)
@@ -401,10 +402,214 @@ more splash options
 move `perks.lua` and `spells.lua` to `files/scripts`
 Confusion Mage !!!!! (guh i hate nolla)
 print log
+buffed blood money healing to be 10% of gold value
 MORE JANK
 less jank but still jank and honestly maybe this is some even more cursed jank
 remove debug wizard spawn
+reworked settings.lua a bit, added new icons
 Merge remote-tracking branch 'upstream/main' into pr/107
 Update list.lua
 update confusion mage
 undo my locale build script shit :p
+make build script update the SLOC splash text
+update commit_log.txt
+new translation system + nonsense, aaaa im going to bed
+update splashes
+updated settings.lua
+finishing touches on new translation system
+disabled unfinished trick blood money rework
+add wizord of confusion to enemy progress
+make poly mage and confusion mage deal 0 damage
+oops lmao
+add fungal hamis to progress
+move wizard to stronger_enemies
+prettify
+add confusion mage to various biomes
+tweak spawn chances further
+me when im in a jank competition and my opponent is nolla
+remove print
+add ragdolls for the confusion wizard
+make confusion wizard more common in fungal cavern
+add stain maps for new enemies
+spell rebalances
+s
+remove old module
+remove debug spawn (i forgor 💀️)
+updat ecredits
+working more on drop_money lib
+fix electric trap
+Update drop_money.lua
+New Alt Biome: Deserted Pits!
+add to progress
+Ira text bug fix
+try to fix the gun_actions.lua bullshit
+Noita: It's Just a Burning Memory Edition (make spooky biome modifier slightly grayscale)
+i forgor to remove debug probs
+nerf dat shit
+i was told jungle and vault are too easy in terms of enemy spawns
+Update core.csv
+Clarify mod release timing in README
+working more on a bunch of nonsense
+disable drop_money lib while its still in progress for PR
+some tweaks and fixes
+added compat file
+some fixes
+nerf greeks
+made boss_wizard less cheesable
+nerf chests that i buffed some long time ago (they were too good 😔️)
+NERF EM ALL
+update mummy's sprite (thank you CxRedix!!!)
+more spell nerfs!!!
+OK I KNOW I REMOVED TRULY_LIMITED_SPELLS, BUT ON SECOND THOUGHT IT IS BETTER IF ITS SPLIT LIKE THIS ALSO I DIDNT INTEND TO USE CAPS OOPS
+add tinker to orb rooms
+Add Aleph Perk
+give Toolbox more spread
+make thunder charge have 10 charges
+undo crit nerf
+change module descriptions in settings
+re-add Double Damage modifier
+make Indulgence a bit more expensive for strong spells
+clarify Blink spell description
+make Double Damage actually unlimited
+Pyromaniac Perk (replacing gas fire) & Contact Damage gives melee immunity
+,
+fixtranslation
+make some enemies immune to electricity
+buff spawns in snadcave
+second HM can't be evil ✅️
+add Echo Bolt spells
+remove d2d references
+add Upgrade Spread spell
+fixed bosses getting undesirable perks
+made orbrooms remove their particle emitters after orb is taken
+fixed damage buffer, made enemy perks is_boss override biome level
+testing crystal fix, made MOM drop Aleph
+Merge remote-tracking branch 'upstream/main' into pr/121
+removed deprecated translation file
+Merge remote-tracking branch 'origin/main' into new-spells
+track death/win for splash
+update fungal mine wang
+add Controlled Reach spell
+adjust spawn rate
+fix shotgun spell spread
+fixed some things
+fix broken script ref
+improve Trial perks
+preserving the evil error
+improve wet aura particles
+fix wet aura xml typo
+make Vigour eperk not heal if wounded
+limit wounded duration to 20s
+finished quantum cloning perk
+Delete standard.csv
+ran split.lua_run
+fixed swapper mages getting blood perks, evil-ass shit lmao
+add Big Shot spell
+disable Trial perk return portal for now
+added Plagued eperk
+make Glass Heart wand iota-compatible
+what an icon
+struggling to add Forbidden Arts eperk
+GOT IT WORKING, NOLLACODE CONQUERED!!!!
+some formatting fixes
+reworked how alt biomes are handled
+add Recharge Shield spell
+remove feature list from readme
+make hiisi evil
+buff broken wand to always have passive(s)
+I AM FUCKING STUPID
+improve Trial wand spell spawn logic
+spawn rate tweaking rn
+sooo tweaking
+fix Parry + make it non-rapid-fire-able
+ugh
+type your text here
+splish splash
+Large Ira Rebalance & Bugfix patch
+jfc nolla stop hardcoding stuff
+added overlay system to progress eperks, added 3 new eperks
+fixed some stuff
+made some perks more likely to appear at higher levels
+fixed issue with biome_index
+tweaked and fixed some eperk stuff, removed a couple debug prints
+some fixes n stuff
+Gatey Guardy
+finished leech perk (thank you spoop for the art!), fixed critical bug in eperk RNG
+Sampo Orb Glyphs
+Add a section to the HM for a random purchasable item
+I LOVE STORING SHIT IN SCRIPT_PRESSURE_PLATE_CHANGE
+move ring of returning module into HM items
+adjust new spell's rarity and mana cost
+nerf further
+do not give win cosmetic if you had integral modules enable d
+force enable credits module
+remove script
+temporary nerf until actual proper nerf
+new eperk
+reordered eperk list, added hax and debug prints for collapse crystal
+reverted crystal changes, found actual issue, maybe fixed
+improved eperk weights
+fix Controlled Reach cheese on trigger payload
+revert some nerfs
+fix Trial perks spawning >T10 wands
+For The Worthy
+more module icons, fixed a few things
+tweaki
+make Thunderlord unavailable to fast shooting enemies
+make Teleportitis not trigger on heal spells
+make Trial perks auto-reroll if incompatible
+fix build script outputting unescaped chars in settings.lua
+use an append instead
+make Pyrelord more fiery
+oh thats how you do it
+add more eperk biome conditions
+remove Mana Burst spell
+spell id consistency
+fix for progress being unlocked
+update thing texture
+add 2 new hm basin materials
+update setting module order
+add stinky eperk
+remove dmg from *lord eperks
+remove Parry from glass wand
+slightly lower Parry uses
+disable short temper eperk for now
+Move setting locale in core.csv
+im evil
+further nerfed rat singularities, just in case
+Merge remote-tracking branch 'upstream/main' into pr/143
+hello everybody this is your Daily Dose of Spell Nerfs
+small optimization
+change piercing
+Move pyramid orb to the sky
+update book
+make Blink non-rapid-fire-able
+snail arrival
+fixes !!
+unshuffle starter wands
+aa
+unnerf
+fixes, implemented functional gold lib
+INSTANT RECHARGE NO MORE
+hacky solution to make hm items module apply to final hm, should override later!!!, also some other stuff
+fixed spawn_on_death_blacklist banned creatures
+add more fungus enemies
+slimes no longer die in their own filth
+reworked healblock, added worse_digging module icon
+More Ira Bugfixes
+fungal hell
+make instant recharge nerf only apply to scroll trick
+Merge remote-tracking branch 'origin/fungal_mines_improvements'
+k
+12... enemies...
+FUCK WRONG BRANCH
+ahem, "12 new enemies, amirite?" (audience laughs)
+rebalance some spells
+temporarily disable custom enemyaicomp until proper balancing, so the enemies should just be resprites for now i think unless i missed something
+Use cheat "copisthings" for a free win!
+Revert "Update init.lua"
+Merge remote-tracking branch 'upstream/main' into pr/158
+yeah
+Update splashes.lua
+added logos
+updated translations
