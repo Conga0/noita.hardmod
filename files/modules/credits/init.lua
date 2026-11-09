@@ -13,10 +13,13 @@ local dev_messages = {
 		from = "UserK",
 		message = "This project took up way too much of my time, genuinely egregious.\nHere's to it taking even more in the future!",
 		credit = "UserK"
-	}
+	},
 }
 
 local FINAL_WORDS = [[
+ 
+ 
+ 
  
  
 ===========
@@ -33,6 +36,7 @@ local COMMIT_HISTORY = [[
 ==============
 COMMIT HISTORY
 ==============
+ 
  
  
 ]]
@@ -54,7 +58,7 @@ end
 if #dev_messages > 0 then
 	credits = credits .. FINAL_WORDS
 	for _,msg in pairs(dev_messages) do
-		credits = credits.." \n \n \n \n \nMESSAGE FROM "..msg.from.."\n~"..msg.message.."~\n(c) "..msg.credit.."\n \n \n \n \n"
+		credits = credits.." \n \n \n \n \nMESSAGE FROM "..msg.from.."\n~"..msg.message.."~\n(c) "..msg.credit.."\n \n \n \n \n \n \n"
 	end
 end
 
