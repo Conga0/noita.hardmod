@@ -18,6 +18,11 @@ local dev_messages = {
 		from = "Dani2D",
 		message = "Working on Hardmod with my lovely colleagues at Notla Games has been\none of the best unpaid part-time jobs I'll ever have. I hope playing\nit has brought you as much enjoyment and frustration as it brought us\nwhile making it.\nThank you for playing!",
 		credit = "https://meyer.games/"
+	},
+	{
+		from = "Evaisa",
+		message = "Hiii I am to blame for making this happen again.\nThis time I had not a lot of motivation to actually add stuff though.\nAnyway die die die die die die die die die snail die die die die die\ndie die die die die die die die die die die\ndie die die solve my riddle.",
+		credit = "https://evaisa.dev/"		
 	}
 }
 
