@@ -169,7 +169,15 @@ hooks.spell_patches = {
 			c.damage_critical_chance = c.damage_critical_chance + 7
 			shot_effects.recoil_knockback = 15.0
 		end,
-	}
+	},
+	-- ["TOUCH_WATER"] = { indulgence_cost = 500 },
+	-- ["TOUCH_OIL"] = { indulgence_cost = 500 },
+	-- ["TOUCH_ALCOHOL"] = { indulgence_cost = 500 },
+	-- ["TOUCH_PISS"] = { indulgence_cost = 500 },
+	-- ["TOUCH_GRASS"] = { indulgence_cost = 500 },
+	-- ["TOUCH_BLOOD"] = { indulgence_cost = 500 },
+	-- ["TOUCH_SMOKE"] = { indulgence_cost = 500 },
+	-- ["TOUCH_GOLD"] = { indulgence_cost = 500 },
 }
 
 local mats = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIAL_CEMENT", "WATER_TRAIL" }
