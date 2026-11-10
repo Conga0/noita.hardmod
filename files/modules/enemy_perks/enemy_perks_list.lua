@@ -355,6 +355,9 @@ enemy_perks = {
 		weight = 6,
 		priority = 0,
 		max = 1,
+		condition = function(self, data)
+			return not (data.dmc and ComponentGetValue2(data.dmc, "wet_status_effect_damage") > 0)
+		end,
 		func = function(self, entity_id, data)
 			EntityAddChild(entity_id, EntityLoad(dir.."entities/wet_aura.xml", data.x, data.y))
 		end
