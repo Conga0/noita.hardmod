@@ -148,6 +148,7 @@ hooks.spell_patches = {
 		end
 	},
 	["FLAMETHROWER"] = { -- damage is also changed in damage.lua
+		mana = 15,
 		max_uses = -1,
 		action = function()
 			add_projectile("data/entities/projectiles/deck/flamethrower.xml")
