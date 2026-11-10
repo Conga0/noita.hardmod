@@ -412,7 +412,7 @@ enemy_perks = {
 			temple_of_the_art = 10,
 			wizards_den = 10,
 		},
-		condition = function(self, data) return data.dmc end,
+		condition = function(...) return not is_projectile_immune(...) end,
 		func = function(self, entity_id, data)
 			ComponentObjectSetValue2(data.dmc, "damage_multipliers", "projectile",
 				ComponentObjectGetValue2(data.dmc, "damage_multipliers", "projectile") * .5

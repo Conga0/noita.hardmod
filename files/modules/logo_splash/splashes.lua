@@ -33,7 +33,7 @@ local evil_level = (year * 31469 + month * 929 + day * 541) % 100 + 1
 
 local months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }
 
-local lines_of_code = "29,269"---Updated by `scripts/build.js`, do not edit or format
+local lines_of_code = "58,247"---Updated by `scripts/build.js`, do not edit or format
 
 ---@type (splash_entry | string)[]
 local splashes = {
@@ -123,6 +123,7 @@ local splashes = {
 	"*drops 12 enemies 10 hours before release*",
 	"You will die, for I am eba, and I will end you.",
 	"She is defrosting as we speak.",
+	"ITS A BRIMSTONE, ITS NOT A PENIS",
 }
 
 --local seed = second*minute*hour/day*year
