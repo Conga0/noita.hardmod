@@ -628,7 +628,7 @@ enemy_perks = {
 		priority = 20,
 		max = 1,
 		biome_conditions = {
-			coal_pits = 4,
+			coal_pits = 6,
 		},
 		condition = function(self, data)
 			return spawn_on_death_blacklist(self, data) and enemy_is_melee(self, data) and not enemy_is_ranged_attack(self, data) and not (data.vigour or data.is_boss)
