@@ -178,6 +178,7 @@ hooks.spell_patches = {
 			shot_effects.recoil_knockback = 15.0
 		end,
 	},
+	["HEAL_BULLET"] = { indulgence_price = 250 },
 	-- ["TOUCH_WATER"] = { indulgence_cost = 500 },
 	-- ["TOUCH_OIL"] = { indulgence_cost = 500 },
 	-- ["TOUCH_ALCOHOL"] = { indulgence_cost = 500 },
