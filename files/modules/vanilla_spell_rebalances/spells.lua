@@ -161,6 +161,14 @@ hooks.spell_patches = {
 	["LASER_EMITTER_CUTTER"] = { mana = 80 },
 	["LASER_EMITTER_FOUR"] = { mana = 120 },
 	["ORBIT_LASERS"] = { mana = 140, max_uses = 5 },
+	["ARROW"] = {
+		action = function()
+			add_projectile("data/entities/projectiles/deck/arrow.xml")
+			c.fire_rate_wait = c.fire_rate_wait + 10
+			c.spread_degrees = c.spread_degrees - 10
+			shot_effects.recoil_knockback = 30.0
+		end,
+	}
 }
 
 local mats = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIAL_CEMENT", "WATER_TRAIL" }
