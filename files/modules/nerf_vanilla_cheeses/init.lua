@@ -23,11 +23,11 @@ local polymorph_immunity = nxml.new_element("Entity", {name = "polymorph_immunit
 })
 for _,path in ipairs(reduce_physics_damage) do
 	for xml in nxml.edit_file(path) do
-		local dmc = xml:first_of("DamageModelComponent")
-		if dmc then
-			local mults = dmc:first_of("damage_multipliers")
-			if mults then mults.attr.physics_hit = "0.05" end
-		end
+		--local dmc = xml:first_of("DamageModelComponent")
+		--if dmc then
+		--	local mults = dmc:first_of("damage_multipliers")
+		--	if mults then mults.attr.physics_hit = "0.05" end
+		--end
 
 		xml:add_child(polymorph_immunity)
 	end
@@ -77,6 +77,14 @@ for xml in nxml.edit_file("data/entities/items/books/base_book.xml") do
 	)
 	local proj_comp = xml:first_of("ProjectileComponent")
 	if proj_comp then proj_comp.attr.damage = "0" end
+end
+
+for xml in nxml.edit_file("data/entities/player_base.xml") do
+	local dmc = xml:first_of("DamageModelComponent")
+	if dmc then
+		local mults = dmc:first_of("damage_multipliers")
+		if mults then mults.attr.physics_hit = "0.05" end
+	end
 end
 
 ModLuaFileAppend("data/scripts/biomes/roadblock.lua", dir.."scripts/roadblock_append.lua")

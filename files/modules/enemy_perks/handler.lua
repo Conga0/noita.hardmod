@@ -39,6 +39,7 @@ local enemy_perks = {}
 for perk_id in ComponentGetValue2(enemy_perk_data, "value_string"):gmatch("([^,]+)") do
 	enemy_perks[#enemy_perks+1] = enemy_perks_indexed[perk_id]
 end
+ComponentSetValue2(enemy_perk_data, "value_int", #enemy_perks)
 
 local offset_y = 0
 for _,hitbox in ipairs(EntityGetComponent(root, "HitboxComponent") or {}) do

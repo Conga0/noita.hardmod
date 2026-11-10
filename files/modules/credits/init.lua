@@ -92,7 +92,7 @@ end
 
 --i personally pick the final commit made before a major release
 --so everything up to `fixed init` is part of the main development, and `Labor of Loathing is here :)` is up until LOL's release
---add_release_break("(whatever the last PR is)", " MAIN RELEASE 31/10/26")
+add_release_break("MATH.MAX, NOT MATH.MIN AAAAAAAAAA", " MAIN RELEASE 9/11/26")
 
 credits = credits .. "\n \n \n \nAdded approximately 95,236,821,904,984 hämisket\n \n \n"
 
