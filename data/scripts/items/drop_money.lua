@@ -261,7 +261,11 @@ hooks = { ---@class drop_money_hooks
 }
 
 for _,path in ipairs(ModLuaFileGetAppends("data/scripts/items/__drop_money.lua")) do
-	dofile_once(path)(hooks)
+	if ModDoesFileExist(path) then
+		dofile_once(path)(hooks)
+	else
+		print("Warning!! drop_money.lua append " .. path .. " not found!!")
+	end
 end
 
 local function_tables = {
