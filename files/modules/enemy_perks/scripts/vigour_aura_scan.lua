@@ -22,7 +22,10 @@ if nearby_mortals then
 			if dmg_comp ~= nil then
 				local p_hp = ComponentGetValue2( dmg_comp, "hp" )
 				local p_max_hp = ComponentGetValue2( dmg_comp, "max_hp" )
-				ComponentSetValue2( dmg_comp, "hp", math.min( p_hp + 0.12, p_max_hp ) ) -- 3 hp per tick, 12 per second, 30 max
+
+				local heal = math.max( 0.12, p_max_hp * 0.01 )
+				ComponentSetValue2( dmg_comp, "hp", math.min( p_hp + heal, p_max_hp ) )
+				-- heal 3 hp or 1% of max hp (whichever is higher) per tick
 
 				GamePlaySound( "data/audio/Desktop/misc.bank", "game_effect/regeneration/tick", x, y )
 			end
