@@ -147,7 +147,14 @@ hooks.spell_patches = {
 			current_reload_time = current_reload_time - 8
 		end
 	},
-	["FLAMETHROWER"] = { max_uses = -1 }, -- damage is also changed in damage.lua
+	["FLAMETHROWER"] = { -- damage is also changed in damage.lua
+		max_uses = -1,
+		action = function()
+			add_projectile("data/entities/projectiles/deck/flamethrower.xml")
+			c.fire_rate_wait = c.fire_rate_wait - 8
+			c.spread_degrees = c.spread_degrees + 4.0
+		end,
+	},
 	["BUCKSHOT"] = {
 		action 		= function()
 			add_projectile("data/entities/projectiles/deck/buckshot_player.xml")
