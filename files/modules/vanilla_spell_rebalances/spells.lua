@@ -165,8 +165,9 @@ hooks.spell_patches = {
 		action = function()
 			add_projectile("data/entities/projectiles/deck/arrow.xml")
 			c.fire_rate_wait = c.fire_rate_wait + 10
-			c.spread_degrees = c.spread_degrees - 10
-			shot_effects.recoil_knockback = 30.0
+			c.spread_degrees = c.spread_degrees - 6
+			c.damage_critical_chance = c.damage_critical_chance + 7
+			shot_effects.recoil_knockback = 15.0
 		end,
 	}
 }
