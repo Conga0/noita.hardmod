@@ -35,8 +35,8 @@
 		count_max="150"
 		render_on_grid="1"
 		fade_based_on_lifetime="1"
-		area_circle_radius.min="90"
-		area_circle_radius.max="90"
+		area_circle_radius.min="115"
+		area_circle_radius.max="115"
 		cosmetic_force_create="0"
 		airflow_force="0.3"
 		airflow_time="0.01"
@@ -50,7 +50,7 @@
 
 	<LuaComponent
 		script_source_file="mods/noita.hardmod/files/modules/enemy_perks/scripts/wet_aura.lua"
-		execute_every_n_frame="10"
+		execute_every_n_frame="25"
 	/>
 
 </Entity>

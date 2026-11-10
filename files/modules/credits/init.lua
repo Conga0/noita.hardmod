@@ -15,10 +15,25 @@ local dev_messages = {
 		credit = "UserK"
 	},
 	{
+		from = "Copi",
+		message = "Copi\n\n\nThis project took up way too little of my time, barely egregious. The others deserve all the recognition they can get for their hard work, cheers to another community collab & a rushed workshop image.",
+		credit = "Copi"
+	},
+	{
 		from = "Dani2D",
 		message = "Working on Hardmod with my lovely colleagues at Notla Games has been\none of the best unpaid part-time jobs I'll ever have. I hope playing\nit has brought you as much enjoyment and frustration as it brought us\nwhile making it.\nThank you for playing!",
 		credit = "https://meyer.games/"
-	}
+	},
+	{
+		from = "Evaisa",
+		message = "Hiii I am to blame for making this happen again.\nThis time I had not a lot of motivation to actually add stuff though.\nAnyway die die die die die die die die die snail die die die die die\ndie die die die die die die die die die die\ndie die die solve my riddle.",
+		credit = "https://evaisa.dev/"
+	},
+	{
+		from = "Lamia",
+		message = "Lamia asked me to write 'im tired' for them, all praise Lamia \\o/",
+		credit = "Zamia",
+	},
 }
 
 local FINAL_WORDS = [[
@@ -31,7 +46,7 @@ local FINAL_WORDS = [[
 FINAL WORDS
 ===========
  
- 
+Find the hidden ARG!
  
  
  
@@ -77,7 +92,7 @@ end
 
 --i personally pick the final commit made before a major release
 --so everything up to `fixed init` is part of the main development, and `Labor of Loathing is here :)` is up until LOL's release
---add_release_break("(whatever the last PR is)", " MAIN RELEASE 31/10/26")
+add_release_break("MATH.MAX, NOT MATH.MIN AAAAAAAAAA", " MAIN RELEASE 9/11/26")
 
 credits = credits .. "\n \n \n \nAdded approximately 95,236,821,904,984 hämisket\n \n \n"
 

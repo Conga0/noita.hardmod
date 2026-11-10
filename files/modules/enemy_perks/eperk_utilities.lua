@@ -156,6 +156,7 @@ function utilities.give_enemy_perks(entity_id, perks_to_give, data)
 
 
 	ComponentSetValue2(enemy_perk_data, "value_string", table.concat(already_held_perks, ","))
+	ComponentSetValue2(enemy_perk_data, "value_int", #already_held_perks)
 
 	if not EntityHasTag(entity_id, "hardmod_blessed") then
 		EntityAddTag(entity_id, "hardmod_blessed")
@@ -168,9 +169,9 @@ end
 
 
 return function(eperks)
-    enemy_perks = eperks
-    for _,perk in ipairs(enemy_perks) do
-        enemy_perks_indexed[perk.id] = perk
-    end
-    return utilities
+	enemy_perks = eperks
+	for _,perk in ipairs(enemy_perks) do
+		enemy_perks_indexed[perk.id] = perk
+	end
+	return utilities
 end

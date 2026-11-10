@@ -11,9 +11,37 @@ dofile_once("data/scripts/game_helpers.lua")
 ---@field func function? optional function to run after spawning this nugget
 ---@field group string? groupname assigned to it
 
+---Clones a table
+---@param orig table
+---@param copies nil
+---@return table
+local function clone_table(orig, copies)
+	copies = copies or {}
+	local orig_type = type(orig)
+	local copy
+	if orig_type == 'table' then
+		if copies[orig] then
+			copy = copies[orig]
+		else
+			copy = {}
+			copies[orig] = copy
+			for orig_key, orig_value in next, orig, nil do
+				copy[clone_table(orig_key, copies)] = clone_table(orig_value, copies)
+			end
+			setmetatable(copy, clone_table(getmetatable(orig), copies))
+		end
+	else -- number, string, boolean, etc
+		copy = orig
+	end
+	return copy
+end
+
 local hooks = {} ---@type drop_money_hooks
 
 hooks = { ---@class drop_money_hooks
+	legacy_nwt_blood_money_drops = true,
+
+
 	pre_funcs = {
 		{
 			id = "trailer_mode_disable_gold",
@@ -40,11 +68,11 @@ hooks = { ---@class drop_money_hooks
 		{
 			id = "legacy_nwt_blood_money_drop",
 			func = function(data) ---@param data gold_drop_data
-				if not data.legacy_nwt_blood_money_drops then return end
+				if not hooks.legacy_nwt_blood_money_drops then return end
 
 				local blood_money_chance = data.multiplier * data.blood_money_chance
 				if Random(1, 100) <= blood_money_chance then
-					data.nuggets[#data.nuggets+1] = hooks.nuggets_indexed.blood[50]
+					data.nuggets[#data.nuggets+1] = clone_table(hooks.nuggets_indexed.blood[50])
 					data.amount = data.amount - 50
 				end
 			end
@@ -97,13 +125,31 @@ hooks = { ---@class drop_money_hooks
 					for _=1, 5 do
 						if data.amount < 10 then break end
 						data.amount = data.amount-10
-						data.nuggets[#data.nuggets+1] = hooks.nuggets_indexed[target_type][10]
+						data.nuggets[#data.nuggets+1] = clone_table(hooks.nuggets_indexed[target_type][10])
 					end
 				end
 			end
 		},
 	},
-	pre_processing = {},
+	pre_processing = {
+		{
+			id = "improved_blood_money_chance",
+			func = function(data) ---@param data gold_drop_data
+				if hooks.legacy_nwt_blood_money_drops then return end
+
+				if data.blood_money_chance > 0 then
+					for _,nugget in ipairs(data.nuggets) do
+						local chance = data.blood_money_chance * .01
+						local rnd = Random()
+						print(("rnd is %s, chance is %s"):format(rnd, chance))
+						if nugget.group == "gold" and rnd <= chance then
+							nugget.path = hooks.nuggets_indexed.blood[nugget.value].path or nugget.path
+						end
+					end
+				end
+			end
+		}
+	},
 	post_processing = {
 		{
 			id = "remove_timer",
@@ -211,11 +257,15 @@ hooks = { ---@class drop_money_hooks
 			},
 		},
 	},
-	nuggets_indexed = {}
+	nuggets_indexed = {},
 }
 
 for _,path in ipairs(ModLuaFileGetAppends("data/scripts/items/__drop_money.lua")) do
-	dofile_once(path)(hooks)
+	if ModDoesFileExist(path) then
+		dofile_once(path)(hooks)
+	else
+		print("Warning!! drop_money.lua append " .. path .. " not found!!")
+	end
 end
 
 local function_tables = {
@@ -268,8 +318,6 @@ function do_money_drop(amount_multiplier, trick_kill, damage_type_bit_field, mes
 			attacker = attacker,
 			drop_items = drop_items,
 		},
-
-		legacy_nwt_blood_money_drops = true
 	}
 
 
@@ -285,7 +333,7 @@ function do_money_drop(amount_multiplier, trick_kill, damage_type_bit_field, mes
 		data.amount = math.max(data.amount, math.floor(data.health) * 10)
 	end
 
-	data.amount = math.min(data.minimum_amount, data.amount * data.multiplier)
+	data.amount = math.max(data.minimum_amount, data.amount * data.multiplier)
 
 
 	for _,v in ipairs(hooks.funcs) do
@@ -302,7 +350,7 @@ function do_money_drop(amount_multiplier, trick_kill, damage_type_bit_field, mes
 		local nugget_value = nugget_data.value
 		local number = math.floor(data.amount/nugget_value)
 		for _=1, number do
-			data.nuggets[#data.nuggets+1] = nugget_data
+			data.nuggets[#data.nuggets+1] = clone_table(nugget_data)
 		end
 		data.amount = data.amount % nugget_value
 	end
@@ -322,7 +370,7 @@ function do_money_drop(amount_multiplier, trick_kill, damage_type_bit_field, mes
 				ComponentSetValue2(varcomp, "value_int", nugget.value)
 			elseif name == "hp_value" and nugget.heal_amount then
 				found_healing = true
-				ComponentSetValue2(varcomp, "value_float")
+				ComponentSetValue2(varcomp, "value_float", nugget.heal_amount)
 			end
 			if found_money and found_healing then break end
 		end

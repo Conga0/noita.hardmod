@@ -7,6 +7,7 @@ local eperk_utils ---@type eperk_utils
 local dir = "mods/noita.hardmod/files/modules/enemy_perks/"
 
 ModLuaFileAppend("data/scripts/perks/perk_reflect.lua", dir.."add_perks_to_progress.lua")
+ModLuaFileAppend("data/scripts/items/__drop_money.lua", dir.."append_drop_money.lua")
 
 
 local base_perk_chance = .15
@@ -81,7 +82,7 @@ hooks.mod_post_init = function() --run later for appends
 end
 
 hooks.new_eid = function(entity_id)
-	if EntityHasTag(entity_id, "enemy") and not EntityHasTag(entity_id, "hardmod_blessed") or EntityHasTag(entity_id, "no_enemy_perks") then
+	if EntityHasTag(entity_id, "enemy") and not (EntityHasTag(entity_id, "hardmod_blessed") or EntityHasTag(entity_id, "no_enemy_perks")) then
 		local is_boss = EntityHasTag(entity_id, "boss")
 		local x,y = EntityGetTransform(entity_id)
 		local biome = biome_index[DebugBiomeMapGetFilename(x, y)]

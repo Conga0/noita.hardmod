@@ -1,9 +1,9 @@
 
 <Mod
-	name="Hard Mod"
+	name="Noita Hard Mod"
 	description=""
-	tags=""
-	dont_upload_folders=""
+	tags="gameplay,graphics,quality of life,perks,spells,biomes,total conversions,creatures,bosses,alchemy,tweaks,items,funny,community collab,hardmod,fairmod,hell,die,you will die,torture,fungus,funguy,what the fuck was that"
+	dont_upload_folders="scripts|workshop_dont_upload"
 	dont_upload_files=""
 > 
 </Mod>	
