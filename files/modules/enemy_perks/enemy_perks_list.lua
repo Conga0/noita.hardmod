@@ -140,6 +140,31 @@ enemy_perks = {
 		end
 	},
 	{
+		id = "AREA_PROTECTOR",
+		name = "$hardmod_eperk_area_protector_name",
+		description = "$hardmod_eperk_area_protector_desc",
+		weight = 1,
+		max = 2,
+		biome_conditions = {
+			magical_temple = 2,
+			temple_of_the_art = 4,
+			wizards_den = 6,
+		},
+		condition = function(self, data)
+			return data.dmc ~= nil
+		end,
+		func = function(self, entity_id, data)
+			local x, y = EntityGetTransform(entity_id)
+			local tier = ( data.how_many_of_each_perk[self.id] or 0 ) + 1
+
+			if tier == 1 then
+				EntityAddChild(entity_id, EntityLoad( dir.."entities/area_protector_shield_t1.xml", x, y))
+			elseif tier == 2 then
+				EntityAddChild(entity_id, EntityLoad( dir.."entities/area_protector_shield_t2.xml", x, y))
+			end
+		end
+	},
+	{
 		id = "DRY_SPELL",
 		name = "$hardmod_eperk_dry_spell_name",
 		description = "$hardmod_eperk_dry_spell_desc",
