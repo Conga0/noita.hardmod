@@ -123,6 +123,7 @@ local splashes = {
 	"*drops 12 enemies 10 hours before release*",
 	"You will die, for I am eba, and I will end you.",
 	"She is defrosting as we speak.",
+	"ITS A BRIMSTONE, ITS NOT A PENIS",
 }
 
 --local seed = second*minute*hour/day*year

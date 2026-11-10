@@ -201,6 +201,9 @@ enemy_perks = {
 			for i = 1, clones_to_make do
 				local clone = EntityLoad(EntityGetFilename(entity_id), data.x, data.y)
 				EntityAddTag(clone, "hardmod_blessed")
+				for _,cbc in ipairs(EntityGetComponentIncludingDisabled(clone, "CameraBoundComponent") or {}) do
+					EntityRemoveComponent(clone, cbc)
+				end
 				eperk_utils.give_enemy_perks(clone, utils.deepcopy(data.selected_perks), data)
 				gang[#gang+1] = clone
 			end
@@ -409,7 +412,7 @@ enemy_perks = {
 			temple_of_the_art = 10,
 			wizards_den = 10,
 		},
-		condition = function(self, data) return data.dmc end,
+		condition = function(...) return not is_projectile_immune(...) end,
 		func = function(self, entity_id, data)
 			ComponentObjectSetValue2(data.dmc, "damage_multipliers", "projectile",
 				ComponentObjectGetValue2(data.dmc, "damage_multipliers", "projectile") * .5

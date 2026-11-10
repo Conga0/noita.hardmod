@@ -347,7 +347,7 @@ end
 ---@param outMin int Lower end of the output range
 ---@param outMax int Higher end of the output range
 ---@return int result The mapped value
-function utils.Remap( value, inMin, inMax, outMin, outMax )
+function utils.Remap(value, inMin, inMax, outMin, outMax)
 	if inMax == inMin then
 		error("Input range cannot have zero length")
 	end
@@ -361,7 +361,7 @@ end
 --- Returns the pickup count of a specific perk
 ---@param perk_id string The perk's ID, i.e. "REMOVE_FOG_OF_WAR"
 ---@return number count The amount of times this perk was taken by the player.
-function utils.GetPerkPickupCount( perk_id )
+function utils.GetPerkPickupCount(perk_id)
 	dofile_once("data/scripts/perks/perk_list.lua")
 
 	---@diagnostic disable-next-line: undefined-global
@@ -534,5 +534,27 @@ function utils.GetHeldWand(entity_id)
 
 	return backup_result
 end
+
+function utils.WandAddAlwaysCast(entity_id, action_id)
+	local action_entity_id = CreateItemActionEntity(action_id)
+	EntityAddChild(entity_id, action_entity_id)
+
+	-- we need to add a slot to the ability_comp
+	local ability_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "AbilityComponent")
+	if ability_comp then
+		local deck_capacity = ComponentObjectGetValue2(ability_comp, "gun_config", "deck_capacity")
+		deck_capacity = deck_capacity + 1
+		ComponentObjectSetValue2(ability_comp, "gun_config", "deck_capacity", deck_capacity)
+	end
+
+	local item_component = EntityGetFirstComponentIncludingDisabled(action_entity_id, "ItemComponent")
+	if item_component then 
+		ComponentSetValue2(item_component, "permanently_attached", true)
+	end
+
+	EntitySetComponentsWithTagEnabled(action_entity_id, "enabled_in_world", false)
+end
+
+
 
 return utils
