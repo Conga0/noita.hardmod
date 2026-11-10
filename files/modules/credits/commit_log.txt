@@ -613,3 +613,9 @@ yeah
 Update splashes.lua
 added logos
 updated translations
+added lamia to end credits
+MATH.MAX, NOT MATH.MIN AAAAAAAAAA
+ok
+disable recharge trick (no more 15 minute RT)
+lowered physics damage taken by the player
+Update workshop.xml
