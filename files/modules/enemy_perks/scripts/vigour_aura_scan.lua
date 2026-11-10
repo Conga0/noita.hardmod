@@ -4,19 +4,7 @@ local x, y = EntityGetTransform( GetUpdatedEntityID() )
 local nearby_mortals = EntityGetInRadiusWithTag( x, y, 32, "mortal" )
 if nearby_mortals then
 	for i,mortal in ipairs( nearby_mortals ) do
-
-		-- check if the target is wounded
-		local is_wounded = false
-		local children = EntityGetAllChildren(target)
-		if children then
-			for k=1,#children
-			do v = children[k]
-				if EntityGetName(v) == "apotheosis_wounded" then
-					is_wounded = true
-				end
-			end
-		end
-
+		local is_wounded = GameGetGameEffect( mortal, "NO_HEAL" )
 		if not is_wounded then
 			local dmg_comp = EntityGetFirstComponentIncludingDisabled( mortal, "DamageModelComponent" )
 			if dmg_comp ~= nil then
