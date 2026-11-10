@@ -1,4 +1,3 @@
-
 local x, y = EntityGetTransform( GetUpdatedEntityID() )
 
 local nearby_mortals = EntityGetInRadiusWithTag( x, y, 32, "mortal" )
