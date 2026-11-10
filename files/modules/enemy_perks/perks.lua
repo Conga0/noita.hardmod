@@ -1,6 +1,7 @@
 return {
 	new_perks = {
 		{
+			id = "HARDMOD_BLESSED_BLOOD_MONEY",
 			ui_name = "$hardmod_perk_blessed_blood_money_name",
 			ui_description = "$hardmod_perk_blessed_blood_money_desc",
 			ui_icon = "mods/noita.hardmod/files/modules/enemy_perks/gfx/blessed_blood_money_icon.png",
@@ -11,7 +12,7 @@ return {
 			end,
 			func_remove = function()
 				GameAddFlagRun("hardmod_blessed_blood_money")
-			end
+			end,
 		}
 	}
-} and {} --THIS FUCKING CRASHES CONSTANTLY AAAAAAAAAAAA I GIVE UP FUCK YOU ill fix this later
+} --note to self: add a perk ID when adding a new perk
