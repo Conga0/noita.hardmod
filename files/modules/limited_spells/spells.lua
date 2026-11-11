@@ -312,64 +312,40 @@ hooks.spell_patches = {
 		description = "$hardmod_spell_zeta_desc",
 		spawn_level = "5,6,10",
 		spawn_probability = "0.1,0.1,1",
-		price = 600,
-		mana = 320,
+		mana = 80,
 		action = function()
-			c.fire_rate_wait = c.fire_rate_wait + 50
+			c.fire_rate_wait = c.fire_rate_wait + 15
 			if reflecting then return end
 
-			-- only cast this spell if it's used by the player
 			local owner = GetUpdatedEntityID()
-			if not EntityHasTag( owner, "player_unit" ) then return end
+			if EntityHasTag( owner ) then return end
 
-			-- get the player's held wand
-		    local wands = {}
-		    local children = EntityGetAllChildren( owner ) or {}
-		    for _,child in ipairs( children ) do
-		        if EntityGetName( child ) == "inventory_quick" then
-		            local may_be_wands = EntityGetAllChildren( child ) or {}
-		            if #may_be_wands > 0 then
-		                for i,may_be_wand in ipairs( may_be_wands ) do
-		                    if EntityHasTag( may_be_wand, "wand" ) then
-		                        table.insert( wands, may_be_wand )
-		                    end
-		                end
-		            end
-		        end
-		    end
-		    local last_wand = wands[#wands] or nil
-			if last_wand == nil then return end
+			local children = EntityGetAllChildren( owner )
+			for k=1,#children do
+				child = children[k]
+			    if EntityGetName( child ) == "inventory_full" then
+			        local inventory_items = EntityGetAllChildren(child)
+			        if( inventory_items ~= nil ) then
+			            for z=1, #inventory_items do
+			            	local index = #inventory_items+1-z -- start at the end
+			            	if index > 0 then
+				            	item = inventory_items[index]
 
-			-- get all actions on the last wand
-			local EZWand = dofile_once( "mods/noita.hardmod/lib/ezwand.lua" )
-			local wand = EZWand( last_wand )
-			local actions = {}
-			local spells, always_casts = wand:GetSpells()
-			for i,always_cast in ipairs( always_casts ) do
-				table.insert( actions, always_cast )
+				            	local ia_comp = EntityGetFirstComponentIncludingDisabled( item, "ItemActionComponent" )
+				            	if ia_comp then
+				            		local action_id = ComponentGetValue2( ia_comp, "action_id" )
+				            		local data = get_spell_data( action_id )
+									local rec = check_recursion( data, recursion_level )
+				            		if data then
+				            			run_greek( data, rec )
+				            			break
+									end
+				            	end
+				            end
+			            end
+			        end
+			    end
 			end
-			for i,spell in ipairs( spells ) do
-				table.insert( actions, spell )
-			end
-			if actions == nil or #actions == 0 then return end
-
-			-- cast all spells on the last wand, until none remain or RESET/AFA is reached
-			local spells_that_halt = { "RESET", "HARDMOD_ALT_FIRE_ANYTHING" }
-            for i=1, #actions do
-            	local action = actions[i].entity_id
-        		local action_id = actions[i].action_id
-
-        		for i,spell_that_halts in ipairs( spells_that_halt ) do
-        			if action_id == spell_that_halts then
-        				return
-        			end
-        		end
-
-        		local data = get_spell_data( action_id )
-        		-- below part is copied from OMEGA
-				if data then run_greek(data, rec) end
-				has_aleph = nil
-            end
         end,
     },
 
