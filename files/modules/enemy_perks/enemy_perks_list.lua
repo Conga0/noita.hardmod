@@ -129,7 +129,8 @@ enemy_perks = {
 		max = 1,
 		condition = function(self, data)
 			if not data.dmc then return end
-			local max_hp = ComponentGetValue2(data.dmc, "max_hp" )
+			if data.how_many_of_each_perk["HARDMOD_AREA_PROTECTOR"] then return end
+			local max_hp = ComponentGetValue2(data.dmc, "max_hp")
 			if max_hp >= 2 then
 				return true
 			end
@@ -147,8 +148,8 @@ enemy_perks = {
 		max = 2,
 		biome_conditions = {
 			magical_temple = 2,
-			temple_of_the_art = 4,
-			wizards_den = 6,
+			temple_of_the_art = 2,
+			wizards_den = 4,
 		},
 		condition = function(self, data)
 			return data.dmc ~= nil
