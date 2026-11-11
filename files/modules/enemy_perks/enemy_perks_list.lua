@@ -126,7 +126,7 @@ enemy_perks = {
 		name = "$hardmod_eperk_protector_name",
 		description = "$hardmod_eperk_protector_desc",
 		weight = 8,
-		max = 1,
+		max = 2,
 		condition = function(self, data)
 			if not data.dmc then return end
 			if data.how_many_of_each_perk["HARDMOD_AREA_PROTECTOR"] then return end
@@ -137,7 +137,9 @@ enemy_perks = {
 		end,
 		func = function(self, entity_id, data)
 			local x, y = EntityGetTransform(entity_id)
-			EntityAddChild(entity_id, EntityLoad( dir.."entities/protector_shield.xml", x, y))
+			local tier = ( data.how_many_of_each_perk[self.id] or 0 ) + 1
+
+			EntityAddChild(entity_id, EntityLoad( dir.."entities/protector_shield_t"..tier..".xml", x, y))
 		end
 	},
 	{
@@ -659,7 +661,7 @@ enemy_perks = {
 		priority = 20,
 		max = 1,
 		biome_conditions = {
-			coal_pits = 6,
+			coal_pits = 5,
 		},
 		condition = function(self, data)
 			return spawn_on_death_blacklist(self, data) and enemy_is_melee(self, data) and not enemy_is_ranged_attack(self, data) and not (data.vigour or data.is_boss)
