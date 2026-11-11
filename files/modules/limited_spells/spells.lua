@@ -308,6 +308,46 @@ hooks.spell_patches = {
 			has_aleph = nil
 		end
 	},
+	["ZETA"] = {
+		description = "$hardmod_spell_zeta_desc",
+		spawn_level = "5,6,10",
+		spawn_probability = "0.1,0.1,1",
+		mana = 80,
+		action = function()
+			c.fire_rate_wait = c.fire_rate_wait + 15
+			if reflecting then return end
+
+			local owner = GetUpdatedEntityID()
+			if EntityHasTag( owner ) then return end
+
+			local children = EntityGetAllChildren( owner )
+			for k=1,#children do
+				child = children[k]
+			    if EntityGetName( child ) == "inventory_full" then
+			        local inventory_items = EntityGetAllChildren(child)
+			        if( inventory_items ~= nil ) then
+			            for z=1, #inventory_items do
+			            	local index = #inventory_items+1-z -- start at the end
+			            	if index > 0 then
+				            	item = inventory_items[index]
+
+				            	local ia_comp = EntityGetFirstComponentIncludingDisabled( item, "ItemActionComponent" )
+				            	if ia_comp then
+				            		local action_id = ComponentGetValue2( ia_comp, "action_id" )
+				            		local data = get_spell_data( action_id )
+									local rec = check_recursion( data, recursion_level )
+				            		if data then
+				            			run_greek( data, rec )
+				            			break
+									end
+				            	end
+				            end
+			            end
+			        end
+			    end
+			end
+        end,
+    },
 
 	["BOMB"] = { max_uses = 5 },
 	["MINE"] = { max_uses = 20 },

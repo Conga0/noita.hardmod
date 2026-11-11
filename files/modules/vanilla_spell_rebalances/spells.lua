@@ -179,6 +179,7 @@ hooks.spell_patches = {
 		end,
 	},
 	["HEAL_BULLET"] = { indulgence_price = 250 },
+	["SPELLS_TO_POWER"] = { spawn_level = "10", spawn_probability = "0.5" },
 	-- ["TOUCH_WATER"] = { indulgence_cost = 500 },
 	-- ["TOUCH_OIL"] = { indulgence_cost = 500 },
 	-- ["TOUCH_ALCOHOL"] = { indulgence_cost = 500 },

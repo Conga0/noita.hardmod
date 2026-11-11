@@ -302,6 +302,15 @@ hooks.perk_patches = {
 		ui_description = "$hardmod_perk_contact_damage_desc",
 		game_effect = "PROTECTION_MELEE",
 	},
+	-- ["WAND_EXPERIMENTER"] = {
+	-- 	ui_description = "$hardmod_perk_wand_experimenter_desc",
+	-- 	func = function()
+	-- 		-- do nothing
+	-- 	end,
+	-- 	func_remove = function()
+	-- 		-- do nothing
+	-- 	end,
+	-- },
 	--["LEVITATION_TRAIL"] = {
 	--	func = function(perk_entity, entity_id, perk_name)
 	--		EntityAddComponent2(entity_id, "LuaComponent", {
