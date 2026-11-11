@@ -12,10 +12,11 @@ end
 
 local old_spawn_all_shopitems = spawn_all_shopitems
 function spawn_all_shopitems(x, y, ...)
-    old_spawn_all_shopitems(x, y, ...)
+	old_spawn_all_shopitems(x, y, ...)
+	EntityLoad("mods/noita.hardmod/files/modules/holy_mountain_items/entities/inject_shop_items.xml", x, y)
 
-    --this shouldnt be done like this but its the last day, and im tired lmao, fixthis at some point, sorry.
-    LoadPixelScene(dir.."gfx/item_room.png",dir.."gfx/item_room_visual.png",x+136, y-111, dir.."gfx/item_room_bg.png")
+	--this shouldnt be done like this but its the last day, and im tired lmao, fixthis at some point, sorry.
+	LoadPixelScene(dir.."gfx/item_room.png",dir.."gfx/item_room_visual.png",x+136, y-111, dir.."gfx/item_room_bg.png")
 end
 
 --316

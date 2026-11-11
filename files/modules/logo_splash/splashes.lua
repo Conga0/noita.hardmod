@@ -33,7 +33,7 @@ local evil_level = (year * 31469 + month * 929 + day * 541) % 100 + 1
 
 local months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }
 
-local lines_of_code = "29,269"---Updated by `scripts/build.js`, do not edit or format
+local lines_of_code = "58,707"---Updated by `scripts/build.js`, do not edit or format
 
 ---@type (splash_entry | string)[]
 local splashes = {
@@ -161,7 +161,9 @@ local custom_splashes = {
 		{"o",color={r=1,g=0.2,b=1}},
 		{"r",color={r=1,g=0.2,b=0.65}},
 		{"!",color={r=1,g=0.2,b=0.2}},
-	}
+	},
+	{"", { image = "mods/noita.hardmod/files/modules/logo_splash/gfx/hardmod_logo.png"}},
+	--{"", { image = "mods/noita.hardmod/files/modules/logo_splash/gfx/fairmod_logo.png"}}, --maybe not lmao
 }
 
 for _,splash in pairs(custom_splashes) do
