@@ -450,5 +450,4 @@ hardmod_eperk_dark_flames_name,Dark Wizard,RU_MISSING,,,,,,,,,,,,
 hardmod_eperk_dark_flames_desc,"This enemy's projectiles leave behind a trail of dark flames.",RU_MISSING,,,,,,,,,,,,
 hardmod_eperk_area_protector_name,Protector,Защитник,,,,,,,,,,,,
 hardmod_eperk_area_protector_desc,"Carries a big, impenetrable shield to protect its allies.",RU_MISSING,,,,,,,,,,,,
-hardmod_spell_zeta_desc,"Casts a copy of the first spell in your inventory",RU_MISSING,,,,,,,,,,,,
-hardmod_spell_zeta_desc,"Casts copies of every spell in your last wand",RU_MISSING,,,,,,,,,,,,
+hardmod_spell_zeta_desc,"Casts a copy of the first spell in your inventory",RU_MISSING,,,,,,,,,,,,=
