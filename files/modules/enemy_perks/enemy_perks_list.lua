@@ -352,33 +352,33 @@ enemy_perks = {
 			})
 		end
 	},
-	{
-		id = "DARK_FLAMES",
-		name = "$hardmod_eperk_dark_flames_name",
-		description = "$hardmod_eperk_dark_flames_desc",
-		weight = 2,
-		max = 1,
-		biome_conditions = {
-			magical_temple = 4,
-			temple_of_the_art = 8,
-			wizards_den = 8,
-		},
-		condition = function(self, data)
-			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(data.target_enemy,"AnimalAIComponent")
-			if animal_ai_comp
-			and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled")
-			and not ComponentGetValue2(animal_ai_comp, "tries_to_ranged_attack_friends")
-			and ComponentGetValue2(animal_ai_comp, "attack_ranged_frames_between") >= 60 then -- only on slow shooters
-				return true
-			end
-		end,
-		func = function(self, entity_id, data)
-			EntityAddComponent2(entity_id, "LuaComponent", {
-				script_shot = dir.."scripts/dark_flames_on_shot.lua",
-				execute_every_n_frame = -1,
-			})
-		end
-	},
+	-- {
+	-- 	id = "DARK_FLAMES",
+	-- 	name = "$hardmod_eperk_dark_flames_name",
+	-- 	description = "$hardmod_eperk_dark_flames_desc",
+	-- 	weight = 2,
+	-- 	max = 1,
+	-- 	biome_conditions = {
+	-- 		magical_temple = 4,
+	-- 		temple_of_the_art = 8,
+	-- 		wizards_den = 8,
+	-- 	},
+	-- 	condition = function(self, data)
+	-- 		local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(data.target_enemy,"AnimalAIComponent")
+	-- 		if animal_ai_comp
+	-- 		and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled")
+	-- 		and not ComponentGetValue2(animal_ai_comp, "tries_to_ranged_attack_friends")
+	-- 		and ComponentGetValue2(animal_ai_comp, "attack_ranged_frames_between") >= 60 then -- only on slow shooters
+	-- 			return true
+	-- 		end
+	-- 	end,
+	-- 	func = function(self, entity_id, data)
+	-- 		EntityAddComponent2(entity_id, "LuaComponent", {
+	-- 			script_shot = dir.."scripts/dark_flames_on_shot.lua",
+	-- 			execute_every_n_frame = -1,
+	-- 		})
+	-- 	end
+	-- },
 	{
 		id = "CURSER",
 		name = "$hardmod_eperk_curser_name",
