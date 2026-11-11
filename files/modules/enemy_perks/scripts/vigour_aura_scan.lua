@@ -1,10 +1,11 @@
+
 local x, y = EntityGetTransform( GetUpdatedEntityID() )
 
 local nearby_mortals = EntityGetInRadiusWithTag( x, y, 32, "mortal" )
 if nearby_mortals then
 	for i,mortal in ipairs( nearby_mortals ) do
-		local is_wounded = GameGetGameEffect( mortal, "NO_HEAL" )
-		if not is_wounded then
+		local is_wounded = GameGetGameEffect( mortal, "NO_HEAL" ) or 0
+		if is_wounded == 0 then
 			local dmg_comp = EntityGetFirstComponentIncludingDisabled( mortal, "DamageModelComponent" )
 			if dmg_comp ~= nil then
 				local p_hp = ComponentGetValue2( dmg_comp, "hp" )
