@@ -148,11 +148,11 @@ enemy_perks = {
 		max = 2,
 		biome_conditions = {
 			magical_temple = 2,
-			temple_of_the_art = 2,
+			temple_of_the_art = 3,
 			wizards_den = 4,
 		},
 		condition = function(self, data)
-			return data.dmc ~= nil
+			return data.dmc ~= nil and data.level > 2
 		end,
 		func = function(self, entity_id, data)
 			local x, y = EntityGetTransform(entity_id)
