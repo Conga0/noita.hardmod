@@ -1,0 +1,8 @@
+<Entity name="aaaaaaaaa">
+	<LuaComponent
+		script_source_file="mods/noita.hardmod/files/modules/holy_mountain_items/scripts/inject_shop_items.lua"
+		execute_every_n_frame="50"
+	/>
+
+	<LifetimeComponent lifetime="401"/>
+</Entity>
