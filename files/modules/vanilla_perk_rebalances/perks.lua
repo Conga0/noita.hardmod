@@ -326,7 +326,7 @@ hooks.perk_patches = {
 			end --no wands found
 
 			local max_allowed_always_casts = 4 --in case we want to change this
-			local chance_to_promote = 1.25 --some luck-based perk could increase the odds
+			local chance_to_promote = 0.25 --some luck-based perk could increase the odds
 			local max_promotions = 1 --per perk
 
 			local ability_component = EntityGetFirstComponentIncludingDisabled(wand, "AbilityComponent")

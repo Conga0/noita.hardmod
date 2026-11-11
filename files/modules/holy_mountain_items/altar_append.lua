@@ -12,6 +12,7 @@ local old_spawn_all_shopitems = spawn_all_shopitems
 
 function spawn_all_shopitems(x, y, ...)
 	old_spawn_all_shopitems(x,y,...)
+
 	do return end
 	local levels = {
 		2,
@@ -31,20 +32,35 @@ function spawn_all_shopitems(x, y, ...)
 	end
 
 	if hm_level == 6 then
+		local indexed_gun_actions = dofile_once("mods/noita.hardmod/lib/gun_actions_indexed.lua")
 		local shop_items = {}
-		local shop_spells = EntityGetInRadiusWithTag(x+256, y+256, 300, "card_action")
-		local shop_wands = EntityGetInRadiusWithTag(x+256, y+256, 300, "wand")
-		for _,item in ipairs(shop_spells) do
+		local nearby_spells = EntityGetInRadiusWithTag(x+256, y+256, 300, "card_action")
+		local nearby_wands = EntityGetInRadiusWithTag(x+256, y+256, 300, "wand")
+		for _,item in ipairs(nearby_spells) do
 			local cost_component = EntityGetFirstComponent(item, "ItemCostComponent")
 			if cost_component then
 				shop_items[#shop_items+1] = {item, cost_component, true}
 			end
 		end
-		for _,item in ipairs(shop_spells) do
+		for _,item in ipairs(nearby_wands) do
 			local cost_component = EntityGetFirstComponent(item, "ItemCostComponent")
 			if cost_component then
-				
-				shop_items[#shop_items+1] = {item, cost_component, false}
+				local ability_component = EntityGetFirstComponentIncludingDisabled(item, "AbilityComponent")
+				if not ability_component then goto continue end
+
+				if ability_component and ComponentObjectGetValue2(ability_component, "gun_config", "deck_capacity") < #(EntityGetAllChildren(item, "card_action") or {}) then
+					nearby_wands[#nearby_wands+1] = {item, cost_component, false, ability_component}
+				end
+			end
+			::continue::
+		end
+
+		for _=1, #shop_items do
+			local target = Random(1, #shop_items)
+			if target[3] then
+				--spell handling
+			else
+				--wand handling
 			end
 		end
 	end
