@@ -25,66 +25,12 @@ end
 local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua") ---@type nxml
 
-local modules = {
-	"test_module_dont_run",
-	"example",
-	"nerfed_combat_healing",
-	"enemy_perks",
-	"trappier_traps",
-	"cheeseless_triggers",
-	"logo_splash",
-	"starter_wands",
-	"unshuffle",
-	"limited_spells",
-	"vanilla_perk_rebalances",
-	"vanilla_spell_rebalances",
-	"spells_reweighted",
-	"vanilla_quests",
-	"vanilla_bosses",
-	--"no_more_chainsaw_wrapping", -- shit module never enable
-	"less_explosive",
-	"holy_mountain_rework",
-	"holy_mountain_items",
-	"no_more_max_hp_cheesing",
-	"phantom_nemesis",
-	"alt_fire_anything",
-	-- TODO: rename "ending" to "core", since now it also spawns the For The Worthy perk?
-	-- might also add more stuff things
-	"ending",
-	"credits",
-	"nerf_vanilla_cheeses",
-	-- replaced by `ending` module requiring 11 orbs to pickup sampo
-	-- "stronger_kolmi",
-	"chest_tweaks",
-	"better_anvil",
-	"rapidfire_nerfs",
-	"trial_perks",
-	"biome_map",
-	"biome_modifiers",
-	"stronger_enemies",
-	"potions",
-	"alternate_biomes",
-	"polymorph_gui",
-	"worse_digging",
-	"vanilla_bugfixes",
-	"spell_variety",
-	"for_the_worthy",
-	-- "no_more_instant_recharge", -- needs to be fixed
-	"snail",
-	"greed_curse_rework",
-}
-
-local force_enable_state = {
-	test_module_dont_run = false,
-	example = false,
-	-- Replaces vanilla credits
-	credits = true,
-}
+local modules = dofile_once("mods/noita.hardmod/modules.lua")---@type module_list
 
 local enabled_modules = {}
-for _,module in ipairs(modules) do
+for _,module in ipairs(modules.list) do
 	local enabled = not ModSettingGet("noita.hardmod."..module..".disabled")
-	if force_enable_state[module] ~= nil then enabled = force_enable_state[module] end
+	if modules.forced_enable_state[module] ~= nil then enabled = modules.forced_enable_state[module] end
 	if enabled then
 		enabled_modules[#enabled_modules+1] = module
 	end
@@ -120,7 +66,6 @@ local hooks = {
 }
 
 HARDMOD_GLOBAL_DATA = { ---@class HardmodGlobalInitData
-	module_ids = modules,
 	player = nil, --player EID.
 	player_poly_identity = nil, --contains some data on the player if they are polymorphed, nil if not polymorphed.
 	player_does_not_exist = true, --this is set to false on `player_spawned` and set to true on `player_destroyed`.
