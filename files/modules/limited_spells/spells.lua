@@ -327,21 +327,18 @@ hooks.spell_patches = {
 			        local inventory_items = EntityGetAllChildren(child)
 			        if( inventory_items ~= nil ) then
 			            for z=1, #inventory_items do
-			            	local index = #inventory_items+1-z -- start at the end
-			            	if index > 0 then
-				            	item = inventory_items[index]
+			            	local item = inventory_items[z]
 
-				            	local ia_comp = EntityGetFirstComponentIncludingDisabled( item, "ItemActionComponent" )
-				            	if ia_comp then
-				            		local action_id = ComponentGetValue2( ia_comp, "action_id" )
-				            		local data = get_spell_data( action_id )
-									local rec = check_recursion( data, recursion_level )
-				            		if data then
-				            			run_greek( data, rec )
-				            			break
-									end
-				            	end
-				            end
+			            	local ia_comp = EntityGetFirstComponentIncludingDisabled( item, "ItemActionComponent" )
+			            	if ia_comp then
+			            		local action_id = ComponentGetValue2( ia_comp, "action_id" )
+			            		local data = get_spell_data( action_id )
+								local rec = check_recursion( data, recursion_level )
+			            		if data then
+			            			run_greek( data, rec )
+			            			break
+								end
+			            	end
 			            end
 			        end
 			    end

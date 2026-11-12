@@ -273,9 +273,8 @@ function hooks.post_update(frame)
 	end
 end--]]
 
-
-
 for file in nxml.edit_file("data/entities/projectiles/darkflame_stationary.xml") do
 	file:set("tags", "hardmod_darkflame")
 end
+
 return hooks
