@@ -127,6 +127,11 @@ enemy_perks = {
 		description = "$hardmod_eperk_protector_desc",
 		weight = 8,
 		max = 2,
+		biome_conditions = {
+			mines = 4,
+			coal_pits = 4,
+			snowy_depths = 6,
+		},
 		condition = function(self, data)
 			if not data.dmc then return end
 			if data.how_many_of_each_perk["HARDMOD_AREA_PROTECTOR"] then return end
