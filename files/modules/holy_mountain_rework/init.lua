@@ -97,19 +97,21 @@ end
 
 
 local dont_dig_mats = {
-	"templebrick_static",
-	"templebrick_noedge_static",
-	"rock_box2d_hard",
+	templebrick_static = true,
+	templebrick_noedge_static = true,
+	rock_box2d_hard = true,
 }
 
 hooks.edit_material = function(elem)
 	if dont_dig_mats[elem.attr.name] then
+		print(elem.attr.name)
 		local tags = elem.attr.tags
 		if #(tags or "") == 0 then
 			elem.attr.tags = "[worms_lukki_ignore]"
 		else
 			elem.attr.tags = tags..",[worms_lukki_ignore]"
 		end
+		print(tostring(elem))
 	elseif elem.attr.name == "templebrick_static_soft" then
 		elem.attr.durability = 9 --weaken the HM false-walls to be more breakable by starter-bomb spells
 	end
