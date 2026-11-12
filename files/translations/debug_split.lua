@@ -1,6 +1,6 @@
 local path = "mods/noita.hardmod/files/translations/"
 
-local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
+local log_strings = false
 
 local translations = {
 	["key"] = {},
@@ -107,8 +107,10 @@ while true do
 	n = n + 1
 end
 
-for index, value in ipairs(translations["en"]) do
-	print(tostring(value))
+if log_strings then
+	for _,en in ipairs(translations["en"]) do
+		print(tostring(en))
+	end
 end
 
 local standard = ""
