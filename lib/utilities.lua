@@ -634,4 +634,23 @@ function utils.SpawnTablet(x, y, title, desc)
 	if abilitycomp then ComponentSetValue2(abilitycomp, "ui_name", title) end
 end
 
+--TOFINISH
+function utils.LinebreakString(str, max_width, font)
+	local current_line = ""
+	local lines = {}
+	for word in str:gmatch("%S+") do
+		local test_line = (current_line == "") and word or current_line .. " " .. word
+		local test_line_w = GuiGetTextDimensions(gui, test_line, 1, 2, font)
+		if test_line_w > max_width then
+			lines[#lines + 1] = current_line
+			current_line = word
+		else
+			if test_line_w > max_width then max_width = test_line_w end
+			current_line = test_line
+		end
+	end --i actually realised i didnt need to modularise this when i realised I could instead modularise split_lines, may recombine
+
+	return table.concat(lines, "\n")
+end
+
 return utils
