@@ -612,6 +612,26 @@ function utils.WandAddAlwaysCast(entity_id, action_id)
 	EntitySetComponentsWithTagEnabled(action_entity_id, "enabled_in_world", false)
 end
 
+---Spawns an emerald tablet at x,y with the specified title and description.
+---This uses vanilla's book_00.xml as a base.
+---@param x number
+---@param y number
+---@param title string
+---@param desc string
+function utils.SpawnTablet(x, y, title, desc)
+	local book = EntityLoad("data/entities/items/books/book_00.xml", x, y)
 
+	local itemcomp = EntityGetFirstComponent(book, "ItemComponent")
+	if itemcomp then
+		ComponentSetValue2(itemcomp, "item_name", title)
+		ComponentSetValue2(itemcomp, "ui_description", desc)
+	end
+
+	local uiinfo = EntityGetFirstComponent(book, "UIInfoComponent")
+	if uiinfo then ComponentSetValue2(uiinfo, "name", title) end
+
+	local abilitycomp = EntityGetFirstComponent(book, "AbilityComponent")
+	if abilitycomp then ComponentSetValue2(abilitycomp, "ui_name", title) end
+end
 
 return utils
