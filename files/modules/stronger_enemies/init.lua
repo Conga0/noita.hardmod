@@ -56,6 +56,30 @@ local function patch_enemy_changes()
 		},
 	})
 
+	for xml in nxml.edit_file("data/entities/animals/weakspirit.xml") do
+		xml:add_child(nxml.new_element("ParticleEmitterComponent", {
+			["emitted_material_name"]="plasma_fading",
+			["gravity.y"]="0.0",
+			["lifetime_min"]="0.02",
+			["lifetime_max"]="0.05",
+			["count_min"]="90",
+			["count_max"]="170",
+			["render_on_grid"]="1",
+			["fade_based_on_lifetime"]="1",
+			["area_circle_radius.min"]="220",
+			["area_circle_radius.max"]="220",
+			["cosmetic_force_create"]="0",
+			["airflow_force"]="0.3",
+			["airflow_time"]="0.01",
+			["airflow_scale"]="0.05",
+			["emission_interval_min_frames"]="0",
+			["emission_interval_max_frames"]="0",
+			["emit_cosmetic_particles"]="1",
+			["is_emitting"]="1",
+			["custom_alpha"]="0.7",
+		}))
+	end
+
 	utils.patchifile("data/entities/projectiles/orb_poly.xml", {
 		{ from = [[damage="0.3"]], to=[[damage="0"]] },
 		{ from = [[damage = "0.1"]], to=[[damage="0"]] },

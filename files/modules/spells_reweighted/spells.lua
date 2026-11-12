@@ -95,7 +95,7 @@ local hooks = {
 local mats = { "MATERIAL_WATER", "MATERIAL_OIL", "MATERIAL_BLOOD", "MATERIAL_CEMENT", "WATER_TRAIL" }
 local crits = { "HITFX_CRITICAL_WATER", "HITFX_CRITICAL_OIL", "HITFX_CRITICAL_BLOOD" }
 
-for _,spell in pairs(mats) do hooks.spell_patches[spell] = { mana = 18 } end
+for _,spell in pairs(mats) do hooks.spell_patches[spell] = { mana = 7 } end
 for _,spell in pairs(crits) do hooks.spell_patches[spell] = { mana = 25 } end
 
 local curses = { "CURSE_WITHER_PROJECTILE", "CURSE_WITHER_EXPLOSION", "CURSE_WITHER_MELEE", "CURSE_WITHER_ELECTRICITY" }
