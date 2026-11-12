@@ -1,16 +1,15 @@
 local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 
-local entity_id = GetUpdatedEntityID()
-local x,y = EntityGetTransform(entity_id)
-
-
 local function inject_into_shop(spell_id, x, y, radius)
 	local indexed_gun_actions = dofile_once("mods/noita.hardmod/lib/gun_actions_indexed.lua")
 	radius = radius or 300
 
 	local shop_items = {}
-	local nearby_spells = EntityGetInRadiusWithTag(x+256, y+256, radius, "card_action")
-	local nearby_wands = EntityGetInRadiusWithTag(x+256, y+256, radius, "wand")
+	local nearby_spells = EntityGetInRadiusWithTag(x, y, radius, "card_action")
+	local nearby_wands = EntityGetInRadiusWithTag(x, y, radius, "wand")
+	print(('for _,v in ipairs(EntityGetInRadiusWithTag(%s, %s, %s, "wand")) do print(v) end'):format(x, y, radius))
+	for _,v in ipairs(nearby_wands) do print(v) end
+	print("end")
 	for _,item in ipairs(nearby_spells) do
 		local cost_component = EntityGetFirstComponent(item, "ItemCostComponent")
 		if cost_component then
@@ -55,7 +54,6 @@ local function inject_into_shop(spell_id, x, y, radius)
 		})
 
 		EntityKill(target[1])
-		EntityKill(entity_id)
 	else
 		--IF WAND
 		local wx,wy = EntityGetTransform(target[1])
@@ -83,31 +81,30 @@ local function inject_into_shop(spell_id, x, y, radius)
 			EntityAddChild(target[1], spell)
 			EntitySetComponentsWithTagEnabled(spell, "enabled_in_world", false)
 		end
-
-		EntityKill(entity_id)
 	end
 end
---inject_into_shop("SUMMON_EGG", -247, 10618, 300)
 
-local levels = {
-	2,
-	5,
-	9,
-	12,
-	16,
-	20,
-	25,
-}
+return function(x, y)
+	local levels = {
+		2,
+		5,
+		9,
+		12,
+		16,
+		20,
+		25,
+	}
 
-local y_chunk_level = math.floor(y/512)
-local hm_level = 0
-for i,stage_boundary in ipairs(levels) do
-	if stage_boundary > y_chunk_level then break end
-	hm_level = i
-end
+	local y_chunk_level = math.floor(y/512)
+	local hm_level = 0
+	for i,stage_boundary in ipairs(levels) do
+		if stage_boundary > y_chunk_level then break end
+		hm_level = i
+	end
 
-if hm_level == 6 then
-	inject_into_shop("SUMMON_EGG", x, y)
-elseif hm_level == 7 then
-	inject_into_shop("TELEPORT_PROJECTILE_SHORT", x, y)
+	if hm_level == 6 then
+		inject_into_shop("SUMMON_EGG", x, y)
+	elseif hm_level == 7 then
+		inject_into_shop("TELEPORT_PROJECTILE_SHORT", x, y)
+	end
 end

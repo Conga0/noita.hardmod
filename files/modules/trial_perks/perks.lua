@@ -12,6 +12,7 @@ return {
 			stackable = true,
 			one_off_effect = true,
 			usable_by_enemies = false,
+			holy_mountain_exclusive = true,
 			func = function( entity_perk_item, entity_who_picked, item_name, pickup_count )
 				if reflecting then return end
 				dofile_once( "data/scripts/lib/utilities.lua" )
@@ -39,6 +40,7 @@ return {
 			stackable = true,
 			one_off_effect = true,
 			usable_by_enemies = false,
+			holy_mountain_exclusive = true,
 			func = function( entity_perk_item, entity_who_picked, item_name, pickup_count )
 				if reflecting then return end
 				dofile_once( "data/scripts/lib/utilities.lua" )
