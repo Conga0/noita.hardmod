@@ -682,4 +682,12 @@ finalised effect, removed debug trigger
 ran build scripts
 added weakghost aura ring indicator
 added 2 new eperks: Holy Reflection and Unstable Teleportitis
+Error handling to init.lua, files/scripts/perks.lua and files/scripts/spells.lua
 fixed worms and lukki digging HM again
+OOPS BROKE DARK FLAME EPERK
+move module list to a separate lua file
+error wrapping
+biome map error
+add guaranteed hastium HM basin somewhere in the first 2 levels
+make guaranteed hastium HM basin only in 2nd level, not 1st
+fixed a few issues

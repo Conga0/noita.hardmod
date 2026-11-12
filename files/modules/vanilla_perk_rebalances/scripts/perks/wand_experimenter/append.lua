@@ -31,5 +31,5 @@ function wand_fired(wand)
   local hp = heal_amounts[casts]
 
   ---@diagnostic disable-next-line: undefined-global
-  heal_entity(player, hp / 25)
+  heal_entity(player, hp)
 end

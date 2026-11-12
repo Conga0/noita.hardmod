@@ -37,6 +37,7 @@ local function inject_into_shop(spell_id, x, y, radius)
 		local cost = ComponentGetValue2(target[2], "cost")
 		local eid = CreateItemActionEntity(spell_id, sx, sy)
 		EntityAddComponent2(eid, "ItemCostComponent", {
+            _tags = "shop_cost,enabled_in_world",
 			cost = cost,
 			stealable = ComponentGetValue2(target[2], "stealable"),
 		})
