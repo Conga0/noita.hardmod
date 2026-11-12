@@ -132,15 +132,24 @@ local gd = HARDMOD_GLOBAL_DATA
 ModTextFileSetContent("mods/noita.hardmod/files/__spell_appends.lua", "--")
 ModTextFileSetContent("mods/noita.hardmod/files/__perk_appends.lua", "--")
 
-for _,module in ipairs(enabled_modules) do
-	print("adding module: "..module)
+---If this table is not empty, a tablet containing all the strings in init_errors will be spawned on top of the player
+---@type string[]
+local init_errors = {}
+
+local function add_init_error(err)
+	table.insert(init_errors, err)
+	print("[noita.hardmod]",err)
+end
+
+local function add_module(module)
 	local module_path = table.concat({"mods/noita.hardmod/files/modules/",module,"/"})
-	local module_hooks = dofile(module_path.."init.lua") or {}
-	for hook_name,hook in pairs(module_hooks) do
-		if hooks[hook_name] ~= nil then --Throw that shit away, let me stuff random shit in the hooks table >:(
-			hooks[hook_name][#hooks[hook_name]+1] = hook
-		end
+
+	if not ModDoesFileExist(module_path.."init.lua") then
+		add_init_error("Failed to add module "..module..": init.lua does not exist")
+		return
 	end
+
+	local module_hooks = dofile_once(module_path.."init.lua") or {}
 
 	local spell_append_path = module_path..(module_hooks.spells_path or "spells.lua")
 	if ModDoesFileExist(spell_append_path) then
@@ -151,8 +160,57 @@ for _,module in ipairs(enabled_modules) do
 	if ModDoesFileExist(perk_append_path) then
 		ModLuaFileAppend("mods/noita.hardmod/files/__perk_appends.lua", perk_append_path)
 	end
+
+	for hook_name,hook in pairs(module_hooks) do
+		if hooks[hook_name] then
+			hooks[hook_name][#hooks[hook_name]+1] = hook
+		end
+	end
 end
 
+--- Note: Only do this for init hooks!!!!
+local function try_run_hooks(hook_name, ...)
+	if type(hooks[hook_name]) ~= "table" then
+		add_init_error("Error running hook "..hook_name..": invalid hook name?!?!")
+		return
+	end
+
+	for _,func in pairs(hooks[hook_name]) do
+		local succ, res = pcall(func, ...)
+		if not succ then
+			add_init_error("Error running hook "..hook_name..": "..tostring(res))
+		end
+	end
+end
+
+local function patch_materials()
+	local files = ModMaterialFilesGet()
+	for _, file in ipairs(files) do --add modded materials
+		for xml in nxml.edit_file(file) do
+			for elem in xml:each_child() do
+				local elem_name = elem.name
+				if elem_name == "CellData" or elem_name == "CellDataChild" then
+					for _,func in ipairs(hooks.edit_material) do
+						func(elem)
+					end
+				else
+					--for _,func in ipairs(hooks.edit_reaction) do
+					--	func(elem)
+					--end disabled until someone actually needs it for something
+				end
+			end
+		end
+	end
+end
+
+for _,module in ipairs(enabled_modules) do
+	print("[noita.hardmod] Adding module: "..module)
+
+	local success, res = pcall(add_module, module)
+	if not success then
+		add_init_error("Failed to add module "..module..": "..tostring(res))
+	end
+end
 
 
 ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/noita.hardmod/files/scripts/spells.lua")
@@ -185,72 +243,54 @@ utils.modifile("data/scripts/perks/perk_reflect.lua",
 )
 
 
-
-function OnModPreInit()
-	for _,func in ipairs(hooks.mod_pre_init) do
-		func()
-	end
-end
-function OnModInit()
-	for _,func in ipairs(hooks.mod_init) do
-		func()
-	end
-end
-function OnModPostInit()
-	for _,func in ipairs(hooks.mod_post_init) do
-		func()
-	end
-end
+function OnModPreInit() try_run_hooks("mod_pre_init") end
+function OnModInit() try_run_hooks("mod_init") end
+function OnModPostInit() try_run_hooks("mod_post_init") end
 
 function OnMagicNumbersAndWorldSeedInitialized() -- this is the last point where the Mod* API is available. after this materials.xml will be loaded.
 	SetRandomSeed(-2497, 492)
-	for _,func in ipairs(hooks.magic_numbers_and_seed_initialised) do
-		func()
-	end
 
-	-- this code adds tags to preexisting materials, its good for compatibility
-	local files = ModMaterialFilesGet()
-	for _, file in ipairs(files) do --add modded materials
-		for xml in nxml.edit_file(file) do
-			for elem in xml:each_child() do
-				local elem_name = elem.name
-				if elem_name == "CellData" or elem_name == "CellDataChild" then
-					for _,func in ipairs(hooks.edit_material) do
-						func(elem)
-					end
-				else
-					--for _,func in ipairs(hooks.edit_reaction) do
-					--	func(elem)
-					--end disabled until someone actually needs it for something
-				end
-			end
-		end
+	-- ok but who called this initialiSed, its initialiZed smh my head!!! :(
+	try_run_hooks("magic_numbers_and_seed_initialised")
+
+	-- This one uses pcall on the entire procedure rather than each hook call for performance reasons
+	local succ, res = pcall(patch_materials)
+	if not succ then
+		add_init_error("Error patching materials: "..tostring(res))
 	end
 end
 
-function OnBiomeConfigLoaded()
-	for _,func in ipairs(hooks.biome_config) do
-		func()
-	end
-end
+function OnBiomeConfigLoaded() try_run_hooks("biome_config") end
+function OnWorldInitialized() try_run_hooks("world_init") end
 
-function OnWorldInitialized()
-	for _,func in ipairs(hooks.world_init) do
-		func()
-	end
-end
-
-
-function OnPlayerSpawned(p)
-	gd.player = p
+function OnPlayerSpawned(pid)
+	gd.player = pid
 	gd.player_does_not_exist = false
 	local is_run_start = not GameHasFlagRun("noita.hardmod.on_player_spawned_flag")
-	for _,func in ipairs(hooks.player_spawned) do
-		func(p, is_run_start)
-	end
+	try_run_hooks("player_spawned", pid, is_run_start)
 	GameAddFlagRun("noita.hardmod.on_player_spawned_flag")
 
 	if nxml_missing then GamePrint("$hardmod_nxml_missing") end
+
+	if #init_errors > 0 then
+		local error = table.concat(init_errors, "\n"):sub(1, 2000)
+		local x, y = EntityGetTransform(pid)
+
+		local book = EntityLoad("data/entities/items/books/book_00.xml", x, y)
+		local title = "Noita Hard Mod: Errors occurred!!!"
+
+		local itemcomp = EntityGetFirstComponent(book, "ItemComponent")
+		if itemcomp then
+			ComponentSetValue2(itemcomp, "item_name", title)
+			ComponentSetValue2(itemcomp, "ui_description", error)
+		end
+
+		local uiinfo = EntityGetFirstComponent(book, "UIInfoComponent")
+		if uiinfo then ComponentSetValue2(uiinfo, "name", title) end
+
+		local abilitycomp = EntityGetFirstComponent(book, "AbilityComponent")
+		if abilitycomp then ComponentSetValue2(abilitycomp, "ui_name", title) end
+	end
 end
 
 function OnPlayerDied(p)
@@ -279,26 +319,24 @@ local check_entities = function()
 			if EntityHasTag(i, "player_unit") then
 				gd.player = i
 				gd.player_poly_identity = nil
+			elseif EntityHasTag(i, "polymorphed_player") then
+				gd.player = i
+				gd.player_poly_identity = {
+					path = EntityGetFilename(i),
+					name = EntityGetName(i)
+				}
 			else
-				if EntityHasTag(i, "polymorphed_player") then
-					gd.player = i
-					gd.player_poly_identity = {
-						path = EntityGetFilename(i),
-						name = EntityGetName(i)
-					}
-				else
-					for _,comp in ipairs(EntityGetComponent(i, "GameStatsComponent") or {}) do
-						if ComponentGetTypeName(comp) ~= "GameStatsComponent" then --Check if GSC is bugged (store as backup if yes)
-							borked_polymorph_entity = borked_polymorph_entity or i
-							goto continue
-						elseif ComponentGetValue2(comp, "is_player") then
-							gd.player = i
-							gd.player_poly_identity = {
-								path = EntityGetFilename(i),
-								name = EntityGetName(i)
-							}
-							goto continue
-						end
+				for _,comp in ipairs(EntityGetComponent(i, "GameStatsComponent") or {}) do
+					if ComponentGetTypeName(comp) ~= "GameStatsComponent" then --Check if GSC is bugged (store as backup if yes)
+						borked_polymorph_entity = borked_polymorph_entity or i
+						goto continue
+					elseif ComponentGetValue2(comp, "is_player") then
+						gd.player = i
+						gd.player_poly_identity = {
+							path = EntityGetFilename(i),
+							name = EntityGetName(i)
+						}
+						goto continue
 					end
 				end
 			end
