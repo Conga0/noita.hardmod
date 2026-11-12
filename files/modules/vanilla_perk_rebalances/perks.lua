@@ -329,7 +329,7 @@ hooks.perk_patches = {
 			local x,y = EntityGetTransform(perk_entity)
 			local wand = utils.GetHeldWand(taker)
 			if not wand then
-	        	GamePrintImportant("$hardmod_promote_ac_fail_empty", "$logdesc_d2d_promote_ac_fail_no_wands")
+				GamePrintImportant("$hardmod_promote_ac_fail_empty", "$logdesc_d2d_promote_ac_fail_no_wands")
 				GamePlaySound("data/audio/Desktop/event_cues.bank", "event_cues/chest_bad/create", x, y)
 				return
 			end --no wands found
@@ -363,8 +363,8 @@ hooks.perk_patches = {
 							end
 						end
 					end
-    		    end
-    		end
+				end
+			end
 
 			local spells = {}
 			for _,item in ipairs(unique_inv_spells) do
@@ -394,7 +394,7 @@ hooks.perk_patches = {
 				table.remove(spells, rnd)
 				if Random() <= chance_to_promote then
 					promotions = promotions + 1
-		        	GamePrint(GameTextGet("$hardmod_promot_ac_success", GameTextGetTranslatedOrNot(indexed_gun_actions[target_spell.sid].name)))
+					GamePrint(GameTextGet("$hardmod_promot_ac_success", GameTextGetTranslatedOrNot(indexed_gun_actions[target_spell.sid].name)))
 
 					EntityRemoveFromParent(target_spell.eid)
 					EntityAddChild(wand, target_spell.eid)

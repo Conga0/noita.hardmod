@@ -645,7 +645,32 @@ added d2d Promote Spell, replacing Always Cast perk
 fixed and added Blessed Blood Money perk, fixed trick blood money
 increased orb tinker check radius
 removed evil and nefarious eof newline
+add Dark Flames perk
+improve Wand Experimenter
+make StP a T10 spell
+remove old Wand Experimenter files
+forgot an important file lol
+add missing TL
+add Area Protector perk
+make Kamikaze eperk slightly more common in Coal Pits
+buff Zeta
 updated splashes
+Merge remote-tracking branch 'upstream/main' into pr/176
+OOPS promote spell should not have a base chance of 125% lmao
+nerf da buff
+Merge remote-tracking branch 'fork/main'
+limit heartbreak max hp loss
 fixed probability oversight in Promote Random Spell
 guaranteed summon egg in HM6, guaranteed small tele in HM7
 added retries in case of hm shop injection fail
+ran split.run_lua and build.js
+(area) protector eperk tweaks
+disable WandEx rework for now (ugghhh... BORING!!!!!)
+fix(?) Vigour eperk not healing Minä
+Revert "remove old Wand Experimenter files"
+tweaky tweaky
+add Shield Sapper eperk
+nerf Shielded perk
+fixed determinism for guaranteed HM spells
+added "perk rain" event
+finalised effect, removed debug trigger
