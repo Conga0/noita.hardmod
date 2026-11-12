@@ -4,7 +4,7 @@ function item_pickup(item, taker, name)
 	local self_path = ComponentGetValue2(GetUpdatedComponentID(), "script_item_picked_up")
 
 	--GamePlaySound("data/audio/Desktop/misc.bank", "game_effect/invisibility/deactivate", x, y)
-	GamePlaySound("data/audio/Desktop/materials.bank", "collision/glass_potion/destroy", x, y)
+	GamePlaySound("data/audio/Desktop/event_cues.bank", "event_cues/shop_item/create", x, y)
 
 	local fragile_perks = {}
 	for _,perk in ipairs(EntityGetInRadiusWithTag(x, y, 1000, "item_perk")) do

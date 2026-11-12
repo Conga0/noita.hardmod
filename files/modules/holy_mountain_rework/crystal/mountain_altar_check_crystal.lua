@@ -59,28 +59,3 @@ for _,crystal in ipairs(EntityGetInRadiusWithTag(x, y, 50, "hm_crystal")) do
 		EntityKill(entity_id)
 	end
 end
-
-if InputIsKeyDown(18) then
-	local valid_perks = {}
-	for _,perk in ipairs(perk_list) do
-		if not (perk.not_in_default_perk_pool or perk.holy_mountain_exclusive or GameHasFlagRun("PERK_PICKED_"..perk.id)) then
-			valid_perks[#valid_perks+1] = perk
-		end
-	end
-	SetRandomSeed(y-1937, x-213048)
-
-	for i = #valid_perks, 2, -1 do
-		local j = math.random(i)
-		valid_perks[i], valid_perks[j] = valid_perks[j], valid_perks[i]
-	end
-
-	local perks = SpawnPerkCircle(valid_perks, x, y, 220)
-	for _,perk in ipairs(perks) do
-		EntityAddComponent2(perk, "LuaComponent", {
-			execute_every_n_frame = -1,
-			script_item_picked_up = "mods/noita.hardmod/files/modules/holy_mountain_rework/crystal/crystal_perk_pickup.lua",
-		})
-	end
-
-	EntityKill(entity_id)
-end
