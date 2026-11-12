@@ -369,7 +369,7 @@ enemy_perks = {
 			if animal_ai_comp
 			and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled")
 			and not ComponentGetValue2(animal_ai_comp, "tries_to_ranged_attack_friends")
-			and ComponentGetValue2(animal_ai_comp, "attack_ranged_frames_between") >= 60 -- only on slow shooters
+			and ComponentGetValue2(animal_ai_comp, "attack_ranged_frames_between") >= 60 then -- only on slow shooters
 				return true
 			end
 		end,
