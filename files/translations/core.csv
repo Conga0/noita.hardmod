@@ -453,3 +453,5 @@ hardmod_eperk_area_protector_desc,"Carries a big, impenetrable shield to protect
 hardmod_spell_zeta_desc,"Casts a copy of the first spell in your inventory",RU_MISSING,,,,,,,,,,,,
 hardmod_eperk_shield_sapper_name,Shield Sapper,RU_MISSING,,,,,,,,,,,,
 hardmod_eperk_shield_sapper_desc,"Carries an aura that rapidly depletes your shields.",RU_MISSING,,,,,,,,,,,,
+hardmod_collapse_crystal_sacrificed,YOUR CURIOSITY IS GREATLY REWARDED,RU_MISSING,,,,,,,,,,,,
+hardmod_collapse_crystal_sacrificed_desc,You feel as though you should weigh your options wisely...,RU_MISSING,,,,,,,,,,,,
