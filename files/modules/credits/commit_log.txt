@@ -671,6 +671,15 @@ Revert "remove old Wand Experimenter files"
 tweaky tweaky
 add Shield Sapper eperk
 nerf Shielded perk
+Zeta now works like described I promise
+disable Dark Flames eperk just in case
+false alarm, WHEW
+add TL for Shield Sapper
+2 NOT 2000
 fixed determinism for guaranteed HM spells
 added "perk rain" event
 finalised effect, removed debug trigger
+ran build scripts
+added weakghost aura ring indicator
+added 2 new eperks: Holy Reflection and Unstable Teleportitis
+fixed worms and lukki digging HM again
