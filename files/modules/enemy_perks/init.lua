@@ -96,8 +96,8 @@ hooks.new_eid = function(entity_id)
 		end
 
 		local level = (is_boss and 5 or biome_data.level) --if is_boss, override biome level
-			+ (tonumber(SessionNumbersGetValue("NEW_GAME_PLUS_COUNT")) or 0) -- + NG+ iteration
-			+ (GetParallelWorldPosition(x, y) ~= 0 and 3 or 0) -- +3 if in a PW
+			+ (tonumber(SessionNumbersGetValue("NEW_GAME_PLUS_COUNT")) or 0)*2 -- + NG+ iteration
+			+ (GetParallelWorldPosition(x, y) * 3) -- +3 per PW
 		if biome_data.do_recursive_roll ~= false then
 			for _=1, level do
 				local function plus_one_perk()
@@ -273,9 +273,8 @@ function hooks.post_update(frame)
 	end
 end--]]
 
-
-
 for file in nxml.edit_file("data/entities/projectiles/darkflame_stationary.xml") do
 	file:set("tags", "hardmod_darkflame")
 end
+
 return hooks

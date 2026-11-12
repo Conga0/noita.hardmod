@@ -125,7 +125,7 @@ enemy_perks = {
 		id = "PROTECTOR",
 		name = "$hardmod_eperk_protector_name",
 		description = "$hardmod_eperk_protector_desc",
-		weight = 8,
+		weight = 7,
 		max = 2,
 		condition = function(self, data)
 			if not data.dmc then return end
@@ -357,6 +357,7 @@ enemy_perks = {
 		name = "$hardmod_eperk_dark_flames_name",
 		description = "$hardmod_eperk_dark_flames_desc",
 		weight = 2,
+		priority = 8,
 		max = 1,
 		biome_conditions = {
 			magical_temple = 4,
@@ -806,7 +807,7 @@ enemy_perks = {
 		max = 1,
 		condition = function(self, data) return data.perks_to_give and (data.level > 4 or data.is_boss) end,
 		func = function(self, entity_id, data)
-			data.perks_to_give = data.perks_to_give + (data.is_boss and 10 or 5)
+			data.perks_to_give = data.perks_to_give + 10
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/drop_chest_on_death.lua"
 			})
@@ -830,6 +831,40 @@ enemy_perks = {
 		func = function(self, entity_id, data)
 			local x, y = EntityGetTransform(entity_id)
 			EntityAddChild(entity_id, EntityLoad( dir.."entities/shield_sapper_aura.xml", x, y))
+		end
+	},
+	{
+		id = "UNSTABLE_TELEPORTITIS",
+		name = "$hardmod_eperk_unstable_teleportitis_name",
+		description = "$hardmod_eperk_unstable_teleportitis_desc",
+		weight = 2,
+		max = 1,
+		condition = function(self, data) return data.level > 4 end,
+		func = function(self, entity_id, data)
+			local eid = EntityCreateNew("random_teleports")
+			EntityAddComponent2(eid, "GameEffectComponent", {
+				effect = "TELEPORTATION",
+				frames = -1,
+				teleportation_probability = 50,
+				teleportation_delay_min_frames = 600,
+				teleportation_radius_max = 324,
+			})
+			EntityAddChild(entity_id, eid)
+		end
+	},
+	{
+		id = "HOLY_REFLECTION",
+		name = "$hardmod_eperk_holy_reflection_name",
+		description = "$hardmod_eperk_holy_reflection_desc",
+		weight = 3,
+		max = 1,
+		condition = function(self, data) return data.level > 7 end,
+		func = function(self, entity_id, data)
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				execute_every_n_frame = -1,
+				script_damage_received = "data/scripts/animals/wraith_glowing_damage.lua",
+				limit_to_every_n_frame = 10,
+			})
 		end
 	},
 	--{ --I'll implement this later, or someone can do it for me 🙏
@@ -910,12 +945,12 @@ local perk_incompatibilities = { --ill implement at some point maybe
 	{"HARDMOD_KAMIKAZE", "HARDMOD_UNFINISHED_BUSINESS"},
 }
 
-for _,perk in ipairs(enemy_perks) do
+for i,perk in ipairs(enemy_perks) do
 	local id = perk.id
 	perk.id = "HARDMOD_"..perk.id
 	perk.name = perk.name or perk.id
 	perk.weight = perk.weight or 10
-	perk.priority = perk.priority or 0
+	perk.priority = (perk.priority or 0) + i*.001
 	perk.sprite = ModDoesFileExist(perk.sprite or "") and perk.sprite
 		or ModDoesFileExist(sprites_path..id:lower()..".png") and sprites_path..id:lower()..".png"
 		or "mods/noita.hardmod/files/modules/enemy_perks/perk_sprites/missing.png"
