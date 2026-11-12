@@ -79,18 +79,21 @@ ModTextFileSetContent("mods/noita.hardmod/files/__perk_appends.lua", "--")
 
 ---If this table is not empty, a tablet containing all the strings in init_errors will be spawned on top of the player
 ---@type string[]
-local init_errors = {}
+local init_error_lines = {}
 
+---@param err string
 local function add_init_error(err)
-	table.insert(init_errors, err)
-	print("[noita.hardmod]",err)
+	for line in err:gmatch("[^\n]+") do
+		table.insert(init_error_lines, line)
+	end
+	print("[noita.hardmod] [ERROR]",err)
 end
 
 local function add_module(module)
 	local module_path = table.concat({"mods/noita.hardmod/files/modules/",module,"/"})
 
 	if not ModDoesFileExist(module_path.."init.lua") then
-		add_init_error("Failed to add module "..module..": init.lua does not exist")
+		add_init_error("Module "..module..": init.lua does not exist")
 		return
 	end
 
@@ -116,14 +119,14 @@ end
 --- Note: Only do this for init hooks!!!!
 local function try_run_hooks(hook_name, ...)
 	if type(hooks[hook_name]) ~= "table" then
-		add_init_error("Error running hook "..hook_name..": invalid hook name?!?!")
+		add_init_error("Hook "..hook_name..": invalid hook name?!?!")
 		return
 	end
 
 	for _,func in pairs(hooks[hook_name]) do
 		local succ, res = pcall(func, ...)
 		if not succ then
-			add_init_error("Error running hook "..hook_name..": "..tostring(res))
+			add_init_error("Hook "..hook_name..": "..tostring(res))
 		end
 	end
 end
@@ -153,7 +156,7 @@ for _,module in ipairs(enabled_modules) do
 
 	local success, res = pcall(add_module, module)
 	if not success then
-		add_init_error("Failed to add module "..module..": "..tostring(res))
+		add_init_error("Module "..module..": "..tostring(res))
 	end
 end
 
@@ -217,24 +220,22 @@ function OnPlayerSpawned(pid)
 
 	if nxml_missing then GamePrint("$hardmod_nxml_missing") end
 
-	if #init_errors > 0 then
-		local error = table.concat(init_errors, "\n"):sub(1, 2000)
-		local x, y = EntityGetTransform(pid)
-
-		local book = EntityLoad("data/entities/items/books/book_00.xml", x, y)
-		local title = "Noita Hard Mod: Errors occurred!!!"
-
-		local itemcomp = EntityGetFirstComponent(book, "ItemComponent")
-		if itemcomp then
-			ComponentSetValue2(itemcomp, "item_name", title)
-			ComponentSetValue2(itemcomp, "ui_description", error)
+	if #init_error_lines > 0 then
+		local lines = {}
+		local max_width = 80
+		for _,line in pairs(init_error_lines) do
+			if #line > 0 then
+				for i=1,#line,max_width do
+					table.insert(lines, line:sub(i, i + max_width + 1))
+				end
+			else table.insert(lines, "") end
 		end
 
-		local uiinfo = EntityGetFirstComponent(book, "UIInfoComponent")
-		if uiinfo then ComponentSetValue2(uiinfo, "name", title) end
-
-		local abilitycomp = EntityGetFirstComponent(book, "AbilityComponent")
-		if abilitycomp then ComponentSetValue2(abilitycomp, "ui_name", title) end
+		local x, y = EntityGetTransform(pid)
+		utils.SpawnTablet(
+			x, y, "Noita Hard Mod: Errors occurred!!!",
+			table.concat(lines, "\n"):sub(1, 2000)
+		)
 	end
 end
 
