@@ -277,4 +277,8 @@ for file in nxml.edit_file("data/entities/projectiles/darkflame_stationary.xml")
 	file:set("tags", "hardmod_darkflame")
 end
 
+function hooks.world_init()
+	EntityLoad(dir.."nothing_to_see_here.xml", 0, 0)
+end
+
 return hooks
