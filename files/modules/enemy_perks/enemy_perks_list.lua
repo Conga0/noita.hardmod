@@ -658,6 +658,9 @@ enemy_perks = {
 		weight = 2,
 		priority = 15,
 		max = 1,
+		biome_conditions = {
+			meat_realm = 0,
+		},
 		condition = spawn_on_death_blacklist,
 		func = function(self, entity_id, data)
 			-- make the enemy explode on death
