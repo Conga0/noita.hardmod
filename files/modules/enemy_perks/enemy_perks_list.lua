@@ -117,7 +117,7 @@ enemy_perks = {
 		description = "$hardmod_eperk_recycle_health_desc",
 		weight = 6,
 		priority = 6,
-		max = 1,
+		max = 0, --this perk is a wasted entry as is, rework to be stronger (ie grant Max HP in addition to HP)
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_damage_received = dir.."scripts/recycle_health.lua",

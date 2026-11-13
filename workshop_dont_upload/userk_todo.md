@@ -17,6 +17,7 @@
 - Look into making gold more valuable?
 - rewrite perk selection logic to be more integrated
 - fix PW cursed liquid to be like apoth's
+- remove item immunities perk if apotheosis is enabled?
 
 ## Enemy Perk Ideas
 - Chaotic Polymorph Aura
