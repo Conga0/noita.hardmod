@@ -65,6 +65,12 @@ local function spawn_on_death_blacklist(self, data)
 		["data/entities/animals/skullfly.xml"] = true,
 		["data/entities/animals/crypt/skullfly.xml"] = true,
 	}
+	local banned_perks = {
+		"HARDMOD_FORBIDDEN_ARTS"
+	}
+	for _,banned_perk in ipairs(banned_perks) do
+		if data.how_many_of_each_perk[banned_perk] then return end
+	end
 
 	return not (banned_creatures[EntityGetFilename(data.target_enemy)] or data.how_many_of_each_perk["HARDMOD_BOUNTY"] or data.how_many_of_each_perk["HARDMOD_SHADOW_REVIVAL"])
 end
@@ -318,6 +324,7 @@ enemy_perks = {
 			sky = 8,
 		},
 		condition = function(self, data)
+			if EntityHasTag(data.target_enemy, "thundermage") then return end
 			local animal_ai_comp = EntityGetFirstComponentIncludingDisabled(data.target_enemy,"AnimalAIComponent")
 			if animal_ai_comp
 			and ComponentGetValue2(animal_ai_comp,"attack_ranged_enabled")
@@ -447,7 +454,7 @@ enemy_perks = {
 		},
 		max = 1,
 		condition = function(self, data)
-			return not is_projectile_immune(self, data)
+			return not (EntityHasTag(data.target_enemy, "thundermage") or is_projectile_immune(self, data))
 		end,
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_ELECTRICITY", false)
@@ -776,6 +783,7 @@ enemy_perks = {
 		name = "$hardmod_eperk_obfuscation_name",
 		description = "$hardmod_eperk_obfuscation_desc",
 		weight = 2,
+		priority = 100,
 		max = 1,
 		condition = function(self, data)
 			return #data.already_held_perks > 0 and data.level > 4
