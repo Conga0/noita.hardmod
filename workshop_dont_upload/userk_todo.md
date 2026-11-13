@@ -17,6 +17,7 @@
 - Add Parallel Parity module
 - Look into improving early-game mobility
 - Look into improving early-game gold gain
+- make plasma usable as damage
 
 ## Enemy Perk Ideas
 - Chaotic Polymorph Aura
@@ -28,3 +29,4 @@
 ## bugs
 - 2nd and 3rd hand statue kicked drops summon portal spell
 - Snail module crashes?
+- 0 0 enemy perk icons
