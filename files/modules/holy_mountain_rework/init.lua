@@ -97,9 +97,9 @@ end
 
 
 local dont_dig_mats = {
-	"templebrick_static",
-	"templebrick_noedge_static",
-	"rock_box2d_hard",
+	templebrick_static = true,
+	templebrick_noedge_static = true,
+	rock_box2d_hard = true,
 }
 
 hooks.edit_material = function(elem)

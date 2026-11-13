@@ -4,6 +4,8 @@ local nxml = dofile_once("mods/noita.hardmod/lib/nxml/nxml.lua")---@type nxml
 
 local hooks = {} ---@type hooks
 
+local biome_map_path = "mods/noita.hardmod/files/modules/biome_map/biome_map.lua"
+
 local custom_biomes = {
 	{ h = 2, color = "ffde88e3", file = "secret_lab_path.xml" },
 	{ h = 0, color = "ffff56a5", file = "pw_barrier.xml" },
@@ -86,14 +88,24 @@ utils.modifile(
 	[[--]]
 )
 
---
 ModMagicNumbersFileAdd("mods/noita.hardmod/files/modules/biome_map/magic_numbers.xml")
 ModMaterialsFileAdd("mods/noita.hardmod/files/modules/biome_map/materials.xml")
 
--- :)
-function hooks.player_spawned(p, is_run_start)
+function hooks.player_spawned(pid, is_run_start)
+	local path = MagicNumbersGetValue("BIOME_MAP")
+	if path ~= biome_map_path then
+		local x, y = EntityGetTransform(pid)
+		utils.SpawnTablet(
+			x, y, "Noita Hard Mod: Errors Occurred!!!",
+			"Mod compatibility error: The 'Biome Map Changes' module is enabled, but we failed to\n"
+			.."apply our worldgen changes!!! Another mod overwrote the biome map file to:\n"
+			.."- '"..path.."'\n \n"
+			.."Please move Hard Mod to start before this mod."
+		)
+	end
+
 	if is_run_start then
-		EntitySetDamageFromMaterial(p, "hardmod_cursed_liquid", 0.003)
+		EntitySetDamageFromMaterial(pid, "hardmod_cursed_liquid", 0.003)
 	end
 end
 

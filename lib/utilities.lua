@@ -612,6 +612,45 @@ function utils.WandAddAlwaysCast(entity_id, action_id)
 	EntitySetComponentsWithTagEnabled(action_entity_id, "enabled_in_world", false)
 end
 
+---Spawns an emerald tablet at x,y with the specified title and description.
+---This uses vanilla's book_00.xml as a base.
+---@param x number
+---@param y number
+---@param title string
+---@param desc string
+function utils.SpawnTablet(x, y, title, desc)
+	local book = EntityLoad("data/entities/items/books/book_00.xml", x, y)
 
+	local itemcomp = EntityGetFirstComponent(book, "ItemComponent")
+	if itemcomp then
+		ComponentSetValue2(itemcomp, "item_name", title)
+		ComponentSetValue2(itemcomp, "ui_description", desc)
+	end
+
+	local uiinfo = EntityGetFirstComponent(book, "UIInfoComponent")
+	if uiinfo then ComponentSetValue2(uiinfo, "name", title) end
+
+	local abilitycomp = EntityGetFirstComponent(book, "AbilityComponent")
+	if abilitycomp then ComponentSetValue2(abilitycomp, "ui_name", title) end
+end
+
+--TOFINISH
+function utils.LinebreakString(str, max_width, font)
+	local current_line = ""
+	local lines = {}
+	for word in str:gmatch("%S+") do
+		local test_line = (current_line == "") and word or current_line .. " " .. word
+		local test_line_w = GuiGetTextDimensions(gui, test_line, 1, 2, font)
+		if test_line_w > max_width then
+			lines[#lines + 1] = current_line
+			current_line = word
+		else
+			if test_line_w > max_width then max_width = test_line_w end
+			current_line = test_line
+		end
+	end --i actually realised i didnt need to modularise this when i realised I could instead modularise split_lines, may recombine
+
+	return table.concat(lines, "\n")
+end
 
 return utils

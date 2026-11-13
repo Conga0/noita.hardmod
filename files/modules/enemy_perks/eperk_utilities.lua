@@ -37,8 +37,7 @@ utilities.biome_levels = {
 	hell = 12,
 
 	holy_mountain = {
-		level = 3,
-		do_recursive_roll = false,
+		level = 0,
 		custom_func = function(self, entity_id, x, y)
 			local levels = {
 				2,

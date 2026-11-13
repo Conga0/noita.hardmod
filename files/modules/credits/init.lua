@@ -64,8 +64,10 @@ COMMIT HISTORY
 local credits = ModTextFileGetContent("mods/noita.hardmod/files/credits.txt")
 local commit_log = ModTextFileGetContent("mods/noita.hardmod/files/modules/credits/commit_log.txt")
 
+local modules = dofile_once("mods/noita.hardmod/modules.lua")---@type module_list
+
 local disabled_modules = {}
-for _,module in pairs(HARDMOD_GLOBAL_DATA.module_ids) do
+for _,module in pairs(modules.list) do
 	if ModSettingGet("noita.hardmod."..module..".disabled") then
 		table.insert(disabled_modules, module)
 	end

@@ -42,6 +42,8 @@ local function collapse()
 
 	GameTriggerMusicFadeOutAndDequeueAll( 2.0 )
 	GamePlaySound( "data/audio/Desktop/misc.bank", "misc/temple_collapse", x-112, y-40 )
+
+	EntityLoad("mods/noita.hardmod/files/modules/holy_mountain_rework/tinker_aura.xml", x+30, y)
 end
 
 if #EntityGetInRadiusWithTag(x, y, 130, "perk") == 0 then

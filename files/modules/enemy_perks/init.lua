@@ -1,4 +1,4 @@
-local hooks = {}
+local hooks = {} ---@type hooks
 local _g = HARDMOD_GLOBAL_DATA
 local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 local biome_index ---@type biome_path_to_simple_id
@@ -96,8 +96,8 @@ hooks.new_eid = function(entity_id)
 		end
 
 		local level = (is_boss and 5 or biome_data.level) --if is_boss, override biome level
-			+ (tonumber(SessionNumbersGetValue("NEW_GAME_PLUS_COUNT")) or 0) -- + NG+ iteration
-			+ (GetParallelWorldPosition(x, y) ~= 0 and 3 or 0) -- +3 if in a PW
+			+ (tonumber(SessionNumbersGetValue("NEW_GAME_PLUS_COUNT")) or 0)*2 -- + NG+ iteration
+			+ (GetParallelWorldPosition(x, y) * 3) -- +3 per PW
 		if biome_data.do_recursive_roll ~= false then
 			for _=1, level do
 				local function plus_one_perk()
@@ -275,6 +275,10 @@ end--]]
 
 for file in nxml.edit_file("data/entities/projectiles/darkflame_stationary.xml") do
 	file:set("tags", "hardmod_darkflame")
+end
+
+function hooks.world_init()
+	EntityLoad(dir.."nothing_to_see_here.xml", 0, 0)
 end
 
 return hooks
