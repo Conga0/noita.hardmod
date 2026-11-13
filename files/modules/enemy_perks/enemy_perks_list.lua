@@ -168,6 +168,7 @@ enemy_perks = {
 			wizards_den = 4,
 		},
 		condition = function(self, data)
+			if data.how_many_of_each_perk["HARDMOD_PROTECTOR"] then return end
 			return data.dmc ~= nil and data.level > 2
 		end,
 		func = function(self, entity_id, data)
