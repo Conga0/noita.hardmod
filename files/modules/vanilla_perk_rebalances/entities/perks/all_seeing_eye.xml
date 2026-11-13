@@ -1,4 +1,4 @@
-<Entity tags="perk_entity,hardmod_all_seeing_eye_entity">
+<Entity name="hardmod.all_seeing_eye" tags="perk_entity,hardmod_all_seeing_eye_entity">
 	<SpriteComponent 
 		_tags="enabled_in_hand,fog_of_war_hole"
 		alpha="1.0"

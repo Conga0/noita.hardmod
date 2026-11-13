@@ -16,9 +16,41 @@ for _,child in pairs(EntityGetAllChildren(player) or {}) do
 	end
 end
 
-if not inventory then
-	return
-end
+if not inventory then return end
+
+local effect_items = {
+	["data/entities/items/pickup/brimstone.xml"] = {
+        game_effects = {
+            "PROTECTION_FIRE",
+        },
+    },
+	["data/entities/items/pickup/waterstone.xml"] = {
+        game_effects = {
+            "BREATH_UNDERWATER",
+        },
+    },
+	["data/entities/items/pickup/thunderstone.xml"] = {
+        game_effects = {
+            "PROTECTION_ELECTRICITY",
+        },
+    },
+	--["data/entities/items/pickup/stonestone.xml"] = {}, --no effect associated at present
+	["mods/noita.hardmod/files/modules/vanilla_perk_rebalances/entities/items/cheese.xml"] = {
+        game_effects = {
+            "PROTECTION_MELEE",
+        },
+    },
+	["data/entities/items/pickup/sun/sunseed.xml"] = {
+        children = {
+            "hardmod.all_seeing_eye"
+        }
+    },
+	["data/entities/items/pickup/sun/sunstone.xml"] = {
+        children = {
+            "hardmod.all_seeing_eye"
+        }
+    },
+}
 
 local added = {}
 
@@ -34,6 +66,7 @@ local function add_effect(name)
 end
 
 for _,item in pairs(EntityGetAllChildren(inventory) or {}) do
+	if EntityGetFilename()
 	if EntityHasTag(item, "thunderstone") then add_effect("PROTECTION_ELECTRICITY")
 	elseif EntityHasTag(item, "brimstone") then add_effect("PROTECTION_FIRE")
 	elseif EntityHasTag(item, "waterstone") then add_effect("BREATH_UNDERWATER")

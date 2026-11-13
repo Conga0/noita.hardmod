@@ -15,8 +15,8 @@
 - Look into improving early-game mobility
 	- This has been done via guaranteed Hastium basin in stage 2, though more options isnt a terrible idea, wait and observe on this topic for now
 - Look into making gold more valuable?
-- make plasma usable as damage
 - rewrite perk selection logic to be more integrated
+- fix PW cursed liquid to be like apoth's
 
 ## Enemy Perk Ideas
 - Chaotic Polymorph Aura
@@ -38,3 +38,6 @@
 - make HM basin changes work in final stage
 - sungems dont spawn
 - Ira should probs remove CBC from their champion
+
+## Spell Issues
+- Plasma does miserable damage
