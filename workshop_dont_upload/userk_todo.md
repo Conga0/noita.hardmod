@@ -23,8 +23,15 @@
 - Armed
   - Enemy spawns with a random wand that shatters on death
   - Wands are from a premade list
+- Drain Field
+  - Drains mana from your wands in an area
+- Blinding Curser
+  - Projectile blinds on hit
+- Teleportitis Curser
+
 
 ## bugs
 - 2nd and 3rd hand statue kicked drops summon portal spell
 - Snail module crashes?
 - 0 0 enemy perk icons
+- exempt On-Death perks if Forbidden Revival (and vice-versa)
