@@ -485,7 +485,7 @@ end
 function CalculateMinibossPower(biomes_visited)
 	local phantom_anger = tonumber(GlobalsGetValue("felcesis_anger","0")) --Felcesis becomes more angry each time they're banished using pheromone, allows them to roll higher on their power variation with each banishment
 	local random_power_variation = math.random(-2,1+phantom_anger)
-	local health_softcap = 15
+	local health_softcap = 20
 	biomes_visited = biomes_visited + random_power_variation
 	local tier = math.max(1,math.floor(1+(biomes_visited / 4)))
 	local budget = math.max(450,400 + (125 * biomes_visited))
