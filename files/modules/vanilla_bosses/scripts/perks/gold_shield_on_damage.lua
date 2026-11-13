@@ -3,6 +3,7 @@ local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua")
 local COOLDOWN_DURATION = 600
 
 function damage_received( damage, desc, entity_who_caused, is_fatal )
+	if damage <= 0 then return end
 	local owner = GetUpdatedEntityID()
 	if owner == nil then return end
 	local shield = EntityGetAllChildren( owner, "hardmod_gold_shield" )[1]

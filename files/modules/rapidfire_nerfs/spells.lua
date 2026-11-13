@@ -55,8 +55,8 @@ hooks.spell_patches = {
 	},
 	["RECHARGE"] = {
 		action = function()
-			c.fire_rate_wait = c.fire_rate_wait - 16
-			current_reload_time = current_reload_time - 8
+			c.fire_rate_wait = c.fire_rate_wait - 8
+			current_reload_time = current_reload_time - 16
 			draw_actions(1, true)
 		end
 	},
