@@ -1,4 +1,4 @@
-local hooks = {}
+local hooks = {} ---@type hooks
 local _g = HARDMOD_GLOBAL_DATA
 local utils = dofile_once("mods/noita.hardmod/lib/utilities.lua") ---@type utils
 local biome_index ---@type biome_path_to_simple_id
