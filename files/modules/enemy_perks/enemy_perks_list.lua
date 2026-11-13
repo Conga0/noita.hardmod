@@ -69,6 +69,15 @@ local function spawn_on_death_blacklist(self, data)
 	return not (banned_creatures[EntityGetFilename(data.target_enemy)] or data.how_many_of_each_perk["HARDMOD_BOUNTY"] or data.how_many_of_each_perk["HARDMOD_SHADOW_REVIVAL"])
 end
 
+local function split_string(inputstr, sep)
+	sep = sep or "%s"
+	local t= {}
+	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+		table.insert(t, str)
+	end
+	return t
+end
+
 -- The `data` table provides `target_enemy` (eid), `already_held_perks` (perk_id[]), `player` (eid) and `player_poly_identity` (table)
 
 ---@type enemy_perk[]
@@ -943,6 +952,60 @@ enemy_perks = {
 	-- 		})
 	-- 	end
 	-- },
+	{
+		id = "ALL_SEEING",
+		name = "$hardmod_eperk_all_seeing_name",
+		description = "$hardmod_eperk_all_seeing_desc",
+		weight = 2,
+		priority = 25,
+		max = 2,
+		biome_conditions = {
+			magical_temple = 3,
+			temple_of_the_art = 4,
+			wizards_den = 4,
+		},
+		condition = function(self, data)
+			-- this perk can only appear on mages, ghosts (excl. wand ghosts) and some select enemies
+			local factions = "mage,mage_swapper,ghost,"
+			local creatures = { "monk", "spearbot", }
+
+			local strparts = split_string(EntityGetFilename(data.target_enemy),"/")
+			local filename = strparts[#strparts]
+			local filename_match = false
+			for _,creature_name in ipairs(creatures) do
+				if string.find(filename, creature_name) then
+					print("match found: " .. filename)
+					filename_match = true
+				end
+			end
+			return enemy_is_ranged_attack(self, data)
+				and (string.find(factions, HerdIdToString(utils.GetHerdID(data.target_enemy)))
+				or filename_match) and not EntityHasTag(data.target_enemy, "wand_ghost")
+		end,
+		func = function(self, entity_id, data)
+			local animal_comp = EntityGetFirstComponent(entity_id, "AnimalAIComponent")
+			if animal_comp then
+				ComponentSetValue2(animal_comp, "sense_creatures", true)
+				ComponentSetValue2(animal_comp, "sense_creatures_through_walls", true)
+			end
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_source_file = dir.."scripts/all_seeing_scan.lua",
+				execute_every_n_frame = 15,
+			})
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_shot = dir.."scripts/all_seeing_on_shot.lua",
+				execute_every_n_frame = -1,
+			})
+
+			local stacks = (data.how_many_of_each_perk[self.id] or 0) + 1
+			if stacks == 2 then
+				EntityAddComponent2(entity_id, "VariableStorageComponent", {
+					name = "hardmod_all_seeing_radius",
+					value_int = 180,
+				})
+			end
+		end
+	},
 }
 
 local perk_incompatibilities = { --ill implement at some point maybe
