@@ -125,7 +125,7 @@ enemy_perks = {
 		id = "PROTECTOR",
 		name = "$hardmod_eperk_protector_name",
 		description = "$hardmod_eperk_protector_desc",
-		weight = 7,
+		weight = 8,
 		max = 2,
 		biome_conditions = {
 			mines = 4,
@@ -362,7 +362,6 @@ enemy_perks = {
 		name = "$hardmod_eperk_dark_flames_name",
 		description = "$hardmod_eperk_dark_flames_desc",
 		weight = 2,
-		priority = 8,
 		max = 1,
 		biome_conditions = {
 			magical_temple = 4,
@@ -812,7 +811,7 @@ enemy_perks = {
 		max = 1,
 		condition = function(self, data) return data.perks_to_give and (data.level > 4 or data.is_boss) end,
 		func = function(self, entity_id, data)
-			data.perks_to_give = data.perks_to_give + 10
+			data.perks_to_give = data.perks_to_give + (data.is_boss and 10 or 5)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_death = dir.."scripts/drop_chest_on_death.lua"
 			})
@@ -950,12 +949,12 @@ local perk_incompatibilities = { --ill implement at some point maybe
 	{"HARDMOD_KAMIKAZE", "HARDMOD_UNFINISHED_BUSINESS"},
 }
 
-for i,perk in ipairs(enemy_perks) do
+for _,perk in ipairs(enemy_perks) do
 	local id = perk.id
 	perk.id = "HARDMOD_"..perk.id
 	perk.name = perk.name or perk.id
 	perk.weight = perk.weight or 10
-	perk.priority = (perk.priority or 0) + i*.001
+	perk.priority = perk.priority or 0
 	perk.sprite = ModDoesFileExist(perk.sprite or "") and perk.sprite
 		or ModDoesFileExist(sprites_path..id:lower()..".png") and sprites_path..id:lower()..".png"
 		or "mods/noita.hardmod/files/modules/enemy_perks/perk_sprites/missing.png"

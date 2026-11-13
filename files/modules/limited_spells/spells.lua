@@ -373,7 +373,7 @@ hooks.spell_patches = {
 	["DARKFLAME"] = { max_uses = -1 },
 	["THUNDERBALL"] = { max_uses = 10 },
 	["ICEBALL"] = { never_unlimited = true },
-	["DAMAGE_FOREVER"] = { max_uses = 0, never_unlimited = true },
+	["DAMAGE_FOREVER"] = { max_uses = -1 },
 	["ALL_DISCS"] = { max_uses = 10, never_unlimited = true },
 	["ALL_ACID"] = { max_uses = 10, never_unlimited = true },
 
