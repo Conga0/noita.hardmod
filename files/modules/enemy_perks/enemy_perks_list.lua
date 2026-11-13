@@ -457,6 +457,8 @@ enemy_perks = {
 		biome_conditions = {
 			fungal_caverns = 2,
 			vault = 2,
+			frozen_vault = 2,
+			powerplant = 8,
 		},
 		max = 1,
 		condition = function(self, data)
