@@ -298,13 +298,13 @@ enemy_perks = {
 		func = function(self, entity_id, data)
 			GetGameEffectLoadTo(entity_id, "PROTECTION_FIRE", false)
 			
-			local stacks = data.how_many_of_each_perk[self.id] or 0
-			if stacks == 0 then
+			local stacks = (data.how_many_of_each_perk[self.id] or 0) + 1
+			if stacks == 1 then
 				EntityAddComponent2(entity_id, "LuaComponent", {
 					script_shot = dir.."scripts/pyrelord_on_shot.lua",
 					execute_every_n_frame = -1,
 				})
-			elseif stacks == 1 then
+			elseif stacks == 2 then
 				EntityAddComponent2(entity_id, "LuaComponent", {
 					script_shot = dir.."scripts/pyrelord_plus_on_shot.lua",
 					execute_every_n_frame = -1,

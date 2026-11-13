@@ -6,28 +6,28 @@
 			_tags="enabled_in_hand,item_identified__LEGACY"
 			max_energy="10"
 			recharge_speed="10"
-			radius="80.0" >
+			radius="64.0" >
 		</EnergyShieldComponent>
 		
 		<ParticleEmitterComponent
 			emitted_material_name="gold"
-			area_circle_radius.max="80"
+			area_circle_radius.max="64"
 			>
 		</ParticleEmitterComponent>
 		
 		<ParticleEmitterComponent
 			emitted_material_name="gold"
-			count_min="200"
-			count_max="250"
-			area_circle_radius.min="80"
-			area_circle_radius.max="80"
+			count_min="150"
+			count_max="200"
+			area_circle_radius.min="64"
+			area_circle_radius.max="64"
 			>
 		</ParticleEmitterComponent>
 		
 		<ParticleEmitterComponent
 			emitted_material_name="gold"
-			area_circle_radius.min="80"
-			area_circle_radius.max="80"
+			area_circle_radius.min="64"
+			area_circle_radius.max="64"
 			>
 		</ParticleEmitterComponent>
 
