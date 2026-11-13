@@ -18,6 +18,7 @@
 - rewrite perk selection logic to be more integrated
 - fix PW cursed liquid to be like apoth's
 - remove item immunities perk if apotheosis is enabled?
+- fix zerk strat (i have a plan :>)
 
 ## Enemy Perk Ideas
 - Chaotic Polymorph Aura
