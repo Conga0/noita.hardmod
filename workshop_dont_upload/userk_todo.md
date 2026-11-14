@@ -15,7 +15,10 @@
 - Look into improving early-game mobility
 	- This has been done via guaranteed Hastium basin in stage 2, though more options isnt a terrible idea, wait and observe on this topic for now
 - Look into making gold more valuable?
-- make plasma usable as damage
+- rewrite perk selection logic to be more integrated
+- fix PW cursed liquid to be like apoth's
+- remove item immunities perk if apotheosis is enabled?
+- fix zerk strat (i have a plan :>)
 
 ## Enemy Perk Ideas
 - Chaotic Polymorph Aura
@@ -26,7 +29,6 @@
 - Drain Field
   - Drains mana from your wands in an area
 - Blinding Curser
-  - Projectile blinds on hit
 - Teleportitis Curser
 
 
@@ -35,3 +37,9 @@
 - Snail module crashes?
 - 0 0 enemy perk icons
 - exempt On-Death perks if Forbidden Revival (and vice-versa)
+- make HM basin changes work in final stage
+- sungems dont spawn
+- Ira should probs remove CBC from their champion
+
+## Spell Issues
+- Plasma does miserable damage
