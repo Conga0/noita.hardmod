@@ -25,7 +25,6 @@ function death(damage_type_bit_field, message, attacker, drop_items)
 
 					local x,y = EntityGetTransform(entity_id)
 					local death_data = {
-						entity_id = entity_id,
 						x = x, y = y,
 						attacker_was_player = false,
 						damage_type_bit_field = damage_type_bit_field,
@@ -38,7 +37,7 @@ function death(damage_type_bit_field, message, attacker, drop_items)
 					for _,perk in ipairs(dofile_once("mods/noita.hardmod/files/modules/enemy_perks/enemy_perks_list.lua")) do
 						if perk.on_death and how_many_of_each_perk[perk.id] then
 							for _=1,how_many_of_each_perk[perk.id] do
-								perk.on_death()
+								perk:on_death(entity_id, death_data)
 							end
 						end
 					end
