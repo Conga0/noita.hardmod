@@ -895,3 +895,4 @@ add Shield Breaker modifier
 make t2 Protector shield even smaller
 add torch wand tip y offset
 make Spell Gems more consistent
+make MoM drop AT spells for now
