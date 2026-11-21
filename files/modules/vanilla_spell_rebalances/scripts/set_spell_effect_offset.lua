@@ -23,5 +23,5 @@ function enabled_changed(entity_id, is_enabled)
 		hs_x + spr_x - 1,
 		hs_y + spr_y - 2,
 		_w, _h, _r
-	) -- -1 makes it align just a bit more nicely
+	)
 end

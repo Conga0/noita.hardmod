@@ -517,4 +517,4 @@ hardmod_eperk_anti_tele_aura_desc,Teleport projectiles around this enemy are des
 hardmod_eperk_spell_gems_name,Gem Collector,,,,,,,,,,,,,
 hardmod_eperk_spell_gems_desc,This enemy drops spell gems on death.,,,,,,,,,,,,,
 harmdod_spell_shield_breaker_name,Shield Breaker,,,,,,,,,,,,,
-harmdod_spell_shield_breaker_desc,Makes a projectile penetrate most enemy shields,,,,,,,,,,,,,
+harmdod_spell_shield_breaker_desc,Makes a projectile deplete most enemy shields,,,,,,,,,,,,,
