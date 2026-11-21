@@ -498,6 +498,7 @@ function CreateMiniboss(entity_id, x, y, tier, budget, health_mult)
 	end
 
 	local dmgcomp = EntityGetFirstComponentIncludingDisabled(entity_id, "DamageModelComponent")
+	local hardmod_physicsdmg_mult = 0.01
 	if dmgcomp then
 		local hp = ComponentGetValue2(dmgcomp, "max_hp")
 		ComponentSetValue2(dmgcomp, "max_hp", hp * health_mult)
@@ -511,7 +512,7 @@ function CreateMiniboss(entity_id, x, y, tier, budget, health_mult)
 				break
 			end
 		end
-		ComponentObjectSetValue2(dmgcomp,"damage_multipliers","physics_hit", math.max(0,1-((tier-1) * 0.4))) --Gain 40% physics damage reduction per tier, maxing out at physics damage immunity at tier 3
+		ComponentObjectSetValue2(dmgcomp,"damage_multipliers","physics_hit", math.max(0,1-((tier-1) * 0.4))*hardmod_physicsdmg_mult) --Gain 40% physics damage reduction per tier, maxing out at physics damage immunity at tier 3
 		if tier >= 3 then ComponentSetValue2(dmgcomp,"fire_probability_of_ignition",0) end
 	end
 
