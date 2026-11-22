@@ -28,12 +28,14 @@
   - only applies once?
 - Aura that destroys projectiles if its been inside of it for 1 second
 
-
 ## bugs
 - 2nd and 3rd hand statue kicked drops summon portal spell
 - Snail module crashes?
 - make HM basin changes work in final stage
 - Ira should probs remove CBC from their champion
+
+## Compatibility
+- Apply Glimmer changes to modded glimmers
 
 ## Spell Issues
 ### These are not things I intend to change on my own, but with the consultation of Yui and the other devs in #noita-coommunity-collab
