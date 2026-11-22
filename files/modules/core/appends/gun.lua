@@ -1,12 +1,7 @@
 local do_global_stats = not ModSettingGet("noita.hardmod.cheeseless_triggers.disabled")
 
--- dont_fire_next_drawn_proj = false
-
-DYNAMIC_TRIGGER_NONE = 0
-DYNAMIC_TRIGGER_WORLD = 1
-DYNAMIC_TRIGGER_TIMER = 2
-DYNAMIC_TRIGGER_DEATH = 3
-dynamic_trigger = DYNAMIC_TRIGGER_NONE
+--[[ Global Stats ]]--
+--#region
 
 local null_shot_nullify = {
 	"damage_electricity_add", "damage_explosion_add", "damage_explosion",
@@ -44,24 +39,76 @@ function draw_shot(shot, instant_reload_if_empty)
 	apply_global_stats(shot.state, c)
 end
 
-local _add_projectile = add_projectile
-function add_projectile(...)
-	if dynamic_trigger == DYNAMIC_TRIGGER_NONE then
-		_add_projectile(...)
+--#endregion
 
-	elseif dynamic_trigger == DYNAMIC_TRIGGER_WORLD then
-		dynamic_trigger = DYNAMIC_TRIGGER_NONE
-		---@diagnostic disable-next-line: undefined-global
-		add_projectile_trigger_hit_world(..., 1)
+--[[ Custom Triggers ]]--
+--#region
 
-	elseif dynamic_trigger == DYNAMIC_TRIGGER_TIMER then
-		dynamic_trigger = DYNAMIC_TRIGGER_NONE
-		---@diagnostic disable-next-line: undefined-global
-		add_projectile_trigger_timer(..., 20, 1)
+---@alias TriggerType 1|2|3
+---@class QueuedTrigger
+---@field type TriggerType
+---@field draw_count integer
+---@field delay_frames integer?
 
-	elseif dynamic_trigger == DYNAMIC_TRIGGER_DEATH then
-		dynamic_trigger = DYNAMIC_TRIGGER_NONE
-		---@diagnostic disable-next-line: undefined-global
-		add_projectile_trigger_death(..., 1)
+---@type QueuedTrigger[]
+trigger_queue = {}
+
+TRIGGER_HIT_WORLD = 1
+TRIGGER_TIMER = 2
+TRIGGER_DEATH = 3
+
+function add_projectile(file)
+	if reflecting then Reflection_RegisterProjectile(file) return end
+
+	BeginProjectile(file)
+
+	if #trigger_queue > 0 then
+		local todo = trigger_queue
+		trigger_queue = {}
+
+		for _,trigger in pairs(todo) do
+			if trigger.type == TRIGGER_HIT_WORLD then BeginTriggerHitWorld()
+			elseif trigger.type == TRIGGER_TIMER then BeginTriggerTimer(trigger.delay_frames)
+			elseif trigger.type == TRIGGER_DEATH then BeginTriggerDeath()
+			end
+
+			draw_shot(create_shot(trigger.draw_count), true)
+			EndTrigger()
+		end
 	end
+
+	EndProjectile()
 end
+
+---@param file string
+---@param trigger QueuedTrigger
+local function add_projectile_with_trigger(file, trigger)
+	if reflecting then Reflection_RegisterProjectile(file) return end
+
+	table.insert(trigger_queue, trigger)
+	add_projectile(file)
+end
+
+function add_projectile_trigger_hit_world(file, draws)
+	add_projectile_with_trigger(file, {
+		type = TRIGGER_HIT_WORLD,
+		draw_count = draws
+	})
+end
+
+function add_projectile_trigger_death(file, draws)
+	add_projectile_with_trigger(file, {
+		type = TRIGGER_DEATH,
+		draw_count = draws
+	})
+end
+
+function add_projectile_trigger_timer(file, delay_frames, draws)
+	add_projectile_with_trigger(file, {
+		type = TRIGGER_TIMER,
+		draw_count = draws,
+		delay_frames = delay_frames
+	})
+end
+
+--#endregion
