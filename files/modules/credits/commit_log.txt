@@ -896,3 +896,8 @@ make t2 Protector shield even smaller
 add torch wand tip y offset
 make Spell Gems more consistent
 make MoM drop AT spells for now
+Rework trigger spells
+improve the trigger system
+convert to vararg
+consistent hardmod_cannot_spawn flag
+make reworked AT spawn regularly, change MoM drops
