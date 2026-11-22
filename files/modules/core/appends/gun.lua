@@ -30,12 +30,12 @@ local function apply_global_stats(from, to)
 	end
 end
 
-local old_draw_shot = draw_shot
+local orig_draw_shot = draw_shot
 
 ---@param shot Shot
 function draw_shot(shot, instant_reload_if_empty)
 	apply_global_stats(c, shot.state)
-	old_draw_shot(shot, instant_reload_if_empty)
+	orig_draw_shot(shot, instant_reload_if_empty)
 	apply_global_stats(shot.state, c)
 end
 
@@ -52,17 +52,20 @@ end
 
 ---@type QueuedTrigger[]
 trigger_queue = {}
+local handle_trigger_queue = false
 
 TRIGGER_HIT_WORLD = 1
 TRIGGER_TIMER = 2
 TRIGGER_DEATH = 3
 
-function add_projectile(file)
-	if reflecting then Reflection_RegisterProjectile(file) return end
+local orig_begin_proj = BeginProjectile
+function BeginProjectile(file)
+	orig_begin_proj(file)
 
-	BeginProjectile(file)
+	if handle_trigger_queue then
+		handle_trigger_queue = false
+		if #trigger_queue == 0 then return end
 
-	if #trigger_queue > 0 then
 		local todo = trigger_queue
 		trigger_queue = {}
 
@@ -70,45 +73,34 @@ function add_projectile(file)
 			if trigger.type == TRIGGER_HIT_WORLD then BeginTriggerHitWorld()
 			elseif trigger.type == TRIGGER_TIMER then BeginTriggerTimer(trigger.delay_frames)
 			elseif trigger.type == TRIGGER_DEATH then BeginTriggerDeath()
-			end
+			else break end
 
 			draw_shot(create_shot(trigger.draw_count), true)
 			EndTrigger()
 		end
 	end
-
-	EndProjectile()
 end
 
----@param file string
----@param trigger QueuedTrigger
-local function add_projectile_with_trigger(file, trigger)
-	if reflecting then Reflection_RegisterProjectile(file) return end
-
-	table.insert(trigger_queue, trigger)
-	add_projectile(file)
+local orig_start_shot = _start_shot
+function _start_shot(...)
+	orig_start_shot(...)
+	trigger_queue = {}
+	handle_trigger_queue = false
 end
 
-function add_projectile_trigger_hit_world(file, draws)
-	add_projectile_with_trigger(file, {
-		type = TRIGGER_HIT_WORLD,
-		draw_count = draws
-	})
+local function wrap_add_projectile(orig_fn)
+	return function(...)
+		if not reflecting then
+			handle_trigger_queue = true
+		end
+
+		orig_fn(...)
+	end
 end
 
-function add_projectile_trigger_death(file, draws)
-	add_projectile_with_trigger(file, {
-		type = TRIGGER_DEATH,
-		draw_count = draws
-	})
-end
-
-function add_projectile_trigger_timer(file, delay_frames, draws)
-	add_projectile_with_trigger(file, {
-		type = TRIGGER_TIMER,
-		draw_count = draws,
-		delay_frames = delay_frames
-	})
-end
+add_projectile                   = wrap_add_projectile(add_projectile)
+add_projectile_trigger_hit_world = wrap_add_projectile(add_projectile_trigger_hit_world)
+add_projectile_trigger_timer     = wrap_add_projectile(add_projectile_trigger_timer)
+add_projectile_trigger_death     = wrap_add_projectile(add_projectile_trigger_death)
 
 --#endregion
