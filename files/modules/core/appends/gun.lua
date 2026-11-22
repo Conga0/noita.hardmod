@@ -99,6 +99,8 @@ local function wrap_add_projectile(orig_fn)
 end
 
 add_projectile                   = wrap_add_projectile(add_projectile)
+-- TODO: [AT][spark bolt trigger] seems broken, other combinations work fine tho?...
+-- dont have energy to figure this out rn
 add_projectile_trigger_hit_world = wrap_add_projectile(add_projectile_trigger_hit_world)
 add_projectile_trigger_timer     = wrap_add_projectile(add_projectile_trigger_timer)
 add_projectile_trigger_death     = wrap_add_projectile(add_projectile_trigger_death)
