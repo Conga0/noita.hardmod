@@ -1,0 +1,17 @@
+<Entity>
+	<InheritTransformComponent/>
+
+	<GameEffectComponent
+		effect="TELEPORTATION"
+        frames="31"
+		teleportation_probability="1"
+		teleportation_delay_min_frames="30"
+	/>
+
+	<UIIconComponent
+		icon_sprite_file="data/ui_gfx/status_indicators/teleportation.png"
+		name="$status_teleportation"
+		description="$statusdesc_teleportation"
+		is_perk="0"
+	/>
+</Entity>

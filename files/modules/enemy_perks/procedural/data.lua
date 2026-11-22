@@ -31,6 +31,10 @@ local on_hit_callbacks = {
 			ComponentSetValue2(comp, "offset", -1, 0)
 			ComponentSetValue2(comp, "gravity", 0, 0)
 		end,
+	},
+	{
+		id = "teleport_curser",
+		entity_on_hit = dir.."entities/teleport_curse.xml",
 	}
 }
 

@@ -359,6 +359,20 @@ enemy_perks = {
 		end,
 	},
 	{
+		id = "HANDY",
+		name = "$hardmod_eperk_handy_name",
+		description = "$hardmod_eperk_handy_desc",
+		weight = 3000,
+		max = 3,
+		biome_conditions = {
+			snowy_depths = 5,
+		},
+		func = function(self, entity_id, data)
+			local arms = EntityLoad("data/entities/misc/monk_arms_standalone.xml", data.x, data.y)
+			EntityAddChild(entity_id, arms)
+		end
+	},
+	{
 		id = "PYRELORD",
 		name = "$hardmod_eperk_pyrelord_name",
 		description = "$hardmod_eperk_pyrelord_desc",
@@ -472,6 +486,21 @@ enemy_perks = {
 		func = function(self, entity_id, data)
 			EntityAddComponent2(entity_id, "LuaComponent", {
 				script_shot = dir.."generated/curser_shot.lua",
+				execute_every_n_frame = -1,
+			})
+		end
+	},
+	{
+		id = "TELEPORT_CURSER",
+		name = "$hardmod_eperk_teleport_curser_name",
+		description = "$hardmod_eperk_teleport_curser_desc",
+		weight = 3,
+		priority = 7,
+		max = 1,
+		condition = enemy_is_ranged_attack,
+		func = function(self, entity_id, data)
+			EntityAddComponent2(entity_id, "LuaComponent", {
+				script_shot = dir.."generated/teleport_curser_shot.lua",
 				execute_every_n_frame = -1,
 			})
 		end
