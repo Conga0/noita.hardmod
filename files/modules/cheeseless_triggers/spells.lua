@@ -27,7 +27,7 @@ hooks.new_spells = {
 			if not data then return end
 
 			while #deck >= how_many and data and (data.type == ACTION_TYPE_MODIFIER or data.type == ACTION_TYPE_PASSIVE or data.type == ACTION_TYPE_OTHER or data.type == ACTION_TYPE_DRAW_MANY) do
-				if data.uses_remaining or data.uses_remaining ~= 0 and not sacrilege_blacklisted_spells[data.id] then
+				if (data.uses_remaining or data.uses_remaining ~= 0) and not sacrilege_blacklisted_spells[data.id] then
 					if data.type == ACTION_TYPE_MODIFIER then
 						dont_draw_actions = true
 						data.action()
