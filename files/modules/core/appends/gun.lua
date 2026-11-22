@@ -59,8 +59,8 @@ TRIGGER_TIMER = 2
 TRIGGER_DEATH = 3
 
 local orig_begin_proj = BeginProjectile
-function BeginProjectile(file)
-	orig_begin_proj(file)
+function BeginProjectile(...)
+	orig_begin_proj(...)
 
 	if handle_trigger_queue then
 		handle_trigger_queue = false
