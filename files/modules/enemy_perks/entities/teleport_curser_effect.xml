@@ -1,11 +1,11 @@
-<Entity>
+<Entity name="hardmod.teleporting">
 	<InheritTransformComponent/>
 
-	<GameEffectComponent
+	<GameEffectComponent 
 		effect="TELEPORTATION"
-        frames="31"
-		teleportation_probability="1"
-		teleportation_delay_min_frames="30"
+		frames="320"
+		teleportation_probability="200"
+		teleportation_delay_min_frames="140"
 	/>
 
 	<UIIconComponent

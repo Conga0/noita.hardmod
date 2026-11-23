@@ -27,6 +27,20 @@
 - Teleportitis Curser
   - only applies once?
 - Aura that destroys projectiles if its been inside of it for 1 second
+- thundercharge on death
+- flummox projectiles 13~15s
+- swapper projectiles
+- material immunity
+  - covered by Rival?
+- extra projectiles
+- iframes
+- chaotic poly on death
+- some stuff with darkness?
+- mini meat realm
+- blinding projectiles ~8s
+- projectile-attracting projectiles
+- status ailment projectile summon
+- "untethered" eperk for houre
 
 ## bugs
 - 2nd and 3rd hand statue kicked drops summon portal spell
@@ -36,6 +50,7 @@
 
 ## Compatibility
 - Apply Glimmer changes to modded glimmers
+- Spell Gems don't work on spells
 
 ## Spell Issues
 ### These are not things I intend to change on my own, but with the consultation of Yui and the other devs in #noita-coommunity-collab
@@ -43,3 +58,4 @@
 - linear arc is less damage for more mana than add damage
 - ASE spell has 5 charges
 - freeze charge is rough atm, perhaps should just be higher price + make more enemies freeze/melee immune?
+- arrow is too strong? (reporter is playing with other mods, should approach critically)

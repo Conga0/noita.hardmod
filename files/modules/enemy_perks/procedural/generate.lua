@@ -16,7 +16,7 @@ for _,callback in ipairs(callback_data.callbacks) do
     }
     if not callback.entity_on_hit then
         templates[#templates+1] = "template_hit.xml"
-        callback.entity_on_hit = id.."_hit.xml"
+        callback.entity_on_hit = table.concat({dir,"generated/",id,"_hit.xml"})
     end
 
     for _,template in ipairs(templates) do
