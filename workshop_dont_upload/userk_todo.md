@@ -24,7 +24,6 @@
 - Drain Field
   - Drains mana from your wands in an area
 - Blinding Curser
-- Teleportitis Curser
   - only applies once?
 - Aura that destroys projectiles if its been inside of it for 1 second
 - thundercharge on death
